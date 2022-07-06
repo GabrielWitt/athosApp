@@ -1,0 +1,28 @@
+<ion-content class="ion-padding">
+  <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> INICIO DE SESIÓN </p>
+  <ion-item>
+    <ion-text color="dark">
+      <p>Email: {{email}}</p>
+    </ion-text>
+  </ion-item>
+  
+  <ion-row class="fullWidth">
+    <ion-text color="danger" class="ion-padding ion-text-center fullWidth">
+      <p>{{errorMessage}}</p>
+    </ion-text>
+  </ion-row>
+  
+  <ion-row class="ion-margin-top">
+    <p class="ion-padding ion-text-center">Presione el botón 'Reenviar' para volver a recibir el mail de verificación</p>
+    <app-big-button type="submit" class="" LABEL="Reenviar" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="resendEmail()"></app-big-button>
+  </ion-row>
+  
+  <ion-row class="ion-margin-top">
+    <app-big-button type="submit" class="ion-padding-top" LABEL="Verificar Email" buttonType="PRIMARY" [loading]="loading" [disabled]="loading" (click)="checkUser()"></app-big-button>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <app-big-button class="ion-padding-top" LABEL="Cancelar" buttonType="GRAY" [loading]="loading" [disabled]="false" (click)="cancel()"></app-big-button>
+  </ion-row>
+
+</ion-content>

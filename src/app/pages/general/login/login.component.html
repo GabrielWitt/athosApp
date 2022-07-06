@@ -1,0 +1,46 @@
+<ion-content class="ion-padding">
+  <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> INICIO DE SESIÓN </p>
+
+  
+  <form #login="ngForm" [formGroup]=loginForm (ngSubmit)=loginProcess(loginForm.value) (keydown)="EnterSubmit($event, loginForm)" novalidate>
+    <ion-item>
+      <ion-label color="dark" position="floating"> <b>Email</b></ion-label>
+      <ion-input color="dark" formControlName="email" type="email" clearInput="true"></ion-input>
+    </ion-item>
+    
+    <ng-container *ngFor="let validation of validationMessages.email">
+      <div class="error-message" *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
+      </div>
+    </ng-container>
+    <ion-text class="ion-padding-start ion-margin-vertical" color="danger" *ngIf="messageError"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ messageError }}
+    </ion-text>
+
+    <ion-item #emailInput>
+      <ion-label color="dark" position='floating'><b>Password</b></ion-label>
+      <ion-input color="dark" formControlName="password" type="password" clearInput="true"></ion-input>
+    </ion-item>
+
+    <ng-container *ngFor="let validation of validationMessages.password">
+      <div class="error-message ion-margin-bottom" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
+      </div>
+    </ng-container>
+    <ion-text class="ion-padding-start ion-margin-vertical" color="danger" *ngIf="messageError"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ messageError }}
+    </ion-text>
+
+
+    <div class='ion-padding-start' *ngIf="!this.block"> 
+      <ion-text color='dark'> <p class="forgot_text" (click)='forgotPassword()'><span>Forgot your password?</span></p>    </ion-text> 
+    </div>
+    <ion-row class="ion-margin-top">
+      <app-big-button type="submit" class="ion-padding-top" LABEL="INICIAR SESIÓN" buttonType="PRIMARY" [loading]="loading" [disabled]="!loginForm.valid || loading" (click)="loginProcess(loginForm.value)"></app-big-button>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <app-big-button class="ion-padding-top" LABEL="REGISTRARSE" buttonType="SECONDARY" [loading]="loading" [disabled]="false" (click)="registrase()"></app-big-button>
+    </ion-row>
+  </form> 
+
+</ion-content>

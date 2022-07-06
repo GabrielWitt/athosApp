@@ -1,0 +1,29 @@
+<ion-row [ngSwitch]="buttonType" class="rowStyle">
+  <ion-button *ngSwitchDefault class='buttonStyle' color="primary" [disabled]="disabled">
+    <ion-label>
+      <ion-spinner *ngIf="loading" style="margin-left: 10px;" color="light" name="dots"></ion-spinner>
+      <ion-text *ngIf="!loading" class="ion-text-uppercase" color="light">{{LABEL}}</ion-text>
+    </ion-label>
+  </ion-button>
+
+  <ion-button *ngSwitchCase="'SECONDARY'" class='buttonStyle' color="secondary" [disabled]="disabled">
+    <ion-label>
+      <ion-spinner *ngIf="loading" style="margin-left: 10px;" color="light" name="dots"></ion-spinner>
+      <ion-text *ngIf="!loading" class="ion-text-uppercase" color="light">{{LABEL}}</ion-text>
+    </ion-label>
+  </ion-button> 
+
+  <ion-button *ngSwitchCase="'RED'" class='buttonStyle' color="danger" [disabled]="disabled">
+    <ion-label>
+      <ion-spinner *ngIf="loading" style="margin-left: 10px;" color="light" name="dots"></ion-spinner>
+      <ion-text *ngIf="!loading" class="ion-text-uppercase" color="light">{{LABEL}}</ion-text>
+    </ion-label>
+  </ion-button> 
+
+  <ion-button *ngSwitchCase="'GRAY'" class='buttonStyle' color="medium" [disabled]="disabled">
+    <ion-label>
+      <ion-spinner *ngIf="loading" style="margin-left: 10px;" color="dark" name="dots"></ion-spinner>
+      <ion-text *ngIf="!loading" class="ion-text-uppercase" color="dark">{{LABEL}}</ion-text>
+    </ion-label>
+  </ion-button> 
+</ion-row>

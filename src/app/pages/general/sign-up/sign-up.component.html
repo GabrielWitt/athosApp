@@ -1,0 +1,92 @@
+<ion-content class="ion-padding">
+  <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> SIGN UP </p>
+
+  <form #email="ngForm" [formGroup]="signUpForm" (ngSubmit)="signProcess(signUpForm.value)" (keydown)="EnterSubmit($event, signUpForm)" novalidate>
+
+    <ion-item>
+      <ion-label color="dark" position="floating"> <b>Email / Usuario</b></ion-label>
+      <ion-input color="dark" formControlName="email" type="email" clearInput="true"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validationMessages.email">
+      <div class="error-message" *ngIf="signUpForm.get('email').hasError(validation.type) && (signUpForm.get('email').dirty || signUpForm.get('email').touched)">
+        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
+      </div>
+    </ng-container>
+
+    <ion-item>
+      <ion-label color="dark" position='floating'><b>Contraseña</b></ion-label>
+      <ion-input color="dark" formControlName="password1" type="password" clearInput="true"></ion-input>
+    </ion-item>
+    <ng-container>
+      <div *ngIf="(signUpForm.get('password1').dirty || signUpForm.get('password1').touched)">
+        <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'required'">
+          <ion-text class="ion-padding-start" color="danger"> 
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
+            Contraseña requerida
+          </ion-text>
+        </div>
+        <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'minlength'">
+          <ion-text class="ion-padding-start" color="danger"> 
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
+            Requiere 8 letras por los menos
+          </ion-text>
+        </div>
+        <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'min1digit'">
+          <ion-text class="ion-padding-start" color="danger"> 
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
+            Requiere un número por lo menos
+          </ion-text>
+        </div>
+        <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'min1uppercase'">
+          <ion-text class="ion-padding-start" color="danger"> 
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
+            Requiere una letra mayúscula por lo menos
+          </ion-text>
+        </div>
+        <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'min1lowercase'">
+          <ion-text class="ion-padding-start" color="danger"> 
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
+            Requiere una letra minúscula por lo menos
+          </ion-text>
+        </div>
+        <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'min1specialCharacter'">
+          <ion-text class="ion-padding-start" color="danger"> 
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
+            Requiere un cáracter special {{'(^ $ * . [ ] { } ( ) ? - " ! @ # % & / \ , > < ' + "' : ; | _ ~ ` + =)"}}
+          </ion-text>
+        </div>
+      </div>
+    </ng-container>
+
+    <ion-item>
+      <ion-label color="dark" position='floating'><b>Repeat Password</b></ion-label>
+      <ion-input color="dark" formControlName="password2" type="password" clearInput="true"></ion-input>
+    </ion-item>
+    <ng-container>
+      <div *ngIf="(signUpForm.get('password2').dirty || signUpForm.get('password2').touched)">
+        <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password2').errors | first) === 'required'">
+          <ion-text class="ion-padding-start" color="danger"> 
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
+            Required field
+          </ion-text>
+        </div>
+        <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.errors | first) === 'compareValidator'">
+          <ion-text class="ion-padding-start" color="danger"> 
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
+            Passwords do not match
+          </ion-text>
+        </div>
+      </div>
+      <ion-text class="ion-padding-start ion-margin-vertical ion-text-capitalize" color="danger" *ngIf="messageError"> 
+        <ion-icon class="vertical-align " color="danger" name="alert-circle-outline"> </ion-icon>  {{ messageError }}
+      </ion-text>
+    </ng-container>
+    <ion-row class="ion-margin-top">
+      <app-big-button LABEL="REGISTRARSE" buttonType="" [loading]="loading" [disabled]="!signUpForm.valid || loading" (click)="signProcess(signUpForm.value)"></app-big-button>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <app-big-button class="ion-padding-top" LABEL="CANCELAR" buttonType="GRAY" [loading]="loading" [disabled]="loading" (click)="cancel()"></app-big-button>
+    </ion-row>
+  </form>
+
+</ion-content>
