@@ -28,7 +28,6 @@ export class FirebaseAuthService {
     this.auth.languageCode = 'es';
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      console.log(user)
       if (user) { this.user = this.setUser(user); } 
       else { this.router.navigateByUrl('general'); }
     })
@@ -55,7 +54,7 @@ export class FirebaseAuthService {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        this.createUserForm(user.uid, name, lastName, birthDate).then(done => {resolve(user);})
+        this.uploadUserForm(user.uid, name, lastName, birthDate).then(done => {resolve(user);})
         .catch((error) => { reject(this.error.handle(error)); });
       })
       .catch((error) => { reject(this.error.handle(error)); });
@@ -153,19 +152,15 @@ export class FirebaseAuthService {
     });
   }
 
-  createUserForm(uid: string, name: string, lastName: string, birthDate: Date){
+  uploadUserForm(uid: string, name: string, lastName: string, birthDate: Date){
     return new Promise((resolve,reject) => {
       this.updateUser('employee', null).then(ok => {
         const userForm: userFormData = { name, lastName, birthDate }
         this.FS.setNamedDocument('users',uid, userForm)
         .then(data => { resolve('done'); })
         .catch((error) => { reject(this.error.handle(error)); });
-      }).catch((error) => { reject(this.error.handle(error)); });
+      }).catch((error) => { reject(error); });
     });
-  }
-
-  updateUserForm(uid: string){
-
   }
   
 }

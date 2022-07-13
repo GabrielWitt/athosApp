@@ -12,7 +12,7 @@ import { AlertsService } from '../../utilities/alerts';
 export class UserProfileComponent implements OnInit {
   @Input() user: User;
   loading = false;
-  defaultUser = '../../../../assets/profile/ProfileBlank.png'
+  defaultUser = '../../../../assets/profile/ProfileBlank.png';
 
   constructor(
     private router: Router,

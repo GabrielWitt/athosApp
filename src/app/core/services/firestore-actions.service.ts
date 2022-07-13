@@ -54,7 +54,6 @@ export class FirestoreActionsService {
       getDoc(doc(db, folder, filename))
       .then(docSnap => { 
         if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
           resolve(docSnap.data());
         } else {
           // doc.data() will be undefined in this case

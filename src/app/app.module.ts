@@ -4,10 +4,9 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
-// Session Store
-import { NgxsModule } from '@ngxs/store';
-import { StoreModule } from '@ngrx/store';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+// Plugins
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +21,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     IonicModule.forRoot(), 
     AppRoutingModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Chooser,
+    NgxImageCompressService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
