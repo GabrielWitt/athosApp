@@ -14,6 +14,36 @@
     </ng-container>
 
     <ion-item>
+      <ion-label color="dark" position="floating"> <b>Nombre</b></ion-label>
+      <ion-input color="dark" formControlName="name" type="text" clearInput="true"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validationMessages.name">
+      <div class="error-message" *ngIf="signUpForm.get('name').hasError(validation.type) && (signUpForm.get('name').dirty || signUpForm.get('name').touched)">
+        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
+      </div>
+    </ng-container>
+
+    <ion-item>
+      <ion-label color="dark" position="floating"> <b>Apellido</b></ion-label>
+      <ion-input color="dark" formControlName="lastName" type="text" clearInput="true"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validationMessages.lastName">
+      <div class="error-message" *ngIf="signUpForm.get('lastName').hasError(validation.type) && (signUpForm.get('lastName').dirty || signUpForm.get('lastName').touched)">
+        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
+      </div>
+    </ng-container>
+
+    <ion-item>
+      <ion-label color="dark" position='floating'><b>Cumpleaños</b></ion-label>
+      <ion-input color="dark" formControlName="birthday" type="date" clearInput="true"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validationMessages.birthday">
+      <div class="error-message" *ngIf="signUpForm.get('birthday').hasError(validation.type) && (signUpForm.get('birthday').dirty || signUpForm.get('birthday').touched)">
+        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
+      </div>
+    </ng-container>
+
+    <ion-item>
       <ion-label color="dark" position='floating'><b>Contraseña</b></ion-label>
       <ion-input color="dark" formControlName="password1" type="password" clearInput="true"></ion-input>
     </ion-item>
@@ -59,7 +89,7 @@
     </ng-container>
 
     <ion-item>
-      <ion-label color="dark" position='floating'><b>Repeat Password</b></ion-label>
+      <ion-label color="dark" position='floating'><b>Repetir Contraseña</b></ion-label>
       <ion-input color="dark" formControlName="password2" type="password" clearInput="true"></ion-input>
     </ion-item>
     <ng-container>

@@ -8,3 +8,10 @@ export interface User {
     photoURL?: string;
     uid?: string;
 }
+
+export interface userFormData {
+    name: string;
+    lastName: string;
+    birthDate: Date;
+    
+}

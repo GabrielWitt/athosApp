@@ -1,3 +1,13 @@
-<p color="primary">
-  user-profile works!
-</p>
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-thumbnail slot="start" class="profileCircle">
+        <img src="{{user?.photoURL ? user?.photoURL : defaultUser}}">
+      </ion-thumbnail>
+      <ion-card-header>
+        <ion-card-title>{{user?.displayName ? user?.displayName : 'Username'}}</ion-card-title>
+        <ion-card-subtitle>{{user?.email ? user?.email : 'User Email'}}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-item>
+  </ion-card>
+</ion-content>

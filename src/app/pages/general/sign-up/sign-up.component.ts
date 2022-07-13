@@ -38,12 +38,16 @@ export class SignUpComponent implements OnInit {
         {type: 'required', message: 'El email es requerido'},
         {type: 'email', message: 'El email tiene formato incorrecto'}
       ],
-      code:[ {type: 'required', message: ' Requiere un código'},]
+      name:[ {type: 'required', message: ' Escribe tu nombre'},],
+      lastName:[ {type: 'required', message: ' Escribe tu apellido'},],
+      birthday:[ {type: 'required', message: ' Ingresa tu fecha de nacimiento'},],
+      code:[ {type: 'required', message: ' Requiere un código'},],
     };
     this.signUpForm = this.formBuilder.group({
       email:[null, { validators: [Validators.required, Validators.email] }],
       name:[null, { validators: [Validators.required, Validators.minLength(2)] }],
       lastName:[null, { validators: [Validators.required, Validators.minLength(3)] }],
+      birthday:[null, { validators: [Validators.required] }],
       password1: [null, { validators: [
         Validators.required,
         Validators.minLength(8),
@@ -65,16 +69,15 @@ export class SignUpComponent implements OnInit {
   signProcess(form) {
     this.messageError = '';
     this.loading = true;
-    this.auth.registerUser(form.email,form.password1).then((user: User) => {
+    this.auth.registerUser(form.email,form.password1,
+      form.name,form.lastName,form.birthday).then((user: User) => {
       this.auth.verifyEmail().then((verify: string) => {
+        this.loading = false;
         this.alert.showAlert('',verify,'OK').then(() => {
           this.router.navigateByUrl('general/verify-email/'+user.email);
         });
       })
-    }).catch(error => {
-      console.log(error)
-      this.messageError = error.split('/')[1].replaceAll("-", " ");
-    })
+    }).catch(error => { this.messageError = error; this.loading = false; })
   }
 
   cancel(){

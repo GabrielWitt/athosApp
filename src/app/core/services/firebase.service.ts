@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { User, userFormData } from '../models/user';
 import { Router } from '@angular/router';
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, updateProfile, onAuthStateChanged, User, signOut } from "firebase/auth";
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
+import { getFirestore } from 'firebase/firestore/lite';
 import { environment } from 'src/environments/environment';
+import { InitUser, login } from 'src/app/shared/session/main.actions';
+import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
+import { 
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, 
+  sendPasswordResetEmail, sendEmailVerification, updateProfile, 
+  onAuthStateChanged, signOut } from "firebase/auth";
+import { FirestoreActionsService } from './firestore-actions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,31 +24,42 @@ export class FirebaseAuthService {
 
   constructor(
     private error: ErrorHandlerService,
-    private router: Router
+    private store: Store,
+    private router: Router,
+    private FS: FirestoreActionsService
   ) { 
     this.auth.languageCode = 'es';
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       console.log(user)
-      if (user) { this.user = user; } 
+      if (user) { this.user = this.setUser(user); } 
       else { this.router.navigateByUrl('general'); }
     })
   }
 
-  currentUser() {
+  setUser(userFB) {
+    const user: User = {
+      accessToken: userFB.accessToken,
+      displayName: userFB.displayName,
+      email: userFB.email,
+      emailVerified: userFB.emailVerified,
+      isAnonymous: userFB.isAnonymous,
+      phoneNumber: userFB.phoneNumber,
+      photoURL: userFB.photoURL,
+      uid: userFB.uid,
+    } 
+    return user;
   }
 
-  registerUser(email: string, password: string){
+  registerUser(email: string, password: string, name: string, lastName: string, birthDate: Date){
     return new Promise((resolve,reject) => {
       const auth = getAuth();
-      console.log(email, password)
       createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(userCredential)
         // Signed in 
         const user = userCredential.user;
-        console.log(user)
-        resolve(user);
+        this.createUserForm(user.uid, name, lastName, birthDate).then(done => {resolve(user);})
+        .catch((error) => { reject(this.error.handle(error)); });
       })
       .catch((error) => { reject(this.error.handle(error)); });
     });
@@ -78,7 +96,7 @@ export class FirebaseAuthService {
       sendPasswordResetEmail(auth, email)
         .then(() => {
           // Password reset email sent!
-          resolve('Se ha enviado un email de reseteo');
+          resolve('Se ha enviado un email a su correo: ');
         })
         .catch((error) => { reject(this.error.handle(error)); });
     });
@@ -86,13 +104,12 @@ export class FirebaseAuthService {
 
   async getUser(){
     return new Promise((resolve, reject) => {
-      console.log('start')
       try {
         const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-          if (user) { 
-            this.user = user;
-            resolve(user);
+        onAuthStateChanged(auth, (userData) => {
+          if (userData) { 
+            this.user = this.setUser(userData);
+            resolve(this.user);
           } else { 
             this.router.navigateByUrl('general'); 
             resolve(null);
@@ -102,14 +119,6 @@ export class FirebaseAuthService {
         reject(error)
       }
     })
-    // The user object has basic properties such as display name, email, etc.
-    /*
-    const displayName = user.displayName;
-    const email = user.email;
-    const photoURL = user.photoURL;
-    const emailVerified = user.emailVerified;
-    const uid = user.uid; 
-    */
   }
 
   updateUser(displayName: string, photoURL: string){
@@ -135,6 +144,31 @@ export class FirebaseAuthService {
       })
       .catch((error) => { reject(this.error.handle(error)); });
     });
+  }
+
+  //DATA_ON_FIRESTORE
+
+  readUserForm(uid: string){
+    return new Promise((resolve,reject) => {
+      this.FS.readDocument('users',uid)
+      .then(doc => { resolve(doc) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
+  createUserForm(uid: string, name: string, lastName: string, birthDate: Date){
+    return new Promise((resolve,reject) => {
+      this.updateUser('employee', null).then(ok => {
+        const userForm: userFormData = { name, lastName, birthDate }
+        this.FS.setNamedDocument('users',uid, userForm)
+        .then(data => { resolve('done'); })
+        .catch((error) => { reject(this.error.handle(error)); });
+      }).catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
+  updateUserForm(uid: string){
+
   }
   
 }

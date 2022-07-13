@@ -34,7 +34,7 @@ export class VerifyEmailComponent implements OnInit {
     this.auth.verifyEmail().then((done: string) => {
       this.loading = false;
       this.alerts.showAlert('', done + ' a ' + this.email, 'OK')
-    });
+    }).catch(error => { this.errorMessage = error; })
   }
 
   checkUser() {

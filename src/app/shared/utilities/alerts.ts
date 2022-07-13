@@ -24,7 +24,7 @@ export class AlertsService {
     return ;
   }
 
-  async AlertConfirm( title: string, message: string) {
+  async AlertConfirm( title: string, message: string, yes?:'', no?: string) {
     let answer = false;
     const alertConfirm = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -33,14 +33,14 @@ export class AlertsService {
       mode: 'ios',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             answer = false;
           }
         }, {
-          text: 'Confirm',
+          text: 'Confirmar',
           handler: () => {
             answer = true;
           }
