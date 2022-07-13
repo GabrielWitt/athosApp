@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { User, userFormData } from '../models/user';
 import { Router } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore/lite';
 import { environment } from 'src/environments/environment';
-import { InitUser, login } from 'src/app/shared/session/main.actions';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { 
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, 
@@ -24,7 +22,6 @@ export class FirebaseAuthService {
 
   constructor(
     private error: ErrorHandlerService,
-    private store: Store,
     private router: Router,
     private FS: FirestoreActionsService
   ) { 
