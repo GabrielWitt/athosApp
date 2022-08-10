@@ -1,0 +1,52 @@
+<ion-card>
+  <ion-row>
+    <ion-col size="3">
+      <ion-thumbnail class="spaceView">
+        <ion-img [src]="request.reservation.photo ? request.reservation.photo : defaultSpace"></ion-img>
+      </ion-thumbnail>
+    </ion-col>
+    <ion-col size="9">
+      <ion-item>
+        <ion-label>
+          <ion-text class="ion-text-capitalize">
+            <h2>{{request.reservation.unitNumber}} </h2>
+            <app-status-request [status]="request.status"></app-status-request>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-card>
+
+
+<ion-list>
+  <ion-list-header>
+    <ion-label>Información:</ion-label>
+  </ion-list-header>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-icon size="large" name="calendar-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label class="ion-text-capitalize">
+          Fecha: {{request.startDate | timeFormat: 'displayDateUTC'}}
+        </ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-icon size="large" name="time-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>
+          Tiempo reservado: {{request.startDate | timeFormat: 'TimeUTC'}} - {{request.endDate | timeFormat: 'TimeUTC'}}
+        </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-item>
+    <ion-label>Solicitado por:</ion-label>
+    <app-user-profile [shortUser]="request.requestBy"></app-user-profile>
+  </ion-item>
+</ion-list>

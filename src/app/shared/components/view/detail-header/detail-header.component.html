@@ -1,0 +1,17 @@
+<ion-toolbar mode="ios">
+  <ion-buttons slot="start" (click)="goBack()" *ngIf="!backButton.modal">
+    <ion-icon *ngIf="backButton.icon" style="font-size: 16pt;" name="{{backButton.icon?backButton.icon:'chevron-back-outline'}}"></ion-icon> {{endButton.text}}
+    <ion-text class="ion-text-capitalize">{{backButton.text ? backButton.text : 'Regresar'}}</ion-text>
+  </ion-buttons>
+  <ion-buttons slot="start" *ngIf="backButton.modal" (click)="modal.dismiss()">
+    <ion-button>
+      <ion-text class="ion-text-capitalize">{{backButton.text ? backButton.text : 'Atrás'}}</ion-text>
+    </ion-button>
+  </ion-buttons>
+  <ion-title class="ion-text-uppercase">{{title}}</ion-title>
+  <ion-buttons slot="end" *ngIf="endButton.show">
+    <ion-button>
+      <ion-icon *ngIf="endButton.icon" style="font-size: 16pt;" name="{{endButton.icon}}"></ion-icon> {{endButton.text}}
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>

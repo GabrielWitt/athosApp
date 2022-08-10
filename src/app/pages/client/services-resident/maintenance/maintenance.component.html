@@ -1,0 +1,17 @@
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
+    <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
+  </ion-refresher>
+  
+  <ion-list *ngIf="loading">
+    <app-loading-view></app-loading-view>
+  </ion-list>
+  
+  <app-not-data-yet-message 
+    *ngIf="itemList.length == 0 && !loading"
+    text="No tiene mantenimientos aún" icon="alert-circle-outline"
+  ></app-not-data-yet-message>
+
+  <ion-list *ngIf="itemList.length > 0 && !loading">
+    
+  </ion-list>

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button color="danger" [disabled]="loading" (click)="modal.dismiss(false)">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">Areas para Renta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="loading">
+  <app-loading-view></app-loading-view>
+</ion-content>
+
+<app-not-data-yet-message 
+  *ngIf="rentSpacesList.length == 0 && !loading"
+  text="No tiene espacios aún" icon="alert-circle-outline"
+></app-not-data-yet-message>
+
+
+<ion-content class="ion-padding"  *ngIf="rentSpacesList.length > 0 && !loading">
+  <ion-list>
+    <app-item-space *ngFor="let space of rentSpacesList" [space]="space" (click)="pickSpace(space)"></app-item-space>
+  </ion-list>
+</ion-content>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { HapticsService } from './haptics.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,8 @@ import { AlertController } from '@ionic/angular';
 export class AlertsService {
 
   constructor(
-    private alertController: AlertController
+    private alertController: AlertController,
+    private vibe: HapticsService
   ) { }
 
   async showAlert( title: string, message: string, buttonOk?): Promise<any> {
@@ -19,6 +21,7 @@ export class AlertsService {
       buttons: button,
       mode: 'ios'
     });
+    this.vibe.vibrate();
     await alert.present();
     await alert.onDidDismiss();
     return ;
@@ -49,6 +52,7 @@ export class AlertsService {
     });
     await alertConfirm.present();
     await alertConfirm.onDidDismiss();
+    this.vibe.mediumVibe();
     return answer;
   }
   

@@ -1,0 +1,238 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="!space" color="danger" [disabled]="loading" (click)="modal.dismiss(false)">
+        Cancelar
+      </ion-button>
+      <ion-button *ngIf="editSpaceForm" color="danger" [disabled]="loading" (click)="editspace()">
+        Cancelar
+      </ion-button>
+      <ion-button *ngIf="space && !editSpaceForm" color="primary" [disabled]="loading" (click)="modal.dismiss(false)">
+        Atrás
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">{{space ? space.type+' '+space.unitNumber: 'Nuevo Espacio'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!space || editSpaceForm" color="success" (click)="createSpace()" 
+        [disabled]="loading && !mySpace?.unitNumber && !mySpace?.spaceType && !mySpace?.type">
+          Enviar
+      </ion-button>
+      <ion-button *ngIf="this.space && this.user.type === 'administrador' && !editSpaceForm" color="dark" (click)="editspace()">
+          Editar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="loading">
+  <app-loading-view></app-loading-view>
+</ion-content>
+
+<ion-content *ngIf="!loading && space && !editSpaceForm">
+  <app-detail-space style="height: 100%;" [user]="user" [space]="space" [reserve]="false"></app-detail-space>
+</ion-content>
+
+<ion-content class="ion-padding" *ngIf="!loading && (!space || editSpaceForm)">
+  <ion-list>
+    <ion-item *ngIf="communitiesList.length > 0">
+      <ion-thumbnail slot="start">
+        <img [src]="communitiesList[0].photo">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>{{communitiesList[0].propertyType}} {{communitiesList[0].name}}</h3>
+        <p>{{communitiesList[0].address}}</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item>
+      <ion-thumbnail slot="start" *ngIf="space" (click)="addPhoto()">
+        <img src="{{space.photo?space.photo :defaultSpace}}">
+      </ion-thumbnail>
+      <ion-thumbnail slot="start" *ngIf="newImage" (click)="addPhoto()">
+        <img src="{{newImage.webPath}}">
+      </ion-thumbnail>
+      <ion-label position="stacked">Unidad:</ion-label>
+      <ion-input type="text" placeholder="(ejem. 0102 o salón)" [value]="mySpace.unitNumber" (ionChange)="unitListener($event)"></ion-input>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!mySpace?.unitNumber"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
+      Ingresa el número del espacio o el título del area
+    </ion-text>
+  
+    <ion-item *ngIf="!newImage && !space.photo" (click)="addPhoto()">
+      <ion-label>Agregue una imagen:</ion-label>
+      <ion-button color="secondary"><ion-icon name="camera-outline" color="light"></ion-icon></ion-button>
+    </ion-item>
+    <ion-row *ngIf="progress > 0">
+      <ion-progress-bar color="secondary" [value]="progress"></ion-progress-bar>
+    </ion-row>
+  
+    <ion-item>
+      <ion-label position="stacked">Tipo de Espacio:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="mySpace.spaceType" (ionChange)="spaceType($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let type of spaceTypeList" [value]="type"> {{type}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!mySpace.spaceType"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Seleccione una  tipo de Espacio
+    </ion-text>
+  
+    <ion-item>
+      <ion-label position="stacked">Asignación de espacio:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="mySpace.type" (ionChange)="handleType($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let type of typeList" [value]="type"> {{type}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!mySpace.type"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Seleccione una asignación
+    </ion-text>
+  
+    <ion-item *ngIf="communitiesList.length>0">
+      <ion-label position="stacked">Ubicación:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="mySpace.floor" (ionChange)="handleArea($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let area of communitiesList[0].areas" [value]="area.name"> {{area.name}} ({{area.description}})</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!mySpace.floor"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Seleccione una ubicación
+    </ion-text>
+  
+    <ion-item>
+      <ion-label position="stacked">Descripción del area:</ion-label>
+      <ion-textarea rows="3" placeholder="(opcional) Ingrese los usos o resumen del inmueble..." [value]="mySpace.description" (ionChange)="descriptionListener($event)"></ion-textarea>
+    </ion-item>
+  
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Metros2:</ion-label>
+          <ion-input class="ion-text-center" type="number" placeholder="(opcional)" [value]="mySpace.squareMeters" (ionChange)="metersListener($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Baños:</ion-label>
+          <ion-input class="ion-text-center" type="number" placeholder="(opcional)" [value]="mySpace.bathrooms" (ionChange)="bathroomsListener($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Ambientes:</ion-label>
+          <ion-input class="ion-text-center" type="number" placeholder="(opcional)" [value]="mySpace.rooms" (ionChange)="roomsListener($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-item *ngIf="this.mySpace.spaceType === 'comunal'">
+      <ion-label>Se puede reservar?</ion-label>
+      <ion-checkbox slot="end" mode='md' (ionChange)="checkBoxListener($event)" [checked]="mySpace.rent" color="primary"></ion-checkbox>
+    </ion-item>
+    <ion-row *ngIf="mySpace.rent">
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Tiempo Mínimo:</ion-label>
+          <ion-select class="ion-text-capitalize" mode='ios' [value]="mySpace.rentData.minTime" (ionChange)="handleMinTime($event)">
+            <ion-select-option class="ion-text-capitalize" *ngFor="let time of minTimeList" [value]="time.unit"> {{time.text}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Tiempo Máximo:</ion-label>
+          <ion-select class="ion-text-capitalize" mode='ios' [value]="mySpace.rentData.maxTime" (ionChange)="handleMaxTime($event)" [disabled]="!mySpace.rentData.minTime">
+            <ion-select-option class="ion-text-capitalize" *ngFor="let time of maxTimeList" [value]="time.unit"> {{time.text}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="mySpace.rent">
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Costo de Reservación:</ion-label>
+          <ion-input class="ion-text-center" type="number" [value]="this.mySpace.rentData.cost" (ionChange)="rentListener($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Aforo Máximo</ion-label>
+          <ion-input class="ion-text-center" type="number" [value]="this.mySpace.rentData.capacity" (ionChange)="capacityListener($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="mySpace.rent">
+      <ion-col class="ion-text-center">
+        <p> Dom </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener0($event)" [checked]="dom" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Lun </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener1($event)" [checked]="lun" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Mar </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener2($event)" [checked]="mar" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Mie </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener3($event)" [checked]="mie" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Jue </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener4($event)" [checked]="jue" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Vie </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener5($event)" [checked]="vie" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Sab </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener6($event)" [checked]="sab" color="primary"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row *ngIf="mySpace.rent">
+      <ion-col>
+        <ion-item (click)="selectTime1()" *ngIf="!startTimeSelector1">
+          <ion-label>Hora Inicio: </ion-label>
+          <ion-label> 
+            <ion-text *ngIf="mySpace.rentData.starTime" style="font-size: inherit; float: right;">{{mySpace.rentData.starTime | timeFormat: 'h:mm A'}}</ion-text>
+            <ion-text *ngIf="!mySpace.rentData.starTime" style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;">(Hora Apertura)</ion-text>
+          </ion-label>
+          <ion-button class="downArrow" slot="end" size="small"><ion-icon style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit;" name="caret-down-outline"></ion-icon></ion-button>
+        </ion-item>
+        <ion-row *ngIf="startTimeSelector1">
+          <ion-col>
+            <ion-label slot="start">Hora Inicio: </ion-label>
+            <ion-datetime #datetime1 style="margin: 0 auto;" presentation="time" [(ngModel)]="mySpace.rentData.starTime" (ionChange)="changeStartTime(datetime1.value)">
+              <ion-buttons slot="buttons">
+                <ion-button color="danger" (click)="selectTime1()">Cancel</ion-button>
+                <ion-button color="success" (click)="datetime1.confirm()">OK</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-item (click)="selectTime2()" *ngIf="!startTimeSelector2">
+          <ion-label>Hora Cierre: </ion-label>
+          <ion-label> 
+            <ion-text *ngIf="mySpace.rentData.endTime" style="font-size: inherit; float: right;">{{mySpace.rentData.endTime | timeFormat: 'h:mm A'}}</ion-text>
+            <ion-text *ngIf="!mySpace.rentData.endTime" style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;">(Hora Cierre)</ion-text>
+          </ion-label>
+          <ion-button class="downArrow" slot="end" size="small"><ion-icon style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit;" name="caret-down-outline"></ion-icon></ion-button>
+        </ion-item>
+        <ion-row *ngIf="startTimeSelector2">
+          <ion-col>
+            <ion-label slot="start">Hora Cierre: </ion-label>
+            <ion-datetime #datetime2 style="margin: 0 auto;" presentation="time" [(ngModel)]="mySpace.rentData.endTime" (ionChange)="changeEndTime(datetime2.value)">
+              <ion-buttons slot="buttons">
+                <ion-button color="danger" (click)="selectTime2()">Cancel</ion-button>
+                <ion-button color="success" (click)="datetime2.confirm()">OK</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+</ion-content>

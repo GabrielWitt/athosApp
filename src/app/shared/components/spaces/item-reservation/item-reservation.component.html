@@ -1,0 +1,16 @@
+<ion-item detail>
+  <ion-thumbnail slot="start">
+    <img [src]="request.reservation.photo ? request.reservation.photo : defaultSpace">
+  </ion-thumbnail>
+  <ion-label class="ion-text-wrap">
+    <ion-text color="dark">
+      <h2 class="ion-text-capitalize"> {{request.reservation.unitNumber}} </h2>
+    </ion-text>
+    <app-status-request [status]="request.status"></app-status-request>
+  </ion-label>
+  <ion-note slot="end">
+    <ion-text color="medium" class="ion-text-capitalize">
+      <p>{{request.startDate | timeFormat: 'shortDateUTC'}}</p>
+    </ion-text>
+  </ion-note>
+</ion-item>

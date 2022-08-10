@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title class="ion-text-uppercase">Espacios</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment mode="ios" (ionChange)="segmentChanged($event)" value="reservations">
+      <ion-segment-button value="reservations">
+        <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="calendar-outline"></ion-icon> Reservaciones </h2> </ion-label> 
+      </ion-segment-button>
+      <ion-segment-button value="spaces">
+        <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="business-outline"></ion-icon> Espacios </h2> </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<app-spaces-admin *ngIf="selectedTab === 'spaces'" style="height: 100%"></app-spaces-admin>
+<app-reservation-admin *ngIf="selectedTab === 'reservations'" style="height: 100%"></app-reservation-admin>

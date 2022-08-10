@@ -1,0 +1,32 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
+    <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
+  </ion-refresher>
+  
+  <ion-list *ngIf="loading">
+    <app-loading-view></app-loading-view>
+  </ion-list>
+  
+  <app-not-data-yet-message 
+    *ngIf="itemList.length == 0 && !loading"
+    text="No tiene reservaciones aún" icon="alert-circle-outline"
+  ></app-not-data-yet-message>
+  
+  <ion-list *ngIf="itemList.length > 0 && !loading">
+    <app-item-reservation *ngFor="let request of itemList" [request]="request" (click)="openReservation(request,null)"></app-item-reservation>
+  </ion-list>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary">
+      <ion-icon name="chevron-up-circle-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="light">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="createReservation()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,157 @@
+
+<ion-card>
+  <ion-row>
+    <ion-col size="3">
+      <ion-thumbnail class="spaceView" (click)="openPreview(space.photo ? space.photo : defaultSpace)">
+        <ion-img [src]="space.photo ? space.photo : defaultSpace"></ion-img>
+      </ion-thumbnail>
+    </ion-col>
+    <ion-col size="9">
+      <ion-item>
+        <ion-label>
+          <ion-text class="ion-text-capitalize">
+            <h2>{{space.type}} {{space.unitNumber}} </h2>
+            <h3>Tipo: {{space.spaceType}}</h3>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-card>
+
+<ion-list>
+  <ion-list-header>
+    <ion-label>Información:</ion-label>
+  </ion-list-header>
+  <ion-row>
+    <p class="ion-padding">{{space.description}}</p>
+  </ion-row>
+  <ion-row *ngIf="!reserve">
+    <ion-col>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-icon size="large" name="map-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>
+          Ubicación: {{space.floor}}
+        </ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-icon size="large" name="crop-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>
+          Metros2: {{space.squareMeters}}
+        </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-icon size="large" name="grid-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>
+          Ambientes: {{space.rooms}}
+        </ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-icon size="large" name="download-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>
+          Baños: {{space.bathrooms}}
+        </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <div *ngIf="space.rent">
+    <ion-list-header>
+      <ion-label>Información de Renta:</ion-label>
+    </ion-list-header>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-icon size="large" name="cash-outline"></ion-icon>
+          </ion-thumbnail>
+          <ion-label>
+            Precio de Renta: {{space.rentData.cost}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-icon size="large" name="calendar-outline"></ion-icon>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>Días Abierto: </h2>
+            <h2>
+              {{space.rentData.weekdays[0]?'Dom. ':''}}
+              {{space.rentData.weekdays[1]?'Lun. ':''}}
+              {{space.rentData.weekdays[2]?'Mar. ':''}}
+              {{space.rentData.weekdays[3]?'Mie. ':''}}
+              {{space.rentData.weekdays[4]?'Jue. ':''}}
+              {{space.rentData.weekdays[5]?'Vie. ':''}}
+              {{space.rentData.weekdays[6]?'Sab. ':''}}
+            </h2>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-icon size="large" name="sunny-outline"></ion-icon>
+          </ion-thumbnail>
+          <ion-label>
+            Hora de Inicio: {{space.rentData.starTime | timeFormat: 'h:mm A'}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-icon size="large" name="moon"></ion-icon>
+          </ion-thumbnail>
+          <ion-label>
+            Hora de Cierre: {{space.rentData.endTime | timeFormat: 'h:mm A'}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!reserve">
+      <ion-col>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-icon size="large" name="time-outline"></ion-icon>
+          </ion-thumbnail>
+          <ion-label>
+            Tiempo Míximo: {{(space.rentData.minTime < 60)? '30 minutos' :space.rentData.minTime === 120?'2 horas':'1 hora'}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-icon size="large" name="time"></ion-icon>
+          </ion-thumbnail>
+          <ion-label>
+            Tiempo Máximo: {{(space.rentData.minTime < 60)? '30 minutos' : (space.rentData.maxTime/60)+' horas'}} 
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-list>

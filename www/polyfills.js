@@ -8,9 +8,9 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _zone_flags__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./zone-flags */ 8270);
+/* harmony import */ var _zone_flags__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./zone-flags */ 28270);
 /* harmony import */ var _zone_flags__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_zone_flags__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var zone_js_dist_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! zone.js/dist/zone */ 3484);
+/* harmony import */ var zone_js_dist_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! zone.js/dist/zone */ 23484);
 /* harmony import */ var zone_js_dist_zone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(zone_js_dist_zone__WEBPACK_IMPORTED_MODULE_1__);
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
@@ -73,7 +73,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 8270:
+/***/ 28270:
 /*!***************************!*\
   !*** ./src/zone-flags.ts ***!
   \***************************/
@@ -89,7 +89,7 @@ window.__Zone_disable_customElements = true;
 
 /***/ }),
 
-/***/ 3484:
+/***/ 23484:
 /*!*******************************************!*\
   !*** ./node_modules/zone.js/dist/zone.js ***!
   \*******************************************/
@@ -108,7 +108,7 @@ var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
   return to.concat(ar || Array.prototype.slice.call(from));
 };
 /**
- * @license Angular v14.1.0-next.0
+ * @license Angular v14.2.0-next.0
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1086,7 +1086,7 @@ var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
     var result;
 
     if (isBrowser && target === internalWindow && event.type === 'error') {
-      // window.onerror have different signiture
+      // window.onerror have different signature
       // https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror#window.onerror
       // and onerror callback will prevent default when callback return true
       var errorEvent = event;
@@ -2523,7 +2523,7 @@ var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
           var options = buildEventListenerOptions(arguments[2], passive);
 
           if (unpatchedEvents) {
-            // check upatched list
+            // check unpatched list
             for (var i = 0; i < unpatchedEvents.length; i++) {
               if (eventName === unpatchedEvents[i]) {
                 if (passive) {
@@ -3135,9 +3135,9 @@ var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
       for (var _i = 0, _b = Object.getOwnPropertySymbols(props); _i < _b.length; _i++) {
         var sym = _b[_i];
         var desc = Object.getOwnPropertyDescriptor(props, sym); // Since `Object.getOwnPropertySymbols` returns *all* symbols,
-        // including non-enumberable ones, retrieve property descriptor and check
+        // including non-enumerable ones, retrieve property descriptor and check
         // enumerability there. Proceed with the rewrite only when a property is
-        // enumberable to make the logic consistent with the way regular
+        // enumerable to make the logic consistent with the way regular
         // properties are retrieved (via `Object.keys`, which respects
         // `enumerable: false` flag). More information:
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties#retrieval

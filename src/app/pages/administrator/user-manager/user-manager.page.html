@@ -1,0 +1,10 @@
+<app-main-header title="Usuarios"></app-main-header>
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
+      <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
+    </ion-refresher>
+ <ion-list>
+    <app-user-profile *ngFor="let user of userList" [user]="user" (click)="userDetail(user)"></app-user-profile>
+ </ion-list>
+</ion-content>

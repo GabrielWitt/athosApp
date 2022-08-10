@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title class="ion-text-uppercase">{{title}}</ion-title>
+    <ion-buttons [ngSwitch]="title" slot="end">
+      <ion-button *ngSwitchCase="'Mi Perfil'" color="danger" (click)="cerrarSesion()">
+        Cerrar Sesión
+      </ion-button>
+      <ion-button *ngSwitchCase="'Usuarios'" (click)="goProfile()">
+        Mi Perfil
+      </ion-button>
+      <ion-button *ngSwitchCase="'Anuncios'" (click)="createNotice()">
+        Nuevo Anuncio
+      </ion-button>
+      <ion-button *ngSwitchCase="'Servicios'" (click)="goProfile()">
+        Agenda
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

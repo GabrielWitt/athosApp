@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Storage } from '@capacitor/storage';
 import { UserPhoto } from '../models/images';
 import { Filesystem } from '@capacitor/filesystem';
 import { DOC_ORIENTATION, NgxImageCompressService} from 'ngx-image-compress';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable, uploadString } from "firebase/storage";
+import { MyStoreService } from './my-store.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,7 @@ export class ImageUploaderService {
 
   constructor(
     private router: Router,
+    private store: MyStoreService,
     private error: ErrorHandlerService,
     private imageCompress: NgxImageCompressService,
   ) { }
@@ -102,28 +103,23 @@ export class ImageUploaderService {
     photos[0].type = type;
     photos[0].data = data;
     if(pdfName)(photos[0].pdf);
-    // Cache all photo data for future retrieval
-    Storage.set({ key: this.PHOTO_STORAGE,
-      value: JSON.stringify(photos)})
-    // .then(done => console.log('saved'));
+    this.store.setData(this.PHOTO_STORAGE,photos);
   }
 
   // Delete picture by removing it from reference data and the filesystem
   public async deletePicture() {
     this.photo = [];
     this.data = undefined;
-    Storage.set({ key: this.PHOTO_STORAGE,
-      value: JSON.stringify(this.photo)})
-    .then(done => console.log('clean photos'));
+    this.store.removeFile(this.PHOTO_STORAGE);
   }
 
   public loadSaved() {
     return new Promise(async resolve => {
       try {
         // Retrieve cached photo array data
-        const photoList = await Storage.get({ key: this.PHOTO_STORAGE });
-        this.photo = photoList ? JSON.parse(photoList.value) : [];
-        if(this.photo?.length){
+        const photoList = await this.store.readFile(this.PHOTO_STORAGE);
+        this.photo = photoList ? photoList : [];
+        if(this.photo.length > 0){
           if(this.photo[0].route !== this.router.url){
             if(this.photo[0].route  === ''){  this.deletePicture(); resolve([]); 
             } else { this.photo[0].deploy = false; resolve(this.photo); }
@@ -215,6 +211,4 @@ export class ImageUploaderService {
       }).catch(e => {console.log(e); error(e)});
     })
   }
-
-
 }

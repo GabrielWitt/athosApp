@@ -1,16 +1,26 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
 import { RouteReuseStrategy } from '@angular/router';
-
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Plugins
+import { Capacitor } from '@capacitor/core';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { NgxImageCompressService } from 'ngx-image-compress';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// @angular/fire
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { PERSISTENCE } from '@angular/fire/compat/auth';
+
+import { getApp } from 'firebase/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,9 +30,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    provideAuth(() => {
+      if (Capacitor.isNativePlatform()) {
+        return initializeAuth(getApp(), { persistence: indexedDBLocalPersistence,});
+      } else { return getAuth(); }
+    }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: PERSISTENCE, useValue: 'session' },
     Chooser,
     NgxImageCompressService
   ],

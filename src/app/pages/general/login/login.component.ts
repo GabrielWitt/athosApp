@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'firebase/auth';
-import { FirebaseAuthService } from 'src/app/core/services/firebase.service';
+import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 import { RouteHistoryService } from 'src/app/shared/utilities/route-history';
 import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
 
@@ -13,7 +12,7 @@ import { VerificationFuncService } from 'src/app/shared/utilities/verificationFu
 })
 export class LoginComponent implements OnInit {
   block = false;
-  loading = false;
+  loading = true;
   validateCode = false;
   messageError: string;
 
@@ -23,7 +22,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private auth: FirebaseAuthService,
+    private auth: FireAuthService,
     private verification: VerificationFuncService,
     public history: RouteHistoryService
     ) { }
@@ -46,20 +45,9 @@ export class LoginComponent implements OnInit {
         Validators.required
       ]))
     });
-    this.checkUser();
-  }
-
-  checkUser() {
     this.loading = true;
-    this.auth.getUser().then((user: User) =>{
-      if(user){
-        if(user.emailVerified){ this.router.navigateByUrl('manager'); }
-        else{ this.router.navigateByUrl('general/verify-email/'+user.email); }
-        this.loading = false;
-      }else{
-        this.loading = false;
-      }
-    });
+    this.auth.refreshUser()
+    .then((login: boolean) => {this.loading = login;});
   }
 
   EnterSubmit(evt, form){
@@ -69,10 +57,10 @@ export class LoginComponent implements OnInit {
   }
 
   loginProcess(form) {
+    this.messageError = '';
     this.loading = true;
-    console.log(this.loginForm.value);
     this.auth.login(this.loginForm.value.email,this.loginForm.value.password)
-    .then((user:User) => { console.log(user); this.checkUser();  })
+    .then(() => { setTimeout(() => { this.loading = false; }, 3000); })
     .catch(error => {
       this.messageError = error;
       this.loading = false;

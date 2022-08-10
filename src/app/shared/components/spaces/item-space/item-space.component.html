@@ -1,0 +1,13 @@
+<ion-item detail>
+  <ion-thumbnail slot="start">
+    <img [src]="space.photo ? space.photo : defaultSpace">
+  </ion-thumbnail>
+  <ion-label class="ion-text-wrap">
+    <ion-text color="dark">
+      <h2 class="ion-text-capitalize"> {{space.type}} {{space.unitNumber}} </h2>
+    </ion-text>
+    <ion-text color="medium">
+      <p>{{fixTitle(space.description)}}</p>
+    </ion-text>
+  </ion-label>
+</ion-item>

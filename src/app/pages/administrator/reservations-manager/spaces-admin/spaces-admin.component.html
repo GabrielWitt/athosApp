@@ -1,0 +1,40 @@
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
+    <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
+  </ion-refresher>
+  
+  <ion-list *ngIf="loading">
+    <app-loading-view></app-loading-view>
+  </ion-list>
+  
+  <ion-item *ngIf="!loading">
+    <ion-label>Tipo de Espacio:</ion-label>
+    <ion-select placeholder="Todos los espacios" class="ion-text-capitalize" mode='ios' [value]="filterSelected" (ionChange)="filterChange($event)">
+      <ion-select-option class="ion-text-capitalize" *ngFor="let item of filterItems" [value]="item.name"> {{item.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <app-not-data-yet-message 
+    *ngIf="itemList.length == 0 && !loading"
+    text="No tiene espacios aún" icon="alert-circle-outline"
+  ></app-not-data-yet-message>
+  
+  
+  <ion-list *ngIf="itemList.length > 0 && !loading">
+    <app-item-space *ngFor="let space of itemList" [space]="space" (click)="detailSpace(space)"></app-item-space>
+  </ion-list>
+    
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary">
+      <ion-icon name="chevron-up-circle-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="light">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="add-outline" (click)="createSpace()"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

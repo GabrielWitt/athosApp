@@ -12,17 +12,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/general/general.module').then( m => m.GeneralPageModule)
   },
   {
-    path: 'manager',
-    loadChildren: () => import('./pages/manager/manager.module').then( m => m.ManagerPageModule)
+    path: 'administrator',
+    loadChildren: () => import('./pages/administrator/administrator.module').then( m => m.AdministratorPageModule)
   },
   {
-    path: 'employee',
-    loadChildren: () => import('./pages/employee/employee.module').then( m => m.EmployeePageModule)
-  },
-  {
-    path: 'resident',
-    loadChildren: () => import('./pages/resident/resident.module').then( m => m.ResidentPageModule)
-  },
+    path: 'client',
+    loadChildren: () => import('./pages/client/client.module').then( m => m.ClientPageModule)
+  }
 ];
 
 @NgModule({

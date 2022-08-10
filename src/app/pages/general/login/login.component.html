@@ -1,5 +1,7 @@
 <ion-content class="ion-padding">
-  <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> INICIO DE SESIÓN </p>
+  <ion-toolbar>
+    <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> INICIO DE SESIÓN </p>
+  </ion-toolbar>
 
   
   <form #login="ngForm" [formGroup]=loginForm (ngSubmit)=loginProcess(loginForm.value) (keydown)="EnterSubmit($event, loginForm)" novalidate>
@@ -32,14 +34,14 @@
     </ion-text>
 
 
-    <div class='ion-padding-start' *ngIf="!this.block"> 
+    <div class='ion-padding-start' *ngIf="!this.block && !loading"> 
       <ion-text color='dark'> <p class="forgot_text" (click)='forgotPassword()'><span>¿Olvidó su contraseña?</span></p>    </ion-text> 
     </div>
     <ion-row class="ion-margin-top">
       <app-big-button type="submit" class="ion-padding-top" LABEL="INICIAR SESIÓN" buttonType="PRIMARY" [loading]="loading" [disabled]="!loginForm.valid || loading" (click)="loginProcess(loginForm.value)"></app-big-button>
     </ion-row>
     <ion-row class="ion-margin-top">
-      <app-big-button class="ion-padding-top" LABEL="REGISTRARSE" buttonType="SECONDARY" [loading]="loading" [disabled]="false" (click)="registrase()"></app-big-button>
+      <app-big-button class="ion-padding-top" LABEL="REGISTRARSE" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="registrase()"></app-big-button>
     </ion-row>
   </form> 
 

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "822120518264",
+    "project_id": "homeservices-63df6",
+    "storage_bucket": "homeservices-63df6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822120518264:android:2d661d88c9a34372c0138d",
+        "android_client_info": {
+          "package_name": "app.domesticServices.gabrodev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822120518264-m2o269nga4idtfecrgl22l39bgbojon6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjB8S3nRQP0OHJeqP7Owd6Z_3zVB1NrDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822120518264-m2o269nga4idtfecrgl22l39bgbojon6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "822120518264-f6muu4eh0mh8m2hrk3k87f70hqqb009r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.domesticServices.gabrodev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

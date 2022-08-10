@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="!notice" color="danger" [disabled]="loading" (click)="modal.dismiss(false)">
+        Cancelar
+      </ion-button>
+      <ion-button *ngIf="editNoticeForm" color="danger" [disabled]="loading" (click)="editNotice()">
+        Cancelar
+      </ion-button>
+      <ion-button *ngIf="notice && !editNoticeForm" color="primary" [disabled]="loading" (click)="modal.dismiss(false)">
+        Atrás
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">{{notice ? notice.type.name: 'Nuevo Anuncio'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!notice || editNoticeForm" color="success" (click)="createNotice()" 
+        [disabled]="loading && (!newImage && myNotice.photo)">
+          Enviar
+      </ion-button>
+      <ion-button *ngIf="notice && !editNoticeForm && (user.uid === notice.writer?.uid)" color="dark" (click)="editNotice()">
+          Editar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding"  *ngIf="loading">
+  <app-loading-view></app-loading-view>
+</ion-content>
+
+<ion-content *ngIf="!loading && notice && !editNoticeForm" fullscreen  #ionScroll [scrollEvents]="true" (ionScroll)="checkScroll($event, ionScroll)">
+  <ion-card>
+    <img *ngIf="notice.photo" [src]="notice.photo" />
+    <ion-card-header>
+      <ion-card-subtitle>
+        Por: {{notice.writer.name}}
+      </ion-card-subtitle>
+      <ion-card-title>Título: {{notice.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{notice.description}}
+    </ion-card-content>
+    <ion-footer>
+      <app-notice-bottom-bar [likes]="notice.likes.length" [comments]="notice.comments.length" [notice]="notice" [userUID]="user.uid"></app-notice-bottom-bar>
+    </ion-footer>
+  </ion-card>
+  <ion-list *ngIf="this.notice.comments.length > 0">
+    <div *ngFor="let comment of this.notice.comments">
+      <ion-item>
+        <ion-avatar slot="start"><img src="{{comment.user.photo ? comment.user.photo : defaultUser}}"></ion-avatar>
+        <ion-labe>
+          <h4>{{comment.user.name}}</h4>
+          <p>{{comment.text}}</p>
+        </ion-labe>
+      </ion-item>
+      <ion-row *ngIf="comment.photo">
+        <img [src]="comment.photo">
+      </ion-row>
+    </div>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" style="bottom: 50px; right: 20px;" *ngIf="showScroll > 400">
+    <ion-fab-button color="light" size="small" (click)="scrollDown()" close-icon="close-outline">
+      <ion-icon name="chevron-down-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+<ion-footer *ngIf="!loading && notice && !editNoticeForm">
+  <ion-toolbar>
+    <ion-row class="inputMargin" *ngIf="!loading">
+      <ion-col size="11">
+        <ion-textarea style="background-color: white; color:black; border-radius: 7pt;" rows="1" [disabled]="sending" [value]="newComment.text" (ionChange)="commentListener($event)"></ion-textarea>
+      </ion-col>
+      <ion-col size="1" class="rightButtonContainer"> 
+        <ion-icon *ngIf="!sending" color="dark" name="arrow-up-circle" class="rightButton" (click)="pressSend()"></ion-icon>
+        <ion-icon *ngIf="sending" color="tertiary" name="arrow-up-circle" class="rightButton"></ion-icon>
+      </ion-col>
+      <div>
+      </div>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-content class="ion-padding" *ngIf="!loading && (!notice || editNoticeForm)">
+  <ion-card>
+    <img *ngIf="!newImage && notice" src="{{myNotice.photo}}" (click)="addPhoto()">
+    <img *ngIf="newImage" src="{{newImage.webPath}}" (click)="addPhoto()">
+    <ion-list>
+      <ion-item *ngIf="!newImage && !notice" (click)="addPhoto()">
+        <ion-label>Agregue una imagen:</ion-label>
+        <ion-button color="secondary"><ion-icon name="camera-outline" color="light"></ion-icon></ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon slot="start" *ngIf="myNotice.type" color="tertiary" size="large" [name]="myNotice.type.icon"></ion-icon>
+        <ion-label position="stacked">Tipo:</ion-label>
+        <ion-select mode='ios' [value]="noticeType" (ionChange)="handleType($event)">
+          <ion-select-option *ngFor="let type of typeList" [value]="type.name"> {{type.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text class="ion-padding-start" color="danger" *ngIf="!noticeType"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Seleccione un tipo de anuncio
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="stacked">Título:</ion-label>
+        <ion-input type="text" [value]="myNotice.title" (ionChange)="titleListener($event)"></ion-input>
+      </ion-item>
+      <ion-text class="ion-padding-start" color="danger" *ngIf="myNotice?.title.length === 0 || !myNotice?.title"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
+        Ingresa el título de este anuncio
+      </ion-text>
+      
+      <ion-item>
+        <ion-label position="stacked">Contenido:</ion-label>
+        <ion-textarea rows="10" placeholder="Ingrese el contenido de tu anuncio aquí..." [value]="myNotice.description" (ionChange)="descriptionListener($event)"></ion-textarea>
+      </ion-item>
+      <ion-text class="ion-padding-start" color="danger" *ngIf="myNotice?.description.length === 0 || !myNotice?.description"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
+        Ingresa el contenido de este anuncio
+      </ion-text>
+    </ion-list>
+  </ion-card>
+</ion-content>

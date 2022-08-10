@@ -1,5 +1,7 @@
 <ion-content class="ion-padding">
-  <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> SIGN UP </p>
+  <ion-toolbar>
+    <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> REGISTRO </p>
+  </ion-toolbar>
 
   <form #email="ngForm" [formGroup]="signUpForm" (ngSubmit)="signProcess(signUpForm.value)" (keydown)="EnterSubmit($event, signUpForm)" novalidate>
 
@@ -97,13 +99,13 @@
         <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password2').errors | first) === 'required'">
           <ion-text class="ion-padding-start" color="danger"> 
             <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
-            Required field
+            Repita la contraseña
           </ion-text>
         </div>
         <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.errors | first) === 'compareValidator'">
           <ion-text class="ion-padding-start" color="danger"> 
             <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
-            Passwords do not match
+            Las contraseñas no coinciden
           </ion-text>
         </div>
       </div>

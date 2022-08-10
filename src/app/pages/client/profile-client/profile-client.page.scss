@@ -1,0 +1,37 @@
+.ripple-parent {
+    position: relative;
+    overflow: hidden;
+}
+
+.profileCircle{
+    --border-radius: 50%;
+    --size: 40pt;
+    position: relative;
+}
+
+.cameraButton{
+    position: absolute;
+    background-color: var(--ion-color-medium);
+    top: 25pt;
+    left: 25pt;
+    width: 20pt;
+    height: 20pt;
+    font-size: 15pt;
+    border-radius: 50%;
+    padding: 2pt;
+}
+
+.uploadingImage{
+    position: absolute;
+    top: 10pt;
+    left: 10pt;
+}
+
+.imageProfile{
+    position: absolute;
+}
+
+.loadingImage{
+    position: absolute;
+    top: 41pt;
+}
