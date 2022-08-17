@@ -12,14 +12,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ReservationAdminComponent": () => (/* binding */ ReservationAdminComponent)
 /* harmony export */ });
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _reservation_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reservation-admin.component.html?ngResource */ 20294);
 /* harmony import */ var _reservation_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reservation-admin.component.scss?ngResource */ 83991);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
-/* harmony import */ var src_app_shared_components_spaces_new_reservation_new_reservation_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/components/spaces/new-reservation/new-reservation.component */ 21897);
-/* harmony import */ var src_app_shared_components_spaces_pick_rent_space_pick_rent_space_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/components/spaces/pick-rent-space/pick-rent-space.component */ 29204);
+/* harmony import */ var src_app_core_services_modules_reservations_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/reservations.service */ 53957);
+/* harmony import */ var src_app_shared_components_spaces_new_reservation_new_reservation_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/components/spaces/new-reservation/new-reservation.component */ 21897);
+/* harmony import */ var src_app_shared_components_spaces_pick_rent_space_pick_rent_space_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/spaces/pick-rent-space/pick-rent-space.component */ 29204);
+
 
 
 
@@ -30,34 +32,55 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ReservationAdminComponent = class ReservationAdminComponent {
-  constructor(modal, auth, routerOutlet) {
+  constructor(modal, auth, request, routerOutlet) {
     this.modal = modal;
     this.auth = auth;
+    this.request = request;
     this.routerOutlet = routerOutlet;
     this.loading = true;
     this.itemList = [];
     this.rentSpacesList = [];
+    this.filterSelected = '>';
+    this.filterItems = [{
+      name: 'Próximas',
+      filter: '>'
+    }, {
+      name: 'Pasadas',
+      filter: '<'
+    }];
   }
 
   ngOnInit() {
-    this.checkUser().then(user => {});
+    this.loading = true;
+    this.loadData().then(user => {
+      this.loading = false;
+    });
   }
 
-  checkUser() {
+  loadData() {
     var _this = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      _this.loading = true;
       const userData = yield _this.auth.getUser();
+      _this.itemList = yield _this.request.readReservationsListOrderRent("startDate", new Date().toISOString(), _this.filterSelected);
+      console.log(_this.itemList);
       _this.user = userData.data;
-      _this.loading = false;
       return _this.user;
     })();
   }
 
+  filterChange(e) {
+    this.filterSelected = e.detail.value;
+    this.loadData();
+  }
+
   doRefresh(refresh) {
+    var _this2 = this;
+
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       // load 
+      yield _this2.loadData();
+
       if (refresh) {
         refresh.target.complete();
       }
@@ -65,40 +88,47 @@ let ReservationAdminComponent = class ReservationAdminComponent {
   }
 
   createReservation() {
-    var _this2 = this;
+    var _this3 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      const modalPick = yield _this2.modal.create({
-        component: src_app_shared_components_spaces_pick_rent_space_pick_rent_space_component__WEBPACK_IMPORTED_MODULE_5__.PickRentSpaceComponent,
+      const modalPick = yield _this3.modal.create({
+        component: src_app_shared_components_spaces_pick_rent_space_pick_rent_space_component__WEBPACK_IMPORTED_MODULE_6__.PickRentSpaceComponent,
         componentProps: {
           reservation: null,
-          user: _this2.user
+          user: _this3.user
         },
         mode: 'ios',
-        presentingElement: _this2.routerOutlet.nativeEl
+        presentingElement: _this3.routerOutlet.nativeEl
       });
       modalPick.present();
       const modalResult1 = yield modalPick.onWillDismiss();
-      console.log(modalResult1);
 
       if (modalResult1.data) {
-        const modalCreate = yield _this2.modal.create({
-          component: src_app_shared_components_spaces_new_reservation_new_reservation_component__WEBPACK_IMPORTED_MODULE_4__.NewReservationComponent,
-          componentProps: {
-            reservation: null,
-            space: modalResult1.data,
-            user: _this2.user
-          },
-          mode: 'ios',
-          presentingElement: _this2.routerOutlet.nativeEl
-        });
-        modalCreate.present();
-        const modalResult2 = yield modalCreate.onWillDismiss();
-        console.log(modalResult2);
+        _this3.openReservation(null, modalResult1.data);
+      }
+    })();
+  }
 
-        if (modalResult2.data) {
-          console.log('reload spaces');
-        }
+  openReservation(reservation, space) {
+    var _this4 = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      const modalCreate = yield _this4.modal.create({
+        component: src_app_shared_components_spaces_new_reservation_new_reservation_component__WEBPACK_IMPORTED_MODULE_5__.NewReservationComponent,
+        componentProps: {
+          reservation,
+          space,
+          user: _this4.user
+        },
+        mode: 'ios',
+        presentingElement: _this4.routerOutlet.nativeEl
+      });
+      modalCreate.present();
+      const modalResult2 = yield modalCreate.onWillDismiss();
+      console.log(modalResult2);
+
+      if (modalResult2.data) {
+        _this4.loadData();
       }
     })();
   }
@@ -106,14 +136,16 @@ let ReservationAdminComponent = class ReservationAdminComponent {
 };
 
 ReservationAdminComponent.ctorParameters = () => [{
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.ModalController
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ModalController
 }, {
   type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__.FireAuthService
 }, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonRouterOutlet
+  type: src_app_core_services_modules_reservations_service__WEBPACK_IMPORTED_MODULE_4__.ReservationsService
+}, {
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonRouterOutlet
 }];
 
-ReservationAdminComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
+ReservationAdminComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({
   selector: 'app-reservation-admin',
   template: _reservation_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
   styles: [_reservation_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
@@ -299,15 +331,15 @@ let SpacesAdminComponent = class SpacesAdminComponent {
       filter: null,
       value: null
     }, {
-      name: 'Espacios a Reservar',
+      name: 'Reservar',
       filter: 'rent',
       value: true
     }, {
-      name: 'Espacios Privados',
+      name: 'Privados',
       filter: 'spaceType',
       value: 'privado'
     }, {
-      name: 'Espacios Comunitarios',
+      name: 'Comunitarios',
       filter: 'spaceType',
       value: 'comunal'
     }];
@@ -494,7 +526,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \************************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene reservaciones aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    \n  </ion-list>\n  \n  <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\">\n      <ion-icon name=\"chevron-up-circle-outline\"></ion-icon>\n    </ion-fab-button>\n    <ion-fab-list side=\"top\">\n      <ion-fab-button color=\"light\">\n        <ion-icon name=\"calendar-outline\"></ion-icon>\n      </ion-fab-button>\n      <ion-fab-button color=\"light\" (click)=\"createReservation()\">\n        <ion-icon name=\"create-outline\"></ion-icon>\n      </ion-fab-button>\n    </ion-fab-list>\n  </ion-fab>\n</ion-content>";
+module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n    <ion-row>\n      \n    </ion-row>\n  </ion-list>\n  \n  <ion-item *ngIf=\"!loading\">\n    <ion-label>Reservas:</ion-label>\n    <ion-select placeholder=\"Todos los espacios\" class=\"ion-text-capitalize\" mode='ios' [value]=\"filterSelected\" (ionChange)=\"filterChange($event)\">\n      <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let item of filterItems\" [value]=\"item.filter\"> {{item.name}}</ion-select-option>\n    </ion-select>\n  </ion-item>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene reservaciones aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-reservation *ngFor=\"let request of itemList\" [request]=\"request\" (click)=\"openReservation(request,null)\"></app-item-reservation>\n  </ion-list>\n  \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createReservation()\">\n      <ion-icon size=\"large\" name=\"add-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ }),
 
@@ -504,7 +536,7 @@ module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"
   \****************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-title class=\"ion-text-uppercase\">Espacios</ion-title>\n  </ion-toolbar>\n  <ion-toolbar>\n    <ion-segment mode=\"ios\" (ionChange)=\"segmentChanged($event)\" value=\"reservations\">\n      <ion-segment-button value=\"reservations\">\n        <ion-label class=\"ion-padding-start ion-padding-end\"> <h2> <ion-icon name=\"calendar-outline\"></ion-icon> Reservaciones </h2> </ion-label> \n      </ion-segment-button>\n      <ion-segment-button value=\"spaces\">\n        <ion-label class=\"ion-padding-start ion-padding-end\"> <h2> <ion-icon name=\"business-outline\"></ion-icon> Espacios </h2> </ion-label>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n\n<app-spaces-admin *ngIf=\"selectedTab === 'spaces'\" style=\"height: 100%\"></app-spaces-admin>\n<app-reservation-admin *ngIf=\"selectedTab === 'reservations'\" style=\"height: 100%\"></app-reservation-admin>\n";
+module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-title *ngIf=\"selectedTab === 'spaces'\" class=\"ion-text-uppercase\">Espacios</ion-title>\n    <ion-title *ngIf=\"selectedTab === 'reservations'\" class=\"ion-text-uppercase\">Reservaciones</ion-title>\n  </ion-toolbar>\n  <ion-toolbar>\n    <ion-segment mode=\"ios\" (ionChange)=\"segmentChanged($event)\" value=\"reservations\">\n      <ion-segment-button value=\"reservations\">\n        <ion-label class=\"ion-padding-start ion-padding-end\"> <h2> <ion-icon name=\"calendar-outline\"></ion-icon> </h2> </ion-label> \n      </ion-segment-button>\n      <ion-segment-button value=\"spaces\">\n        <ion-label class=\"ion-padding-start ion-padding-end\"> <h2> <ion-icon name=\"business-outline\"></ion-icon> </h2> </ion-label>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n\n<app-spaces-admin *ngIf=\"selectedTab === 'spaces'\" style=\"height: 100%\"></app-spaces-admin>\n<app-reservation-admin *ngIf=\"selectedTab === 'reservations'\" style=\"height: 100%\"></app-reservation-admin>\n";
 
 /***/ }),
 
@@ -514,7 +546,7 @@ module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-title cla
   \**************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "\n<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <ion-item *ngIf=\"!loading\">\n    <ion-label>Tipo de Espacio:</ion-label>\n    <ion-select placeholder=\"Todos los espacios\" class=\"ion-text-capitalize\" mode='ios' [value]=\"filterSelected\" (ionChange)=\"filterChange($event)\">\n      <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let item of filterItems\" [value]=\"item.name\"> {{item.name}}</ion-select-option>\n    </ion-select>\n  </ion-item>\n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene espacios aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-space *ngFor=\"let space of itemList\" [space]=\"space\" (click)=\"detailSpace(space)\"></app-item-space>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\">\n      <ion-icon name=\"chevron-up-circle-outline\"></ion-icon>\n    </ion-fab-button>\n    <ion-fab-list side=\"top\">\n      <ion-fab-button color=\"light\">\n        <ion-icon name=\"calendar-outline\"></ion-icon>\n      </ion-fab-button>\n      <ion-fab-button color=\"light\">\n        <ion-icon name=\"add-outline\" (click)=\"createSpace()\"></ion-icon>\n      </ion-fab-button>\n    </ion-fab-list>\n  </ion-fab>\n</ion-content>";
+module.exports = "\n<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <ion-item *ngIf=\"!loading\">\n    <ion-label>Tipo de Espacio:</ion-label>\n    <ion-select placeholder=\"Todos los espacios\" class=\"ion-text-capitalize\" mode='ios' [value]=\"filterSelected\" (ionChange)=\"filterChange($event)\">\n      <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let item of filterItems\" [value]=\"item.name\"> {{item.name}}</ion-select-option>\n    </ion-select>\n  </ion-item>\n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene espacios aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-space *ngFor=\"let space of itemList\" [space]=\"space\" (click)=\"detailSpace(space)\"></app-item-space>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createSpace()\">\n      <ion-icon size=\"large\" name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ })
 

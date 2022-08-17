@@ -38,7 +38,8 @@
       <ion-text color='dark'> <p class="forgot_text" (click)='forgotPassword()'><span>¿Olvidó su contraseña?</span></p>    </ion-text> 
     </div>
     <ion-row class="ion-margin-top">
-      <app-big-button type="submit" class="ion-padding-top" LABEL="INICIAR SESIÓN" buttonType="PRIMARY" [loading]="loading" [disabled]="!loginForm.valid || loading" (click)="loginProcess(loginForm.value)"></app-big-button>
+      <app-big-button type="submit" class="ion-padding-top" LABEL="INICIAR SESIÓN" buttonType="PRIMARY" [loading]="loading" [disabled]="!loginForm.valid || loading" 
+      (click)="loginProcess(loginForm.value)"></app-big-button>
     </ion-row>
     <ion-row class="ion-margin-top">
       <app-big-button class="ion-padding-top" LABEL="REGISTRARSE" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="registrase()"></app-big-button>

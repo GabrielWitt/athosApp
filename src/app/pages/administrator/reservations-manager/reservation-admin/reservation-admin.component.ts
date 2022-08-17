@@ -17,6 +17,12 @@ export class ReservationAdminComponent implements OnInit {
   itemList = [];
   rentSpacesList: Space[]=[]
   user: userFormData;
+  filterSelected: '>'|'<' = '>'
+
+  filterItems = [
+    {name: 'Próximas',filter: '>'},
+    {name: 'Pasadas',filter: '<'}
+  ]
 
   constructor(
     private modal: ModalController,
@@ -26,22 +32,28 @@ export class ReservationAdminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.checkUser().then(user => {
+    this.loading = true;
+    this.loadData().then(user => {
+      this.loading = false;
     })
   }
 
-  async checkUser() {
-    this.loading = true;
+  async loadData() {
     const userData:any = await this.auth.getUser();
-    this.itemList = await this.request.readReservationsListOrderRent("startDate","2022-08-10T00:00:000Z",">");
+    this.itemList = await this.request.readReservationsListOrderRent("startDate",new Date().toISOString(),this.filterSelected);
     console.log(this.itemList)
     this.user = userData.data;
-    this.loading = false;
     return this.user
+  }
+
+  filterChange(e){
+    this.filterSelected = e.detail.value;
+    this.loadData();
   }
 
   async doRefresh(refresh?){
     // load 
+    await this.loadData();
     if (refresh){ refresh.target.complete(); }
   }
 
@@ -68,7 +80,7 @@ export class ReservationAdminComponent implements OnInit {
     modalCreate.present();
     const modalResult2 = await modalCreate.onWillDismiss();
     console.log(modalResult2);
-    if(modalResult2.data){ console.log('reload spaces')}
+    if(modalResult2.data){ this.loadData()}
   }
 
 }

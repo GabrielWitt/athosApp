@@ -23,7 +23,6 @@ export interface ReservationItem {
 export interface reservationSlot {
     uid?: string;
     spaceUID: string;
-    reservationUID: string;
     scheduleDate: string;
     startDate: string;
     endDate: string;

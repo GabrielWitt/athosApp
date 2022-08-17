@@ -5,7 +5,7 @@ import { Filesystem } from '@capacitor/filesystem';
 import { DOC_ORIENTATION, NgxImageCompressService} from 'ngx-image-compress';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable, uploadString } from "firebase/storage";
-import { MyStoreService } from './my-store.service';
+import { MyStoreService } from '../../shared/utilities/my-store.service';
 
 @Injectable({
   providedIn: 'root'
@@ -77,7 +77,7 @@ export class ImageUploaderService {
             console.log('File available at', downloadURL);
             resolve({ message:'Archivo transferido', url: downloadURL })
           });
-        }
+        } 
       );
       uploadBytes(storageRef, file).then((snapshot) => {
         console.log(snapshot);

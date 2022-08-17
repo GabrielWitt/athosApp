@@ -4,44 +4,15 @@
   </ion-toolbar>
 
   <form #email="ngForm" [formGroup]="signUpForm" (ngSubmit)="signProcess(signUpForm.value)" (keydown)="EnterSubmit($event, signUpForm)" novalidate>
-
     <ion-item>
       <ion-label color="dark" position="floating"> <b>Email / Usuario</b></ion-label>
       <ion-input color="dark" formControlName="email" type="email" clearInput="true"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validationMessages.email">
       <div class="error-message" *ngIf="signUpForm.get('email').hasError(validation.type) && (signUpForm.get('email').dirty || signUpForm.get('email').touched)">
-        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
-      </div>
-    </ng-container>
-
-    <ion-item>
-      <ion-label color="dark" position="floating"> <b>Nombre</b></ion-label>
-      <ion-input color="dark" formControlName="name" type="text" clearInput="true"></ion-input>
-    </ion-item>
-    <ng-container *ngFor="let validation of validationMessages.name">
-      <div class="error-message" *ngIf="signUpForm.get('name').hasError(validation.type) && (signUpForm.get('name').dirty || signUpForm.get('name').touched)">
-        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
-      </div>
-    </ng-container>
-
-    <ion-item>
-      <ion-label color="dark" position="floating"> <b>Apellido</b></ion-label>
-      <ion-input color="dark" formControlName="lastName" type="text" clearInput="true"></ion-input>
-    </ion-item>
-    <ng-container *ngFor="let validation of validationMessages.lastName">
-      <div class="error-message" *ngIf="signUpForm.get('lastName').hasError(validation.type) && (signUpForm.get('lastName').dirty || signUpForm.get('lastName').touched)">
-        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
-      </div>
-    </ng-container>
-
-    <ion-item>
-      <ion-label color="dark" position='floating'><b>Cumpleaños</b></ion-label>
-      <ion-input color="dark" formControlName="birthday" type="date" clearInput="true"></ion-input>
-    </ion-item>
-    <ng-container *ngFor="let validation of validationMessages.birthday">
-      <div class="error-message" *ngIf="signUpForm.get('birthday').hasError(validation.type) && (signUpForm.get('birthday').dirty || signUpForm.get('birthday').touched)">
-        <ion-text class="ion-padding-start" color="danger"> <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}</ion-text>
+        <ion-text class="ion-padding-start" color="danger"> 
+          <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{ validation.message }}
+        </ion-text>
       </div>
     </ng-container>
 
@@ -53,20 +24,17 @@
       <div *ngIf="(signUpForm.get('password1').dirty || signUpForm.get('password1').touched)">
         <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'required'">
           <ion-text class="ion-padding-start" color="danger"> 
-            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
-            Contraseña requerida
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Contraseña requerida
           </ion-text>
         </div>
         <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'minlength'">
           <ion-text class="ion-padding-start" color="danger"> 
-            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
-            Requiere 8 letras por los menos
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Requiere 8 letras por los menos
           </ion-text>
         </div>
         <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'min1digit'">
           <ion-text class="ion-padding-start" color="danger"> 
-            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  
-            Requiere un número por lo menos
+            <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Requiere un número por lo menos
           </ion-text>
         </div>
         <div class="error-message ion-margin-bottom" *ngIf="(signUpForm.get('password1').errors | first) === 'min1uppercase'">

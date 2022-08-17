@@ -70,10 +70,11 @@ let FirestoreActionsService = class FirestoreActionsService {
             }
         });
     }
-    readCollectionOrderFilter(folderName, filterName, filterValue, orderField) {
+    readCollectionOrderFilter(folderName, filterName, filterValue, orderField, filterOperator) {
         return new Promise((resolve, reject) => {
             try {
-                const callDoc = this.afs.collection(folderName, (ref => ref.where(filterName, "==", filterValue).orderBy(orderField))).valueChanges();
+                const filterOp = filterOperator ? filterOperator : '==';
+                const callDoc = this.afs.collection(folderName, (ref => ref.where(filterName, filterOp, filterValue).orderBy(orderField))).valueChanges();
                 callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
                     resolve(querySnapshot);
                 });
@@ -86,20 +87,6 @@ let FirestoreActionsService = class FirestoreActionsService {
     createDocument(folder, data) {
         return new Promise((resolve, reject) => {
             data['uid'] = this.afs.createId();
-            data['createdAt'] = this.time.dateTransform((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.serverTimestamp)());
-            try {
-                this.afs.collection(folder).doc(data.uid).set(data).then((data) => {
-                    resolve(data);
-                });
-            }
-            catch (error) {
-                reject(this.error.handle(error));
-            }
-        });
-    }
-    createCalendarItem(folder, data) {
-        return new Promise((resolve, reject) => {
-            data['uid'] = this.time.getShortDate(data.scheduleDate);
             data['createdAt'] = this.time.dateTransform((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.serverTimestamp)());
             try {
                 this.afs.collection(folder).doc(data.uid).set(data).then((data) => {
@@ -133,6 +120,18 @@ let FirestoreActionsService = class FirestoreActionsService {
             }
         });
     }
+    deleteDocument(folder, filename) {
+        return new Promise((resolve, reject) => {
+            try {
+                this.afs.collection(folder).doc(filename).delete().then(done => {
+                    resolve(done);
+                });
+            }
+            catch (error) {
+                reject(this.error.handle(error));
+            }
+        });
+    }
     returnNowStamp() {
         return this.time.dateTransform((0,firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.serverTimestamp)());
     }
@@ -147,6 +146,95 @@ FirestoreActionsService = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
         providedIn: 'root'
     })
 ], FirestoreActionsService);
+
+
+
+/***/ }),
+
+/***/ 16695:
+/*!***********************************************************!*\
+  !*** ./src/app/core/services/modules/calendar.service.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CalendarService": () => (/* binding */ CalendarService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _firestore_actions_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../firestore-actions.service */ 14871);
+/* harmony import */ var src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/shared/utilities/time-handler */ 8123);
+/* harmony import */ var src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/utilities/error-handler.service */ 43570);
+
+
+
+
+
+let CalendarService = class CalendarService {
+    constructor(firestore, error, time) {
+        this.firestore = firestore;
+        this.error = error;
+        this.time = time;
+        this.calendarFolder = 'calendar/reservations/';
+        this.calendarFolder = 'calendar/reservations/';
+    }
+    confirmReservation(data) {
+        return new Promise((resolve, reject) => {
+            const timeSlot = {
+                uid: data.uid,
+                scheduleDate: data.scheduleDate,
+                startDate: data.startDate,
+                endDate: data.endDate,
+                unitNumber: data.reservation.unitNumber,
+                spaceUID: data.uid,
+                floor: data.reservation.floor,
+            };
+            this.firestore.setNamedDocument(this.calendarFolder + this.time.getShortDateUTC(data.startDate), data.uid, timeSlot)
+                .then((doc) => { resolve(doc); })
+                .catch((error) => { reject(this.error.handle(error)); });
+        });
+    }
+    cancelReservation(data) {
+        return new Promise((resolve, reject) => {
+            this.firestore.deleteDocument(this.calendarFolder + this.time.getShortDateUTC(data.startDate), data.uid)
+                .then((doc) => { resolve(doc); })
+                .catch((error) => { reject(this.error.handle(error)); });
+        });
+    }
+    createCalendar(data) {
+        return new Promise((resolve, reject) => {
+            this.firestore.createDocument(this.calendarFolder, data)
+                .then(doc => { resolve(doc); })
+                .catch((error) => { reject(this.error.handle(error)); });
+        });
+    }
+    UpdateCalendar(data) {
+        return new Promise((resolve, reject) => {
+            this.firestore.setNamedDocument(this.calendarFolder, data.uid, data)
+                .then((docs) => { resolve(docs); })
+                .catch((error) => { reject(this.error.handle(error)); });
+        });
+    }
+    readCalendarList() {
+        return new Promise((resolve, reject) => {
+            this.firestore.readCollection(this.calendarFolder)
+                .then((docs) => { resolve(docs); })
+                .catch((error) => { reject(this.error.handle(error)); });
+        });
+    }
+};
+CalendarService.ctorParameters = () => [
+    { type: _firestore_actions_service__WEBPACK_IMPORTED_MODULE_0__.FirestoreActionsService },
+    { type: src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_2__.ErrorHandlerService },
+    { type: src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_1__.TimeHandlerModule }
+];
+CalendarService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+        providedIn: 'root'
+    })
+], CalendarService);
 
 
 
@@ -726,28 +814,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ReservationsService": () => (/* binding */ ReservationsService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/shared/utilities/error-handler.service */ 43570);
-/* harmony import */ var src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/shared/utilities/time-handler */ 8123);
-/* harmony import */ var _firestore_actions_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../firestore-actions.service */ 14871);
-
+/* harmony import */ var _firestore_actions_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../firestore-actions.service */ 14871);
 
 
 
 
 let ReservationsService = class ReservationsService {
-    constructor(firestore, time, error) {
+    constructor(firestore, error) {
         this.firestore = firestore;
-        this.time = time;
         this.error = error;
         this.ReservationsFolder = 'reservations';
-        this.CommunityFolder = 'communities';
-        this.ReservationsFolder = 'calendar/reservations/';
+        this.ReservationsFolder = 'reservations';
     }
     createReservations(data) {
         return new Promise((resolve, reject) => {
-            this.firestore.createDocument(this.ReservationsFolder + this.time.getShortDateUTC(data.startDate), data)
+            this.firestore.createDocument(this.ReservationsFolder, data)
                 .then(doc => { resolve(doc); })
                 .catch((error) => { reject(this.error.handle(error)); });
         });
@@ -755,7 +839,7 @@ let ReservationsService = class ReservationsService {
     UpdateReservations(data) {
         return new Promise((resolve, reject) => {
             this.firestore.setNamedDocument(this.ReservationsFolder, data.uid, data)
-                .then((docs) => { resolve(docs); })
+                .then((doc) => { resolve(doc); })
                 .catch((error) => { reject(this.error.handle(error)); });
         });
     }
@@ -773,21 +857,20 @@ let ReservationsService = class ReservationsService {
                 .catch((error) => { reject(this.error.handle(error)); });
         });
     }
-    readReservationsListOrderRent(filterName, filterValue) {
+    readReservationsListOrderRent(filterName, filterValue, filterOp) {
         return new Promise((resolve, reject) => {
-            this.firestore.readCollectionOrderFilter(this.ReservationsFolder, filterName, filterValue, 'unitNumber')
+            this.firestore.readCollectionOrderFilter(this.ReservationsFolder, filterName, filterValue, 'startDate', filterOp)
                 .then((docs) => { resolve(docs); })
                 .catch((error) => { reject(this.error.handle(error)); });
         });
     }
 };
 ReservationsService.ctorParameters = () => [
-    { type: _firestore_actions_service__WEBPACK_IMPORTED_MODULE_2__.FirestoreActionsService },
-    { type: src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_1__.TimeHandlerModule },
+    { type: _firestore_actions_service__WEBPACK_IMPORTED_MODULE_1__.FirestoreActionsService },
     { type: src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_0__.ErrorHandlerService }
 ];
-ReservationsService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+ReservationsService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
         providedIn: 'root'
     })
 ], ReservationsService);
@@ -841,6 +924,13 @@ let SpacesService = class SpacesService {
     UpdateSpaces(data) {
         return new Promise((resolve, reject) => {
             this.firestore.setNamedDocument(this.SpacesFolder, data.uid, data)
+                .then((docs) => { resolve(docs); })
+                .catch((error) => { reject(this.error.handle(error)); });
+        });
+    }
+    readSpace(uid) {
+        return new Promise((resolve, reject) => {
+            this.firestore.readDocument(this.SpacesFolder, uid)
                 .then((docs) => { resolve(docs); })
                 .catch((error) => { reject(this.error.handle(error)); });
         });
@@ -1180,37 +1270,37 @@ NewNoticeComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([(0,_ang
 
 /***/ }),
 
-/***/ 63370:
-/*!*******************************************************************************************!*\
-  !*** ./src/app/shared/components/services/new-service-type/new-service-type.component.ts ***!
-  \*******************************************************************************************/
+/***/ 85585:
+/*!***************************************************************************************!*\
+  !*** ./src/app/shared/components/services/detail-service/detail-service.component.ts ***!
+  \***************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "NewServiceTypeComponent": () => (/* binding */ NewServiceTypeComponent)
+/* harmony export */   "DetailServiceComponent": () => (/* binding */ DetailServiceComponent)
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _new_service_type_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./new-service-type.component.html?ngResource */ 61144);
-/* harmony import */ var _new_service_type_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new-service-type.component.scss?ngResource */ 43271);
+/* harmony import */ var _detail_service_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./detail-service.component.html?ngResource */ 47488);
+/* harmony import */ var _detail_service_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./detail-service.component.scss?ngResource */ 91150);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 22560);
 
 
 
 
-let NewServiceTypeComponent = class NewServiceTypeComponent {
+let DetailServiceComponent = class DetailServiceComponent {
     constructor() { }
     ngOnInit() { }
 };
-NewServiceTypeComponent.ctorParameters = () => [];
-NewServiceTypeComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+DetailServiceComponent.ctorParameters = () => [];
+DetailServiceComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
-        selector: 'app-new-service-type',
-        template: _new_service_type_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_new_service_type_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+        selector: 'app-detail-service',
+        template: _detail_service_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_detail_service_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
     })
-], NewServiceTypeComponent);
+], DetailServiceComponent);
 
 
 
@@ -1227,21 +1317,68 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NewServiceComponent": () => (/* binding */ NewServiceComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _new_service_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./new-service.component.html?ngResource */ 52805);
 /* harmony import */ var _new_service_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new-service.component.scss?ngResource */ 16289);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var src_app_core_services_image_uploader_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/services/image-uploader.service */ 36071);
+/* harmony import */ var src_app_shared_utilities_alerts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/utilities/alerts */ 80884);
+/* harmony import */ var src_app_shared_utilities_attachments_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/utilities/attachments.service */ 15909);
+/* harmony import */ var src_app_shared_utilities_haptics_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/utilities/haptics.service */ 54387);
+/* harmony import */ var src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/utilities/time-handler */ 8123);
+
+
+
+
+
+
 
 
 
 
 let NewServiceComponent = class NewServiceComponent {
-    constructor() { }
+    constructor(modal, alerts, images, upload, vibe, time) {
+        this.modal = modal;
+        this.alerts = alerts;
+        this.images = images;
+        this.upload = upload;
+        this.vibe = vibe;
+        this.time = time;
+        this.defaultUser = 'assets/profile/ProfileBlank.png';
+        this.defaultSpace = '../../../../../assets/blueprint.png';
+        this.myService = {
+            unitNumber: '',
+            communityUID: '',
+            description: '',
+            bathrooms: 0,
+            rooms: 0,
+            squareMeters: 0,
+            spaceType: null,
+            type: null
+        };
+        this.progress = 0;
+        this.loading = false;
+        this.editServiceForm = false;
+    }
     ngOnInit() { }
+    createService() { }
+    editService() { }
 };
-NewServiceComponent.ctorParameters = () => [];
-NewServiceComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+NewServiceComponent.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ModalController },
+    { type: src_app_shared_utilities_alerts__WEBPACK_IMPORTED_MODULE_3__.AlertsService },
+    { type: src_app_shared_utilities_attachments_service__WEBPACK_IMPORTED_MODULE_4__.AttachmentsService },
+    { type: src_app_core_services_image_uploader_service__WEBPACK_IMPORTED_MODULE_2__.ImageUploaderService },
+    { type: src_app_shared_utilities_haptics_service__WEBPACK_IMPORTED_MODULE_5__.HapticsService },
+    { type: src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_6__.TimeHandlerModule }
+];
+NewServiceComponent.propDecorators = {
+    user: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_8__.Input }],
+    service: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_8__.Input }]
+};
+NewServiceComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-new-service',
         template: _new_service_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_new_service_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -1283,6 +1420,47 @@ ServiceItemComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
         styles: [_service_item_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
     })
 ], ServiceItemComponent);
+
+
+
+/***/ }),
+
+/***/ 56113:
+/*!*********************************************************************************************!*\
+  !*** ./src/app/shared/components/spaces/detail-reservation/detail-reservation.component.ts ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DetailReservationComponent": () => (/* binding */ DetailReservationComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _detail_reservation_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./detail-reservation.component.html?ngResource */ 50610);
+/* harmony import */ var _detail_reservation_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./detail-reservation.component.scss?ngResource */ 11275);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 22560);
+
+
+
+
+let DetailReservationComponent = class DetailReservationComponent {
+    constructor() {
+        this.defaultSpace = '../../../../../assets/blueprint.png';
+    }
+    ngOnInit() { }
+};
+DetailReservationComponent.ctorParameters = () => [];
+DetailReservationComponent.propDecorators = {
+    request: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }]
+};
+DetailReservationComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+        selector: 'app-detail-reservation',
+        template: _detail_reservation_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_detail_reservation_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], DetailReservationComponent);
 
 
 
@@ -1367,6 +1545,47 @@ DetailSpaceComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0,_an
 
 /***/ }),
 
+/***/ 21375:
+/*!*****************************************************************************************!*\
+  !*** ./src/app/shared/components/spaces/item-reservation/item-reservation.component.ts ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ItemReservationComponent": () => (/* binding */ ItemReservationComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _item_reservation_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item-reservation.component.html?ngResource */ 46719);
+/* harmony import */ var _item_reservation_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./item-reservation.component.scss?ngResource */ 53591);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 22560);
+
+
+
+
+let ItemReservationComponent = class ItemReservationComponent {
+    constructor() {
+        this.defaultSpace = '../../../../../assets/blueprint.png';
+    }
+    ngOnInit() { }
+};
+ItemReservationComponent.ctorParameters = () => [];
+ItemReservationComponent.propDecorators = {
+    request: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }]
+};
+ItemReservationComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+        selector: 'app-item-reservation',
+        template: _item_reservation_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_item_reservation_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], ItemReservationComponent);
+
+
+
+/***/ }),
+
 /***/ 67921:
 /*!*****************************************************************************!*\
   !*** ./src/app/shared/components/spaces/item-space/item-space.component.ts ***!
@@ -1428,16 +1647,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "NewReservationComponent": () => (/* binding */ NewReservationComponent)
 /* harmony export */ });
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _new_reservation_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new-reservation.component.html?ngResource */ 44323);
 /* harmony import */ var _new_reservation_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new-reservation.component.scss?ngResource */ 66591);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/utilities/verificationFunc */ 94264);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/utilities/time-handler */ 8123);
 /* harmony import */ var src_app_shared_utilities_alerts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/utilities/alerts */ 80884);
 /* harmony import */ var src_app_shared_utilities_haptics_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/utilities/haptics.service */ 54387);
 /* harmony import */ var src_app_core_services_modules_reservations_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/core/services/modules/reservations.service */ 53957);
+/* harmony import */ var src_app_core_services_modules_spaces_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/core/services/modules/spaces.service */ 59269);
+/* harmony import */ var src_app_core_services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/core/services/modules/calendar.service */ 16695);
+
+
 
 
 
@@ -1450,9 +1673,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let NewReservationComponent = class NewReservationComponent {
-  constructor(vibe, request, alerts, modal, time, extra) {
+  constructor(vibe, request, calendar, spaces, alerts, modal, time, extra) {
     this.vibe = vibe;
     this.request = request;
+    this.calendar = calendar;
+    this.spaces = spaces;
     this.alerts = alerts;
     this.modal = modal;
     this.time = time;
@@ -1460,6 +1685,9 @@ let NewReservationComponent = class NewReservationComponent {
     this.defaultUser = 'assets/profile/ProfileBlank.png';
     this.defaultSpace = '../../../../../assets/blueprint.png';
     this.rentSpacesList = [];
+    this.standAlone = {
+      standalone: true
+    };
     this.loading = false;
     this.editReservationForm = false;
     this.showReservationForm = false;
@@ -1485,6 +1713,7 @@ let NewReservationComponent = class NewReservationComponent {
       date: null,
       index: null
     };
+    this.addTime = 30;
     this.myReservation = {
       scheduleDate: '',
       startDate: '',
@@ -1497,29 +1726,46 @@ let NewReservationComponent = class NewReservationComponent {
 
   ngOnInit() {
     this.vibe.startAction();
-
-    if (this.reservation) {
-      this.myReservation = this.reservation;
-    }
   }
 
   enableForm() {
-    this.showReservationForm = true;
-    this.myReservation.reservation = {
-      spaceUID: this.space.uid,
-      unitNumber: this.space.unitNumber,
-      floor: this.space.floor,
-      guests: 1
-    };
+    var _this = this;
 
-    if (this.space.photo) {
-      this.myReservation.reservation.photo = this.space.photo;
-    }
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      _this.showReservationForm = true;
 
-    this.extra.createShortUser(this.user).then(requestBy => {
-      this.myReservation.requestBy = requestBy;
-    });
-    console.log(this.space.rentData);
+      if (_this.reservation) {
+        _this.myReservation = _this.reservation;
+        _this.guestCounter = _this.myReservation.reservation.guests;
+        _this.space = yield _this.spaces.readSpace(_this.reservation.reservation.spaceUID);
+        _this.addTime = _this.space.rentData.minTime < 60 ? 30 : 60;
+        yield _this.createScheduleList();
+        let count = 0;
+
+        _this.scheduleTimes.forEach(slot => {
+          if (slot.date === _this.myReservation.startDate) {
+            _this.timeSlotClicked(count, slot);
+          } else if (slot.date === _this.myReservation.endDate) {
+            _this.timeSlotClicked(count, slot);
+          }
+
+          count++;
+        });
+      } else {
+        _this.myReservation.requestBy = yield _this.extra.createShortUser(_this.user);
+        _this.addTime = _this.space.rentData.minTime < 60 ? 30 : 60;
+        _this.myReservation.reservation = {
+          spaceUID: _this.space.uid,
+          unitNumber: _this.space.type + ' ' + _this.space.unitNumber,
+          floor: _this.space.floor,
+          guests: 1
+        };
+
+        if (_this.space.photo) {
+          _this.myReservation.reservation.photo = _this.space.photo;
+        }
+      }
+    })();
   }
 
   showCalendar1() {
@@ -1538,35 +1784,29 @@ let NewReservationComponent = class NewReservationComponent {
   }
 
   createScheduleList() {
-    var _this = this;
+    var _this2 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      const addTime = _this.space.rentData.minTime < 60 ? 30 : 60;
-
-      _this.time.getScheduleList(_this.myReservation.scheduleDate, _this.space.rentData.starTime, _this.space.rentData.endTime, addTime).then(list => {
-        console.log(list);
-        _this.scheduleTimes = list;
-      });
+      _this2.scheduleTimes = yield _this2.time.getScheduleList(_this2.myReservation.scheduleDate, _this2.space.rentData.starTime, _this2.space.rentData.endTime, _this2.addTime);
+      return 'done';
     })();
   }
 
   timeSlotClicked(index, timeSlot) {
-    var _this2 = this;
+    var _this3 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      if (_this2.scheduleTimes[index].disabled) {
-        _this2.alerts.showAlert('Book Reservation', 'La hora de reservacion no está disponible. ');
+      if (_this3.scheduleTimes[index].disabled) {
+        _this3.alerts.showAlert('Book Reservation', 'La hora de reservacion no está disponible. ');
       } else {
-        const answer = yield _this2.time.clickDaySlot(_this2.scheduleTimes, _this2.timeSlotStart, _this2.timeSlotEnd, timeSlot, index, _this2.space.rentData.minTime < 60 ? 30 : 60, _this2.space.rentData.maxTime);
+        const answer = yield _this3.time.clickDaySlot(_this3.scheduleTimes, _this3.timeSlotStart, _this3.timeSlotEnd, timeSlot, index, _this3.space.rentData.minTime < 60 ? 30 : 60, _this3.space.rentData.maxTime);
 
         if (answer) {
-          _this2.scheduleTimes = answer.scheduleTimes;
-          _this2.timeSlotStart = answer.timeSlotStart;
-          _this2.timeSlotEnd = answer.timeSlotEnd;
+          _this3.scheduleTimes = answer.scheduleTimes;
+          _this3.timeSlotStart = answer.timeSlotStart;
+          _this3.timeSlotEnd = answer.timeSlotEnd;
           timeSlot = answer.timeSlot;
         }
-
-        console.log(_this2.timeSlotStart, _this2.timeSlotEnd);
       }
     })();
   }
@@ -1595,39 +1835,48 @@ let NewReservationComponent = class NewReservationComponent {
   }
 
   createReservation() {
-    var _this3 = this;
+    var _this4 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
-        _this3.loading = true;
-        _this3.myReservation.startDate = _this3.timeSlotStart.date;
-        _this3.myReservation.endDate = _this3.timeSlotEnd.date;
-        _this3.myReservation.reservation.guests = _this3.guestCounter;
-        console.log(_this3.myReservation);
-        const res = yield _this3.request.createReservations(_this3.myReservation);
-        console.log(res);
+        _this4.loading = true;
+        _this4.myReservation.startDate = _this4.timeSlotStart.date;
+        _this4.myReservation.endDate = _this4.timeSlotEnd.date;
+        _this4.myReservation.reservation.guests = _this4.guestCounter;
+        console.log(_this4.myReservation);
 
-        _this3.vibe.endAction();
-        /*
-        if(this.reservation){
+        if (_this4.reservation) {
+          yield _this4.request.UpdateReservations(_this4.myReservation);
         } else {
-          this.request.UpdateReservations(this.myReservation)
+          yield _this4.request.createReservations(_this4.myReservation);
         }
-        */
 
+        _this4.vibe.endAction();
 
-        _this3.alerts.showAlert('ESPACIOS', _this3.space ? 'Datos de su reserva actualizados' : 'Nuevo reserva solicitada', 'OK');
+        _this4.alerts.showAlert('RESERVAS', _this4.reservation ? 'Datos de reserva actualizados' : 'Nueva reserva solicitada', 'OK');
 
-        _this3.loading = false;
+        _this4.loading = false;
 
-        _this3.modal.dismiss(true);
+        _this4.modal.dismiss(true);
 
         return 'done';
       } catch (error) {
         console.log(error);
-        _this3.loading = false;
+        _this4.loading = false;
         return 'error';
       }
+    })();
+  }
+
+  changeStateReserve(status) {
+    var _this5 = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      _this5.alerts.AlertConfirm(status, '¿Seguro desea' + (status === '' ? 'aprobar' : 'cancelar') + ' la reserva?').then(answer => {
+        if (answer) {
+          _this5.changeRequestStatus(status);
+        }
+      });
     })();
   }
 
@@ -1643,6 +1892,37 @@ let NewReservationComponent = class NewReservationComponent {
     this.modal.dismiss(false);
   }
 
+  changeRequestStatus(status) {
+    var _this6 = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      try {
+        _this6.loading = true;
+        _this6.myReservation = _this6.reservation;
+        _this6.myReservation.status = status;
+        yield _this6.request.UpdateReservations(_this6.reservation);
+        console.log(status === 'Aprovado');
+
+        if (status === 'Aprovado') {
+          yield _this6.calendar.confirmReservation(_this6.myReservation);
+        }
+
+        _this6.vibe.endAction();
+
+        _this6.alerts.showAlert('RESERVAS', 'Su reserva ha sido actualizada', 'OK');
+
+        _this6.loading = false;
+
+        _this6.modal.dismiss(true);
+      } catch (error) {
+        console.log(error);
+        _this6.loading = false;
+
+        _this6.modal.dismiss(true);
+      }
+    })();
+  }
+
 };
 
 NewReservationComponent.ctorParameters = () => [{
@@ -1650,9 +1930,13 @@ NewReservationComponent.ctorParameters = () => [{
 }, {
   type: src_app_core_services_modules_reservations_service__WEBPACK_IMPORTED_MODULE_7__.ReservationsService
 }, {
+  type: src_app_core_services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_9__.CalendarService
+}, {
+  type: src_app_core_services_modules_spaces_service__WEBPACK_IMPORTED_MODULE_8__.SpacesService
+}, {
   type: src_app_shared_utilities_alerts__WEBPACK_IMPORTED_MODULE_5__.AlertsService
 }, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.ModalController
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.ModalController
 }, {
   type: src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_4__.TimeHandlerModule
 }, {
@@ -1661,16 +1945,16 @@ NewReservationComponent.ctorParameters = () => [{
 
 NewReservationComponent.propDecorators = {
   user: [{
-    type: _angular_core__WEBPACK_IMPORTED_MODULE_9__.Input
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_11__.Input
   }],
   reservation: [{
-    type: _angular_core__WEBPACK_IMPORTED_MODULE_9__.Input
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_11__.Input
   }],
   space: [{
-    type: _angular_core__WEBPACK_IMPORTED_MODULE_9__.Input
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_11__.Input
   }]
 };
-NewReservationComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({
+NewReservationComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_12__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.Component)({
   selector: 'app-new-reservation',
   template: _new_reservation_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
   styles: [_new_reservation_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
@@ -2722,6 +3006,46 @@ NoticeBottomBarComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0
 
 /***/ }),
 
+/***/ 76543:
+/*!***********************************************************************************!*\
+  !*** ./src/app/shared/components/view/status-request/status-request.component.ts ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "StatusRequestComponent": () => (/* binding */ StatusRequestComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _status_request_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./status-request.component.html?ngResource */ 59585);
+/* harmony import */ var _status_request_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./status-request.component.scss?ngResource */ 53141);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 22560);
+
+
+
+
+let StatusRequestComponent = class StatusRequestComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+StatusRequestComponent.ctorParameters = () => [];
+StatusRequestComponent.propDecorators = {
+    status: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }]
+};
+StatusRequestComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+        selector: 'app-status-request',
+        template: _status_request_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_status_request_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], StatusRequestComponent);
+
+
+
+/***/ }),
+
 /***/ 82234:
 /*!************************************************!*\
   !*** ./src/app/shared/pipes/first-key.pipe.ts ***!
@@ -2792,6 +3116,9 @@ let TimeFormatPipe = class TimeFormatPipe {
             case 'h:mm A':
                 this.RESULT = moment__WEBPACK_IMPORTED_MODULE_0__(date).format('h:mm A');
                 break;
+            case 'shortDateUTC':
+                this.RESULT = moment__WEBPACK_IMPORTED_MODULE_0__.parseZone(date).format('DD/MM/YYYY');
+                break;
             case 'displayDateUTC':
                 this.RESULT = moment__WEBPACK_IMPORTED_MODULE_0__.parseZone(date).format('dddd, DD') + ' de ' + moment__WEBPACK_IMPORTED_MODULE_0__.parseZone(date).format('MMMM, YYYY');
                 break;
@@ -2825,11 +3152,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SharedModule": () => (/* binding */ SharedModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/common */ 94666);
-/* harmony import */ var swiper_angular__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! swiper/angular */ 341);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @angular/common */ 94666);
+/* harmony import */ var swiper_angular__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! swiper/angular */ 341);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var _pipes_first_key_pipe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pipes/first-key.pipe */ 82234);
 /* harmony import */ var _pipes_time_format_pipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pipes/time-format.pipe */ 84203);
 /* harmony import */ var _components_view_big_button_big_button_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/view/big-button/big-button.component */ 23740);
@@ -2837,11 +3164,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_view_detail_header_detail_header_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/view/detail-header/detail-header.component */ 88999);
 /* harmony import */ var _components_view_not_data_yet_message_not_data_yet_message_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/view/not-data-yet-message/not-data-yet-message.component */ 29168);
 /* harmony import */ var _components_view_loading_view_loading_view_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/view/loading-view/loading-view.component */ 266);
-/* harmony import */ var _components_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/user-profile/user-profile.component */ 94046);
-/* harmony import */ var _components_view_notice_bottom_bar_notice_bottom_bar_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/view/notice-bottom-bar/notice-bottom-bar.component */ 67798);
-/* harmony import */ var _components_new_notice_new_notice_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/new-notice/new-notice.component */ 67186);
-/* harmony import */ var _components_services_new_service_new_service_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/services/new-service/new-service.component */ 36048);
-/* harmony import */ var _components_services_new_service_type_new_service_type_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/services/new-service-type/new-service-type.component */ 63370);
+/* harmony import */ var _components_view_status_request_status_request_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/view/status-request/status-request.component */ 76543);
+/* harmony import */ var _components_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/user-profile/user-profile.component */ 94046);
+/* harmony import */ var _components_view_notice_bottom_bar_notice_bottom_bar_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/view/notice-bottom-bar/notice-bottom-bar.component */ 67798);
+/* harmony import */ var _components_new_notice_new_notice_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/new-notice/new-notice.component */ 67186);
+/* harmony import */ var _components_services_new_service_new_service_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/services/new-service/new-service.component */ 36048);
 /* harmony import */ var _components_services_service_item_service_item_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/services/service-item/service-item.component */ 87150);
 /* harmony import */ var _components_spaces_item_space_item_space_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/spaces/item-space/item-space.component */ 67921);
 /* harmony import */ var _components_spaces_new_space_new_space_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/spaces/new-space/new-space.component */ 61559);
@@ -2849,6 +3176,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_spaces_detail_space_detail_space_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/spaces/detail-space/detail-space.component */ 65569);
 /* harmony import */ var _components_spaces_pick_rent_space_pick_rent_space_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/spaces/pick-rent-space/pick-rent-space.component */ 29204);
 /* harmony import */ var _components_view_image_preview_image_preview_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/view/image-preview/image-preview.component */ 36729);
+/* harmony import */ var _components_spaces_item_reservation_item_reservation_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/spaces/item-reservation/item-reservation.component */ 21375);
+/* harmony import */ var _components_spaces_detail_reservation_detail_reservation_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/spaces/detail-reservation/detail-reservation.component */ 56113);
+/* harmony import */ var _components_services_detail_service_detail_service_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/services/detail-service/detail-service.component */ 85585);
 
 
 
@@ -2858,6 +3188,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // General view
+
 
 
 
@@ -2876,25 +3207,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 const components = [
     _components_view_big_button_big_button_component__WEBPACK_IMPORTED_MODULE_2__.BigButtonComponent,
     _components_view_main_header_main_header_component__WEBPACK_IMPORTED_MODULE_3__.MainHeaderComponent,
-    _components_view_notice_bottom_bar_notice_bottom_bar_component__WEBPACK_IMPORTED_MODULE_8__.NoticeBottomBarComponent,
+    _components_view_notice_bottom_bar_notice_bottom_bar_component__WEBPACK_IMPORTED_MODULE_9__.NoticeBottomBarComponent,
     _components_view_detail_header_detail_header_component__WEBPACK_IMPORTED_MODULE_4__.DetailHeaderComponent,
     _components_view_not_data_yet_message_not_data_yet_message_component__WEBPACK_IMPORTED_MODULE_5__.NotDataYetMessageComponent,
     _components_view_loading_view_loading_view_component__WEBPACK_IMPORTED_MODULE_6__.LoadingViewComponent,
     _components_view_image_preview_image_preview_component__WEBPACK_IMPORTED_MODULE_18__.ImagePreviewComponent,
+    _components_view_status_request_status_request_component__WEBPACK_IMPORTED_MODULE_7__.StatusRequestComponent,
     // User
-    _components_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_7__.UserProfileComponent,
+    _components_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_8__.UserProfileComponent,
     //Notice
-    _components_new_notice_new_notice_component__WEBPACK_IMPORTED_MODULE_9__.NewNoticeComponent,
+    _components_new_notice_new_notice_component__WEBPACK_IMPORTED_MODULE_10__.NewNoticeComponent,
     //Services
-    _components_services_new_service_new_service_component__WEBPACK_IMPORTED_MODULE_10__.NewServiceComponent,
-    _components_services_new_service_type_new_service_type_component__WEBPACK_IMPORTED_MODULE_11__.NewServiceTypeComponent,
+    _components_services_new_service_new_service_component__WEBPACK_IMPORTED_MODULE_11__.NewServiceComponent,
     _components_services_service_item_service_item_component__WEBPACK_IMPORTED_MODULE_12__.ServiceItemComponent,
+    _components_services_detail_service_detail_service_component__WEBPACK_IMPORTED_MODULE_21__.DetailServiceComponent,
     //Spaces
     _components_spaces_item_space_item_space_component__WEBPACK_IMPORTED_MODULE_13__.ItemSpaceComponent,
+    _components_spaces_item_reservation_item_reservation_component__WEBPACK_IMPORTED_MODULE_19__.ItemReservationComponent,
     _components_spaces_detail_space_detail_space_component__WEBPACK_IMPORTED_MODULE_16__.DetailSpaceComponent,
+    _components_spaces_detail_reservation_detail_reservation_component__WEBPACK_IMPORTED_MODULE_20__.DetailReservationComponent,
     _components_spaces_new_space_new_space_component__WEBPACK_IMPORTED_MODULE_14__.NewSpaceComponent,
     _components_spaces_pick_rent_space_pick_rent_space_component__WEBPACK_IMPORTED_MODULE_17__.PickRentSpaceComponent,
     _components_spaces_new_reservation_new_reservation_component__WEBPACK_IMPORTED_MODULE_15__.NewReservationComponent
@@ -2905,13 +3241,13 @@ const pipes = [
 ];
 let SharedModule = class SharedModule {
 };
-SharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_19__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_20__.NgModule)({
+SharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_22__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_23__.NgModule)({
         imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_21__.CommonModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_22__.FormsModule,
-            swiper_angular__WEBPACK_IMPORTED_MODULE_23__.SwiperModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_22__.ReactiveFormsModule,
+            _angular_common__WEBPACK_IMPORTED_MODULE_24__.CommonModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_25__.FormsModule,
+            swiper_angular__WEBPACK_IMPORTED_MODULE_26__.SwiperModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_25__.ReactiveFormsModule,
         ],
         declarations: [
             ...pipes,
@@ -2921,7 +3257,7 @@ SharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_19__.__decorate)([
             ...pipes,
             ...components
         ],
-        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_20__.CUSTOM_ELEMENTS_SCHEMA],
+        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_23__.CUSTOM_ELEMENTS_SCHEMA],
     })
 ], SharedModule);
 
@@ -3288,7 +3624,6 @@ let TimeHandlerModule = class TimeHandlerModule {
           timeSlot.selected = true;
           timeSlot.isFirstSelected = true;
         } else if (!timeSlotStart.date) {
-          console.log('!timeSlotStart.date');
           timeSlotStart = {
             hour: moment__WEBPACK_IMPORTED_MODULE_1__.parseZone(timeSlot.date).format('h:mm A'),
             date: moment__WEBPACK_IMPORTED_MODULE_1__.parseZone(timeSlot.date).toISOString(),
@@ -23278,14 +23613,14 @@ module.exports = ".rightButtonContainer {\n  text-align: center;\n}\n\n.rightBut
 
 /***/ }),
 
-/***/ 43271:
-/*!********************************************************************************************************!*\
-  !*** ./src/app/shared/components/services/new-service-type/new-service-type.component.scss?ngResource ***!
-  \********************************************************************************************************/
+/***/ 91150:
+/*!****************************************************************************************************!*\
+  !*** ./src/app/shared/components/services/detail-service/detail-service.component.scss?ngResource ***!
+  \****************************************************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJuZXctc2VydmljZS10eXBlLmNvbXBvbmVudC5zY3NzIn0= */";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJkZXRhaWwtc2VydmljZS5jb21wb25lbnQuc2NzcyJ9 */";
 
 /***/ }),
 
@@ -23311,6 +23646,17 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
+/***/ 11275:
+/*!**********************************************************************************************************!*\
+  !*** ./src/app/shared/components/spaces/detail-reservation/detail-reservation.component.scss?ngResource ***!
+  \**********************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRldGFpbC1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zcGFjZXMvZGV0YWlsLXJlc2VydmF0aW9uL2RldGFpbC1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FDQ0oiLCJmaWxlIjoiZGV0YWlsLXJlc2VydmF0aW9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNwYWNlVmlld3tcbiAgICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgICAtLXNpemU6IDIwdnc7XG59IiwiLnNwYWNlVmlldyB7XG4gIGJhY2tncm91bmQtc2l6ZTogMTIwJSBhdXRvICFpbXBvcnRhbnQ7XG4gIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgLS1zaXplOiAyMHZ3O1xufSJdfQ== */";
+
+/***/ }),
+
 /***/ 99876:
 /*!**********************************************************************************************!*\
   !*** ./src/app/shared/components/spaces/detail-space/detail-space.component.scss?ngResource ***!
@@ -23319,6 +23665,17 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 "use strict";
 module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRldGFpbC1zcGFjZS5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zcGFjZXMvZGV0YWlsLXNwYWNlL2RldGFpbC1zcGFjZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FDQ0oiLCJmaWxlIjoiZGV0YWlsLXNwYWNlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNwYWNlVmlld3tcbiAgICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgICAtLXNpemU6IDIwdnc7XG59IiwiLnNwYWNlVmlldyB7XG4gIGJhY2tncm91bmQtc2l6ZTogMTIwJSBhdXRvICFpbXBvcnRhbnQ7XG4gIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgLS1zaXplOiAyMHZ3O1xufSJdfQ== */";
+
+/***/ }),
+
+/***/ 53591:
+/*!******************************************************************************************************!*\
+  !*** ./src/app/shared/components/spaces/item-reservation/item-reservation.component.scss?ngResource ***!
+  \******************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJpdGVtLXJlc2VydmF0aW9uLmNvbXBvbmVudC5zY3NzIn0= */";
 
 /***/ }),
 
@@ -23340,7 +23697,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /***/ ((module) => {
 
 "use strict";
-module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n\n.time_box {\n  border: 2px solid var(--ion-color-secondary);\n  width: 100%;\n  text-align: center;\n  color: black;\n  padding: 4px 8px;\n  font-size: 14px;\n  font-weight: bold;\n  margin: 2px 0;\n  border-radius: 15px;\n}\n\n.time_box.selected {\n  background-color: var(--ion-color-secondary);\n}\n\n.time_box.disabled {\n  background: darkgray !important;\n  border: 0 !important;\n}\n\n.guest_size {\n  font-size: 28px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zcGFjZXMvbmV3LXJlc2VydmF0aW9uL25ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FDQUo7O0FER0E7RUFDSSw0Q0FBQTtFQUNBLFdBQUE7RUFDQSxrQkFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtFQUNBLGVBQUE7RUFDQSxpQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtBQ0FKOztBREdBO0VBQ0ksNENBQUE7QUNBSjs7QURHQTtFQUNJLCtCQUFBO0VBQ0Esb0JBQUE7QUNBSjs7QURHQTtFQUNJLGVBQUE7QUNBSiIsImZpbGUiOiJuZXctcmVzZXJ2YXRpb24uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbi5zcGFjZVZpZXd7XG4gICAgYmFja2dyb3VuZC1zaXplOiAxMjAlIGF1dG8gIWltcG9ydGFudDtcbiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XG4gICAgLS1zaXplOiAyMHZ3O1xufVxuXG4udGltZV9ib3gge1xuICAgIGJvcmRlcjogMnB4IHNvbGlkIHZhcigtLWlvbi1jb2xvci1zZWNvbmRhcnkpO1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBjb2xvcjogYmxhY2s7XG4gICAgcGFkZGluZzogNHB4IDhweDtcbiAgICBmb250LXNpemU6IDE0cHg7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgbWFyZ2luOiAycHggMDtcbiAgICBib3JkZXItcmFkaXVzOiAxNXB4O1xufVxuXG4udGltZV9ib3guc2VsZWN0ZWR7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG59XG5cbi50aW1lX2JveC5kaXNhYmxlZHtcbiAgICBiYWNrZ3JvdW5kOiBkYXJrZ3JheSAhaW1wb3J0YW50O1xuICAgIGJvcmRlcjogMCAhaW1wb3J0YW50O1xufVxuXG4uZ3Vlc3Rfc2l6ZXtcbiAgICBmb250LXNpemU6IDI4cHg7XG59IiwiLnNwYWNlVmlldyB7XG4gIGJhY2tncm91bmQtc2l6ZTogMTIwJSBhdXRvICFpbXBvcnRhbnQ7XG4gIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgLS1zaXplOiAyMHZ3O1xufVxuXG4udGltZV9ib3gge1xuICBib3JkZXI6IDJweCBzb2xpZCB2YXIoLS1pb24tY29sb3Itc2Vjb25kYXJ5KTtcbiAgd2lkdGg6IDEwMCU7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgY29sb3I6IGJsYWNrO1xuICBwYWRkaW5nOiA0cHggOHB4O1xuICBmb250LXNpemU6IDE0cHg7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBtYXJnaW46IDJweCAwO1xuICBib3JkZXItcmFkaXVzOiAxNXB4O1xufVxuXG4udGltZV9ib3guc2VsZWN0ZWQge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kYXJ5KTtcbn1cblxuLnRpbWVfYm94LmRpc2FibGVkIHtcbiAgYmFja2dyb3VuZDogZGFya2dyYXkgIWltcG9ydGFudDtcbiAgYm9yZGVyOiAwICFpbXBvcnRhbnQ7XG59XG5cbi5ndWVzdF9zaXplIHtcbiAgZm9udC1zaXplOiAyOHB4O1xufSJdfQ== */";
+module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n\n.time_box {\n  border: 2px solid var(--ion-color-secondary);\n  width: 100%;\n  text-align: center;\n  color: black;\n  padding: 4px 8px;\n  font-size: 14px;\n  font-weight: bold;\n  margin: 2px 0;\n  border-radius: 15px;\n}\n\n.time_box.selected {\n  background-color: var(--ion-color-secondary);\n}\n\n.time_box.disabled {\n  background: darkgray !important;\n  border: 0 !important;\n}\n\n.guest_size {\n  font-size: 20pt;\n}\n\n.input_bg {\n  border: 2pt solid var(--ion-color-dark);\n  border-radius: 15pt;\n  padding: 5pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zcGFjZXMvbmV3LXJlc2VydmF0aW9uL25ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FDQUo7O0FER0E7RUFDSSw0Q0FBQTtFQUNBLFdBQUE7RUFDQSxrQkFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtFQUNBLGVBQUE7RUFDQSxpQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtBQ0FKOztBREdBO0VBQ0ksNENBQUE7QUNBSjs7QURHQTtFQUNJLCtCQUFBO0VBQ0Esb0JBQUE7QUNBSjs7QURHQTtFQUNJLGVBQUE7QUNBSjs7QURHQTtFQUNJLHVDQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0FDQUoiLCJmaWxlIjoibmV3LXJlc2VydmF0aW9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4uc3BhY2VWaWV3e1xuICAgIGJhY2tncm91bmQtc2l6ZTogMTIwJSBhdXRvICFpbXBvcnRhbnQ7XG4gICAgYmFja2dyb3VuZC1wb3NpdGlvbjogY2VudGVyO1xuICAgIC0tc2l6ZTogMjB2dztcbn1cblxuLnRpbWVfYm94IHtcbiAgICBib3JkZXI6IDJweCBzb2xpZCB2YXIoLS1pb24tY29sb3Itc2Vjb25kYXJ5KTtcbiAgICB3aWR0aDogMTAwJTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIHBhZGRpbmc6IDRweCA4cHg7XG4gICAgZm9udC1zaXplOiAxNHB4O1xuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgIG1hcmdpbjogMnB4IDA7XG4gICAgYm9yZGVyLXJhZGl1czogMTVweDtcbn1cblxuLnRpbWVfYm94LnNlbGVjdGVke1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWlvbi1jb2xvci1zZWNvbmRhcnkpO1xufVxuXG4udGltZV9ib3guZGlzYWJsZWR7XG4gICAgYmFja2dyb3VuZDogZGFya2dyYXkgIWltcG9ydGFudDtcbiAgICBib3JkZXI6IDAgIWltcG9ydGFudDtcbn1cblxuLmd1ZXN0X3NpemV7XG4gICAgZm9udC1zaXplOiAyMHB0O1xufVxuXG4uaW5wdXRfYmcge1xuICAgIGJvcmRlcjogMnB0IHNvbGlkIHZhcigtLWlvbi1jb2xvci1kYXJrKTtcbiAgICBib3JkZXItcmFkaXVzOiAxNXB0O1xuICAgIHBhZGRpbmc6IDVwdDtcbiAgfSIsIi5zcGFjZVZpZXcge1xuICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XG4gIC0tc2l6ZTogMjB2dztcbn1cblxuLnRpbWVfYm94IHtcbiAgYm9yZGVyOiAycHggc29saWQgdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG4gIHdpZHRoOiAxMDAlO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIGNvbG9yOiBibGFjaztcbiAgcGFkZGluZzogNHB4IDhweDtcbiAgZm9udC1zaXplOiAxNHB4O1xuICBmb250LXdlaWdodDogYm9sZDtcbiAgbWFyZ2luOiAycHggMDtcbiAgYm9yZGVyLXJhZGl1czogMTVweDtcbn1cblxuLnRpbWVfYm94LnNlbGVjdGVkIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG59XG5cbi50aW1lX2JveC5kaXNhYmxlZCB7XG4gIGJhY2tncm91bmQ6IGRhcmtncmF5ICFpbXBvcnRhbnQ7XG4gIGJvcmRlcjogMCAhaW1wb3J0YW50O1xufVxuXG4uZ3Vlc3Rfc2l6ZSB7XG4gIGZvbnQtc2l6ZTogMjBwdDtcbn1cblxuLmlucHV0X2JnIHtcbiAgYm9yZGVyOiAycHQgc29saWQgdmFyKC0taW9uLWNvbG9yLWRhcmspO1xuICBib3JkZXItcmFkaXVzOiAxNXB0O1xuICBwYWRkaW5nOiA1cHQ7XG59Il19 */";
 
 /***/ }),
 
@@ -23454,6 +23811,17 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
+/***/ 53141:
+/*!************************************************************************************************!*\
+  !*** ./src/app/shared/components/view/status-request/status-request.component.scss?ngResource ***!
+  \************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdGF0dXMtcmVxdWVzdC5jb21wb25lbnQuc2NzcyJ9 */";
+
+/***/ }),
+
 /***/ 49578:
 /*!***********************************************************************************!*\
   !*** ./src/app/shared/components/new-notice/new-notice.component.html?ngResource ***!
@@ -23465,14 +23833,14 @@ module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons s
 
 /***/ }),
 
-/***/ 61144:
-/*!********************************************************************************************************!*\
-  !*** ./src/app/shared/components/services/new-service-type/new-service-type.component.html?ngResource ***!
-  \********************************************************************************************************/
+/***/ 47488:
+/*!****************************************************************************************************!*\
+  !*** ./src/app/shared/components/services/detail-service/detail-service.component.html?ngResource ***!
+  \****************************************************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<p>\n  new-service-type works!\n</p>\n";
+module.exports = "<p>\n  detail-service works!\n</p>\n";
 
 /***/ }),
 
@@ -23483,7 +23851,7 @@ module.exports = "<p>\n  new-service-type works!\n</p>\n";
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<p>\n  new-service works!\n</p>\n";
+module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons slot=\"start\">\n      <ion-button *ngIf=\"!service\" color=\"danger\" [disabled]=\"loading\" (click)=\"modal.dismiss(false)\">\n        Cancelar\n      </ion-button>\n      <ion-button *ngIf=\"editServiceForm\" color=\"danger\" [disabled]=\"loading\" (click)=\"editService()\">\n        Cancelar\n      </ion-button>\n      <ion-button *ngIf=\"service && !editServiceForm\" color=\"primary\" [disabled]=\"loading\" (click)=\"modal.dismiss(false)\">\n        Atrás\n      </ion-button>\n    </ion-buttons>\n    <ion-title class=\"ion-text-uppercase\">{{service ? service.type+' '+service.unitNumber: 'Nuevo Espacio'}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button *ngIf=\"!service || editServiceForm\" color=\"success\" (click)=\"createService()\" \n        [disabled]=\"loading\">\n          Enviar\n      </ion-button>\n      <ion-button *ngIf=\"this.service && this.user.type === 'administrador' && !editServiceForm\" color=\"dark\" (click)=\"editService()\">\n          Editar\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"loading\">\n  <app-loading-view></app-loading-view>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && service && !editServiceForm\">\n  <app-detail-service style=\"height: 100%;\" [user]=\"user\" [service]=\"service\" [reserve]=\"false\"></app-detail-service>\n</ion-content>\n\n<ion-content class=\"ion-padding\" *ngIf=\"!loading && (!service || editServiceForm)\">\n  <ion-list>\n  </ion-list>\n</ion-content>\n\n";
 
 /***/ }),
 
@@ -23498,6 +23866,17 @@ module.exports = "<p>\n  service-item works!\n</p>\n";
 
 /***/ }),
 
+/***/ 50610:
+/*!**********************************************************************************************************!*\
+  !*** ./src/app/shared/components/spaces/detail-reservation/detail-reservation.component.html?ngResource ***!
+  \**********************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<ion-card>\n  <ion-row>\n    <ion-col size=\"3\">\n      <ion-thumbnail class=\"spaceView\">\n        <ion-img [src]=\"request.reservation.photo ? request.reservation.photo : defaultSpace\"></ion-img>\n      </ion-thumbnail>\n    </ion-col>\n    <ion-col size=\"9\">\n      <ion-item>\n        <ion-label>\n          <ion-text class=\"ion-text-capitalize\">\n            <h2>{{request.reservation.unitNumber}} </h2>\n            <app-status-request [status]=\"request.status\"></app-status-request>\n          </ion-text>\n        </ion-label>\n      </ion-item>\n    </ion-col>\n  </ion-row>\n</ion-card>\n\n\n<ion-list>\n  <ion-list-header>\n    <ion-label>Información:</ion-label>\n  </ion-list-header>\n  <ion-row>\n    <ion-col>\n      <ion-item>\n        <ion-thumbnail slot=\"start\">\n          <ion-icon size=\"large\" name=\"calendar-outline\"></ion-icon>\n        </ion-thumbnail>\n        <ion-label class=\"ion-text-capitalize\">\n          Fecha: {{request.startDate | timeFormat: 'displayDateUTC'}}\n        </ion-label>\n      </ion-item>\n    </ion-col>\n    <ion-col>\n      <ion-item>\n        <ion-thumbnail slot=\"start\">\n          <ion-icon size=\"large\" name=\"time-outline\"></ion-icon>\n        </ion-thumbnail>\n        <ion-label>\n          Reserva: {{request.startDate | timeFormat: 'TimeUTC'}} - {{request.endDate | timeFormat: 'TimeUTC'}}\n        </ion-label>\n      </ion-item>\n    </ion-col>\n  </ion-row>\n\n  <ion-row>\n    <ion-col>\n      <ion-item>\n        <ion-thumbnail slot=\"start\">\n          <ion-icon size=\"large\" name=\"calendar-outline\"></ion-icon>\n        </ion-thumbnail>\n        <ion-label class=\"ion-text-capitalize\">\n          Grupo: {{request.reservation.guests}}\n        </ion-label>\n      </ion-item>\n    </ion-col>\n    <ion-col>\n      <ion-item>\n        <ion-thumbnail slot=\"start\">\n          <ion-icon size=\"large\" name=\"time-outline\"></ion-icon>\n        </ion-thumbnail>\n        <ion-label>\n          Tiempo reservado: {{request.startDate | timeFormat: 'TimeUTC'}} - {{request.endDate | timeFormat: 'TimeUTC'}}\n        </ion-label>\n      </ion-item>\n    </ion-col>\n  </ion-row>\n  <ion-item>\n    <ion-label>Solicitado por:</ion-label>\n    <app-user-profile [shortUser]=\"request.requestBy\"></app-user-profile>\n  </ion-item>\n</ion-list>";
+
+/***/ }),
+
 /***/ 90290:
 /*!**********************************************************************************************!*\
   !*** ./src/app/shared/components/spaces/detail-space/detail-space.component.html?ngResource ***!
@@ -23506,6 +23885,17 @@ module.exports = "<p>\n  service-item works!\n</p>\n";
 
 "use strict";
 module.exports = "\n<ion-card>\n  <ion-row>\n    <ion-col size=\"3\">\n      <ion-thumbnail class=\"spaceView\" (click)=\"openPreview(space.photo ? space.photo : defaultSpace)\">\n        <ion-img [src]=\"space.photo ? space.photo : defaultSpace\"></ion-img>\n      </ion-thumbnail>\n    </ion-col>\n    <ion-col size=\"9\">\n      <ion-item>\n        <ion-label>\n          <ion-text class=\"ion-text-capitalize\">\n            <h2>{{space.type}} {{space.unitNumber}} </h2>\n            <h3>Tipo: {{space.spaceType}}</h3>\n          </ion-text>\n        </ion-label>\n      </ion-item>\n    </ion-col>\n  </ion-row>\n</ion-card>\n\n<ion-list>\n  <ion-list-header>\n    <ion-label>Información:</ion-label>\n  </ion-list-header>\n  <ion-row>\n    <p class=\"ion-padding\">{{space.description}}</p>\n  </ion-row>\n  <ion-row *ngIf=\"!reserve\">\n    <ion-col>\n      <ion-item>\n        <ion-thumbnail slot=\"start\">\n          <ion-icon size=\"large\" name=\"map-outline\"></ion-icon>\n        </ion-thumbnail>\n        <ion-label>\n          Ubicación: {{space.floor}}\n        </ion-label>\n      </ion-item>\n    </ion-col>\n    <ion-col>\n      <ion-item>\n        <ion-thumbnail slot=\"start\">\n          <ion-icon size=\"large\" name=\"crop-outline\"></ion-icon>\n        </ion-thumbnail>\n        <ion-label>\n          Metros2: {{space.squareMeters}}\n        </ion-label>\n      </ion-item>\n    </ion-col>\n  </ion-row>\n\n  <ion-row>\n    <ion-col>\n      <ion-item>\n        <ion-thumbnail slot=\"start\">\n          <ion-icon size=\"large\" name=\"grid-outline\"></ion-icon>\n        </ion-thumbnail>\n        <ion-label>\n          Ambientes: {{space.rooms}}\n        </ion-label>\n      </ion-item>\n    </ion-col>\n    <ion-col>\n      <ion-item>\n        <ion-thumbnail slot=\"start\">\n          <ion-icon size=\"large\" name=\"download-outline\"></ion-icon>\n        </ion-thumbnail>\n        <ion-label>\n          Baños: {{space.bathrooms}}\n        </ion-label>\n      </ion-item>\n    </ion-col>\n  </ion-row>\n  <div *ngIf=\"space.rent\">\n    <ion-list-header>\n      <ion-label>Información de Renta:</ion-label>\n    </ion-list-header>\n\n    <ion-row>\n      <ion-col>\n        <ion-item>\n          <ion-thumbnail slot=\"start\">\n            <ion-icon size=\"large\" name=\"cash-outline\"></ion-icon>\n          </ion-thumbnail>\n          <ion-label>\n            Precio de Renta: {{space.rentData.cost}}\n          </ion-label>\n        </ion-item>\n      </ion-col>\n      <ion-col>\n        <ion-item>\n          <ion-thumbnail slot=\"start\">\n            <ion-icon size=\"large\" name=\"calendar-outline\"></ion-icon>\n          </ion-thumbnail>\n          <ion-label>\n            <h2>Días Abierto: </h2>\n            <h2>\n              {{space.rentData.weekdays[0]?'Dom. ':''}}\n              {{space.rentData.weekdays[1]?'Lun. ':''}}\n              {{space.rentData.weekdays[2]?'Mar. ':''}}\n              {{space.rentData.weekdays[3]?'Mie. ':''}}\n              {{space.rentData.weekdays[4]?'Jue. ':''}}\n              {{space.rentData.weekdays[5]?'Vie. ':''}}\n              {{space.rentData.weekdays[6]?'Sab. ':''}}\n            </h2>\n          </ion-label>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n\n    <ion-row>\n      <ion-col>\n        <ion-item>\n          <ion-thumbnail slot=\"start\">\n            <ion-icon size=\"large\" name=\"sunny-outline\"></ion-icon>\n          </ion-thumbnail>\n          <ion-label>\n            Hora de Inicio: {{space.rentData.starTime | timeFormat: 'h:mm A'}}\n          </ion-label>\n        </ion-item>\n      </ion-col>\n      <ion-col>\n        <ion-item>\n          <ion-thumbnail slot=\"start\">\n            <ion-icon size=\"large\" name=\"moon\"></ion-icon>\n          </ion-thumbnail>\n          <ion-label>\n            Hora de Cierre: {{space.rentData.endTime | timeFormat: 'h:mm A'}}\n          </ion-label>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngIf=\"!reserve\">\n      <ion-col>\n        <ion-item>\n          <ion-thumbnail slot=\"start\">\n            <ion-icon size=\"large\" name=\"time-outline\"></ion-icon>\n          </ion-thumbnail>\n          <ion-label>\n            Tiempo Míximo: {{(space.rentData.minTime < 60)? '30 minutos' :space.rentData.minTime === 120?'2 horas':'1 hora'}}\n          </ion-label>\n        </ion-item>\n      </ion-col>\n      <ion-col>\n        <ion-item>\n          <ion-thumbnail slot=\"start\">\n            <ion-icon size=\"large\" name=\"time\"></ion-icon>\n          </ion-thumbnail>\n          <ion-label>\n            Tiempo Máximo: {{(space.rentData.minTime < 60)? '30 minutos' : (space.rentData.maxTime/60)+' horas'}} \n          </ion-label>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </div>\n</ion-list>";
+
+/***/ }),
+
+/***/ 46719:
+/*!******************************************************************************************************!*\
+  !*** ./src/app/shared/components/spaces/item-reservation/item-reservation.component.html?ngResource ***!
+  \******************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<ion-item detail>\n  <ion-thumbnail slot=\"start\">\n    <img [src]=\"request.reservation.photo ? request.reservation.photo : defaultSpace\">\n  </ion-thumbnail>\n  <ion-label class=\"ion-text-wrap\">\n    <ion-text color=\"dark\">\n      <h2 class=\"ion-text-capitalize\"> {{request.reservation.unitNumber}} </h2>\n    </ion-text>\n    <app-status-request [status]=\"request.status\"></app-status-request>\n  </ion-label>\n  <ion-note slot=\"end\">\n    <ion-text color=\"medium\" class=\"ion-text-capitalize\">\n      <p>{{request.startDate | timeFormat: 'shortDateUTC'}}</p>\n    </ion-text>\n  </ion-note>\n</ion-item>";
 
 /***/ }),
 
@@ -23527,7 +23917,7 @@ module.exports = "<ion-item detail>\n  <ion-thumbnail slot=\"start\">\n    <img 
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons slot=\"start\">\n      <ion-button *ngIf=\"!reservation\" color=\"danger\" [disabled]=\"loading\" (click)=\"cancelReservation()\">\n        Cancelar\n      </ion-button>\n      <ion-button *ngIf=\"editReservationForm\" color=\"danger\" [disabled]=\"loading\" (click)=\"cancelReservation()\">\n        Cancelar\n      </ion-button>\n      <ion-button *ngIf=\"reservation && !editReservationForm\" color=\"primary\" [disabled]=\"loading\" (click)=\"modal.dismiss(false)\">\n        Atrás\n      </ion-button>\n    </ion-buttons>\n    <ion-title class=\"ion-text-uppercase\">{{reservation ? reservation.reservation.unitNumber: 'Nueva Reserva'}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button *ngIf=\"(!reservation || editReservationForm) && showReservationForm\" color=\"success\" (click)=\"createReservation()\" \n        [disabled]=\"loading || !myReservation.scheduleDate || !timeSlotStart.date\">\n          Enviar\n      </ion-button>\n      <ion-button *ngIf=\"this.reservation && this.user.type === 'administrador' && !editReservationForm\" color=\"dark\" (click)=\"createReservation()\">\n          Editar\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"loading\">\n  <app-loading-view></app-loading-view>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && space && !showReservationForm\">\n  <app-detail-space style=\"height: 100%;\" [user]=\"user\" [space]=\"space\" [reserve]=\"true\"></app-detail-space>\n</ion-content>\n<ion-content *ngIf=\"!loading && space && showReservationForm\">\n  <ion-card>\n    <ion-row>\n      <ion-col size=\"3\">\n        <ion-thumbnail class=\"spaceView\">\n          <ion-img [src]=\"space.photo ? space.photo : defaultSpace\"></ion-img>\n        </ion-thumbnail>\n      </ion-col>\n      <ion-col size=\"9\">\n        <ion-item>\n          <ion-label>\n            <ion-text class=\"ion-text-capitalize\">\n              <h2>{{space.type}} {{space.unitNumber}} </h2>\n              <h3>Tipo: {{space.spaceType}}</h3>\n            </ion-text>\n          </ion-label>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n  <ion-list>\n    <ion-item (click)=\"showCalendar1()\" *ngIf=\"!showCalendar\">\n      <ion-label>Fecha de Evento: </ion-label>\n      <ion-label> \n        <ion-text *ngIf=\"myReservation.scheduleDate\" style=\"font-size: inherit; float: right;\">{{myReservation.scheduleDate | timeFormat: 'DD/MM/YYYY'}}</ion-text>\n        <ion-text *ngIf=\"!myReservation.scheduleDate\" style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;\">(Selección fecha)</ion-text>\n      </ion-label>\n      <ion-button class=\"downArrow\" slot=\"end\" size=\"small\"><ion-icon style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit;\" name=\"caret-down-outline\"></ion-icon></ion-button>\n    </ion-item>\n    <ion-row *ngIf=\"showCalendar\">\n      <ion-col>\n        <ion-label>Fecha de Evento: </ion-label>\n        <ion-datetime #datetime style=\"margin: 0 auto;\" [isDateEnabled]=\"availableDays\" presentation=\"date\" \n              [(ngModel)]=\"myReservation.scheduleDate\" (ionChange)=\"changeScheduleTime(datetime.value)\">\n          <ion-buttons slot=\"buttons\">\n            <ion-button color=\"danger\" (click)=\"showCalendar1()\">Cancelar</ion-button>\n            <ion-button color=\"success\" (click)=\"datetime.confirm()\">OK</ion-button>\n          </ion-buttons>\n        </ion-datetime>\n      </ion-col>\n    </ion-row>\n\n    <ion-grid class=\"item_grid\" *ngIf=\"myReservation.scheduleDate\">\n      <ion-row class=\"ion-align-items-center\">\n        <ion-col>\n          <p class=\"ion-no-margin item_text required ion-text-center\" position=\"stacked\">Disponibilidad:</p>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-align-items-center\" *ngIf=\"scheduleTimes?.length === 1\">\n        <ion-col *ngFor=\"let timeSlot of scheduleTimes; index as i\">\n          <div class=\"time_box {{timeSlot.disabled?'disabled':(timeSlot.selected?'selected':'')}}\"\n          (click)=\"timeSlotClicked(i,timeSlot)\"\n          >{{timeSlot.time}}</div>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-align-items-center\" *ngIf=\"scheduleTimes?.length > 1\">\n        <ion-col size=\"6\" *ngFor=\"let timeSlot of scheduleTimes; index as i\">\n          <div class=\"time_box {{timeSlot.disabled?'disabled':(timeSlot.selected?'selected':'')}}\"\n          (click)=\"timeSlotClicked(i,timeSlot)\"\n          >{{timeSlot.time}}</div>\n        </ion-col>\n      </ion-row>\n\n      <ion-row class=\"ion-align-items-center\" *ngIf=\"timeSlotStart.date\">\n        <ion-col>\n          <p class=\"ion-no-margin ion-text-center\">{{!timeSlotStart.date?'Seleccione tiempo':'Hora de Reserva'}}</p>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-align-items-center\" *ngIf=\"timeSlotStart.date\">\n        <ion-col class=\"ion-no-margin ion-text-center\">\n          <p class=\"ion-no-margin item_text ion-text-center ion-text-capitalize\">{{timeSlotStart.date | timeFormat: 'displayDateUTC'}}</p>\n          <p class=\"ion-no-margin item_text ion-text-center ion-text-capitalize\">{{timeSlotStart.hour}} - {{timeSlotEnd.hour}}</p>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"timeSlotStart.date\">\n      <ion-row class=\"ion-align-items-center\">\n        <ion-col size=\"7\">\n          <p class=\"ion-no-margin item_text\">¿Cuantos acompañantes traerá con usted?</p>\n        </ion-col>\n        <ion-col size=\"5\">\n          <ion-row class=\"input_bg\">\n            <ion-col class=\"ion-text-center guest_size\" (click)=\"guestCounterButton('minus')\">\n              <ion-icon name=\"remove-circle-outline\"></ion-icon>\n            </ion-col>\n            <ion-col class=\"ion-text-center guest_size\">\n              {{guestCounter}}\n            </ion-col>\n            <ion-col class=\"ion-text-center guest_size\" (click)=\"guestCounterButton('plus')\">\n              <ion-icon name=\"add-circle-outline\"></ion-icon>\n            </ion-col>\n          </ion-row>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-align-items-center\">\n        <ion-col>\n          <p class=\"ion-no-margin item_text ion-text-center\">Grupo: {{guestCounter+1}}/{{space.rentData.capacity}}</p>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-list>\n</ion-content>\n<ion-footer *ngIf=\"!showReservationForm\">\n  <ion-toolbar>\n    <app-big-button class=\"ion-padding-top\" LABEL=\"SOLICITAR\" buttonType=\"SECONDARY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"enableForm()\"></app-big-button>\n  </ion-toolbar>\n</ion-footer>";
+module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons slot=\"start\">\n      <ion-button *ngIf=\"!reservation\" color=\"danger\" [disabled]=\"loading\" (click)=\"cancelReservation()\">\n        Cancelar\n      </ion-button>\n      <ion-button *ngIf=\"editReservationForm\" color=\"danger\" [disabled]=\"loading\" (click)=\"cancelReservation()\">\n        Cancelar\n      </ion-button>\n      <ion-button *ngIf=\"reservation && !editReservationForm\" color=\"primary\" [disabled]=\"loading\" (click)=\"modal.dismiss(false)\">\n        Atrás\n      </ion-button>\n    </ion-buttons>\n    <ion-title class=\"ion-text-uppercase\">{{reservation ? reservation.reservation.unitNumber: 'Nueva Reserva'}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button *ngIf=\"(!reservation || editReservationForm) && showReservationForm\" color=\"success\" (click)=\"createReservation()\" \n        [disabled]=\"loading || !myReservation.scheduleDate || !timeSlotStart.date\">\n          Enviar\n      </ion-button>\n      <ion-button *ngIf=\"reservation && user.type === 'administrador' && !editReservationForm\" color=\"dark\" (click)=\"enableForm()\">\n          Editar\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"loading\">\n  <app-loading-view></app-loading-view>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && space && !showReservationForm\">\n  <app-detail-space style=\"height: 100%;\" [user]=\"user\" [space]=\"space\" [reserve]=\"true\"></app-detail-space>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && reservation && !showReservationForm\">\n  <app-detail-reservation style=\"height: 100%;\" [user]=\"user\" [request]=\"reservation\"></app-detail-reservation>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && space && showReservationForm\">\n  <ion-card>\n    <ion-row>\n      <ion-col size=\"3\">\n        <ion-thumbnail class=\"spaceView\">\n          <ion-img [src]=\"space.photo ? space.photo : defaultSpace\"></ion-img>\n        </ion-thumbnail>\n      </ion-col>\n      <ion-col size=\"9\">\n        <ion-item>\n          <ion-label>\n            <ion-text class=\"ion-text-capitalize\">\n              <h2>{{space.type}} {{space.unitNumber}} </h2>\n              <h3>Tipo: {{space.spaceType}}</h3>\n            </ion-text>\n          </ion-label>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n  <ion-list>\n    <ion-item (click)=\"showCalendar1()\" *ngIf=\"!showCalendar\">\n      <ion-label>Fecha de Evento: </ion-label>\n      <ion-label> \n        <ion-text *ngIf=\"myReservation.scheduleDate\" style=\"font-size: inherit; float: right;\">{{myReservation.scheduleDate | timeFormat: 'DD/MM/YYYY'}}</ion-text>\n        <ion-text *ngIf=\"!myReservation.scheduleDate\" style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;\">(Selección fecha)</ion-text>\n      </ion-label>\n      <ion-button class=\"downArrow\" slot=\"end\" size=\"small\"><ion-icon style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit;\" name=\"caret-down-outline\"></ion-icon></ion-button>\n    </ion-item>\n    <ion-row *ngIf=\"showCalendar\">\n      <ion-col>\n        <ion-label>Fecha de Evento: </ion-label>\n        <ion-datetime #datetime style=\"margin: 0 auto;\" [isDateEnabled]=\"availableDays\" presentation=\"date\" \n              [(ngModel)]=\"myReservation.scheduleDate\" (ionChange)=\"changeScheduleTime(datetime.value)\">\n          <ion-buttons slot=\"buttons\">\n            <ion-button color=\"danger\" (click)=\"showCalendar1()\">Cancelar</ion-button>\n            <ion-button color=\"success\" (click)=\"datetime.confirm()\">OK</ion-button>\n          </ion-buttons>\n        </ion-datetime>\n      </ion-col>\n    </ion-row>\n\n    <ion-grid class=\"item_grid\" *ngIf=\"myReservation.scheduleDate\">\n      <ion-row class=\"ion-align-items-center\">\n        <ion-col>\n          <p class=\"ion-no-margin item_text required ion-text-center\" position=\"stacked\">Disponibilidad:</p>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-align-items-center\" *ngIf=\"scheduleTimes?.length === 1\">\n        <ion-col *ngFor=\"let timeSlot of scheduleTimes; index as i\">\n          <div class=\"time_box {{timeSlot.disabled?'disabled':(timeSlot.selected?'selected':'')}}\"\n          (click)=\"timeSlotClicked(i,timeSlot)\"\n          >{{timeSlot.time}}</div>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-align-items-center\" *ngIf=\"scheduleTimes?.length > 1\">\n        <ion-col size=\"6\" *ngFor=\"let timeSlot of scheduleTimes; index as i\">\n          <div class=\"time_box {{timeSlot.disabled?'disabled':(timeSlot.selected?'selected':'')}}\"\n          (click)=\"timeSlotClicked(i,timeSlot)\"\n          >{{timeSlot.time}}</div>\n        </ion-col>\n      </ion-row>\n\n      <ion-row class=\"ion-align-items-center\" *ngIf=\"timeSlotStart.date\">\n        <ion-col>\n          <p class=\"ion-no-margin ion-text-center\">{{!timeSlotStart.date?'Seleccione tiempo':'Hora de Reserva'}}</p>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-align-items-center\" *ngIf=\"timeSlotStart.date\">\n        <ion-col class=\"ion-no-margin ion-text-center\">\n          <p class=\"ion-no-margin item_text ion-text-center ion-text-capitalize\">{{timeSlotStart.date | timeFormat: 'displayDateUTC'}}</p>\n          <p class=\"ion-no-margin item_text ion-text-center ion-text-capitalize\">{{timeSlotStart.hour}} - {{timeSlotEnd.hour}}</p>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"timeSlotStart.date\">\n      <ion-row class=\"ion-align-items-center\">\n        <ion-col size=\"7\">\n          <p class=\"ion-no-margin item_text\">¿Cuantos acompañantes traerá con usted?</p>\n        </ion-col>\n        <ion-col size=\"5\">\n          <ion-row class=\"input_bg\">\n            <ion-col class=\"ion-text-center guest_size\" (click)=\"guestCounterButton('minus')\">\n              <ion-icon style=\"padding-top: 5pt;\" name=\"remove-circle-outline\"></ion-icon>\n            </ion-col>\n            <ion-col class=\"ion-text-center guest_size\">\n              {{guestCounter}}\n            </ion-col>\n            <ion-col class=\"ion-text-center guest_size\" (click)=\"guestCounterButton('plus')\">\n              <ion-icon style=\"padding-top: 5pt;\" name=\"add-circle-outline\"></ion-icon>\n            </ion-col>\n          </ion-row>\n        </ion-col>\n      </ion-row>\n      <ion-row class=\"ion-align-items-center\">\n        <ion-col>\n          <p class=\"ion-no-margin item_text ion-text-center\">Grupo: {{guestCounter+1}}/{{space.rentData.capacity}}</p>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-list>\n</ion-content>\n<ion-footer *ngIf=\"!loading\">\n  <ion-toolbar>\n    <app-big-button *ngIf=\"space && !showReservationForm\" class=\"ion-padding-top\" LABEL=\"SOLICITAR\" buttonType=\"SECONDARY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"enableForm()\"></app-big-button>\n    <ion-row>\n      <ion-col>\n        <app-big-button *ngIf=\"reservation && reservation.requestBy.uid === user.uid\" class=\"ion-padding-top\" LABEL=\"APROVAR\" buttonType=\"SUCCESS\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"changeStateReserve('Aprovado')\"></app-big-button>\n      </ion-col>\n      <ion-col>\n        <app-big-button *ngIf=\"reservation && (user.type === 'administrador' || reservation.requestBy.uid === user.uid)\" class=\"ion-padding-top\" LABEL=\"CANCELAR\" buttonType=\"RED\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"changeStateReserve('Cancelado')\"></app-big-button>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-footer>";
 
 /***/ }),
 
@@ -23571,7 +23961,7 @@ module.exports = "<ion-card *ngIf=\"user\">\n  <ion-item>\n    <ion-avatar slot=
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-row [ngSwitch]=\"buttonType\" class=\"rowStyle\">\n  <ion-button *ngSwitchDefault class='buttonStyle' color=\"primary\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"light\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"light\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button>\n  \n  <ion-button *ngSwitchCase=\"'SECONDARY'\" class='buttonStyle' color=\"secondary\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"light\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"light\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button> \n\n  <ion-button *ngSwitchCase=\"'RED'\" class='buttonStyle' color=\"danger\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"light\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"light\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button> \n\n  <ion-button *ngSwitchCase=\"'GRAY'\" class='buttonStyle' color=\"medium\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"dark\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"dark\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button> \n</ion-row>";
+module.exports = "<ion-row [ngSwitch]=\"buttonType\" class=\"rowStyle\">\n  <ion-button *ngSwitchDefault class='buttonStyle' color=\"primary\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"light\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"light\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button>\n  \n  <ion-button *ngSwitchCase=\"'SECONDARY'\" class='buttonStyle' color=\"secondary\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"light\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"light\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button> \n\n  <ion-button *ngSwitchCase=\"'RED'\" class='buttonStyle' color=\"danger\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"light\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"light\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button> \n\n  <ion-button *ngSwitchCase=\"'GRAY'\" class='buttonStyle' color=\"medium\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"dark\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"dark\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button> \n\n  <ion-button *ngSwitchCase=\"'SUCCESS'\" class='buttonStyle' color=\"success\" [disabled]=\"disabled\">\n    <ion-label>\n      <ion-spinner *ngIf=\"loading\" style=\"margin-left: 10px;\" color=\"light\" name=\"dots\"></ion-spinner>\n      <ion-text *ngIf=\"!loading\" class=\"ion-text-uppercase\" color=\"light\">{{LABEL}}</ion-text>\n    </ion-label>\n  </ion-button> \n</ion-row>";
 
 /***/ }),
 
@@ -23638,6 +24028,17 @@ module.exports = "<div class=\"positionTop\">\n  <ion-row>\n    <div class=\"ion
 
 "use strict";
 module.exports = "<ion-row>\n  <ion-col class=\"ion-text-center\">\n    <div (click)=\"addLike()\">\n      <ion-icon *ngIf=\"!this.myLike\" name=\"paw-outline\"></ion-icon>\n      <ion-icon *ngIf=\"this.myLike\" color=\"primary\" name=\"paw\"></ion-icon>\n      Me Importa {{notice.likes.length}}\n    </div>\n  </ion-col>\n  <ion-col class=\"ion-text-center\">\n    <ion-icon name=\"chatbubble-ellipses-outline\"></ion-icon> Comentarios {{notice.comments.length}}\n  </ion-col>\n</ion-row>";
+
+/***/ }),
+
+/***/ 59585:
+/*!************************************************************************************************!*\
+  !*** ./src/app/shared/components/view/status-request/status-request.component.html?ngResource ***!
+  \************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<p>Status: \n  <ion-text *ngIf=\"status == 'Solicitado'\" color=\"secondary\">Solicitado</ion-text>\n  <ion-text *ngIf=\"status == 'Aprovado'\" color=\"success\">Aprovado</ion-text>\n  <ion-text *ngIf=\"status == 'Cancelado'\" color=\"danger\">Cancelado</ion-text>\n  <ion-text *ngIf=\"status == 'Terminado'\" color=\"primary\">Terminado</ion-text>\n</p>";
 
 /***/ }),
 

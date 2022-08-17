@@ -14,23 +14,9 @@
 <ion-list *ngIf="itemList.length > 0 && !loading">
   
 </ion-list>
-
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button color="secondary">
-    <ion-icon name="chevron-up-circle-outline"></ion-icon>
+    
+<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab-button color="secondary" (click)="createService(null)">
+    <ion-icon name="create-outline"></ion-icon>
   </ion-fab-button>
-  <ion-fab-list side="top">
-    <ion-fab-button color="light">
-      <ion-icon name="build-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-button color="light">
-      <ion-icon name="hammer-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-button color="light">
-      <ion-icon name="calendar-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-button color="light">
-      <ion-icon name="create-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab-list>
 </ion-fab>

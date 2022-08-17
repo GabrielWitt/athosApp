@@ -210,8 +210,11 @@ export class NewReservationComponent implements OnInit {
       this.loading = true;
       this.myReservation = this.reservation;
       this.myReservation.status = status;
-      this.reservation = await this.request.UpdateReservations(this.reservation);
-      if(status === 'Aprovado'){await this.calendar.confirmReservation(this.reservation);}
+      await this.request.UpdateReservations(this.reservation);
+      console.log(status === 'Aprovado')
+      if(status === 'Aprovado'){
+        await this.calendar.confirmReservation(this.myReservation);
+      }
       this.vibe.endAction();
       this.alerts.showAlert('RESERVAS','Su reserva ha sido actualizada', 'OK');
       this.loading = false;

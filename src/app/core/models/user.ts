@@ -8,11 +8,17 @@ export interface User {
 
 export interface userFormData {
     uid?: string;
+    CI?: number;
     photo?: string;
     email:string;
-    name: string;
-    lastName: string;
-    birthDate: Date;
+    phonePersonal?: number;
+    phoneHome?: number;
+    phoneWork?: number;
+    name?: string;
+    secondName?: string;
+    lastName?: string;
+    secondLastName?: string;
+    birthDate?: Date;
     type?: string;
     createdAt?: string;
     token?: string;

@@ -19,7 +19,7 @@ export class CalendarService {
   confirmReservation(data: CalendarItem){
     return new Promise<reservationSlot>((resolve,reject) => {
       const timeSlot: reservationSlot = {
-        reservationUID: data.uid,
+        uid: data.uid,
         scheduleDate: data.scheduleDate,
         startDate: data.startDate,
         endDate: data.endDate,
@@ -27,7 +27,15 @@ export class CalendarService {
         spaceUID: data.uid,
         floor: data.reservation.floor,
       }
-      this.firestore.createDocument(this.calendarFolder+this.time.getShortDateUTC(data.startDate),timeSlot)
+      this.firestore.setNamedDocument(this.calendarFolder+this.time.getShortDateUTC(data.startDate),data.uid,timeSlot)
+      .then((doc:reservationSlot) => { resolve(doc) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    })
+  }
+
+  cancelReservation(data: CalendarItem){
+    return new Promise<reservationSlot>((resolve,reject) => {
+      this.firestore.deleteDocument(this.calendarFolder+this.time.getShortDateUTC(data.startDate),data.uid)
       .then((doc:reservationSlot) => { resolve(doc) })
       .catch((error) => { reject(this.error.handle(error)); });
     })

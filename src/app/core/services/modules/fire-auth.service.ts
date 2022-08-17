@@ -6,7 +6,7 @@ import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.serv
 import { PushNotificationService } from 'src/app/shared/utilities/push-notification.service';
 import { User, userFormData } from '../../models/user';
 import { FirestoreActionsService } from '../firestore-actions.service';
-import { MyStoreService } from '../my-store.service';
+import { MyStoreService } from '../../../shared/utilities/my-store.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +43,6 @@ export class FireAuthService {
                 uid: user.uid, 
                 email: user.email, 
                 photo: user.photoURL,
-                name: this.userData.name, 
-                lastName: this.userData.lastName, 
-                birthDate: this.userData.birthDate,
                 type: this.userData.type
               }
               if(token){userData.token = token;}
@@ -76,6 +73,7 @@ export class FireAuthService {
     return new Promise((resolve, reject) => {
       try {
         this.store.readFile(this.session).then(session => {
+          console.log(session)
           if (session) { 
             this.store.readFile(this.userInfo)
             .then(data => { resolve({user: session, data}); });
@@ -169,6 +167,7 @@ export class FireAuthService {
     return new Promise(async (resolve) => {
       try {
         this.store.readFile(this.credentials).then(async data => {
+          console.log(data)
           if(data?.email && data?.password){
             this.login(data.email, data.password);
             resolve(true);

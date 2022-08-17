@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./services-manager.page.scss'],
 })
 export class ServicesManagerPage implements OnInit {
-  selectedTab = 'services'
+  selectedTab = 'request'
 
   constructor() { }
 

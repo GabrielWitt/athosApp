@@ -10,6 +10,7 @@ import { ServicesManagerPage } from './services-manager.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MaintenanceAdminComponent } from './maintenance-admin/maintenance-admin.component';
 import { ServicesAdminComponent } from './services-admin/services-admin.component';
+import { RequestAdminComponent } from './request-admin/request-admin.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ServicesAdminComponent } from './services-admin/services-admin.componen
   declarations: [
     ServicesManagerPage,
     MaintenanceAdminComponent,
-    ServicesAdminComponent
+    ServicesAdminComponent,
+    RequestAdminComponent
   ]
 })
 export class ServicesManagerPageModule {}

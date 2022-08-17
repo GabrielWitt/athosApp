@@ -37,16 +37,10 @@ export class SignUpComponent implements OnInit {
       email: [
         {type: 'required', message: 'El email es requerido'},
         {type: 'email', message: 'El email tiene formato incorrecto'}
-      ],
-      name:[ {type: 'required', message: ' Escribe tu nombre'},],
-      lastName:[ {type: 'required', message: ' Escribe tu apellido'},],
-      birthday:[ {type: 'required', message: ' Ingresa tu fecha de nacimiento'},],
+      ]
     };
     this.signUpForm = this.formBuilder.group({
       email:[null, { validators: [Validators.required, Validators.email] }],
-      name:[null, { validators: [Validators.required, Validators.minLength(2)] }],
-      lastName:[null, { validators: [Validators.required, Validators.minLength(3)] }],
-      birthday:[null, { validators: [Validators.required] }],
       password1: [null, { validators: [
         Validators.required,
         Validators.minLength(8),

@@ -20,7 +20,6 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { NoticeBottomBarComponent } from './components/view/notice-bottom-bar/notice-bottom-bar.component';
 import { NewNoticeComponent } from './components/new-notice/new-notice.component';
 import { NewServiceComponent } from './components/services/new-service/new-service.component';
-import { NewServiceTypeComponent } from './components/services/new-service-type/new-service-type.component';
 import { ServiceItemComponent } from './components/services/service-item/service-item.component';
 import { ItemSpaceComponent } from './components/spaces/item-space/item-space.component';
 import { NewSpaceComponent } from './components/spaces/new-space/new-space.component';
@@ -30,6 +29,7 @@ import { PickRentSpaceComponent } from './components/spaces/pick-rent-space/pick
 import { ImagePreviewComponent } from './components/view/image-preview/image-preview.component';
 import { ItemReservationComponent } from './components/spaces/item-reservation/item-reservation.component';
 import { DetailReservationComponent } from './components/spaces/detail-reservation/detail-reservation.component';
+import { DetailServiceComponent } from './components/services/detail-service/detail-service.component';
 
 const components = [
   BigButtonComponent,
@@ -46,8 +46,8 @@ const components = [
   NewNoticeComponent,
   //Services
   NewServiceComponent,
-  NewServiceTypeComponent,
   ServiceItemComponent,
+  DetailServiceComponent,
   //Spaces
   ItemSpaceComponent,
   ItemReservationComponent,

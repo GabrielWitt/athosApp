@@ -40,6 +40,29 @@
           <ion-icon size="large" name="time-outline"></ion-icon>
         </ion-thumbnail>
         <ion-label>
+          Reserva: {{request.startDate | timeFormat: 'TimeUTC'}} - {{request.endDate | timeFormat: 'TimeUTC'}}
+        </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-icon size="large" name="calendar-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label class="ion-text-capitalize">
+          Grupo: {{request.reservation.guests}}
+        </ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-icon size="large" name="time-outline"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>
           Tiempo reservado: {{request.startDate | timeFormat: 'TimeUTC'}} - {{request.endDate | timeFormat: 'TimeUTC'}}
         </ion-label>
       </ion-item>

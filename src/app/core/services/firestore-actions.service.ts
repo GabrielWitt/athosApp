@@ -110,6 +110,18 @@ export class FirestoreActionsService {
     })
   }
 
+  deleteDocument(folder: string, filename: string){
+    return new Promise((resolve, reject) => {
+      try {
+        this.afs.collection(folder).doc(filename).delete().then(done => {
+          resolve(done);
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
+    })
+  }
+
   returnNowStamp(){
     return this.time.dateTransform(serverTimestamp());
   }

@@ -1,16 +1,22 @@
-<app-main-header title="Servicios"></app-main-header>
+<app-main-header *ngIf="selectedTab === 'request'" title="Solicitudes"></app-main-header>
+<app-main-header *ngIf="selectedTab === 'services'" title="Servicios"></app-main-header>
+<app-main-header *ngIf="selectedTab === 'maintenance'" title="Mantenimientos"></app-main-header>
 <ion-toolbar>
-  <ion-segment mode="ios" (ionChange)="segmentChanged($event)" value="services">
+  <ion-segment mode="ios" (ionChange)="segmentChanged($event)" value="request">
+    <ion-segment-button value="request">
+      <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="book-outline"></ion-icon> </h2> </ion-label> 
+    </ion-segment-button>
     <ion-segment-button value="services">
-      <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="hammer-outline"></ion-icon> Servicios </h2> </ion-label> 
+      <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="hammer-outline"></ion-icon> </h2> </ion-label> 
     </ion-segment-button>
     <ion-segment-button value="maintenance">
-      <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="build-outline"></ion-icon> Mantenimientos </h2> </ion-label>
+      <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="build-outline"></ion-icon> </h2> </ion-label>
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
 
 <ion-content>
+  <app-request-admin *ngIf="selectedTab === 'request'"></app-request-admin>
   <app-services-admin *ngIf="selectedTab === 'services'"></app-services-admin>
   <app-maintenance-admin *ngIf="selectedTab === 'maintenance'"></app-maintenance-admin>
 </ion-content>

@@ -1,3 +1,148 @@
-<p>
-  new-service works!
-</p>
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="!service" color="danger" [disabled]="loading" (click)="modal.dismiss(false)">
+        Cancelar
+      </ion-button>
+      <ion-button *ngIf="editServiceForm" color="danger" [disabled]="loading" (click)="editService()">
+        Cancelar
+      </ion-button>
+      <ion-button *ngIf="service && !editServiceForm" color="primary" [disabled]="loading" (click)="modal.dismiss(false)">
+        Atrás
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">{{service ? service.serviceType+': '+service.name: 'Nuevo Servicio'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!service || editServiceForm" color="success" (click)="createService()" 
+        [disabled]="loading">
+          Enviar
+      </ion-button>
+      <ion-button *ngIf="this.service && this.user.type === 'administrador' && !editServiceForm" color="dark" (click)="editService()">
+          Editar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="loading">
+  <app-loading-view></app-loading-view>
+</ion-content>
+
+<ion-content *ngIf="!loading && service && !editServiceForm">
+  <app-detail-service style="height: 100%;" [user]="user" [service]="service" [reserve]="false"></app-detail-service>
+</ion-content>
+
+<ion-content class="ion-padding" *ngIf="!loading && (!service || editServiceForm)">
+  <ion-list>
+    <ion-item>
+      <ion-label>Visible:</ion-label>
+      <ion-checkbox slot="end" mode='md' (ionChange)="availableListener($event)" [checked]="myService.available" color="primary"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-thumbnail slot="start" *ngIf="service" (click)="addPhoto()">
+        <img src="{{service.photo?service.photo :defaultSpace}}">
+      </ion-thumbnail>
+      <ion-thumbnail slot="start" *ngIf="newImage" (click)="addPhoto()">
+        <img src="{{newImage.webPath}}">
+      </ion-thumbnail>
+      <ion-label position="stacked">Servicio:</ion-label>
+      <ion-input type="text" placeholder="Nombre del servicio" [value]="myService.name" (ionChange)="nameListener($event)"></ion-input>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!myService?.name"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
+      Ingresa título del servicio
+    </ion-text>
+  
+    <ion-item *ngIf="!newImage && !service?.photo" (click)="addPhoto()">
+      <ion-label>Agregue una imagen:</ion-label>
+      <ion-button color="secondary"><ion-icon name="camera-outline" color="light"></ion-icon></ion-button>
+    </ion-item>
+    <ion-row *ngIf="progress > 0">
+      <ion-progress-bar color="secondary" [value]="progress"></ion-progress-bar>
+    </ion-row>
+  
+    <ion-item>
+      <ion-label position="stacked">Tipo de Servicio:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="myService.serviceType" (ionChange)="serviceType($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let type of typeList" [value]="type"> {{type}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!myService.serviceType"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Seleccione un tipo de servicio
+    </ion-text>
+  
+    <ion-item>
+      <ion-label position="stacked">Descripción del servicio:</ion-label>
+      <ion-textarea rows="3" placeholder="Ingrese un resumen ..." [value]="myService.description" (ionChange)="descriptionListener($event)"></ion-textarea>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!myService.description"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Agregue una descripción
+    </ion-text>
+  
+    <ion-item>
+      <ion-label position="stacked">Terminos y Condiciones:</ion-label>
+      <ion-textarea rows="3" placeholder="Ingrese las reglas o límites del servicio..." [value]="myService.description" (ionChange)="descriptionListener($event)"></ion-textarea>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Mantenimiento</ion-label>
+          <ion-checkbox slot="end" mode='md' (ionChange)="maintenanceListener($event)" [checked]="myService.maintenance" color="primary"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label style="height: 33px;">Precio: {{!myService.maintenance?'':'Gratis'}}</ion-label>
+          <ion-input *ngIf="!myService.maintenance" class="ion-text-center" type="number" placeholder="Valor en dólares" [value]="myService.cost" (ionChange)="priceListener($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!myService.maintenance && !myService.cost"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Agregue un valor
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Duración (minutos) :</ion-label>
+      <ion-input slot="end" class="ion-text-center" type="number" placeholder="(minutos)" [value]="myService.estimatedTime" (ionChange)="estimatedTimeListener($event)"></ion-input>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!myService.estimatedTime"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Agregue un tiempo estimado del servicio
+    </ion-text>
+
+    <ion-item>
+      <ion-label>Días disponibles:</ion-label>
+    </ion-item>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <p> Dom </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener0($event)" [checked]="dom" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Lun </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener1($event)" [checked]="lun" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Mar </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener2($event)" [checked]="mar" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Mie </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener3($event)" [checked]="mie" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Jue </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener4($event)" [checked]="jue" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Vie </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener5($event)" [checked]="vie" color="primary"></ion-checkbox>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <p> Sab </p>
+        <ion-checkbox mode='ios' (ionChange)="Listener6($event)" [checked]="sab" color="primary"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+</ion-content>
+

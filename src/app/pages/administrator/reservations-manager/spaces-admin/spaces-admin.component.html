@@ -24,17 +24,9 @@
     <app-item-space *ngFor="let space of itemList" [space]="space" (click)="detailSpace(space)"></app-item-space>
   </ion-list>
     
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="secondary">
-      <ion-icon name="chevron-up-circle-outline"></ion-icon>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="secondary" (click)="createSpace()">
+      <ion-icon size="large" name="create-outline"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="light">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light">
-        <ion-icon name="add-outline" (click)="createSpace()"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
   </ion-fab>
 </ion-content>

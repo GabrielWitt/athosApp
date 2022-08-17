@@ -22,9 +22,9 @@ export class SpacesAdminComponent implements OnInit {
   filterSelection = { name: 'Todos', filter: null, value: null };
   filterItems = [
     { name: 'Todos', filter: null, value: null },
-    { name: 'Espacios a Reservar', filter: 'rent', value: true },
-    { name: 'Espacios Privados', filter: 'spaceType', value: 'privado' },
-    { name: 'Espacios Comunitarios', filter: 'spaceType', value: 'comunal' },
+    { name: 'Reservar', filter: 'rent', value: true },
+    { name: 'Privados', filter: 'spaceType', value: 'privado' },
+    { name: 'Comunitarios', filter: 'spaceType', value: 'comunal' },
   ]
 
   constructor(
