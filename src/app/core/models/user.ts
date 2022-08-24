@@ -1,3 +1,5 @@
+import { Lease } from "./spaces";
+
 export interface User {
     uid: string;
     email: string;
@@ -6,22 +8,31 @@ export interface User {
     emailVerified: boolean;
  }
 
-export interface userFormData {
+export interface UserFormData {
     uid?: string;
-    CI?: number;
+    CI?: string;
     photo?: string;
     email:string;
-    phonePersonal?: number;
-    phoneHome?: number;
-    phoneWork?: number;
+    verified?: boolean;
+    phonePersonal?: number | string;
+    phoneHome?: number | string;
+    phoneWork?: number | string;
     name?: string;
     secondName?: string;
     lastName?: string;
     secondLastName?: string;
-    birthDate?: Date;
+    birthDate?: string;
     type?: string;
     createdAt?: string;
     token?: string;
+    leases?: Lease[];
+    company?: Company[];
+}
+
+export interface Company {
+    shortName: string;
+    companyName: string;
+    companyRuc?: string;
 }
 
 export interface ShortUser {

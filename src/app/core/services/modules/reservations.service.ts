@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
-import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
-import { CalendarItem, reservationSlot } from '../../models/calendar';
 import { FirestoreActionsService } from '../firestore-actions.service';
+import { CalendarItem, reservationSlot } from '../../models/calendar';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +51,14 @@ export class ReservationsService {
   readReservationsListOrderRent(filterName: string, filterValue: any,filterOp?){
     return new Promise<CalendarItem[]>((resolve,reject) => {
       this.firestore.readCollectionOrderFilter(this.ReservationsFolder, filterName, filterValue, 'startDate', filterOp)
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
+  readUserReservationsListOrderRent(filterName: string, filterValue: any, userUID:string, filterOp?){
+    return new Promise<CalendarItem[]>((resolve,reject) => {
+      this.firestore.readUserCollectionOrderFilter(this.ReservationsFolder, filterName, filterValue, 'startDate', userUID, filterOp)
       .then((docs: any[]) => { resolve(docs) })
       .catch((error) => { reject(this.error.handle(error)); });
     });

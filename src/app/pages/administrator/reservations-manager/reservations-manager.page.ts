@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserController } from 'src/app/core/controller/user.controller';
 
 @Component({
   selector: 'app-reservations-manager',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class ReservationsManagerPage implements OnInit {
   selectedTab = 'reservations';
 
-  constructor() { }
+  constructor(public userCtrl: UserController) { }
 
   ngOnInit() {}
 

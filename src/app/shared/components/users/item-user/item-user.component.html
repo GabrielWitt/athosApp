@@ -1,0 +1,11 @@
+<ion-row class="userItemList">
+  <ion-col size="3" class="ion-text-center ion-text-capitalize">{{user.name}} {{user.lastName}}</ion-col>
+  <ion-col size="3" class="ion-text-center ion-text-capitalize">{{ this.user.leases?.length>0 ?
+    this.user.leases[0].spaceLease.type+' '+this.user.leases[0].spaceLease.unitNumber: '_'}} 
+    {{ this.user.leases?.length>1?'(+'+(this.user.leases.length-1)+')':''}}</ion-col>
+  <ion-col size="4" class="ion-text-center">{{user.email}}</ion-col>
+  <ion-col size="2" class="ion-text-center ion-text-capitalize">
+    <ion-text color="success">{{user.type}}</ion-text>
+    <ion-icon class="ion-float-right" name="chevron-forward-outline"></ion-icon>
+  </ion-col>
+</ion-row>

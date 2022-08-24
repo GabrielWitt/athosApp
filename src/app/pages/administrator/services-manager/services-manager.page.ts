@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserController } from 'src/app/core/controller/user.controller';
 
 @Component({
   selector: 'app-services-manager',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class ServicesManagerPage implements OnInit {
   selectedTab = 'request'
 
-  constructor() { }
+  constructor(public userCtrl: UserController) { }
 
   ngOnInit() {
   }

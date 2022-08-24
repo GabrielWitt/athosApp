@@ -36,7 +36,7 @@ const routes = [
             },
             {
                 path: 'users',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("src_app_pages_administrator_user-manager_user-manager_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./user-manager/user-manager.module */ 22913)).then(m => m.UserManagerPageModule),
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_administrator_user-manager_user-manager_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./user-manager/user-manager.module */ 22913)).then(m => m.UserManagerPageModule),
                 data: { viewName: 'Users' }
             },
             {
@@ -50,7 +50,7 @@ const routes = [
             },
             {
                 path: 'services',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("src_app_pages_administrator_services-manager_services-manager_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./services-manager/services-manager.module */ 55450)).then(m => m.ServicesManagerPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_administrator_services-manager_services-manager_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./services-manager/services-manager.module */ 55450)).then(m => m.ServicesManagerPageModule)
             }
         ]
     },
@@ -125,12 +125,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "AdministratorPage": () => (/* binding */ AdministratorPage)
 /* harmony export */ });
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _administrator_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./administrator.page.html?ngResource */ 90554);
 /* harmony import */ var _administrator_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./administrator.page.scss?ngResource */ 59287);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 60124);
-/* harmony import */ var src_app_shared_utilities_attachments_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/utilities/attachments.service */ 15909);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
+/* harmony import */ var src_app_shared_utilities_attachments_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/utilities/attachments.service */ 15909);
+
 
 
 
@@ -139,12 +141,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AdministratorPage = class AdministratorPage {
-  constructor(router, images) {
+  constructor(userCtrl, router, images) {
+    this.userCtrl = userCtrl;
     this.router = router;
     this.images = images;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userCtrl.loadUser();
+  }
 
   checkSavedImages() {
     var _this = this;
@@ -169,12 +174,14 @@ let AdministratorPage = class AdministratorPage {
 };
 
 AdministratorPage.ctorParameters = () => [{
-  type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.Router
+  type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__.UserController
 }, {
-  type: src_app_shared_utilities_attachments_service__WEBPACK_IMPORTED_MODULE_3__.AttachmentsService
+  type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router
+}, {
+  type: src_app_shared_utilities_attachments_service__WEBPACK_IMPORTED_MODULE_4__.AttachmentsService
 }];
 
-AdministratorPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+AdministratorPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
   selector: 'app-administrator',
   template: _administrator_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
   styles: [_administrator_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]

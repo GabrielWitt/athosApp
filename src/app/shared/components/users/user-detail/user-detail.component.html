@@ -1,0 +1,98 @@
+<ion-list>
+  <ion-item>
+    <ion-thumbnail *ngIf="!newImage" slot="start" class="profileCircle" (click)="addPhoto()">
+      <img class="imageProfile" src="{{userData?.photo ? userData?.photo : userData}}">
+      <div class="cameraButton" *ngIf="user">
+        <ion-icon name="camera-outline" color="light"></ion-icon>
+      </div>
+    </ion-thumbnail>
+    <ion-thumbnail *ngIf="newImage" slot="start" class="profileCircle">
+      <img src="{{newImage.webPath}}">
+      <ion-spinner class="uploadingImage" size="large" name="circles"></ion-spinner>
+      <ion-progress-bar class="loadingImage" color="primary" [value]="progress"></ion-progress-bar>
+    </ion-thumbnail>
+    <ion-label class="ion-text-wrap">
+      <ion-text color="dark">
+        <ion-card-title>{{userData ? userData.name + ' ' + userData.lastName : 'Cargando'}} <ion-spinner *ngIf="!userData" name="dots"></ion-spinner></ion-card-title>
+      </ion-text>
+      <p>{{userData?.email ? userData.email : '_'}}</p>
+      <ion-text color="primary">
+        <p class="ion-text-capitalize">Tipo: {{userData?.type ? userData.type : '_'}}</p>
+      </ion-text>
+    </ion-label>
+    <ion-button size="small" color="secondary"  *ngIf="!edit && editDataForm"
+    [disabled]="loading" (click)="userCtrl.editUser()">Editar</ion-button>
+  </ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Identificación:</ion-text> {{userData?.CI}}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Fecha de Nacimiento:</ion-text> {{userData?.birthDate | timeFormat: 'DD/MM/YYYY'}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Nombre:</ion-text> {{userData?.name}}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Segundo Nombre:</ion-text> {{userData?.secondName}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Apellido:</ion-text> {{userData?.lastName}}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Segundo Apellido:</ion-text> {{userData?.secondLastName}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Email:</ion-text> {{userData?.email}}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Teléfono Principal:</ion-text> {{userData?.phonePersonal}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Teléfono Secundario:</ion-text> {{userData?.phoneHome?userData?.phoneHome:'N/D'}}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label> <ion-text class="title">Teléfono Contacto:</ion-text> {{userData?.phoneWork?userData?.phoneWork:'N/D'}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="userData.leases?.length > 0">
+    <ion-list-header>
+      <ion-label>Espacios Asignados:</ion-label>
+    </ion-list-header>
+    <app-item-space *ngFor="let space of userData.leases" [space]="space.spaceLease" [profileView]="true" (click)="detailSpace(space)">
+    </app-item-space>
+  </div>
+</ion-list>

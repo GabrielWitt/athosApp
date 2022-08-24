@@ -60,7 +60,15 @@ export class SpacesService {
 
   readSpacesListOrder(){
     return new Promise<Space[]>((resolve,reject) => {
-      this.firestore.readCollectionOrderBy(this.SpacesFolder, 'unitNumber')
+      this.firestore.readCollectionOrderBy(this.SpacesFolder, 'type')
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
+  readSpacesListOrderType(type){
+    return new Promise<Space[]>((resolve,reject) => {
+      this.firestore.readCollectionOrderFilter(this.SpacesFolder, 'type', type, 'unitNumber')
       .then((docs: any[]) => { resolve(docs) })
       .catch((error) => { reject(this.error.handle(error)); });
     });

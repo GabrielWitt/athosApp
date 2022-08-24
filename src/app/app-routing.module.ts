@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['general']);
 const routes: Routes = [
   {
     path: '',
@@ -13,11 +15,13 @@ const routes: Routes = [
   },
   {
     path: 'administrator',
-    loadChildren: () => import('./pages/administrator/administrator.module').then( m => m.AdministratorPageModule)
+    loadChildren: () => import('./pages/administrator/administrator.module').then( m => m.AdministratorPageModule),
+    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'client',
-    loadChildren: () => import('./pages/client/client.module').then( m => m.ClientPageModule)
+    loadChildren: () => import('./pages/client/client.module').then( m => m.ClientPageModule),
+    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   }
 ];
 

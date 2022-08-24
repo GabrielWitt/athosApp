@@ -1,22 +1,25 @@
-<app-main-header *ngIf="selectedTab === 'request'" title="Solicitudes"></app-main-header>
-<app-main-header *ngIf="selectedTab === 'services'" title="Servicios"></app-main-header>
-<app-main-header *ngIf="selectedTab === 'maintenance'" title="Mantenimientos"></app-main-header>
+<div *ngIf="userCtrl.platform !== 'web'">
+  <app-main-header *ngIf="selectedTab === 'request'" title="Tíquetes"></app-main-header>
+  <app-main-header *ngIf="selectedTab === 'services'" title="Servicios"></app-main-header>
+  <app-main-header *ngIf="selectedTab === 'maintenance'" title="Mantenimientos"></app-main-header>
+</div>
 <ion-toolbar>
-  <ion-segment mode="ios" (ionChange)="segmentChanged($event)" value="request">
-    <ion-segment-button value="request">
-      <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="book-outline"></ion-icon> </h2> </ion-label> 
+  <ion-segment (ionChange)="segmentChanged($event)" value="request">
+    <ion-segment-button value="request" layout="icon-start">
+      <ion-label *ngIf="userCtrl.platform === 'web'">Tíquetes</ion-label>
+      <ion-icon name="book-outline"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="services">
-      <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="hammer-outline"></ion-icon> </h2> </ion-label> 
+    <ion-segment-button value="services" layout="icon-start">
+      <ion-label *ngIf="userCtrl.platform === 'web'">Servicios</ion-label>
+      <ion-icon name="hammer-outline"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="maintenance">
-      <ion-label class="ion-padding-start ion-padding-end"> <h2> <ion-icon name="build-outline"></ion-icon> </h2> </ion-label>
+    <ion-segment-button value="maintenance" layout="icon-start">
+      <ion-label *ngIf="userCtrl.platform === 'web'">Mantenimiento</ion-label>
+      <ion-icon name="build-outline"></ion-icon>
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
 
-<ion-content>
-  <app-request-admin *ngIf="selectedTab === 'request'"></app-request-admin>
-  <app-services-admin *ngIf="selectedTab === 'services'"></app-services-admin>
-  <app-maintenance-admin *ngIf="selectedTab === 'maintenance'"></app-maintenance-admin>
-</ion-content>
+<app-request-admin *ngIf="selectedTab === 'request'" style="height: 100%"></app-request-admin>
+<app-services-admin *ngIf="selectedTab === 'services'" style="height: 100%"></app-services-admin>
+<app-maintenance-admin *ngIf="selectedTab === 'maintenance'" style="height: 100%"></app-maintenance-admin>

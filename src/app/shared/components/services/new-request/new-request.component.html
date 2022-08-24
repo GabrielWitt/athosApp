@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="!request" color="danger" [disabled]="loading" (click)="cancelRequest()">
+        Cancelar
+      </ion-button>
+      <ion-button *ngIf="editRequestForm " color="danger" [disabled]="loading" (click)="cancelRequest()">
+        Cancelar
+      </ion-button>
+      <ion-button *ngIf="request && !editRequestForm " color="primary" [disabled]="loading" (click)="modal.dismiss(false)">
+        Atrás
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">{{request ? request.service.name : 'Nuevo Tíquet'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="(!request || editRequestForm ) && request" color="success" (click)="createRequest()" 
+        [disabled]="loading || !myRequest.scheduleDate">
+          Enviar
+      </ion-button>
+      <ion-button *ngIf="request && user.type === 'administrador' && !editRequestForm " color="dark" (click)="enableForm()">
+          Editar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="loading">
+  <app-loading-view></app-loading-view>
+</ion-content>
+
+<ion-content *ngIf="!loading">
+  <app-detail-service *ngIf="service" style="height: 100%;" [user]="user" [service]="service" [reserve]="false"></app-detail-service>
+  <app-detail-request *ngIf="request && !showRequestForm" style="height: 100%;" [user]="user" [request]="request"></app-detail-request>
+  
+  <ion-list *ngIf="showRequestForm">
+    <ion-item>
+      <ion-label position="stacked">Lugar de Servicio:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="unitName" (ionChange)="spaceChange($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let space of units" [value]="space">{{space.type}} {{space.unitNumber}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer *ngIf="!loading">
+  <ion-toolbar>
+    <app-big-button *ngIf="service && !showRequestForm" class="ion-padding-top" LABEL="SOLICITAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="enableForm()"></app-big-button>
+    <app-big-button *ngIf="service && !showRequestForm" class="ion-padding-top" LABEL="SOLICITAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="enableForm()"></app-big-button>
+    <ion-row>
+      <ion-col>
+        <app-big-button *ngIf="request && request.requestBy.uid === user.uid" class="ion-padding-top" LABEL="APROVAR" buttonType="SUCCESS" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Aprovado')"></app-big-button>
+      </ion-col>
+      <ion-col>
+        <app-big-button *ngIf="request && (user.type === 'administrador' || request.requestBy.uid === user.uid)" class="ion-padding-top" LABEL="CANCELAR" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

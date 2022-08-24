@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ShortUser, userFormData } from 'src/app/core/models/user';
+import { ShortUser, UserFormData } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,7 +7,7 @@ import { ShortUser, userFormData } from 'src/app/core/models/user';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-  @Input() user: userFormData;
+  @Input() user: UserFormData;
   @Input() shortUser: ShortUser;
   defaultUser = '../../../../assets/profile/ProfileBlank.png';
   lastName = '';

@@ -24,11 +24,9 @@ export interface ShortService {
 }
 
 export const ServiceTypeArray = [
-   'Electrico',
+   'Eléctrico',
    'Plomeria',
-   'Construccion',
-   'Muebles',
-   'Jardineria',
-   'Limpieza'
+   'Muebles/Construcción',
+   'Limpieza/Jardinería'
 ] as const;
 export type ServiceTypeList = typeof ServiceTypeArray[number];

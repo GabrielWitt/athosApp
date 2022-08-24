@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
-import { userFormData } from 'src/app/core/models/user';
+import { UserController } from 'src/app/core/controller/user.controller';
+import { UserFormData } from 'src/app/core/models/user';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 import { AlertsService } from 'src/app/shared/utilities/alerts';
 import { NewNoticeComponent } from '../../new-notice/new-notice.component';
@@ -15,9 +16,10 @@ export class MainHeaderComponent implements OnInit {
   loading = false;
   @Input() title: string;
   @Input() rightButton: any;
-  user: userFormData;
+  user: UserFormData;
 
   constructor(
+    public userCtrl: UserController,
     private router: Router,
     private modal: ModalController,
     private alerts: AlertsService,
@@ -25,9 +27,7 @@ export class MainHeaderComponent implements OnInit {
     private routerOutlet: IonRouterOutlet,
   ) { }
 
-  ngOnInit() {
-    this.auth.getUser()
-    .then((userData:any) => { this.user = userData.data; })
+  ngOnInit() {  this.user = this.userCtrl.currentUser;
   }
 
   cerrarSesion(){

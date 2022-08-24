@@ -36,7 +36,7 @@
   <ion-list>
     <ion-item *ngIf="communitiesList.length > 0">
       <ion-thumbnail slot="start">
-        <img [src]="communitiesList[0].photo">
+        <img [src]="communitiesList[0]?.photo">
       </ion-thumbnail>
       <ion-label>
         <h3>{{communitiesList[0].propertyType}} {{communitiesList[0].name}}</h3>
@@ -46,20 +46,20 @@
   
     <ion-item>
       <ion-thumbnail slot="start" *ngIf="space" (click)="addPhoto()">
-        <img src="{{space.photo?space.photo :defaultSpace}}">
+        <img src="{{space?.photo?space.photo :defaultSpace}}">
       </ion-thumbnail>
       <ion-thumbnail slot="start" *ngIf="newImage" (click)="addPhoto()">
         <img src="{{newImage.webPath}}">
       </ion-thumbnail>
-      <ion-label position="stacked">Unidad:</ion-label>
-      <ion-input type="text" placeholder="(ejem. 0102 o salón)" [value]="mySpace.unitNumber" (ionChange)="unitListener($event)"></ion-input>
+      <ion-label position="stacked">Alias:</ion-label>
+      <ion-input type="text" placeholder="número o designación" [value]="mySpace.unitNumber" (ionChange)="unitListener($event)"></ion-input>
     </ion-item>
     <ion-text class="ion-padding-start" color="danger" *ngIf="!mySpace?.unitNumber"> 
       <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
       Ingresa el número del espacio o el título del area
     </ion-text>
   
-    <ion-item *ngIf="!newImage && !space.photo" (click)="addPhoto()">
+    <ion-item *ngIf="!newImage && !space?.photo" (click)="addPhoto()">
       <ion-label>Agregue una imagen:</ion-label>
       <ion-button color="secondary"><ion-icon name="camera-outline" color="light"></ion-icon></ion-button>
     </ion-item>

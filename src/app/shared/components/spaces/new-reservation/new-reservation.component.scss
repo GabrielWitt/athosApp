@@ -35,3 +35,13 @@
     border-radius: 15pt;
     padding: 5pt;
   }
+
+.dateStyle{
+    font-size: inherit; 
+    float: right;
+}
+
+.noDateStyle{
+    --color: #b4b4b4;
+    color: #b4b4b4;
+}

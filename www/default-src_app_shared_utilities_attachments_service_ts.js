@@ -19,7 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_image_compress__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-image-compress */ 32568);
 /* harmony import */ var src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/utilities/error-handler.service */ 43570);
 /* harmony import */ var firebase_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/storage */ 19058);
-/* harmony import */ var _my_store_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./my-store.service */ 30259);
+/* harmony import */ var _shared_utilities_my_store_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/utilities/my-store.service */ 11308);
 
 
 
@@ -310,7 +310,7 @@ let ImageUploaderService = class ImageUploaderService {
 ImageUploaderService.ctorParameters = () => [{
   type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router
 }, {
-  type: _my_store_service__WEBPACK_IMPORTED_MODULE_4__.MyStoreService
+  type: _shared_utilities_my_store_service__WEBPACK_IMPORTED_MODULE_4__.MyStoreService
 }, {
   type: src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_2__.ErrorHandlerService
 }, {
@@ -320,84 +320,6 @@ ImageUploaderService.ctorParameters = () => [{
 ImageUploaderService = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Injectable)({
   providedIn: 'root'
 })], ImageUploaderService);
-
-
-/***/ }),
-
-/***/ 30259:
-/*!***************************************************!*\
-  !*** ./src/app/core/services/my-store.service.ts ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MyStoreService": () => (/* binding */ MyStoreService)
-/* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _capacitor_preferences__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @capacitor/preferences */ 85191);
-
-
-
-
-let MyStoreService = class MyStoreService {
-  constructor() {}
-
-  setData(filename, data) {
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      try {
-        const lockData = JSON.stringify(data);
-        yield _capacitor_preferences__WEBPACK_IMPORTED_MODULE_1__.Preferences.set({
-          key: filename,
-          value: lockData
-        });
-        return 'ok';
-      } catch (error) {
-        console.log(error);
-        return 'data not saved';
-      }
-    })();
-  }
-
-  readFile(filename) {
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      try {
-        const {
-          value
-        } = yield _capacitor_preferences__WEBPACK_IMPORTED_MODULE_1__.Preferences.get({
-          key: filename
-        });
-        return JSON.parse(value);
-      } catch (error) {
-        console.log(error);
-        return 'file not found';
-      }
-    })();
-  }
-
-  removeFile(filename) {
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      try {
-        yield _capacitor_preferences__WEBPACK_IMPORTED_MODULE_1__.Preferences.remove({
-          key: filename
-        });
-        return 'file removed';
-      } catch (error) {
-        console.log(error);
-        return 'file not found';
-      }
-    })();
-  }
-
-};
-
-MyStoreService.ctorParameters = () => [];
-
-MyStoreService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
-  providedIn: 'root'
-})], MyStoreService);
 
 
 /***/ }),
@@ -973,6 +895,84 @@ HapticsService.ctorParameters = () => [];
 HapticsService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
   providedIn: 'root'
 })], HapticsService);
+
+
+/***/ }),
+
+/***/ 11308:
+/*!******************************************************!*\
+  !*** ./src/app/shared/utilities/my-store.service.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MyStoreService": () => (/* binding */ MyStoreService)
+/* harmony export */ });
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _capacitor_preferences__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @capacitor/preferences */ 85191);
+
+
+
+
+let MyStoreService = class MyStoreService {
+  constructor() {}
+
+  setData(filename, data) {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      try {
+        const lockData = JSON.stringify(data);
+        yield _capacitor_preferences__WEBPACK_IMPORTED_MODULE_1__.Preferences.set({
+          key: filename,
+          value: lockData
+        });
+        return 'ok';
+      } catch (error) {
+        console.log(error);
+        return 'data not saved';
+      }
+    })();
+  }
+
+  readFile(filename) {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      try {
+        const {
+          value
+        } = yield _capacitor_preferences__WEBPACK_IMPORTED_MODULE_1__.Preferences.get({
+          key: filename
+        });
+        return JSON.parse(value);
+      } catch (error) {
+        console.log(error);
+        return 'file not found';
+      }
+    })();
+  }
+
+  removeFile(filename) {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      try {
+        yield _capacitor_preferences__WEBPACK_IMPORTED_MODULE_1__.Preferences.remove({
+          key: filename
+        });
+        return 'file removed';
+      } catch (error) {
+        console.log(error);
+        return 'file not found';
+      }
+    })();
+  }
+
+};
+
+MyStoreService.ctorParameters = () => [];
+
+MyStoreService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+  providedIn: 'root'
+})], MyStoreService);
 
 
 /***/ }),

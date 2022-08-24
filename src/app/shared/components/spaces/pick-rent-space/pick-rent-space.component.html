@@ -5,7 +5,7 @@
         Cancelar
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-uppercase">Areas para Renta</ion-title>
+    <ion-title class="ion-text-uppercase">Nueva Reservación</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,6 +21,24 @@
 
 <ion-content class="ion-padding"  *ngIf="rentSpacesList.length > 0 && !loading">
   <ion-list>
-    <app-item-space *ngFor="let space of rentSpacesList" [space]="space" (click)="pickSpace(space)"></app-item-space>
+    <ion-row class="headerSpaceList">
+      <ion-col size="2" class="ion-text-center"></ion-col>
+      <ion-col size="4" class="ion-text-center">Espacio</ion-col>
+      <ion-col size="3" class="ion-text-center">Aforo</ion-col>
+      <ion-col size="3" class="ion-text-center">Renta</ion-col>
+    </ion-row>
+    <ion-row class="spaceItemList" *ngFor="let space of rentSpacesList" (click)="pickSpace(space)">
+      <ion-col size="2" class="ion-text-center ion-text-capitalize">
+        <ion-thumbnail>
+          <img [src]="space.photo ? space.photo : defaultSpace">
+        </ion-thumbnail>
+      </ion-col>
+      <ion-col size="4" class="ion-text-center ion-padding-top ion-text-capitalize">{{space.type}} {{space.unitNumber}}</ion-col>
+      <ion-col size="3" class="ion-text-center ion-padding-top ion-text-capitalize">{{space.rentData.capacity}}</ion-col>
+      <ion-col size="3" class="ion-text-center ion-padding-top ion-text-capitalize">
+        {{showCost(space)}}
+        <ion-icon class="ion-float-right" name="chevron-forward-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
   </ion-list>
 </ion-content>

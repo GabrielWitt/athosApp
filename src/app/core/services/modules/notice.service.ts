@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { Notice } from '../../models/notice';
-import { userFormData } from '../../models/user';
+import { UserFormData } from '../../models/user';
 import { FirestoreActionsService } from '../firestore-actions.service';
 
 @Injectable({

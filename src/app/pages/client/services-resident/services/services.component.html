@@ -1,17 +1,51 @@
 
+
+<ion-content class="ion-padding" *ngIf="loading">
+  <app-loading-view></app-loading-view>
+</ion-content>
+
+<app-not-data-yet-message 
+  *ngIf="services.serviceList.length == 0 && services.maintenanceList.length == 0  && !loading"
+  text="No tiene servicios aún" icon="alert-circle-outline"
+></app-not-data-yet-message>
+
+
+<ion-content class="ion-padding"  *ngIf="(services.serviceList.length > 0 || services.maintenanceList.length > 0 ) && !loading">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
     <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
   </ion-refresher>
-  
-  <ion-list *ngIf="loading">
-    <app-loading-view></app-loading-view>
-  </ion-list>
-  
-  <app-not-data-yet-message 
-    *ngIf="itemList.length == 0 && !loading"
-    text="No tiene servicios aún" icon="alert-circle-outline"
-  ></app-not-data-yet-message>
+  <ion-list>
+    <ion-accordion-group #accordionGroup value="second">
+      <ion-accordion value="first" *ngIf="(services.maintenanceList.length> 0)">
+        <ion-item slot="header" color="light">
+          <ion-label>Mantenimiento</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-row class="headerServiceList" *ngIf="(services.maintenanceList.length> 0)">
+            <ion-col size="2" class="ion-text-center"></ion-col>
+            <ion-col size="5" class="ion-text-center">Tipo</ion-col>
+            <ion-col size="5" class="ion-text-center">Servicio</ion-col>
+          </ion-row>
+          <app-service-item *ngFor="let service of services.maintenanceList" [service]="service" 
+          (click)="pickService(service)" [maintenance]="true"></app-service-item>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="second" *ngIf="(services.serviceList.length> 0)">
+        <ion-item slot="header" color="light">
+          <ion-label>Servicios</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
 
-  <ion-list *ngIf="itemList.length > 0 && !loading">
-    
+          <ion-row class="headerServiceList" *ngIf="(services.serviceList.length> 0)">
+            <ion-col size="1" class="ion-text-center"></ion-col>
+            <ion-col size="4" class="ion-text-center">Tipo</ion-col>
+            <ion-col size="4" class="ion-text-center">Servicio</ion-col>
+            <ion-col size="3" class="ion-text-center">Precio</ion-col>
+          </ion-row>
+          <app-service-item *ngFor="let service of services.serviceList" [service]="service" 
+          (click)="pickService(service)" [maintenance]="false"></app-service-item>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
   </ion-list>

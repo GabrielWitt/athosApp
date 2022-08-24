@@ -286,7 +286,7 @@ module.exports = "\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($ev
   \***************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<app-main-header title=\"Servicios\"></app-main-header>\n\n<ion-content>\n  <ion-segment mode=\"ios\" (ionChange)=\"segmentChanged($event)\" value=\"services\">\n    <ion-segment-button value=\"services\">\n      <ion-label> <h2>Servicios</h2> </ion-label> \n    </ion-segment-button>\n    <ion-segment-button value=\"maintenance\">\n      <ion-label> <h2>Mantenimientos</h2> </ion-label>\n    </ion-segment-button>\n  </ion-segment>\n  <app-services *ngIf=\"selectedTab === 'services'\"></app-services>\n  <app-maintenance *ngIf=\"selectedTab === 'maintenance'\"></app-maintenance>\n</ion-content>\n";
+module.exports = "<app-main-header title=\"Servicios\"></app-main-header>\n\n<ion-content>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"services\">\n    <ion-segment-button value=\"services\">\n      <ion-label> <h2>Servicios</h2> </ion-label> \n    </ion-segment-button>\n    <ion-segment-button value=\"maintenance\">\n      <ion-label> <h2>Mantenimientos</h2> </ion-label>\n    </ion-segment-button>\n  </ion-segment>\n  <app-services *ngIf=\"selectedTab === 'services'\"></app-services>\n  <app-maintenance *ngIf=\"selectedTab === 'maintenance'\"></app-maintenance>\n</ion-content>\n";
 
 /***/ }),
 

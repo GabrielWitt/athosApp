@@ -11,6 +11,7 @@ import { SpacesService } from 'src/app/core/services/modules/spaces.service';
 export class PickRentSpaceComponent implements OnInit {
   rentSpacesList: Space[] = [];
   loading = true;
+  defaultSpace = '../../../../../assets/blueprint.png';
 
   constructor(
     private spaces: SpacesService,
@@ -30,6 +31,11 @@ export class PickRentSpaceComponent implements OnInit {
       console.log(error)
       this.loading = false;
     }
+  }
+
+  showCost(space){
+    if(space.rent){return space.rentData.cost + "$"; }
+    else{ return 'Gratis'; }
   }
 
   pickSpace(space){

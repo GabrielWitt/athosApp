@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { StatusList } from 'src/app/core/models/calendar';
 
 @Component({
   selector: 'app-status-request',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./status-request.component.scss'],
 })
 export class StatusRequestComponent implements OnInit {
-  @Input() status: 'Solicitado'|'Aprovado'|'Cancelado'|'Terminado';
+  @Input() status: StatusList;
 
   constructor() { }
 

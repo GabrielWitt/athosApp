@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { attachmentOptions } from 'src/app/core/models/images';
-import { Community, Space } from 'src/app/core/models/spaces';
-import { userFormData } from 'src/app/core/models/user';
+import { Space } from 'src/app/core/models/spaces';
+import { UserFormData } from 'src/app/core/models/user';
 import { ImageUploaderService } from 'src/app/core/services/image-uploader.service';
-import { CommunitiesService } from 'src/app/core/services/modules/courses.service';
 import { SpacesService } from 'src/app/core/services/modules/spaces.service';
 import { AlertsService } from 'src/app/shared/utilities/alerts';
 import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
@@ -19,7 +18,7 @@ import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 export class NewSpaceComponent implements OnInit {
   defaultUser = 'assets/profile/ProfileBlank.png';
   defaultSpace = '../../../../../assets/blueprint.png';
-  @Input() user: userFormData;
+  @Input() user: UserFormData;
   @Input() space: Space;
 
   mySpace: Space = {
@@ -37,7 +36,7 @@ export class NewSpaceComponent implements OnInit {
   progress = 0;
   communitiesList = [];
   spaceTypeList = ['privado', 'comunal']
-  typeList = ['oficina' , 'vivienda' , 'parqueadero' , 'recepción' , 'bodega' , 'salón' , 'tienda' , 'terraza']
+  typeList = ['oficina','vivienda' , 'parqueo' , 'recepción' , 'bodega' , 'salón' , 'tienda' , 'terraza']
 
   loading = false;
   editSpaceForm = false;
@@ -85,6 +84,7 @@ export class NewSpaceComponent implements OnInit {
   ngOnInit() {
     this.vibe.startAction();
     if(this.space && this.user.type === 'administrador'){
+      console.log(this.space)
       this.mySpace = this.space;
       if(this.space.rent){
         this.dom = this.mySpace.rentData.weekdays[0];
@@ -96,9 +96,19 @@ export class NewSpaceComponent implements OnInit {
         this.sab = this.mySpace.rentData.weekdays[6];
         this.setMaxTime(this.mySpace.rentData.minTime);
       }
+    } else {
+      this.spaces.readCommunityList()
+      .then(communities => { this.communitiesList = communities; })
     }
-    this.spaces.readCommunityList()
-    .then(communities => { this.communitiesList = communities; })
+  }
+
+  editspace(){
+    if(this.editSpaceForm){
+      this.mySpace = this.space;
+      this.editSpaceForm = false;
+    } else {
+      this.editSpaceForm= true;
+    }
   }
 
   // LISTENRES
@@ -256,22 +266,13 @@ export class NewSpaceComponent implements OnInit {
   uploadPhoto(){
     return new Promise<string>((resolve, reject) => {
       const imageName = Date().toString()+'_Space_'+this.mySpace.unitNumber;
-      this.upload.uploadFile('NoticeList',imageName, this.newImage.file,
+      this.upload.uploadFile('Spaces',imageName, this.newImage.file,
       (progress)=>{ this.progress = progress })
       .then((data:any) => {
         this.upload.deletePicture();
         resolve(data.url);
       }).catch(error => { console.log(error); reject(error) })
     })
-  }
-
-  editspace(){
-    if(this.editSpaceForm){
-      this.mySpace = this.space;
-      this.editSpaceForm = false;
-    } else {
-      this.editSpaceForm= true;
-    }
   }
 
   async createSpace(){
@@ -282,12 +283,11 @@ export class NewSpaceComponent implements OnInit {
       if(this.mySpace.rent){
         this.mySpace.rentData.weekdays = [this.dom,this.lun,this.mar,this.mie,this.jue,this.vie,this.sab]
       }
-      console.log(this.mySpace)
       this.vibe.endAction();
       if(this.space){
-        this.spaces.UpdateSpaces(this.mySpace)
+        await this.spaces.UpdateSpaces(this.mySpace)
       } else {
-        this.spaces.createSpaces(this.mySpace)
+        await this.spaces.createSpaces(this.mySpace)
       }
       this.alerts.showAlert( 'ESPACIOS', 
       this.space? 'Datos de '+ this.space.unitNumber + ' actualizados' : 'Nuevo espacio agregado', 'OK');

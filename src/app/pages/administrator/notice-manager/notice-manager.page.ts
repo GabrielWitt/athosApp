@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { Notice } from 'src/app/core/models/notice';
-import { User, userFormData } from 'src/app/core/models/user';
+import { User, UserFormData } from 'src/app/core/models/user';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 import { NoticeService } from 'src/app/core/services/modules/notice.service';
 import { NewNoticeComponent } from 'src/app/shared/components/new-notice/new-notice.component';
@@ -13,7 +13,7 @@ import { NewNoticeComponent } from 'src/app/shared/components/new-notice/new-not
 })
 export class NoticeManagerPage implements OnInit {
   user: User;
-  userData: userFormData;
+  userData: UserFormData;
   loading = true;
   loadingColor = false;
   loadingList = [1,2,3,4,5]

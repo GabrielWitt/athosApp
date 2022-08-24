@@ -5,11 +5,12 @@ export interface CalendarItem {
     scheduleDate: string;
     startDate: string;
     endDate: string;
-    status: 'Solicitado'|'Aprovado'|'Cancelado'|'Terminado'
+    status: StatusList;
     notes?: string;
     reservation?: ReservationItem;
     service?: ServiceItem;
     requestBy: ShortUser;
+    userUID: string;
 }
 
 export interface ReservationItem {
@@ -18,6 +19,18 @@ export interface ReservationItem {
     floor?: string;
     photo?: string;
     guests: number;
+}
+
+export interface ServiceItem {
+    serviceUID: string;
+    name: string;
+    maintenance: boolean;
+    photo: string;
+    estimatedTime: number;
+    cost: string | number;
+    spaceUID: string;
+    unitNumber?: string | number;
+    floor?: string;
 }
 
 export interface reservationSlot {
@@ -30,8 +43,11 @@ export interface reservationSlot {
     floor?: string;
 }
 
-export interface ServiceItem {
-    serviceUID: string;
-    type?: 'maintenance'|'service';
-    spaceUID: string
-}
+export const StatusArray = [
+    'Solicitado',
+    'Aprovado',
+    'En Progreso',
+    'Cancelado',
+    'Terminado'
+] as const;
+export type StatusList = typeof StatusArray[number];

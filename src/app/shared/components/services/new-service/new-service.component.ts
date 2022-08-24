@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { attachmentOptions } from 'src/app/core/models/images';
 import { Service, ServiceTypeList } from 'src/app/core/models/services';
-import { userFormData } from 'src/app/core/models/user';
+import { UserFormData } from 'src/app/core/models/user';
 import { ImageUploaderService } from 'src/app/core/services/image-uploader.service';
+import { MaintenanceService } from 'src/app/core/services/modules/maintenance.service';
 import { SpacesService } from 'src/app/core/services/modules/spaces.service';
 import { AlertsService } from 'src/app/shared/utilities/alerts';
 import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
@@ -18,8 +19,9 @@ import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 export class NewServiceComponent implements OnInit {
   defaultUser = 'assets/profile/ProfileBlank.png';
   defaultSpace = '../../../../../assets/blueprint.png';
-  @Input() user: userFormData;
+  @Input() user: UserFormData;
   @Input() service: Service;
+  title = 'Nuevo Servicio';
 
   myService: Service = {
     communityUID: '',
@@ -51,7 +53,7 @@ export class NewServiceComponent implements OnInit {
   serviceCheck = false;
   maintenanceCheck = false;
 
-  typeList = [ 'Electrico', 'Plomeria', 'Construccion', 'Muebles', 'Jardineria', 'Limpieza' ]
+  typeList = this.services.typeList;
 
   constructor(
     public modal: ModalController,
@@ -60,16 +62,13 @@ export class NewServiceComponent implements OnInit {
     private upload: ImageUploaderService,
     private vibe: HapticsService,
     private spaces: SpacesService,
+    private services: MaintenanceService
   ) { }
 
   ngOnInit() {
     this.spaces.readCommunityList()
     .then(communities => { this.communitiesList = communities; })
   }
-
-  createService(){}
-
-  editService(){}
 
   // LISTENRES
   nameListener(e){ this.myService.name = e.detail.value; }
@@ -83,7 +82,8 @@ export class NewServiceComponent implements OnInit {
 
   maintenanceListener(e){ 
     this.myService.maintenance = e.detail.checked;
-    if(this.myService.maintenance){ this.myService.cost = 0; }
+    if(this.myService.maintenance){ this.myService.cost = 0; this.title = 'Nuevo Mantenimiento' }
+    else{this.title = 'Nuevo Servicio'}
   }
 
   availableListener(e) { this.myService.available = e.detail.value; }
@@ -119,18 +119,6 @@ export class NewServiceComponent implements OnInit {
     });
   }
 
-  addAttachment() {
-    const options: attachmentOptions = {
-      currentRoute: '/services',
-      height:null, width:null, pdf: false
-    }
-    this.images.presentImageOptions(options).then(imageObj => {
-      if (imageObj[0] !== undefined){
-        this.newImage  = imageObj[0];
-      }
-    });
-  }
-
   uploadPhoto(){
     return new Promise<string>((resolve, reject) => {
       const imageName = Date().toString()+'_Space_'+this.myService.name;
@@ -142,5 +130,9 @@ export class NewServiceComponent implements OnInit {
       }).catch(error => { console.log(error); reject(error) })
     })
   }
+
+  createService(){}
+
+  editService(){}
 
 }

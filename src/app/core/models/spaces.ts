@@ -1,4 +1,4 @@
-
+import { ShortUser } from "./user";
 
 export interface Community {
     uid?: string
@@ -56,10 +56,18 @@ export interface ShortSpace {
     photo?: string;
 }
 
+export interface Lease {
+    spaceLease: ShortSpace;
+    userLease: ShortUser;
+    leaseStart: string;
+    leaseEnd: string;
+    monthlyCost: number;
+}
+
 export const SpaceTypeArray = [
     'oficina', 
     'vivienda', 
-    'parqueadero', 
+    'parqueo', 
     'recepción', 
     'bodega', 
     'salón', 

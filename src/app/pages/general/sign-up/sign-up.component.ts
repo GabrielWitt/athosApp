@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { User } from 'firebase/auth';
+import { UserFormData } from 'src/app/core/models/user';
+import { FirestoreActionsService } from 'src/app/core/services/firestore-actions.service';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 import { AlertsService } from 'src/app/shared/utilities/alerts';
 import { RouteHistoryService } from 'src/app/shared/utilities/route-history';
@@ -29,6 +31,7 @@ export class SignUpComponent implements OnInit {
     private verification: VerificationFuncService,
     public history: RouteHistoryService,
     private auth: FireAuthService,
+    private action: FirestoreActionsService,
     private alert: AlertsService
     ) { }
 
@@ -59,18 +62,22 @@ export class SignUpComponent implements OnInit {
     })
   }
 
-  signProcess(form) {
-    this.messageError = '';
-    this.loading = true;
-    this.auth.registerUser(form.email,form.password1,
-      form.name,form.lastName,form.birthday).then((user: User) => {
-      this.auth.verifyEmail().then((verify: string) => {
-        this.loading = false;
-        this.alert.showAlert('',verify,'OK').then(() => {
-          this.router.navigateByUrl('general/verify-email/'+user.email);
-        });
+  async signProcess(form) {
+    try {
+      this.messageError = '';
+      this.loading = true;
+      this.auth.registerUser(form.email,form.password1).then((user: User) => {
+        this.auth.verifyEmail().then((verify: string) => {
+          this.loading = false;
+          this.alert.showAlert('',verify,'OK').then(() => {
+            this.router.navigateByUrl('general/verify-email/'+user.email);
+          });
+        })
       })
-    }).catch(error => { this.messageError = error; this.loading = false; })
+    } catch (error) {
+      this.messageError = error; 
+      this.loading = false;
+    }
   }
 
   cancel(){

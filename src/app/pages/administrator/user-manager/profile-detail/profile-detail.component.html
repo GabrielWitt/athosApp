@@ -5,57 +5,128 @@
         Atrás
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-uppercase">Perfil de {{user.name}}</ion-title>
+    <ion-title class="ion-text-uppercase">{{user?user.name +' '+ user.lastName:'Nuevo Usuario'}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="!upgrading" color="primary" (click)="upgradeUser()">
-        <ion-icon name="arrow-up-circle-outline"></ion-icon>
+      <ion-button *ngIf="!user || editUserForm" color="success" (click)="sendData()" 
+        [disabled]="loading && !myCurrentUser?.type && !myCurrentUser?.CI && !myCurrentUser?.name &&
+        !myCurrentUser?.secondName && !myCurrentUser?.lastName && !myCurrentUser?.birthDate &&
+        !myCurrentUser?.email && !myCurrentUser?.phonePersonal
+        ">
+          Enviar
       </ion-button>
-      <ion-button *ngIf="upgrading" color="primary">
-        <ion-spinner name="lines-small" color="tertiary"></ion-spinner>
+      <ion-button *ngIf="user && currentUser?.type === 'administrador' && !editUserForm" color="dark" (click)="editUser()">
+          Editar
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list class="ion-padding">
+<ion-content class="ion-padding" *ngIf="loading">
+  <app-loading-view></app-loading-view>
+</ion-content>
+
+<ion-content *ngIf="!loading && user && !editUserForm">
+  <app-user-detail [user]="null" [userData]="user" [editDataForm]="false"></app-user-detail>
+</ion-content>
+
+<ion-content class="ion-padding" *ngIf="!loading && (!user || editUserForm)">
+  <ion-list>
     <ion-item>
-      <ion-thumbnail slot="start">
-        <img class="imageProfile" src="{{user?.photo ? user?.photo : defaultUser}}">
+      <ion-thumbnail *ngIf="!newImage" slot="start" class="profileCircle">
+        <img class="imageProfile" src="{{user?.photo ? user.photo : defaultUser}}">
+      </ion-thumbnail>
+      <ion-thumbnail *ngIf="newImage" slot="start" class="profileCircle">
+        <img src="{{newImage.webPath}}">
+        <ion-spinner class="uploadingImage" size="large" name="circles"></ion-spinner>
+        <ion-progress-bar class="loadingImage" color="primary" [value]="progress"></ion-progress-bar>
       </ion-thumbnail>
       <ion-label class="ion-text-wrap">
         <ion-text color="dark">
-          <ion-card-title>{{user.name + ' ' + user.lastName}} </ion-card-title>
+          <ion-card-title>{{myCurrentUser ? myCurrentUser.name + ' ' + myCurrentUser.lastName : 'Cargando'}} <ion-spinner *ngIf="!myCurrentUser" name="dots"></ion-spinner></ion-card-title>
         </ion-text>
         <p>{{user?.email ? user?.email : '_'}}</p>
         <ion-text color="primary">
-          <p class="ion-text-capitalize"> Tipo: {{user.type}}</p>
+          <p class="ion-text-capitalize">Tipo: {{myCurrentUser?.type ? myCurrentUser?.type : '_'}}</p>
         </ion-text>
       </ion-label>
     </ion-item>
+  
     <ion-item>
-      <ion-label color="dark" position="floating"> <b>Nombre</b></ion-label>
-      <ion-input [value]="user.name" type="text" [disabled]="true"></ion-input>
+      <ion-label>Identificación:</ion-label>
+      <ion-input class="ion-text-center" placeholder="Cédula o Pasaporte" type="number" maxlength="10" (ionChange)="CIListener($event)" [value]="myCurrentUser.CI"></ion-input>
     </ion-item>
+  
     <ion-item>
-      <ion-label color="dark" position="floating"> <b>Apellido</b></ion-label>
-      <ion-input [value]="user.lastName" type="text" [disabled]="true"></ion-input>
+      <ion-label>Email:</ion-label>
+      <ion-input class="ion-text-center" type="text" (ionChange)="emailListener($event)" [value]="myCurrentUser.email"></ion-input>
     </ion-item>
+  
     <ion-item>
-      <ion-label color="dark" position='floating'><b>Cumpleaños</b></ion-label>
-      <ion-input [value]="user.birthDate" type="date" [disabled]="true"></ion-input>
+      <ion-label>Nombre:</ion-label>
+      <ion-input class="ion-text-center" type="text" placeholder="Primer Nombre" (ionChange)="nameListener($event)" [value]="myCurrentUser.name"></ion-input>
     </ion-item>
-  </ion-list>
-  <div *ngIf="petList.length > 0">
-    <ion-list-header>
-      <ion-label>Mascotas:</ion-label>
-    </ion-list-header>
-    <ion-item *ngFor="let pet of petList">
-      <ion-avatar slot="start">  <img [src]="pet.photo"> </ion-avatar>
-      <ion-label>
-        <h3> {{pet.name}} </h3>
-        <p> {{pet.specie}}  {{pet.breed?'/ '+pet.breed:''}}  </p>
+  
+    <ion-item>
+      <ion-label>2º Nombre:</ion-label>
+      <ion-input class="ion-text-center" type="text" placeholder="" (ionChange)="secondNameListener($event)" [value]="myCurrentUser.secondName"></ion-input>
+    </ion-item>
+    <div class="error-message" *ngIf="!myCurrentUser.secondName">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Segundo Nombre Requerido
+      </ion-text>
+    </div>
+  
+    <ion-item>
+      <ion-label>Apellido:</ion-label>
+      <ion-input class="ion-text-center" type="text" placeholder="Primer Apellido" (ionChange)="lastNameListener($event)" [value]="myCurrentUser.lastName"></ion-input>
+    </ion-item>
+    <div class="error-message" *ngIf="!myCurrentUser.lastName">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Nombre Requerido
+      </ion-text>
+    </div>
+  
+    <ion-item>
+      <ion-label>2º Apellido:</ion-label>
+      <ion-input class="ion-text-center" type="text" placeholder="(Opcional)" (ionChange)="secondLastNameListener($event)" [value]="myCurrentUser.secondLastName"></ion-input>
+    </ion-item>
+  
+    <ion-item (click)="showCalendar1()">
+      <ion-label>Fecha de Nacimiento: </ion-label>
+      <ion-label class="ion-text-center"> 
+        <ion-text *ngIf="myCurrentUser.birthDate" style="font-size: inherit; float: inherit;">{{myCurrentUser.birthDate | timeFormat: 'DD/MM/YYYY'}}</ion-text>
+        <ion-text *ngIf="!myCurrentUser.birthDate" style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;">(Selección fecha)</ion-text>
       </ion-label>
+      <ion-button class="downArrow" slot="end" size="small"><ion-icon style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit;" name="caret-down-outline"></ion-icon></ion-button>
     </ion-item>
-  </div>
+    <ion-row *ngIf="showCalendar">
+      <ion-col>
+        <ion-item>
+          <ion-datetime #datetime style="margin: 0 auto;" presentation="date" 
+                [(ngModel)]="myCurrentUser.birthDate" (ionChange)="changeScheduleTime(datetime.value)">
+            <ion-buttons slot="buttons">
+              <ion-button color="danger" (click)="showCalendar1()">Cancelar</ion-button>
+              <ion-button color="success" (click)="datetime.confirm()">OK</ion-button>
+            </ion-buttons>
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  
+    <ion-item>
+      <ion-label>Teléfono Principal:</ion-label>
+      <ion-input class="ion-text-center" type="number" placeholder="Para Emergencias" (ionChange)="phonePersonalListener($event)" [value]="myCurrentUser.phonePersonal"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Teléfono Secundario:</ion-label>
+      <ion-input class="ion-text-center" type="text" placeholder="Fijo o Trabajo" (ionChange)="phoneHomeListener($event)" [value]="myCurrentUser.phoneHome"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Teléfono Contacto:</ion-label>
+      <ion-input class="ion-text-center" type="text" placeholder="En caso de que no esté disponible" (ionChange)="phoneWorkListener($event)" [value]="myCurrentUser.phoneWork"></ion-input>
+    </ion-item>
+  
+  </ion-list>
 </ion-content>

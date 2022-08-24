@@ -9,6 +9,7 @@ import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.serv
 })
 export class CalendarService {
   calendarFolder = 'calendar/reservations/';
+  serviceRequestFolder = 'calendar/services/';
 
   constructor(
     private firestore: FirestoreActionsService,

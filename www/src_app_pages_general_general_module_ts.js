@@ -362,16 +362,10 @@ let SignUpComponent = class SignUpComponent {
             email: [
                 { type: 'required', message: 'El email es requerido' },
                 { type: 'email', message: 'El email tiene formato incorrecto' }
-            ],
-            name: [{ type: 'required', message: ' Escribe tu nombre' },],
-            lastName: [{ type: 'required', message: ' Escribe tu apellido' },],
-            birthday: [{ type: 'required', message: ' Ingresa tu fecha de nacimiento' },],
+            ]
         };
         this.signUpForm = this.formBuilder.group({
             email: [null, { validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.email] }],
-            name: [null, { validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.minLength(2)] }],
-            lastName: [null, { validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.minLength(3)] }],
-            birthday: [null, { validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required] }],
             password1: [null, { validators: [
                         _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required,
                         _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.minLength(8),

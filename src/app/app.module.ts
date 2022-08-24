@@ -12,7 +12,6 @@ import { Capacitor } from '@capacitor/core';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { NgxImageCompressService } from 'ngx-image-compress';
 
-
 // @angular/fire
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';

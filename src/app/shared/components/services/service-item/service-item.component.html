@@ -1,3 +1,28 @@
-<p>
-  service-item works!
-</p>
+<ion-row class="serviceItemList" *ngIf="!maintenance">
+  <ion-col size="1" class="ion-text-center ion-text-capitalize">
+    <ion-thumbnail>
+      <img [src]="service.photo ? '../../../../../'+service.photo : defaultService">
+    </ion-thumbnail>
+  </ion-col>
+  <ion-col size="4" class="ion-text-center ion-padding-top ion-text-capitalize">{{service.serviceType}}</ion-col>
+  <ion-col size="4" class="ion-text-center ion-padding-top ion-text-capitalize">{{service.name}}</ion-col>
+  <ion-col size="3" class="ion-text-center ion-padding-top ion-text-capitalize">
+    {{service.cost}}$
+    <ion-icon class="ion-float-right" name="chevron-forward-outline"></ion-icon>
+  </ion-col>
+</ion-row>
+
+
+
+<ion-row class="serviceItemList" *ngIf="maintenance">
+  <ion-col size="2" class="ion-text-center ion-text-capitalize">
+    <ion-thumbnail class="ion-margin-start">
+      <img [src]="service.photo ? '../../../../../'+service.photo : defaultService">
+    </ion-thumbnail>
+  </ion-col>
+  <ion-col size="5" class="ion-text-center ion-padding-top ion-text-capitalize">{{service.serviceType}}</ion-col>
+  <ion-col size="5" class="ion-text-center ion-padding-top ion-text-capitalize">
+    {{service.name}}
+    <ion-icon class="ion-float-right" name="chevron-forward-outline"></ion-icon>
+  </ion-col>
+</ion-row>

@@ -5,6 +5,7 @@ import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.serv
 import { take } from 'rxjs/operators';
 import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 import { CalendarItem } from '../models/calendar';
+import { UserFormData } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -73,10 +74,29 @@ export class FirestoreActionsService {
     });
   }
 
+  readUserCollectionOrderFilter(folderName:string, filterName: string, filterValue: any, orderField: string,userUID: string,filterOperator?:WhereFilterOp){
+    return new Promise((resolve, reject) => {
+      try {
+        const filterOp: WhereFilterOp = filterOperator ? filterOperator : '=='
+        const callDoc = this.afs.collection(
+          folderName,(ref => ref.where(filterName, filterOp, filterValue)
+          .where("userUID", "==", userUID).orderBy(orderField))
+        ).valueChanges();
+
+        callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {
+          resolve(querySnapshot); 
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
+    });
+  }
+
   createDocument(folder: string, data){
     return new Promise((resolve, reject) => {
       data['uid'] = this.afs.createId();
       data['createdAt'] = this.time.dateTransform(serverTimestamp());
+      console.log(data);
       try {
         this.afs.collection(folder).doc(data.uid).set(data).then((data:any) => {
           resolve(data);
@@ -89,11 +109,29 @@ export class FirestoreActionsService {
 
   setNamedDocument(folder: string, filename: string, data){
     return new Promise((resolve, reject) => {
-      data['updatedAt'] = 
+      data['updatedAt'] = this.time.dateTransform(serverTimestamp());
       this.afs.collection(folder).doc(filename) 
       .set(JSON.parse(JSON.stringify(data)), { merge: true })
       .then((done: any) => { resolve(done); })
       .catch((error) => { reject(this.error.handle(error)); });
+    })
+  }
+
+  checkEmail(email: string){
+    return new Promise<UserFormData>((resolve, reject) => {
+      try {
+        const callDoc = this.afs.collection('users',(ref => ref.where('email','==', email)))
+        .valueChanges();
+          callDoc.pipe(take(1)).subscribe((data: any[])=>{
+            if(data.length>0){
+              resolve(data[0]);
+            }else{
+              reject('user not found')
+            }
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
     })
   }
 
@@ -125,5 +163,64 @@ export class FirestoreActionsService {
   returnNowStamp(){
     return this.time.dateTransform(serverTimestamp());
   }
+
+  readServicesOrderAll(folderName: string, communityUID:string){
+    return new Promise((resolve, reject) => {
+      try {
+        const callDoc = this.afs.collection(
+          folderName,(ref => ref
+            .where('communityUID', '==', communityUID)
+            .orderBy('serviceType'))
+        ).valueChanges();
+
+        callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {
+          resolve(querySnapshot); 
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
+    });
+  }
+
+  readServicesOrderFilter(folderName: string, communityUID:string, maintenance: boolean){
+    return new Promise((resolve, reject) => {
+      try {
+        const callDoc = this.afs.collection(
+          folderName,(ref => ref
+            .where('communityUID', '==', communityUID)
+            .where('maintenance', '==', maintenance)
+            .orderBy('serviceType'))
+        ).valueChanges();
+
+        callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {
+          resolve(querySnapshot); 
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
+    });
+  }
+
+  readServicesOrderFilterByType(folderName: string, communityUID:string, maintenance:boolean, serviceType: string, orderField: string){
+    return new Promise((resolve, reject) => {
+      try {
+        const callDoc = this.afs.collection(
+          folderName,(ref => ref
+            .where('communityUID', '==', communityUID)
+            .where('maintenance', '==', maintenance)
+            .where('serviceType', '==', serviceType)
+            .orderBy(orderField))
+        ).valueChanges();
+
+        callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {
+          resolve(querySnapshot); 
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
+    });
+  }
+
+
 
 }

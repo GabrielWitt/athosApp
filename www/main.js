@@ -11,12 +11,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppRoutingModule": () => (/* binding */ AppRoutingModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var _angular_fire_compat_auth_guard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/fire/compat/auth-guard */ 56566);
 
 
 
+
+const redirectUnauthorizedToLogin = () => (0,_angular_fire_compat_auth_guard__WEBPACK_IMPORTED_MODULE_0__.redirectUnauthorizedTo)(['general']);
 const routes = [
     {
         path: '',
@@ -25,25 +28,27 @@ const routes = [
     },
     {
         path: 'general',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_general_general_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/general/general.module */ 13387)).then(m => m.GeneralPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_general_general_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/general/general.module */ 13387)).then(m => m.GeneralPageModule)
     },
     {
         path: 'administrator',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_administrator_administrator_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/administrator/administrator.module */ 66484)).then(m => m.AdministratorPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_administrator_administrator_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/administrator/administrator.module */ 66484)).then(m => m.AdministratorPageModule),
+        canActivate: [_angular_fire_compat_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
     },
     {
         path: 'client',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_client_client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/client/client.module */ 54373)).then(m => m.ClientPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_client_client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/client/client.module */ 54373)).then(m => m.ClientPageModule),
+        canActivate: [_angular_fire_compat_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
-AppRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.NgModule)({
+AppRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
         imports: [
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule.forRoot(routes, { preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_2__.PreloadAllModules })
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule.forRoot(routes, { preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_3__.PreloadAllModules })
         ],
-        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule]
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule]
     })
 ], AppRoutingModule);
 

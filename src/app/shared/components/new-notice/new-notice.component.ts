@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonContent, ModalController } from '@ionic/angular';
 import { attachmentOptions } from 'src/app/core/models/images';
 import { Comments, Notice } from 'src/app/core/models/notice';
-import { ShortUser, userFormData } from 'src/app/core/models/user';
+import { ShortUser, UserFormData } from 'src/app/core/models/user';
 import { ImageUploaderService } from 'src/app/core/services/image-uploader.service';
 import { NoticeService } from 'src/app/core/services/modules/notice.service';
 import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
@@ -20,7 +20,7 @@ export class NewNoticeComponent implements OnInit {
   private fullHeight = 0;
   public showScroll = 0;
   defaultUser = 'assets/profile/ProfileBlank.png';
-  @Input() user: userFormData;
+  @Input() user: UserFormData;
   @Input() notice: Notice;
   writer: ShortUser;
   typeList = []

@@ -1,12 +1,12 @@
 <app-main-header title="Servicios"></app-main-header>
 
 <ion-content>
-  <ion-segment mode="ios" (ionChange)="segmentChanged($event)" value="services">
+  <ion-segment (ionChange)="segmentChanged($event)" value="services">
     <ion-segment-button value="services">
       <ion-label> <h2>Servicios</h2> </ion-label> 
     </ion-segment-button>
     <ion-segment-button value="maintenance">
-      <ion-label> <h2>Mantenimientos</h2> </ion-label>
+      <ion-label> <h2>Mis Tiquetes</h2> </ion-label>
     </ion-segment-button>
   </ion-segment>
   <app-services *ngIf="selectedTab === 'services'"></app-services>

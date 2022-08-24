@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { userFormData } from 'src/app/core/models/user';
+import { UserFormData } from 'src/app/core/models/user';
 import { AlertsService } from 'src/app/shared/utilities/alerts';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
@@ -16,16 +16,10 @@ import { Space } from 'src/app/core/models/spaces';
 export class SpacesAdminComponent implements OnInit {
   loading = true;
   itemList = []
-  user: userFormData;
+  user: UserFormData;
 
   filterSelected = 'Todos';
-  filterSelection = { name: 'Todos', filter: null, value: null };
-  filterItems = [
-    { name: 'Todos', filter: null, value: null },
-    { name: 'Reservar', filter: 'rent', value: true },
-    { name: 'Privados', filter: 'spaceType', value: 'privado' },
-    { name: 'Comunitarios', filter: 'spaceType', value: 'comunal' },
-  ]
+  filterItems = ['Todos','oficina','vivienda' , 'parqueo' , 'recepción' , 'bodega' , 'salón' , 'tienda' , 'terraza']
 
   constructor(
     private modal: ModalController,
@@ -45,10 +39,9 @@ export class SpacesAdminComponent implements OnInit {
     try {
       let list: Space[] = [];
       const userData:any = await this.auth.getUser();
-      if(this.filterSelection.filter){
-        list = await this.spaces.
-        readSpacesListOrderRent(this.filterSelection.filter,this.filterSelection.value);
-      }else{list = await this.spaces.readSpacesListOrder();}
+      if(this.filterSelected === 'Todos'){
+        list = await this.spaces.readSpacesListOrder()
+      }else{list = await this.spaces.readSpacesListOrderType(this.filterSelected);}
       if(reload){
         if(list.length>0 && list.length < this.itemList.length){
           list.forEach(newItem => {
@@ -76,11 +69,6 @@ export class SpacesAdminComponent implements OnInit {
 
   filterChange(e) { 
     this.filterSelected = e.detail.value;
-    let selection = null;
-    this.filterItems.forEach(item => {
-      if(item.name === this.filterSelected){selection = item}
-    })
-    if(selection){ this.filterSelection = selection;}
     this.loadData();
   }
 
@@ -108,5 +96,4 @@ export class SpacesAdminComponent implements OnInit {
     const modalResult = await modal.onWillDismiss();
     if(modalResult.data){ this.loadData(true);}
   }
-
 }

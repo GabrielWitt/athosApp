@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { Space } from 'src/app/core/models/spaces';
-import { userFormData } from 'src/app/core/models/user';
+import { UserFormData } from 'src/app/core/models/user';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 import { ReservationsService } from 'src/app/core/services/modules/reservations.service';
 import { NewReservationComponent } from 'src/app/shared/components/spaces/new-reservation/new-reservation.component';
@@ -16,7 +16,7 @@ export class ReservationAdminComponent implements OnInit {
   loading = true;
   itemList = [];
   rentSpacesList: Space[]=[]
-  user: userFormData;
+  user: UserFormData;
   filterSelected: '>'|'<' = '>'
 
   filterItems = [

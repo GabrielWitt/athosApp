@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ServicesController } from 'src/app/core/controller/services.controller';
+import { IonAccordionGroup } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-services',
@@ -6,20 +10,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./services.component.scss'],
 })
 export class ServicesComponent implements OnInit {
-  loading = true;
-  itemList = []
+  @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
+  loading = false;
+  defaultSpace = '../../../../../assets/blueprint.png';
 
-  constructor() { }
+  constructor(
+    public services: ServicesController,
+    public modal: ModalController
+  ) { }
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.loading = false;
-    }, 2500);
+  ngOnInit() { }
+
+  defaultTab(){
+    const nativeEl = this.accordionGroup;
+    console.log(nativeEl)
+    if (this.services.serviceList.length> 0) {
+      nativeEl.value = 'second';
+    } else if (this.services.maintenanceList.length> 0) {
+      nativeEl.value = 'first';
+    } else {
+      nativeEl.value = undefined;
+    }
   }
 
   async doRefresh(refresh?){
-    // load 
-    if (refresh){ refresh.target.complete(); }
+    this.loading = true;
+    this.services.loadServices()
+    .then(() => { 
+      this.defaultTab();
+      this.loading = false;
+      if (refresh){ refresh.target.complete(); }
+    });
+  }
+
+  showCost(space){
+    if(space.rent){return space.rentData.cost + "$"; }
+    else{ return 'Gratis'; }
+  }
+
+  pickService(service){
+    this.modal.dismiss(service);
   }
 
 }

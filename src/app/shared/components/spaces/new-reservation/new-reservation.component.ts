@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Space } from 'src/app/core/models/spaces';
-import { userFormData } from 'src/app/core/models/user';
+import { UserFormData } from 'src/app/core/models/user';
 import { CalendarItem } from 'src/app/core/models/calendar';
 import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
 import { ModalController } from '@ionic/angular';
@@ -19,7 +19,7 @@ import { CalendarService } from 'src/app/core/services/modules/calendar.service'
 export class NewReservationComponent implements OnInit {
   defaultUser = 'assets/profile/ProfileBlank.png';
   defaultSpace = '../../../../../assets/blueprint.png';
-  @Input() user: userFormData;
+  @Input() user: UserFormData;
   @Input() reservation: CalendarItem;
   @Input() space: Space;
 
@@ -56,7 +56,8 @@ export class NewReservationComponent implements OnInit {
     endDate: '',
     status: 'Solicitado',
     reservation: null,
-    requestBy: null
+    requestBy: null,
+    userUID: null
   }
 
 
@@ -124,8 +125,7 @@ export class NewReservationComponent implements OnInit {
 
   async timeSlotClicked(index, timeSlot){
     if (this.scheduleTimes[index].disabled) {
-      this.alerts.showAlert('Book Reservation',
-      'La hora de reservacion no está disponible. ');
+      this.alerts.showAlert('Book Reservation','La hora de reservacion no está disponible. ');
     }else {
       const answer:any = await this.time.clickDaySlot(this.scheduleTimes, this.timeSlotStart, this.timeSlotEnd,
         timeSlot, index, (this.space.rentData.minTime<60?30:60), this.space.rentData.maxTime
@@ -162,32 +162,37 @@ export class NewReservationComponent implements OnInit {
   }
 
   async createReservation(){
-    try {
-      this.loading = true;
-      this.myReservation.startDate = this.timeSlotStart.date;
-      this.myReservation.endDate = this.timeSlotEnd.date;
-      this.myReservation.reservation.guests = this.guestCounter;
-      console.log(this.myReservation)
-      if(this.reservation){
-        await this.request.UpdateReservations(this.myReservation);
-      } else {
-        await this.request.createReservations(this.myReservation);
+    if(this.loading || !this.myReservation.scheduleDate || !this.timeSlotStart.date){
+      return null;
+    } else {
+      try {
+        this.loading = true;
+        this.myReservation.startDate = this.timeSlotStart.date;
+        this.myReservation.endDate = this.timeSlotEnd.date;
+        this.myReservation.reservation.guests = this.guestCounter;
+        this.myReservation.userUID = this.user.uid;
+        console.log(this.myReservation)
+        if(this.reservation){
+          await this.request.UpdateReservations(this.myReservation);
+        } else {
+          await this.request.createReservations(this.myReservation);
+        }
+        this.vibe.endAction();
+        this.alerts.showAlert( 'RESERVAS', 
+        this.reservation ? 'Datos de reserva actualizados' : 'Nueva reserva solicitada', 'OK');
+        this.loading = false;
+        this.modal.dismiss(true);
+        return 'done';
+      } catch (error) {
+        console.log(error);
+        this.loading = false;
+        return 'error';
       }
-      this.vibe.endAction();
-      this.alerts.showAlert( 'RESERVAS', 
-      this.reservation ? 'Datos de reserva actualizados' : 'Nueva reserva solicitada', 'OK');
-      this.loading = false;
-      this.modal.dismiss(true);
-      return 'done';
-    } catch (error) {
-      console.log(error);
-      this.loading = false;
-      return 'error';
     }
   }
 
   async changeStateReserve(status){
-    this.alerts.AlertConfirm(status,'¿Seguro desea'+(status === ''?'aprobar':'cancelar')+ ' la reserva?')
+    this.alerts.AlertConfirm((status === 'Aprovado'?'APROVAR':'CANCELAR'),'¿Seguro desea '+(status === 'Aprovado'?'aprobar':'cancelar')+ ' la reserva?')
     .then(answer => {
       if(answer){this.changeRequestStatus(status);}
     })
@@ -200,7 +205,8 @@ export class NewReservationComponent implements OnInit {
       endDate: '',
       status: 'Solicitado',
       reservation: null,
-      requestBy: null
+      requestBy: null,
+      userUID: null,
     }
     this.modal.dismiss(false)
   }

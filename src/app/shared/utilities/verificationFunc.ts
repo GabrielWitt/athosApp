@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { Keyboard } from '@capacitor/keyboard';
 import { ShortSpace, Space } from 'src/app/core/models/spaces';
-import { ShortUser, userFormData } from 'src/app/core/models/user';
+import { ShortUser, UserFormData } from 'src/app/core/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,21 @@ import { ShortUser, userFormData } from 'src/app/core/models/user';
 export class VerificationFuncService {
 
   constructor( ) { }
+
+  aleatorio(a,b) {
+    const newNumber = Math.round(Math.random()*(b-a)+parseInt(a));
+    return newNumber < 10 ? '0'+newNumber :''+newNumber
+  }
+
+  sortByType( a, b ) {
+    if ( a.type < b.type ){
+      return -1;
+    }
+    if ( a.type > b.type ){
+      return 1;
+    }
+    return 0;
+  }
 
   async EnterSubmit(evt, form, block){
     if (evt.keyCode === 13 && form.status === 'VALID' && !block){
@@ -19,10 +34,10 @@ export class VerificationFuncService {
     return false
   }
 
-  async createShortUser(user: userFormData): Promise<ShortUser>{
+  async createShortUser(user: UserFormData): Promise<ShortUser>{
     const short: ShortUser = {
       uid: user.uid,
-      photo: user.photo,
+      photo: user.photo?user.photo:'',
       email: user.email,
       name: user.name + ' ' + user.lastName
     }

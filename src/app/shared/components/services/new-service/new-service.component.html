@@ -11,7 +11,7 @@
         Atrás
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-uppercase">{{service ? service.serviceType+': '+service.name: 'Nuevo Servicio'}}</ion-title>
+    <ion-title class="ion-text-uppercase">{{service ? service.serviceType+': '+service.name: title}}</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="!service || editServiceForm" color="success" (click)="createService()" 
         [disabled]="loading">
@@ -29,13 +29,13 @@
 </ion-content>
 
 <ion-content *ngIf="!loading && service && !editServiceForm">
-  <app-detail-service style="height: 100%;" [user]="user" [service]="service" [reserve]="false"></app-detail-service>
+  <app-detail-service style="height: 100%;" [user]="user" [service]="service"></app-detail-service>
 </ion-content>
 
 <ion-content class="ion-padding" *ngIf="!loading && (!service || editServiceForm)">
   <ion-list>
     <ion-item>
-      <ion-label>Visible:</ion-label>
+      <ion-label>Disponible para residentes:</ion-label>
       <ion-checkbox slot="end" mode='md' (ionChange)="availableListener($event)" [checked]="myService.available" color="primary"></ion-checkbox>
     </ion-item>
     <ion-item>
@@ -73,28 +73,33 @@
   
     <ion-item>
       <ion-label position="stacked">Descripción del servicio:</ion-label>
-      <ion-textarea rows="3" placeholder="Ingrese un resumen ..." [value]="myService.description" (ionChange)="descriptionListener($event)"></ion-textarea>
+      <ion-textarea rows="3" placeholder="Ingrese un resumen ..." [value]="myService.description" 
+      (ionChange)="descriptionListener($event)"></ion-textarea>
     </ion-item>
     <ion-text class="ion-padding-start" color="danger" *ngIf="!myService.description"> 
-      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Agregue una descripción
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> 
+      Agregue una descripción
     </ion-text>
   
     <ion-item>
       <ion-label position="stacked">Terminos y Condiciones:</ion-label>
-      <ion-textarea rows="3" placeholder="Ingrese las reglas o límites del servicio..." [value]="myService.description" (ionChange)="descriptionListener($event)"></ion-textarea>
+      <ion-textarea rows="3" placeholder="Ingrese las reglas o límites del servicio..." [value]="myService.description" 
+      (ionChange)="descriptionListener($event)"></ion-textarea>
     </ion-item>
 
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-label>Mantenimiento</ion-label>
-          <ion-checkbox slot="end" mode='md' (ionChange)="maintenanceListener($event)" [checked]="myService.maintenance" color="primary"></ion-checkbox>
+          <ion-checkbox slot="end" mode='md' (ionChange)="maintenanceListener($event)" 
+          [checked]="myService.maintenance" color="primary"></ion-checkbox>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label style="height: 33px;">Precio: {{!myService.maintenance?'':'Gratis'}}</ion-label>
-          <ion-input *ngIf="!myService.maintenance" class="ion-text-center" type="number" placeholder="Valor en dólares" [value]="myService.cost" (ionChange)="priceListener($event)"></ion-input>
+          <ion-input *ngIf="!myService.maintenance" class="ion-text-center" type="number" placeholder="Valor en dólares" 
+          [value]="myService.cost" (ionChange)="priceListener($event)"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>

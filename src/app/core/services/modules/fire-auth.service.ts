@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { PushNotificationService } from 'src/app/shared/utilities/push-notification.service';
-import { User, userFormData } from '../../models/user';
+import { User, UserFormData } from '../../models/user';
 import { FirestoreActionsService } from '../firestore-actions.service';
 import { MyStoreService } from '../../../shared/utilities/my-store.service';
 
@@ -12,11 +12,10 @@ import { MyStoreService } from '../../../shared/utilities/my-store.service';
   providedIn: 'root'
 })
 export class FireAuthService {
+  user;
   session;
   userInfo;
   credentials;
-  user: User = null;
-  userData: userFormData;
 
   constructor(
     private router: Router,
@@ -32,21 +31,21 @@ export class FireAuthService {
     this.credentials = 'credentials';
     this.auth.authState.subscribe(async (user) => {
       if (user) {
+        console.log('update')
         await this.store.setData(this.session, user);
-        this.readUserForm(user.uid).then(async (data:userFormData) => {
-          await this.store.setData(this.userInfo, data);
-          this.userData = data;
+        this.readUserForm(user.uid).then(async (data:UserFormData) => {
           if(!this.user){
             this.checkUser()
             this.push.registerPushService().then(async token => {
-              let userData: userFormData = {
+              let userData: UserFormData = {
+                ...data,
                 uid: user.uid, 
                 email: user.email, 
                 photo: user.photoURL,
-                type: this.userData.type
+                type: data.type
               }
               if(token){userData.token = token;}
-              await this.uploadUserForm(this.userData.uid, userData);
+              await this.uploadUserForm(userData.uid, userData);
             })
           }
           this.user = this.setUser(user);
@@ -73,7 +72,6 @@ export class FireAuthService {
     return new Promise((resolve, reject) => {
       try {
         this.store.readFile(this.session).then(session => {
-          console.log(session)
           if (session) { 
             this.store.readFile(this.userInfo)
             .then(data => { resolve({user: session, data}); });
@@ -99,7 +97,7 @@ export class FireAuthService {
               const route1 = 'administrator';
               if(currentModule !== route1){this.router.navigateByUrl(route1);}
               break;
-            case 'cliente':
+            case 'residente':
               const route2 = 'client';
               if(currentModule !== route2){this.router.navigateByUrl(route2);}
               break;
@@ -134,17 +132,17 @@ export class FireAuthService {
     });
   }
 
-  registerUser(email: string, password: string, name: string, lastName: string, birthDate: Date){
+  registerUser(email: string, password: string){
     return new Promise((resolve,reject) => {
       this.auth.createUserWithEmailAndPassword(email, password)
       .then(async (userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        await this.upgradeUser('residente');
-        this.uploadUserForm( user.uid, {
-          uid: user.uid, photo:'', email: user.email, name, lastName, 
-          birthDate, type: 'residente', createdAt: this.FS.returnNowStamp() })
-        .then(done => {
+        const userDataForm: UserFormData = await this.FS.checkEmail(email)
+        const updateUser = {...userDataForm,uid:user.uid}
+        await this.updateUser(userDataForm.type, userDataForm.photo);
+        this.uploadUserForm( user.uid, updateUser).then(async done => {
+          await this.FS.deleteDocument('users',userDataForm.uid)
           resolve(user);
         }).catch((error) => { reject(this.error.handle(error)); });
       })
@@ -257,7 +255,6 @@ export class FireAuthService {
     await this.store.removeFile(this.userInfo);
     await this.store.removeFile(this.credentials);
     this.user = null;
-    this.userData = null;
     return null;
   }
 
@@ -266,15 +263,18 @@ export class FireAuthService {
   readUserForm(uid: string){
     return new Promise((resolve,reject) => {
       this.FS.readDocument('users',uid)
-      .then((doc: userFormData) => { resolve(doc); })
+      .then((doc: UserFormData) => { resolve(doc); })
       .catch((error) => { reject(this.error.handle(error)); });
     });
   }
 
-  uploadUserForm(uid: string, data: userFormData){
+  uploadUserForm(uid: string, data: UserFormData){
     return new Promise((resolve,reject) => {
       this.FS.setNamedDocument('users',uid, data)
-      .then(data => { resolve('done'); })
+      .then(async (response: any) => { 
+        if(this.user.uid === data.uid){ await this.store.setData(this.userInfo, data);}
+        resolve('done');
+      })
       .catch((error) => { reject(this.error.handle(error)); });
     });
   }

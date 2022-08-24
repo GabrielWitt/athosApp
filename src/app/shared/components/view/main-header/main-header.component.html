@@ -1,10 +1,17 @@
 <ion-header>
   <ion-toolbar mode="ios">
+    <ion-buttons slot="start" *ngIf="title === 'Mi Perfil' && userCtrl.edit">
+      <ion-button color="danger" (click)="userCtrl.editUser()">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
     <ion-title class="ion-text-uppercase">{{title}}</ion-title>
     <ion-buttons [ngSwitch]="title" slot="end">
-      <ion-button *ngSwitchCase="'Mi Perfil'" color="danger" (click)="cerrarSesion()">
-        Cerrar Sesión
-      </ion-button>
+      <div *ngSwitchCase="'Mi Perfil'" >
+        <ion-button *ngIf="!userCtrl.edit" color="danger" (click)="cerrarSesion()">
+          Cerrar Sesión
+        </ion-button>
+      </div>
       <ion-button *ngSwitchCase="'Usuarios'" (click)="goProfile()">
         Mi Perfil
       </ion-button>

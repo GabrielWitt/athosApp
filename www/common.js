@@ -1,6 +1,95 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["common"],{
 
+/***/ 77464:
+/*!********************************************************!*\
+  !*** ./src/app/core/services/modules/users.service.ts ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "UsersService": () => (/* binding */ UsersService)
+/* harmony export */ });
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/shared/utilities/error-handler.service */ 43570);
+/* harmony import */ var _firestore_actions_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../firestore-actions.service */ 14871);
+
+
+
+
+
+let UsersService = class UsersService {
+  constructor(firestore, error) {
+    this.firestore = firestore;
+    this.error = error;
+    this.UsersFolder = 'users';
+    this.UsersFolder = 'users';
+  }
+
+  createUser(data) {
+    return new Promise((resolve, reject) => {
+      this.firestore.createDocument(this.UsersFolder, data).then(doc => {
+        resolve(doc);
+      }).catch(error => {
+        reject(this.error.handle(error));
+      });
+    });
+  }
+
+  updateUser(data) {
+    return new Promise((resolve, reject) => {
+      this.firestore.setNamedDocument(this.UsersFolder, data.uid, data).then( /*#__PURE__*/function () {
+        var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (response) {
+          resolve('done');
+        });
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }()).catch(error => {
+        reject(this.error.handle(error));
+      });
+    });
+  }
+
+  readAllUsers() {
+    return new Promise((resolve, reject) => {
+      this.firestore.readCollectionOrderBy(this.UsersFolder, 'lastName').then(docs => {
+        resolve(docs);
+      }).catch(error => {
+        reject(this.error.handle(error));
+      });
+    });
+  }
+
+  readUser(uid) {
+    return new Promise((resolve, reject) => {
+      this.firestore.readDocument(this.UsersFolder, uid).then(doc => {
+        resolve(doc);
+      }).catch(error => {
+        reject(this.error.handle(error));
+      });
+    });
+  }
+
+};
+
+UsersService.ctorParameters = () => [{
+  type: _firestore_actions_service__WEBPACK_IMPORTED_MODULE_2__.FirestoreActionsService
+}, {
+  type: src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_1__.ErrorHandlerService
+}];
+
+UsersService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+  providedIn: 'root'
+})], UsersService);
+
+
+/***/ }),
+
 /***/ 73696:
 /*!*********************************************************************!*\
   !*** ./node_modules/@ionic/core/dist/esm/button-active-8937ead0.js ***!

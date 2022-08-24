@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Service } from 'src/app/core/models/services';
 
 @Component({
   selector: 'app-detail-service',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detail-service.component.scss'],
 })
 export class DetailServiceComponent implements OnInit {
+  @Input() service: Service;
+  @Input() reserve: boolean;
+  defaultSpace = '../../../../../assets/blueprint.png';
 
   constructor() { }
 

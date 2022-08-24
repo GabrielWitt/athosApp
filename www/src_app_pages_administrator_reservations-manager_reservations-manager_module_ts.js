@@ -254,16 +254,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ReservationsManagerPage": () => (/* binding */ ReservationsManagerPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _reservations_manager_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./reservations-manager.page.html?ngResource */ 10844);
 /* harmony import */ var _reservations_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reservations-manager.page.scss?ngResource */ 71321);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
+
 
 
 
 
 let ReservationsManagerPage = class ReservationsManagerPage {
-    constructor() {
+    constructor(userCtrl) {
+        this.userCtrl = userCtrl;
         this.selectedTab = 'reservations';
     }
     ngOnInit() { }
@@ -271,9 +274,11 @@ let ReservationsManagerPage = class ReservationsManagerPage {
         this.selectedTab = ev.detail.value;
     }
 };
-ReservationsManagerPage.ctorParameters = () => [];
-ReservationsManagerPage = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+ReservationsManagerPage.ctorParameters = () => [
+    { type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__.UserController }
+];
+ReservationsManagerPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
         selector: 'app-reservations-manager',
         template: _reservations_manager_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_reservations_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -321,28 +326,7 @@ let SpacesAdminComponent = class SpacesAdminComponent {
     this.loading = true;
     this.itemList = [];
     this.filterSelected = 'Todos';
-    this.filterSelection = {
-      name: 'Todos',
-      filter: null,
-      value: null
-    };
-    this.filterItems = [{
-      name: 'Todos',
-      filter: null,
-      value: null
-    }, {
-      name: 'Reservar',
-      filter: 'rent',
-      value: true
-    }, {
-      name: 'Privados',
-      filter: 'spaceType',
-      value: 'privado'
-    }, {
-      name: 'Comunitarios',
-      filter: 'spaceType',
-      value: 'comunal'
-    }];
+    this.filterItems = ['Todos', 'oficina', 'vivienda', 'parqueo', 'recepción', 'bodega', 'salón', 'tienda', 'terraza'];
   }
 
   ngOnInit() {
@@ -360,10 +344,10 @@ let SpacesAdminComponent = class SpacesAdminComponent {
         let list = [];
         const userData = yield _this.auth.getUser();
 
-        if (_this.filterSelection.filter) {
-          list = yield _this.spaces.readSpacesListOrderRent(_this.filterSelection.filter, _this.filterSelection.value);
-        } else {
+        if (_this.filterSelected === 'Todos') {
           list = yield _this.spaces.readSpacesListOrder();
+        } else {
+          list = yield _this.spaces.readSpacesListOrderType(_this.filterSelected);
         }
 
         if (reload) {
@@ -410,17 +394,6 @@ let SpacesAdminComponent = class SpacesAdminComponent {
 
   filterChange(e) {
     this.filterSelected = e.detail.value;
-    let selection = null;
-    this.filterItems.forEach(item => {
-      if (item.name === this.filterSelected) {
-        selection = item;
-      }
-    });
-
-    if (selection) {
-      this.filterSelection = selection;
-    }
-
     this.loadData();
   }
 
@@ -516,7 +489,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \**************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcGFjZXMtYWRtaW4uY29tcG9uZW50LnNjc3MifQ== */";
+module.exports = ".headerSpaceList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 15pt;\n  font-weight: bold;\n  color: black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNwYWNlcy1hZG1pbi5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9wYWdlcy9hZG1pbmlzdHJhdG9yL3Jlc2VydmF0aW9ucy1tYW5hZ2VyL3NwYWNlcy1hZG1pbi9zcGFjZXMtYWRtaW4uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSwyQ0FBQTtFQUNBLGVBQUE7RUFDQSxpQkFBQTtFQUNBLFlBQUE7QUNDSiIsImZpbGUiOiJzcGFjZXMtYWRtaW4uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaGVhZGVyU3BhY2VMaXN0e1xuICAgIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCByZ2IoMTg3LCAxODcsIDE4Nyk7XG4gICAgZm9udC1zaXplOiAxNXB0O1xuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgIGNvbG9yOiBibGFjaztcbn0iLCIuaGVhZGVyU3BhY2VMaXN0IHtcbiAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIHJnYigxODcsIDE4NywgMTg3KTtcbiAgZm9udC1zaXplOiAxNXB0O1xuICBmb250LXdlaWdodDogYm9sZDtcbiAgY29sb3I6IGJsYWNrO1xufSJdfQ== */";
 
 /***/ }),
 
@@ -536,7 +509,7 @@ module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"
   \****************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-title *ngIf=\"selectedTab === 'spaces'\" class=\"ion-text-uppercase\">Espacios</ion-title>\n    <ion-title *ngIf=\"selectedTab === 'reservations'\" class=\"ion-text-uppercase\">Reservaciones</ion-title>\n  </ion-toolbar>\n  <ion-toolbar>\n    <ion-segment mode=\"ios\" (ionChange)=\"segmentChanged($event)\" value=\"reservations\">\n      <ion-segment-button value=\"reservations\">\n        <ion-label class=\"ion-padding-start ion-padding-end\"> <h2> <ion-icon name=\"calendar-outline\"></ion-icon> </h2> </ion-label> \n      </ion-segment-button>\n      <ion-segment-button value=\"spaces\">\n        <ion-label class=\"ion-padding-start ion-padding-end\"> <h2> <ion-icon name=\"business-outline\"></ion-icon> </h2> </ion-label>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n\n<app-spaces-admin *ngIf=\"selectedTab === 'spaces'\" style=\"height: 100%\"></app-spaces-admin>\n<app-reservation-admin *ngIf=\"selectedTab === 'reservations'\" style=\"height: 100%\"></app-reservation-admin>\n";
+module.exports = "<ion-header>\n  <ion-toolbar *ngIf=\"userCtrl.platform !== 'web'\">\n    <ion-title *ngIf=\"selectedTab === 'spaces'\" class=\"ion-text-uppercase\">Espacios</ion-title>\n    <ion-title *ngIf=\"selectedTab === 'reservations'\" class=\"ion-text-uppercase\">Reservaciones</ion-title>\n  </ion-toolbar>\n  <ion-toolbar>\n    <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"reservations\">\n      <ion-segment-button value=\"reservations\" layout=\"icon-start\">\n        <ion-label *ngIf=\"userCtrl.platform === 'web'\">Reservas</ion-label>\n        <ion-icon name=\"calendar-outline\"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value=\"spaces\" layout=\"icon-start\">\n        <ion-label *ngIf=\"userCtrl.platform === 'web'\">Inmuebles</ion-label>\n        <ion-icon name=\"business-outline\"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n\n<app-spaces-admin *ngIf=\"selectedTab === 'spaces'\" style=\"height: 100%\"></app-spaces-admin>\n<app-reservation-admin *ngIf=\"selectedTab === 'reservations'\" style=\"height: 100%\"></app-reservation-admin>\n";
 
 /***/ }),
 
@@ -546,7 +519,7 @@ module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-title *ng
   \**************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "\n<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <ion-item *ngIf=\"!loading\">\n    <ion-label>Tipo de Espacio:</ion-label>\n    <ion-select placeholder=\"Todos los espacios\" class=\"ion-text-capitalize\" mode='ios' [value]=\"filterSelected\" (ionChange)=\"filterChange($event)\">\n      <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let item of filterItems\" [value]=\"item.name\"> {{item.name}}</ion-select-option>\n    </ion-select>\n  </ion-item>\n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene espacios aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-space *ngFor=\"let space of itemList\" [space]=\"space\" (click)=\"detailSpace(space)\"></app-item-space>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createSpace()\">\n      <ion-icon size=\"large\" name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
+module.exports = "\n<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <ion-item *ngIf=\"!loading\">\n    <ion-label>Tipo Inmueble:</ion-label>\n    <ion-select placeholder=\"Todos los espacios\" class=\"ion-text-capitalize\" mode='ios' \n    [value]=\"filterSelected\" (ionChange)=\"filterChange($event)\">\n      <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let item of filterItems\" \n      [value]=\"item\"> {{item}}</ion-select-option>\n    </ion-select>\n  </ion-item>\n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene espacios aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <ion-row class=\"headerSpaceList\">\n      <ion-col size=\"2\" class=\"ion-text-center\"></ion-col>\n      <ion-col size=\"4\" class=\"ion-text-center\">Espacio</ion-col>\n      <ion-col size=\"2\" class=\"ion-text-center\">Tipo</ion-col>\n      <ion-col size=\"4\" class=\"ion-text-center\">Ocupante</ion-col>\n    </ion-row>\n    <app-item-space *ngFor=\"let space of itemList\" [space]=\"space\" (click)=\"detailSpace(space)\">\n    </app-item-space>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createSpace()\">\n      <ion-icon size=\"large\" name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ })
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserController } from 'src/app/core/controller/user.controller';
 import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
 
 @Component({
@@ -10,11 +11,13 @@ import { AttachmentsService } from 'src/app/shared/utilities/attachments.service
 export class AdministratorPage implements OnInit {
 
   constructor(
+    private userCtrl: UserController,
     private router: Router,
     private images: AttachmentsService,
   ) { }
 
   ngOnInit() {
+    this.userCtrl.loadUser();
   }
 
   async checkSavedImages(){

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { userFormData } from 'src/app/core/models/user';
+import { UserFormData } from 'src/app/core/models/user';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
-import { ReservationsService } from 'src/app/core/services/modules/reservations.service';
 import { NewServiceComponent } from 'src/app/shared/components/services/new-service/new-service.component';
+import { Service } from 'src/app/core/models/services';
+import { MaintenanceService } from 'src/app/core/services/modules/maintenance.service';
+import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
 
 @Component({
   selector: 'app-maintenance-admin',
@@ -13,8 +15,24 @@ import { NewServiceComponent } from 'src/app/shared/components/services/new-serv
 export class MaintenanceAdminComponent implements OnInit  {
   loading = true;
   itemList = []
-  user: userFormData;
+  user: UserFormData;
   filterSelected: '>'|'<' = '>'
+
+  servicesList = [
+    {title:'Inpeccionar Tuberias', type: 'Plomería'},
+    {title:'Inpeccionar Muros Húmedos', type: 'Plomería'},
+    {title:'Inpeccionar Cableado', type: 'Eléctrico'},
+    {title:'Inpeccionar Iluminación', type: 'Eléctrico'},
+    {title:'Inpeccionar Dispositivo', type: 'Eléctrico'},
+    {title:'Inpeccionar Ventana', type: 'Limpieza / Jardineria'},
+    {title:'Inpeccionar Paneles de yeso', type: 'Muebles / Construcción'},
+    {title:'Inpeccionar Concreto Agrietado', type: 'Muebles / Construcción'},
+    {title:'Inpeccionar Area Dañada', type: 'Muebles / Construcción'},
+    {title:'Inpeccionar Plantas', type: 'Limpieza / Jardineria'},
+    {title:'Inpeccionar Area Sucia', type: 'Limpieza / Jardineria'},
+    {title:'Limpieza de Espacio Comunal', type: 'Limpieza / Jardineria'},
+  ]
+  typeList = this.services.typeList;
 
   filterItems = [
     {name: 'Mantenimientos',filter: '>'},
@@ -24,8 +42,9 @@ export class MaintenanceAdminComponent implements OnInit  {
   constructor(
     private modal: ModalController,
     private auth: FireAuthService,
-    private request: ReservationsService,
-    private routerOutlet: IonRouterOutlet
+    private services: MaintenanceService,
+    private routerOutlet: IonRouterOutlet,
+    private utility: VerificationFuncService
   ) { }
 
   ngOnInit() {
@@ -37,16 +56,24 @@ export class MaintenanceAdminComponent implements OnInit  {
 
   async loadData() {
     const userData:any = await this.auth.getUser();
-    // this.itemList = await //this.request.readReservationsListOrderRent("startDate",new Date().toISOString(),this.filterSelected);
+    this.itemList = await this.services.readServicesListOrder('MD61xvWSecqNMYYjvEoM',true);
     console.log(this.itemList)
     this.user = userData.data;
     return this.user
   }
 
+  filterChange(e){
+    this.filterSelected = e.detail.value;
+    this.loadData();
+  }
+
   async doRefresh(refresh?){
     // load 
+    await this.loadData();
     if (refresh){ refresh.target.complete(); }
   }
+
+  requestService(service){}
 
   async createService(service){
     const modalService = await this.modal.create({
@@ -59,5 +86,4 @@ export class MaintenanceAdminComponent implements OnInit  {
     const modalResult1 = await modalService.onWillDismiss();
     if(modalResult1.data){}
   }
-
-}
+} 

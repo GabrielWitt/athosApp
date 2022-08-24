@@ -31,19 +31,19 @@ const routes = [
         children: [
             {
                 path: 'news',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("src_app_pages_client_notices-client_notices-client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./notices-client/notices-client.module */ 92606)).then(m => m.NoticesClientPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_notices-client_notices-client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./notices-client/notices-client.module */ 92606)).then(m => m.NoticesClientPageModule)
             },
             {
                 path: 'services',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("src_app_pages_client_services-resident_services-resident_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./services-resident/services-resident.module */ 56124)).then(m => m.ServicesResidentPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_services-resident_services-resident_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./services-resident/services-resident.module */ 56124)).then(m => m.ServicesResidentPageModule)
             },
             {
                 path: 'reservations',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("src_app_pages_client_reservations-resident_reservations-resident_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./reservations-resident/reservations-resident.module */ 68038)).then(m => m.ReservationsResidentPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_reservations-resident_reservations-resident_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./reservations-resident/reservations-resident.module */ 68038)).then(m => m.ReservationsResidentPageModule)
             },
             {
                 path: 'profile',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("src_app_pages_client_profile-client_profile-client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./profile-client/profile-client.module */ 72579)).then(m => m.ProfileClientPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_profile-client_profile-client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./profile-client/profile-client.module */ 72579)).then(m => m.ProfileClientPageModule)
             }
         ]
     },

@@ -9,9 +9,11 @@
   </ion-list>
   
   <ion-item *ngIf="!loading">
-    <ion-label>Tipo de Espacio:</ion-label>
-    <ion-select placeholder="Todos los espacios" class="ion-text-capitalize" mode='ios' [value]="filterSelected" (ionChange)="filterChange($event)">
-      <ion-select-option class="ion-text-capitalize" *ngFor="let item of filterItems" [value]="item.name"> {{item.name}}</ion-select-option>
+    <ion-label>Tipo Inmueble:</ion-label>
+    <ion-select placeholder="Todos los espacios" class="ion-text-capitalize" mode='ios' 
+    [value]="filterSelected" (ionChange)="filterChange($event)">
+      <ion-select-option class="ion-text-capitalize" *ngFor="let item of filterItems" 
+      [value]="item"> {{item}}</ion-select-option>
     </ion-select>
   </ion-item>
   <app-not-data-yet-message 
@@ -21,7 +23,14 @@
   
   
   <ion-list *ngIf="itemList.length > 0 && !loading">
-    <app-item-space *ngFor="let space of itemList" [space]="space" (click)="detailSpace(space)"></app-item-space>
+    <ion-row class="headerSpaceList">
+      <ion-col size="2" class="ion-text-center"></ion-col>
+      <ion-col size="4" class="ion-text-center">Espacio</ion-col>
+      <ion-col size="2" class="ion-text-center">Tipo</ion-col>
+      <ion-col size="4" class="ion-text-center">Ocupante</ion-col>
+    </ion-row>
+    <app-item-space *ngFor="let space of itemList" [space]="space" (click)="detailSpace(space)">
+    </app-item-space>
   </ion-list>
     
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">

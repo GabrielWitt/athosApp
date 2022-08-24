@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Service } from 'src/app/core/models/services';
 
 @Component({
   selector: 'app-service-item',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./service-item.component.scss'],
 })
 export class ServiceItemComponent implements OnInit {
+  @Input() service: Service;
+  @Input() maintenance: boolean;
+  defaultService = '../../../../../assets/cleaning.png';
 
   constructor() { }
 

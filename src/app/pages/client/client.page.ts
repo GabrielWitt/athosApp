@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserController } from 'src/app/core/controller/user.controller';
 import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
 
 @Component({
@@ -11,24 +12,11 @@ export class ClientPage implements OnInit {
 
   constructor(
     private router: Router,
-    private images: AttachmentsService,
+    private userCtrl: UserController
   ) { }
 
   ngOnInit() {
-  }
-
-  async checkSavedImages(){
-    this.images.loadSaved().then((photos: any) => {
-      if(photos.length){ setTimeout(() => {
-          this.router.navigateByUrl(photos[0].route.substring(1)); 
-        }, 1500);
-      }else{
-        this.router.navigateByUrl('/client/news');
-      }
-    }).catch(e => {
-      console.log(e);
-      this.router.navigateByUrl('/client/news');
-    })
+    this.userCtrl.loadUser();
   }
 
 }

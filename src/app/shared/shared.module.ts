@@ -16,7 +16,7 @@ import { LoadingViewComponent } from './components/view/loading-view/loading-vie
 import { StatusRequestComponent } from './components/view/status-request/status-request.component';
 
 // Components
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
 import { NoticeBottomBarComponent } from './components/view/notice-bottom-bar/notice-bottom-bar.component';
 import { NewNoticeComponent } from './components/new-notice/new-notice.component';
 import { NewServiceComponent } from './components/services/new-service/new-service.component';
@@ -30,6 +30,12 @@ import { ImagePreviewComponent } from './components/view/image-preview/image-pre
 import { ItemReservationComponent } from './components/spaces/item-reservation/item-reservation.component';
 import { DetailReservationComponent } from './components/spaces/detail-reservation/detail-reservation.component';
 import { DetailServiceComponent } from './components/services/detail-service/detail-service.component';
+import { ItemUserComponent } from './components/users/item-user/item-user.component';
+import { UserDetailComponent } from './components/users/user-detail/user-detail.component';
+import { EditUserComponent } from './components/users/edit-user/edit-user.component';
+import { PickServiceComponent } from './components/services/pick-service/pick-service.component';
+import { NewRequestComponent } from './components/services/new-request/new-request.component';
+import { DetailRequestComponent } from './components/services/detail-request/detail-request.component';
 
 const components = [
   BigButtonComponent,
@@ -42,11 +48,18 @@ const components = [
   StatusRequestComponent,
   // User
   UserProfileComponent,
+  ItemUserComponent,
+  UserDetailComponent, 
+  EditUserComponent,
   //Notice
   NewNoticeComponent,
   //Services
   NewServiceComponent,
   ServiceItemComponent,
+  DetailServiceComponent,
+  PickServiceComponent,
+  NewRequestComponent,
+  DetailRequestComponent,
   DetailServiceComponent,
   //Spaces
   ItemSpaceComponent,
