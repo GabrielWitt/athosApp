@@ -130,6 +130,10 @@ export class TimeHandlerModule {
     return moment.parseZone(date).format('DD_MM_YYYY');
   }
 
+  geDateFullUTC(date){
+    return moment.parseZone(date).format('DD/MM/YYYY');
+  }
+
   getStartTime(selectedDate, startTime){
     return moment(moment(selectedDate).format('MM/DD/YY') + ' ' + moment(startTime).format('HH:mm')).toISOString();
   }
@@ -315,6 +319,30 @@ export class TimeHandlerModule {
 
   getEndDate(){
     return moment().hours(18).minutes(0).seconds(0).millisecond(0).toISOString();
+  }
+
+  getCurrentMonthStart(date){
+    return moment.parseZone(date).startOf('month').toISOString();
+  }
+
+  getEndMonth(date){
+    return moment.parseZone(date).endOf('month').toISOString();
+  }
+
+  getNextMonStart(date){
+    return moment.parseZone(date).add(1, 'months').toISOString();
+  }
+
+  getPrevMonStart(date){
+    return moment.parseZone(date).subtract(1, 'months').toISOString();
+  }
+
+  getSelectedDate(date){
+    return moment(date).toISOString();
+  }
+
+  getMonthName(date){
+    return moment.parseZone(date).format('MMMM');
   }
 
  }

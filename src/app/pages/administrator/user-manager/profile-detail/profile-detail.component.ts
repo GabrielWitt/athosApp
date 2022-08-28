@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { attachmentOptions } from 'src/app/core/models/images';
 import { UserFormData } from 'src/app/core/models/user';
 import { UsersService } from 'src/app/core/services/modules/users.service';
 import { AlertsService } from 'src/app/shared/utilities/alerts';
+import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
 import { HapticsService } from 'src/app/shared/utilities/haptics.service';
 
 @Component({
@@ -16,6 +18,7 @@ export class ProfileDetailComponent implements OnInit {
   @Input() user: UserFormData;
   @Input() currentUser: UserFormData;
   petList = []
+  
   defaultUser = '../../../../assets/profile/ProfileBlank.png';
 
   editUserForm = false;
@@ -38,18 +41,18 @@ export class ProfileDetailComponent implements OnInit {
   newImage;
   progress = 0;
   showCalendar = false;
-  typeList = ['residente','empleado','administrador']
+  typeList = ['residente','empleado','administrador','inactivo']
 
   constructor(
     public modal: ModalController,
     public alerts: AlertsService,
+    private images: AttachmentsService,
     private vibe: HapticsService,
     private users: UsersService,
   ) { }
 
   ngOnInit() { 
-    console.log(this.user);
-    this.myCurrentUser = this.user;
+    if(this.user){ this.myCurrentUser = this.user; }
    }
 
   editUser(){
@@ -86,8 +89,25 @@ export class ProfileDetailComponent implements OnInit {
     this.myCurrentUser.birthDate = new Date(event).toISOString();
   }
 
-  sendData(){
+  typeHandler(e){ this.myCurrentUser.type = e.detail.value}
 
+  addPhoto() {
+    if(this.user){
+      const options: attachmentOptions = {
+        currentRoute: 'administrator/users',
+        height:null, width:null, pdf: false
+      }
+      this.images.presentImageOptions(options).then(async imageObj => {
+        if (imageObj[0] !== undefined){ this.newImage = imageObj[0];
+        }
+      });
+    }
+  }
+
+  sendData(){
+    if(this.newImage){
+
+    }
     if(this.user){
       this.users.createUser(this.myCurrentUser)
     }else {
@@ -96,8 +116,13 @@ export class ProfileDetailComponent implements OnInit {
     this.alerts.showAlert( 'USUARIO', 
     this.user? 'Datos de '+ this.user.name + ' '+ this.user.lastName + ' han sido actualizados' : 'Nuevo usuario agregado', 'OK');
     this.loading = false;
-    this.modal.dismiss(true);
+    this.modal.dismiss({action:'reload'});
     return 'done';
+  }
+
+  newReceipts(){
+    console.log('newReceipts')
+    this.modal.dismiss({action:'receipt',user: this.user})
   }
 
 }

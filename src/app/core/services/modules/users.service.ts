@@ -38,6 +38,22 @@ export class UsersService {
     });
   }
 
+  readOnlyResidents(){
+    return new Promise<UserFormData[]>((resolve,reject) => {
+      this.firestore.readCollectionOrderFilter(this.UsersFolder,'type','residente','name')
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
+  readOnlyStaff(){
+    return new Promise<UserFormData[]>((resolve,reject) => {
+      this.firestore.readCollectionOrderFilter(this.UsersFolder,'type','empleado','name')
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
   readUser(uid: string){
     return new Promise((resolve,reject) => {
       this.firestore.readDocument(this.UsersFolder,uid)

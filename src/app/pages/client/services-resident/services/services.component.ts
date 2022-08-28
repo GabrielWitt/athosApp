@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { UserFormData } from 'src/app/core/models/user';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { ServicesController } from 'src/app/core/controller/services.controller';
-import { IonAccordionGroup } from '@ionic/angular';
+import { NewRequestComponent } from 'src/app/shared/components/services/new-request/new-request.component';
+import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 
 
 @Component({
@@ -10,34 +12,27 @@ import { IonAccordionGroup } from '@ionic/angular';
   styleUrls: ['./services.component.scss'],
 })
 export class ServicesComponent implements OnInit {
-  @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
+  user: UserFormData
   loading = false;
   defaultSpace = '../../../../../assets/blueprint.png';
 
   constructor(
     public services: ServicesController,
+    public auth: FireAuthService,
+    private routerOutlet: IonRouterOutlet,
     public modal: ModalController
   ) { }
 
-  ngOnInit() { }
-
-  defaultTab(){
-    const nativeEl = this.accordionGroup;
-    console.log(nativeEl)
-    if (this.services.serviceList.length> 0) {
-      nativeEl.value = 'second';
-    } else if (this.services.maintenanceList.length> 0) {
-      nativeEl.value = 'first';
-    } else {
-      nativeEl.value = undefined;
-    }
+  ngOnInit() { 
+    this.auth.getUser().then((user: any) =>{
+      this.user = user.data;
+    });
   }
 
   async doRefresh(refresh?){
     this.loading = true;
-    this.services.loadServices()
+    this.services.loadServices(this.user.type)
     .then(() => { 
-      this.defaultTab();
       this.loading = false;
       if (refresh){ refresh.target.complete(); }
     });
@@ -48,8 +43,17 @@ export class ServicesComponent implements OnInit {
     else{ return 'Gratis'; }
   }
 
-  pickService(service){
-    this.modal.dismiss(service);
+  async pickService(request, service){
+    const modalCreate = await this.modal.create({
+      component: NewRequestComponent,
+      componentProps: {service, request, currentUser: this.user },
+      mode: 'ios',
+      presentingElement: this.routerOutlet.nativeEl
+    });
+    modalCreate.present();
+    const modalResult2 = await modalCreate.onWillDismiss();
+    console.log(modalResult2);
+    if(modalResult2.data){  this.services.changeTab('maintenance') }
   }
 
 }

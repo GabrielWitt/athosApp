@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserController } from 'src/app/core/controller/user.controller';
 import { User, UserFormData } from 'src/app/core/models/user';
+import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 
 @Component({
   selector: 'app-profile-manager',
@@ -11,24 +12,24 @@ export class ProfileManagerPage implements OnInit {
   user: User;
   currentUser: UserFormData;
   defaultUser = '../../../../assets/profile/ProfileBlank.png';
+  edit = false;
+  loading = true;
 
-  constructor( public userCtrl: UserController) { }
+  constructor( 
+    public userCtrl: UserController, 
+    public auth: FireAuthService
+  ) { }
 
   ngOnInit(){
-    this.userCtrl.currentUserData()
-    .then((data:any) => {
-      console.log(data)
-      this.user = data.user;
-      this.currentUser = data.data;
-    });
   }
 
   ionViewWillEnter(){
-    this.userCtrl.currentUserData()
-    .then((data:any) => {
-      console.log(data)
-      this.user = data.user;
-      this.currentUser = data.data;
+    this.loading = true;
+    this.auth.getUser().then((user: any) =>{
+      this.user = user.user;
+      this.currentUser = user.data;
+      console.log(this.currentUser);
+      this.loading = false;
     });
   }
 

@@ -1,4 +1,4 @@
-
+<ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
     <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
   </ion-refresher>
@@ -15,3 +15,4 @@
   <ion-list *ngIf="itemList.length > 0 && !loading">
     
   </ion-list>
+</ion-content>

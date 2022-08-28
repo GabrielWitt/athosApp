@@ -125,9 +125,7 @@ let MaintenanceAdminComponent = class MaintenanceAdminComponent {
     })();
   }
 
-  requestService(service) {}
-
-  createService(service) {
+  editService(service) {
     var _this3 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
@@ -186,11 +184,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _request_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./request-admin.component.scss?ngResource */ 96063);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 93819);
-/* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
-/* harmony import */ var src_app_core_services_modules_spaces_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/spaces.service */ 59269);
-/* harmony import */ var src_app_shared_components_services_new_request_new_request_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/components/services/new-request/new-request.component */ 58151);
-/* harmony import */ var src_app_shared_components_services_pick_service_pick_service_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/services/pick-service/pick-service.component */ 2850);
-/* harmony import */ var src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/core/services/modules/users.service */ 77464);
+/* harmony import */ var src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/users.service */ 77464);
+/* harmony import */ var src_app_core_services_modules_requests_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/requests.service */ 25293);
+/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
+/* harmony import */ var src_app_shared_components_services_new_request_new_request_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/services/new-request/new-request.component */ 58151);
+/* harmony import */ var src_app_shared_components_services_pick_service_pick_service_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/components/services/pick-service/pick-service.component */ 2850);
 
 
 
@@ -203,11 +201,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let RequestAdminComponent = class RequestAdminComponent {
-  constructor(modal, spaces, userService, userCtrl, routerOutlet) {
+  constructor(modal, requests, auth, userServ, routerOutlet) {
     this.modal = modal;
-    this.spaces = spaces;
-    this.userService = userService;
-    this.userCtrl = userCtrl;
+    this.requests = requests;
+    this.auth = auth;
+    this.userServ = userServ;
     this.routerOutlet = routerOutlet;
     this.loading = true;
     this.itemList = [];
@@ -221,19 +219,20 @@ let RequestAdminComponent = class RequestAdminComponent {
     var _this = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      const userData = yield _this.userCtrl.loadUser();
+      const userData = yield _this.auth.getUser();
       _this.user = userData.data;
-      console.log(_this.user);
-      _this.units = yield _this.spaces.readSpacesListOrder();
-      console.log(_this.units);
+      _this.itemList = yield _this.requests.readRequestListOrder();
       _this.loading = false;
       return _this.user;
     })();
   }
 
   doRefresh(refresh) {
+    var _this2 = this;
+
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      // load 
+      yield _this2.loadData();
+
       if (refresh) {
         refresh.target.complete();
       }
@@ -241,43 +240,48 @@ let RequestAdminComponent = class RequestAdminComponent {
   }
 
   createRequest() {
-    var _this2 = this;
+    var _this3 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      const modalService = yield _this2.modal.create({
-        component: src_app_shared_components_services_pick_service_pick_service_component__WEBPACK_IMPORTED_MODULE_6__.PickServiceComponent,
+      const modalService = yield _this3.modal.create({
+        component: src_app_shared_components_services_pick_service_pick_service_component__WEBPACK_IMPORTED_MODULE_7__.PickServiceComponent,
+        componentProps: {
+          user: _this3.user
+        },
         mode: 'ios',
-        presentingElement: _this2.routerOutlet.nativeEl
+        presentingElement: _this3.routerOutlet.nativeEl
       });
       modalService.present();
       const modalResult1 = yield modalService.onWillDismiss();
 
       if (modalResult1.data) {
-        _this2.openRequest(null, modalResult1.data);
+        _this3.openRequest(null, modalResult1.data);
       }
     })();
   }
 
   openRequest(request, service) {
-    var _this3 = this;
+    var _this4 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      const modalCreate = yield _this3.modal.create({
-        component: src_app_shared_components_services_new_request_new_request_component__WEBPACK_IMPORTED_MODULE_5__.NewRequestComponent,
+      _this4.users = yield _this4.userServ.readOnlyResidents();
+      const modalCreate = yield _this4.modal.create({
+        component: src_app_shared_components_services_new_request_new_request_component__WEBPACK_IMPORTED_MODULE_6__.NewRequestComponent,
         componentProps: {
           service,
           request,
-          user: _this3.user
+          currentUser: _this4.user,
+          users: _this4.users
         },
         mode: 'ios',
-        presentingElement: _this3.routerOutlet.nativeEl
+        presentingElement: _this4.routerOutlet.nativeEl
       });
       modalCreate.present();
       const modalResult2 = yield modalCreate.onWillDismiss();
       console.log(modalResult2);
 
       if (modalResult2.data) {
-        _this3.loadData();
+        _this4.loadData();
       }
     })();
   }
@@ -287,11 +291,11 @@ let RequestAdminComponent = class RequestAdminComponent {
 RequestAdminComponent.ctorParameters = () => [{
   type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.ModalController
 }, {
-  type: src_app_core_services_modules_spaces_service__WEBPACK_IMPORTED_MODULE_4__.SpacesService
+  type: src_app_core_services_modules_requests_service__WEBPACK_IMPORTED_MODULE_4__.RequestsService
 }, {
-  type: src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_7__.UsersService
+  type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_5__.FireAuthService
 }, {
-  type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__.UserController
+  type: src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_3__.UsersService
 }, {
   type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonRouterOutlet
 }];
@@ -453,9 +457,7 @@ let ServicesAdminComponent = class ServicesAdminComponent {
     })();
   }
 
-  requestService(service) {}
-
-  createService(service) {
+  editService(service) {
     var _this3 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
@@ -683,7 +685,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \********************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene mantenimientos aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <ion-row class=\"headerServiceList\">\n      <ion-col size=\"2\" class=\"ion-text-center\"></ion-col>\n      <ion-col size=\"5\" class=\"ion-text-center\">Tipo</ion-col>\n      <ion-col size=\"5\" class=\"ion-text-center\">Servicio</ion-col>\n    </ion-row>\n    <app-service-item *ngFor=\"let service of itemList\" [service]=\"service\" [maintenance]=\"true\"\n    (click)=\"requestService(service)\"></app-service-item>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createService(null)\">\n      <ion-icon name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
+module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene mantenimientos aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <ion-row class=\"headerServiceList\">\n      <ion-col size=\"2\" class=\"ion-text-center\"></ion-col>\n      <ion-col size=\"5\" class=\"ion-text-center\">Tipo</ion-col>\n      <ion-col size=\"5\" class=\"ion-text-center\">Servicio</ion-col>\n    </ion-row>\n    <app-service-item *ngFor=\"let service of itemList\" [service]=\"service\" [maintenance]=\"true\"\n    (click)=\"editService(service)\"></app-service-item>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"editService(null)\">\n      <ion-icon name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ }),
 
@@ -693,7 +695,7 @@ module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"
   \************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene solicitudes aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    \n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createRequest()\">\n      <ion-icon size=\"large\" name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
+module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene solicitudes aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-request *ngFor=\"let request of itemList\" [request]=\"request\" [reserve]=\"false\" (click)=\"openRequest(request,null)\"></app-item-request>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createRequest()\">\n      <ion-icon size=\"large\" name=\"add-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ }),
 
@@ -703,7 +705,7 @@ module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"
   \**************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene servicios aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <ion-row class=\"headerServiceList\">\n      <ion-col size=\"1\" class=\"ion-text-center\"></ion-col>\n      <ion-col size=\"4\" class=\"ion-text-center\">Tipo</ion-col>\n      <ion-col size=\"4\" class=\"ion-text-center\">Servicio</ion-col>\n      <ion-col size=\"3\" class=\"ion-text-center\">Precio</ion-col>\n    </ion-row>\n    <app-service-item *ngFor=\"let service of itemList\" [service]=\"service\" \n    (click)=\"requestService(service)\" [maintenance]=\"false\"></app-service-item>\n  </ion-list>\n      \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createService(null)\">\n      <ion-icon name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
+module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene servicios aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <ion-row class=\"headerServiceList\">\n      <ion-col size=\"1\" class=\"ion-text-center\"></ion-col>\n      <ion-col size=\"4\" class=\"ion-text-center\">Tipo</ion-col>\n      <ion-col size=\"4\" class=\"ion-text-center\">Servicio</ion-col>\n      <ion-col size=\"3\" class=\"ion-text-center\">Precio</ion-col>\n    </ion-row>\n    <app-service-item *ngFor=\"let service of itemList\" [service]=\"service\" \n    (click)=\"editService(service)\" [maintenance]=\"false\"></app-service-item>\n  </ion-list>\n      \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"editService(null)\">\n      <ion-icon name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ }),
 

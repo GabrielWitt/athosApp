@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ServicesController } from 'src/app/core/controller/services.controller';
+import { UserController } from 'src/app/core/controller/user.controller';
 
 @Component({
   selector: 'app-services-resident',
@@ -6,15 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./services-resident.page.scss'],
 })
 export class ServicesResidentPage implements OnInit {
-  selectedTab = 'services'
 
-  constructor() { }
+  constructor(
+    public services: ServicesController,
+    public userCtrl: UserController
+    ) { }
 
   ngOnInit() {
   }
 
   segmentChanged(ev: any) {
-    this.selectedTab = ev.detail.value;
+    this.services.changeTab(ev.detail.value)
   }
 
 }

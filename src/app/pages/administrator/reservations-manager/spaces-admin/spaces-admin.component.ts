@@ -82,7 +82,7 @@ export class SpacesAdminComponent implements OnInit {
     modal.present();
     const modalResult = await modal.onWillDismiss();
     console.log(modalResult);
-    if(modalResult.data){ this.loadData();}
+    if(modalResult.data){ this.loadData(true);}
   }
 
   async detailSpace(space){

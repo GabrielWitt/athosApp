@@ -1,98 +1,9 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["common"],{
 
-/***/ 77464:
-/*!********************************************************!*\
-  !*** ./src/app/core/services/modules/users.service.ts ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "UsersService": () => (/* binding */ UsersService)
-/* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/shared/utilities/error-handler.service */ 43570);
-/* harmony import */ var _firestore_actions_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../firestore-actions.service */ 14871);
-
-
-
-
-
-let UsersService = class UsersService {
-  constructor(firestore, error) {
-    this.firestore = firestore;
-    this.error = error;
-    this.UsersFolder = 'users';
-    this.UsersFolder = 'users';
-  }
-
-  createUser(data) {
-    return new Promise((resolve, reject) => {
-      this.firestore.createDocument(this.UsersFolder, data).then(doc => {
-        resolve(doc);
-      }).catch(error => {
-        reject(this.error.handle(error));
-      });
-    });
-  }
-
-  updateUser(data) {
-    return new Promise((resolve, reject) => {
-      this.firestore.setNamedDocument(this.UsersFolder, data.uid, data).then( /*#__PURE__*/function () {
-        var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (response) {
-          resolve('done');
-        });
-
-        return function (_x) {
-          return _ref.apply(this, arguments);
-        };
-      }()).catch(error => {
-        reject(this.error.handle(error));
-      });
-    });
-  }
-
-  readAllUsers() {
-    return new Promise((resolve, reject) => {
-      this.firestore.readCollectionOrderBy(this.UsersFolder, 'lastName').then(docs => {
-        resolve(docs);
-      }).catch(error => {
-        reject(this.error.handle(error));
-      });
-    });
-  }
-
-  readUser(uid) {
-    return new Promise((resolve, reject) => {
-      this.firestore.readDocument(this.UsersFolder, uid).then(doc => {
-        resolve(doc);
-      }).catch(error => {
-        reject(this.error.handle(error));
-      });
-    });
-  }
-
-};
-
-UsersService.ctorParameters = () => [{
-  type: _firestore_actions_service__WEBPACK_IMPORTED_MODULE_2__.FirestoreActionsService
-}, {
-  type: src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_1__.ErrorHandlerService
-}];
-
-UsersService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
-  providedIn: 'root'
-})], UsersService);
-
-
-/***/ }),
-
-/***/ 73696:
+/***/ 52483:
 /*!*********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/button-active-8937ead0.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/button-active-4975dbd0.js ***!
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -100,7 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "c": () => (/* binding */ createButtonActiveGesture)
 /* harmony export */ });
-/* harmony import */ var _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-88bdeaae.js */ 39479);
+/* harmony import */ var _index_1a99aeb7_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-1a99aeb7.js */ 34895);
 /* harmony import */ var _haptic_683b3b3c_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./haptic-683b3b3c.js */ 70634);
 /* harmony import */ var _index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-3f1a7d95.js */ 82172);
 /*!
@@ -140,7 +51,7 @@ const createButtonActiveGesture = (el, isButton) => {
     }
 
     const buttonToModify = currentTouchedButton;
-    (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.add('ion-activated'));
+    (0,_index_1a99aeb7_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.add('ion-activated'));
     hapticFeedbackFn();
   };
 
@@ -150,7 +61,7 @@ const createButtonActiveGesture = (el, isButton) => {
     }
 
     const buttonToModify = currentTouchedButton;
-    (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.remove('ion-activated'));
+    (0,_index_1a99aeb7_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.remove('ion-activated'));
     /**
      * Clicking on one button, but releasing on another button
      * does not dispatch a click event in browsers, so we
@@ -625,6 +536,47 @@ const hapticImpact = options => {
 
 /***/ }),
 
+/***/ 42286:
+/*!*************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm/index-33ffec25.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "w": () => (/* binding */ win)
+/* harmony export */ });
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+
+/**
+ * When accessing the window, it is important
+ * to account for SSR applications where the
+ * window is not available. Code that accesses
+ * window when it is not available will crash.
+ * Even checking if `window === undefined` will cause
+ * apps to crash in SSR.
+ *
+ * Use win below to access an SSR-safe version
+ * of the window.
+ *
+ * Example 1:
+ * Before:
+ * if (window.innerWidth > 768) { ... }
+ *
+ * After:
+ * import { win } from 'path/to/this/file';
+ * if (win?.innerWidth > 768) { ... }
+ *
+ * Note: Code inside of this if-block will
+ * not run in an SSR environment.
+ */
+const win = typeof window !== 'undefined' ? window : undefined;
+
+
+/***/ }),
+
 /***/ 27288:
 /*!*************************************************************!*\
   !*** ./node_modules/@ionic/core/dist/esm/index-3413f7be.js ***!
@@ -1036,6 +988,68 @@ const copyVisualViewport = visualViewport => {
     pageTop: visualViewport.pageTop,
     pageLeft: visualViewport.pageLeft,
     scale: visualViewport.scale
+  };
+};
+
+
+
+/***/ }),
+
+/***/ 23963:
+/*!***************************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm/keyboard-controller-73af62b2.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "c": () => (/* binding */ createKeyboardController)
+/* harmony export */ });
+/* harmony import */ var _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-33ffec25.js */ 42286);
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+
+/**
+ * Creates a controller that tracks and reacts to opening or closing the keyboard.
+ *
+ * @internal
+ * @param keyboardChangeCallback A function to call when the keyboard opens or closes.
+ */
+
+const createKeyboardController = keyboardChangeCallback => {
+  let keyboardWillShowHandler;
+  let keyboardWillHideHandler;
+  let keyboardVisible;
+
+  const init = () => {
+    keyboardWillShowHandler = () => {
+      keyboardVisible = true;
+      if (keyboardChangeCallback) keyboardChangeCallback(true);
+    };
+
+    keyboardWillHideHandler = () => {
+      keyboardVisible = false;
+      if (keyboardChangeCallback) keyboardChangeCallback(false);
+    };
+
+    _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === null || _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === void 0 ? void 0 : _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w.addEventListener('keyboardWillShow', keyboardWillShowHandler);
+    _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === null || _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === void 0 ? void 0 : _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w.addEventListener('keyboardWillHide', keyboardWillHideHandler);
+  };
+
+  const destroy = () => {
+    _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === null || _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === void 0 ? void 0 : _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w.removeEventListener('keyboardWillShow', keyboardWillShowHandler);
+    _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === null || _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w === void 0 ? void 0 : _index_33ffec25_js__WEBPACK_IMPORTED_MODULE_0__.w.removeEventListener('keyboardWillHide', keyboardWillHideHandler);
+    keyboardWillShowHandler = keyboardWillHideHandler = undefined;
+  };
+
+  const isKeyboardVisible = () => keyboardVisible;
+
+  init();
+  return {
+    init,
+    destroy,
+    isKeyboardVisible
   };
 };
 

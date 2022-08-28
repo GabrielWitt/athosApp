@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { FirestoreActionsService } from '../firestore-actions.service';
-import { CalendarItem, reservationSlot } from '../../models/calendar';
+import { CalendarItem, HistoryRecord, reservationSlot } from '../../models/calendar';
+import { serverTimestamp } from "firebase/firestore";
+import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
+import { UserFormData } from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +14,7 @@ export class ReservationsService {
 
   constructor(
     private firestore: FirestoreActionsService,
+    private time: TimeHandlerModule,
     private error: ErrorHandlerService,
   ) {
     this.ReservationsFolder = 'reservations';
@@ -24,8 +28,16 @@ export class ReservationsService {
     });
   }
 
-  UpdateReservations(data: CalendarItem){
+  UpdateReservations(data: CalendarItem, user: UserFormData){
     return new Promise<CalendarItem>((resolve,reject) => {
+      if(!data.history){ data.history = []; }
+      const newItem: HistoryRecord = {
+        updateAt: this.time.dateTransform(serverTimestamp()),
+        updateByUID: user.uid,
+        updateByName: user.name + ' ' + user.lastName,
+        status: data.status
+      }
+      data.history.push(newItem);
       this.firestore.setNamedDocument(this.ReservationsFolder, data.uid, data)
       .then((doc:CalendarItem) => { resolve(doc) })
       .catch((error) => { reject(this.error.handle(error)); });

@@ -39,36 +39,24 @@
       <ion-checkbox slot="end" mode='md' (ionChange)="availableListener($event)" [checked]="myService.available" color="primary"></ion-checkbox>
     </ion-item>
     <ion-item>
-      <ion-thumbnail slot="start" *ngIf="service" (click)="addPhoto()">
-        <img src="{{service.photo?service.photo :defaultSpace}}">
+      <ion-thumbnail slot="start" *ngIf="myService.photo">
+        <img src="{{myService.photo}}">
       </ion-thumbnail>
-      <ion-thumbnail slot="start" *ngIf="newImage" (click)="addPhoto()">
-        <img src="{{newImage.webPath}}">
-      </ion-thumbnail>
+      <ion-label position="stacked">Tipo de Servicio:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="myService.serviceType" (ionChange)="serviceType($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let type of typeList" [value]="type.name"> {{type.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="!myService.serviceType"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Seleccione un tipo de servicio
+    </ion-text>
+    <ion-item>
       <ion-label position="stacked">Servicio:</ion-label>
       <ion-input type="text" placeholder="Nombre del servicio" [value]="myService.name" (ionChange)="nameListener($event)"></ion-input>
     </ion-item>
     <ion-text class="ion-padding-start" color="danger" *ngIf="!myService?.name"> 
       <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>
       Ingresa título del servicio
-    </ion-text>
-  
-    <ion-item *ngIf="!newImage && !service?.photo" (click)="addPhoto()">
-      <ion-label>Agregue una imagen:</ion-label>
-      <ion-button color="secondary"><ion-icon name="camera-outline" color="light"></ion-icon></ion-button>
-    </ion-item>
-    <ion-row *ngIf="progress > 0">
-      <ion-progress-bar color="secondary" [value]="progress"></ion-progress-bar>
-    </ion-row>
-  
-    <ion-item>
-      <ion-label position="stacked">Tipo de Servicio:</ion-label>
-      <ion-select class="ion-text-capitalize" mode='ios' [value]="myService.serviceType" (ionChange)="serviceType($event)">
-        <ion-select-option class="ion-text-capitalize" *ngFor="let type of typeList" [value]="type"> {{type}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-text class="ion-padding-start" color="danger" *ngIf="!myService.serviceType"> 
-      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Seleccione un tipo de servicio
     </ion-text>
   
     <ion-item>
@@ -83,8 +71,8 @@
   
     <ion-item>
       <ion-label position="stacked">Terminos y Condiciones:</ion-label>
-      <ion-textarea rows="3" placeholder="Ingrese las reglas o límites del servicio..." [value]="myService.description" 
-      (ionChange)="descriptionListener($event)"></ion-textarea>
+      <ion-textarea rows="3" placeholder="Ingrese las reglas o límites del servicio..." [value]="myService.terms" 
+      (ionChange)="termsListener($event)"></ion-textarea>
     </ion-item>
 
     <ion-row>
@@ -109,7 +97,9 @@
 
     <ion-item>
       <ion-label position="stacked">Duración (minutos) :</ion-label>
-      <ion-input slot="end" class="ion-text-center" type="number" placeholder="(minutos)" [value]="myService.estimatedTime" (ionChange)="estimatedTimeListener($event)"></ion-input>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="myService.estimatedTime" (ionChange)="estimatedTimeListener($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let time of timeEstimationList" [value]="time.unit"> {{time.text}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-text class="ion-padding-start" color="danger" *ngIf="!myService.estimatedTime"> 
       <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Agregue un tiempo estimado del servicio

@@ -10,7 +10,6 @@ import { ShortUser, UserFormData } from 'src/app/core/models/user';
 export class ItemUserComponent implements OnInit {
   @Input() user: UserFormData;
   defaultUser = '../../../../assets/profile/ProfileBlank.png';
-  principal;
 
   constructor() { }
 

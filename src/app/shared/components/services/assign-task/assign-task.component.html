@@ -1,0 +1,92 @@
+<ion-card class="ion-padding">
+  
+    <ion-list>
+    <ion-item lines="none">
+      <ion-label>Asignación de Tarea:</ion-label>
+      <ion-button size="small" slot="end" [disabled]="" color="success" [disabled]="loading || !myTask?.scheduleDate || !timeSlotStart?.date" (click)="confirmService()">
+          Enviar
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>Días Preferidos por cliente:  
+          {{request.service.preferredDays[0]?'Domingo. ':''}}
+          {{request.service.preferredDays[1]?'Lunes. ':''}}
+          {{request.service.preferredDays[2]?'Martes. ':''}}
+          {{request.service.preferredDays[3]?'Miercoles. ':''}}
+          {{request.service.preferredDays[4]?'Jueves. ':''}}
+          {{request.service.preferredDays[5]?'Viernes. ':''}}
+          {{request.service.preferredDays[6]?'Sábado. ':''}}
+        </h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Empleado Asignado:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="selectedUserUID" (ionChange)="userChange($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let user of staffList" [value]="user.uid">{{user.name}} {{user.lastName}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item (click)="showCalendar1()" *ngIf="!showCalendar">
+      <ion-label>Fecha de Servicio: </ion-label>
+      <ion-label> 
+        <ion-text *ngIf="myTask?.scheduleDate" class="dateStyle">
+          {{myTask?.scheduleDate | timeFormat: 'DD/MM/YYYY'}}
+        </ion-text>
+        <ion-text *ngIf="!myTask?.scheduleDate" class="dateStyle noDateStyle">
+          (Seleccióne la fecha)
+        </ion-text>
+      </ion-label>
+      <ion-button class="downArrow" slot="end" size="small">
+        <ion-icon style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit;" name="caret-down-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-row *ngIf="showCalendar">
+      <ion-col>
+        <ion-label>Fecha de Evento: </ion-label>
+        <ion-datetime #datetime style="margin: 0 auto;" [isDateEnabled]="availableDays" min="{{minDate}}" presentation="date" 
+              [(ngModel)]="myTask.scheduleDate" (ionChange)="changeScheduleTime(datetime.value)">
+          <ion-buttons slot="buttons">
+            <ion-button color="danger" (click)="showCalendar1()">Cancelar</ion-button>
+            <ion-button color="success" (click)="datetime.confirm()">OK</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-grid *ngIf="myTask?.scheduleDate">
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <p class="ion-no-margin ion-text-center">{{!timeSlotStart.date?'Seleccione tiempo':'Hora de Reserva'}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-center" *ngIf="timeSlotStart.date">
+        <ion-col class="ion-no-margin ion-text-center">
+          <p class="ion-no-margin item_text ion-text-center ion-text-capitalize">{{timeSlotStart.date | timeFormat: 'displayDateUTC'}}</p>
+          <p class="ion-no-margin item_text ion-text-center ion-text-capitalize">{{timeSlotStart.hour}} - {{timeSlotEnd.hour}}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <p class="ion-no-margin item_text required ion-text-center" position="stacked">Disponibilidad:</p>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-center" *ngIf="scheduleTimes?.length === 1">
+        <ion-col *ngFor="let timeSlot of scheduleTimes; index as i">
+          <div class="time_box {{timeSlot.disabled?'disabled':(timeSlot.selected?'selected':'')}}"
+          (click)="timeSlotClicked(i,timeSlot)"
+          >{{timeSlot.time}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-center" *ngIf="scheduleTimes?.length > 1">
+        <ion-col size="6" *ngFor="let timeSlot of scheduleTimes; index as i">
+          <div class="time_box {{timeSlot.disabled?'disabled':(timeSlot.selected?'selected':'')}}"
+          (click)="timeSlotClicked(i,timeSlot)"
+          >{{timeSlot.time}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-card>

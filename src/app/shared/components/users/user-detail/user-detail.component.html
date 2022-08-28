@@ -1,7 +1,7 @@
 <ion-list>
   <ion-item>
     <ion-thumbnail *ngIf="!newImage" slot="start" class="profileCircle" (click)="addPhoto()">
-      <img class="imageProfile" src="{{userData?.photo ? userData?.photo : userData}}">
+      <img class="imageProfile" src="{{userData?.photo ? userData?.photo : defaultUser}}">
       <div class="cameraButton" *ngIf="user">
         <ion-icon name="camera-outline" color="light"></ion-icon>
       </div>

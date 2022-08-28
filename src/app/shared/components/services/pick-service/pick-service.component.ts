@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Service } from 'src/app/core/models/services';
-import { MaintenanceService } from 'src/app/core/services/modules/maintenance.service';
+import { ServicesController } from 'src/app/core/controller/services.controller';
+import { IonAccordionGroup } from '@ionic/angular';
+import { UserFormData } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-pick-service',
@@ -9,36 +10,25 @@ import { MaintenanceService } from 'src/app/core/services/modules/maintenance.se
   styleUrls: ['./pick-service.component.scss'],
 })
 export class PickServiceComponent implements OnInit {
-  serviceList: Service[] = [];
-  maintenanceList: Service[] = [];
-  loading = true;
+  @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
+  @Input() user: UserFormData
+  loading = false;
   defaultSpace = '../../../../../assets/blueprint.png';
 
   constructor(
-    private services: MaintenanceService,
+    public services: ServicesController,
     public modal: ModalController
   ) { }
 
-  ngOnInit() {
-    this.loadData()
-  }
+  ngOnInit() { }
 
-  async loadData(){
-    try {
-      const list = await this.services.readResidentServicesList('MD61xvWSecqNMYYjvEoM');
-      console.log(list)
-      list.forEach(service => {
-        if(service.maintenance){
-          this.maintenanceList.push(service);
-        } else {
-          this.serviceList.push(service);
-        }
-      })
+  async doRefresh(refresh?){
+    this.loading = true;
+    this.services.loadServices(this.user.type)
+    .then(() => { 
       this.loading = false;
-    } catch (error) {
-      console.log(error)
-      this.loading = false;
-    }
+      if (refresh){ refresh.target.complete(); }
+    });
   }
 
   showCost(space){

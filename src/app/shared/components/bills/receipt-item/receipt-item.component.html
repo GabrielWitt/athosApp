@@ -1,0 +1,10 @@
+<ion-row class="userItemList">
+  <ion-col size="4" class="ion-text-center ion-text-capitalize">{{receipt.userName}}</ion-col>
+  <ion-col size="1" class="ion-text-center ion-text-capitalize">{{receipt.itemDetail.length}} </ion-col>
+  <ion-col size="3" class="ion-text-center">{{receipt.total.toFixed(2)}}$</ion-col>
+  <ion-col size="4" class="ion-text-center ion-text-capitalize">
+    <ion-text color="success" *ngIf="receipt.status === 'Pagado'">Pagado</ion-text>
+    <ion-text color="medium" *ngIf="receipt.status === 'Pendiente'">Pendiente</ion-text>
+    <ion-icon class="ion-float-right" name="chevron-forward-outline"></ion-icon>
+  </ion-col>
+</ion-row>

@@ -4,20 +4,20 @@
       <ion-button *ngIf="!request" color="danger" [disabled]="loading" (click)="cancelRequest()">
         Cancelar
       </ion-button>
-      <ion-button *ngIf="editRequestForm " color="danger" [disabled]="loading" (click)="cancelRequest()">
+      <ion-button *ngIf="showRequestForm && request" color="danger" [disabled]="loading" (click)="enableForm()">
         Cancelar
       </ion-button>
-      <ion-button *ngIf="request && !editRequestForm " color="primary" [disabled]="loading" (click)="modal.dismiss(false)">
+      <ion-button *ngIf="request && !showRequestForm " color="primary" [disabled]="loading" (click)="modal.dismiss(false)">
         Atrás
       </ion-button>
     </ion-buttons>
     <ion-title class="ion-text-uppercase">{{request ? request.service.name : 'Nuevo Tíquet'}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="(!request || editRequestForm ) && request" color="success" (click)="createRequest()" 
+      <ion-button *ngIf="(!request || showRequestForm ) && request" color="success" (click)="createRequest()" 
         [disabled]="loading || !myRequest.scheduleDate">
-          Enviar
+          Actualizar
       </ion-button>
-      <ion-button *ngIf="request && user.type === 'administrador' && !editRequestForm " color="dark" (click)="enableForm()">
+      <ion-button *ngIf="request && currentUser.type === 'administrador' && !showRequestForm " color="dark" (click)="enableForm()">
           Editar
       </ion-button>
     </ion-buttons>
@@ -29,29 +29,79 @@
 </ion-content>
 
 <ion-content *ngIf="!loading">
-  <app-detail-service *ngIf="service" style="height: 100%;" [user]="user" [service]="service" [reserve]="false"></app-detail-service>
-  <app-detail-request *ngIf="request && !showRequestForm" style="height: 100%;" [user]="user" [request]="request"></app-detail-request>
+  <app-detail-service *ngIf="service" style="height: 100%;" [user]="currentUser" [service]="service" [reserve]="false"></app-detail-service>
+  <app-assign-task *ngIf="request && !showRequestForm && request.status === 'Solicitado' && currentUser.type !== 'residente'"
+    [currentUser]="currentUser" [request]="request"></app-assign-task>
+  <app-solve-task *ngIf="request && !showRequestForm && request.status === 'Agendado' && currentUser.type !== 'residente'"
+    [currentUser]="currentUser" [request]="request"></app-solve-task>
+  <app-detail-request *ngIf="request && !showRequestForm" style="height: 100%;" [user]="currentUser" [request]="request"></app-detail-request>
   
   <ion-list *ngIf="showRequestForm">
-    <ion-item>
-      <ion-label position="stacked">Lugar de Servicio:</ion-label>
-      <ion-select class="ion-text-capitalize" mode='ios' [value]="unitName" (ionChange)="spaceChange($event)">
-        <ion-select-option class="ion-text-capitalize" *ngFor="let space of units" [value]="space">{{space.type}} {{space.unitNumber}}</ion-select-option>
+    <ion-item *ngIf="users?.length > 1">
+      <ion-label position="stacked">Usuario Solicitante:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="selectedUserUID" (ionChange)="userChange($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let user of users" [value]="user.uid">{{user.name}} {{user.lastName}}</ion-select-option>
       </ion-select>
     </ion-item>
+
+    <ion-item *ngIf="selectedUser?.leases?.length > 0">
+      <ion-label position="stacked">Lugar de Servicio:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="selectedUnitUID" (ionChange)="spaceChange($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let space of selectedUser.leases" [value]="space.spaceLease.uid">{{space.spaceLease.type}} {{space.spaceLease.unitNumber}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-row *ngIf="selectedUser?.leases?.length > 0 && !selectedUnitUID">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Seleccione donde recibe el servicio
+      </ion-text>
+    </ion-row>
+
+    <ion-row>
+      <ion-label class="ion-padding ion-margin-top">Seleccione qué días prefiere recibir el servicio:</ion-label>
+    </ion-row>
+    <ion-item>
+      <ion-row *ngIf="selectedUser" style="margin: 0 auto 16px auto;" class="ion-margin-bottom" >
+        <ion-col class="ion-text-center">
+          <p> Dom </p>
+          <ion-checkbox mode='ios' (ionChange)="Listener0($event)" [checked]="dom" color="primary" [disabled]="!service.weekdays[0]"></ion-checkbox>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <p> Lun </p>
+          <ion-checkbox mode='ios' (ionChange)="Listener1($event)" [checked]="lun" color="primary" [disabled]="!service.weekdays[1]"></ion-checkbox>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <p> Mar </p>
+          <ion-checkbox mode='ios' (ionChange)="Listener2($event)" [checked]="mar" color="primary" [disabled]="!service.weekdays[2]"></ion-checkbox>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <p> Mie </p>
+          <ion-checkbox mode='ios' (ionChange)="Listener3($event)" [checked]="mie" color="primary" [disabled]="!service.weekdays[3]"></ion-checkbox>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <p> Jue </p>
+          <ion-checkbox mode='ios' (ionChange)="Listener4($event)" [checked]="jue" color="primary" [disabled]="!service.weekdays[4]"></ion-checkbox>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <p> Vie </p>
+          <ion-checkbox mode='ios' (ionChange)="Listener5($event)" [checked]="vie" color="primary" [disabled]="!service.weekdays[5]"></ion-checkbox>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <p> Sab </p>
+          <ion-checkbox mode='ios' (ionChange)="Listener6($event)" [checked]="sab" color="primary" [disabled]="!service.weekdays[6]"></ion-checkbox>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked">Notas:</ion-label>
+      <ion-textarea rows="3" placeholder="(opcional) Ingrese detalles u observaciones para el servicio..." [value]="notes" (ionChange)="notesListener($event)"></ion-textarea>
+    </ion-item>
+
   </ion-list>
 </ion-content>
-<ion-footer *ngIf="!loading">
+<ion-footer *ngIf="!loading && !(request && showRequestForm)">
   <ion-toolbar>
-    <app-big-button *ngIf="service && !showRequestForm" class="ion-padding-top" LABEL="SOLICITAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="enableForm()"></app-big-button>
-    <app-big-button *ngIf="service && !showRequestForm" class="ion-padding-top" LABEL="SOLICITAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="enableForm()"></app-big-button>
-    <ion-row>
-      <ion-col>
-        <app-big-button *ngIf="request && request.requestBy.uid === user.uid" class="ion-padding-top" LABEL="APROVAR" buttonType="SUCCESS" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Aprovado')"></app-big-button>
-      </ion-col>
-      <ion-col>
-        <app-big-button *ngIf="request && (user.type === 'administrador' || request.requestBy.uid === user.uid)" class="ion-padding-top" LABEL="CANCELAR" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>
-      </ion-col>
-    </ion-row>
+    <app-big-button *ngIf="!request && service && showRequestForm" class="ion-padding-top" LABEL="ENVIAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading || (this.selectedUser?.leases?.length>0 && !this.selectedUnitUID)" (click)="createRequest()"></app-big-button>
+    <app-big-button *ngIf="!service && request && (currentUser.type === 'administrador' || request.requestBy.uid === currentUser.uid)" class="ion-padding-top" LABEL="CANCELAR" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>
   </ion-toolbar>
 </ion-footer>

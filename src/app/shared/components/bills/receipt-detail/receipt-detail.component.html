@@ -1,0 +1,118 @@
+
+  <ion-grid class="ion-margin ion-padding billBorder">
+    <ion-row>
+      <ion-col size="3" class="ion-margin-start">
+        <ion-img src="../../../../../assets/Athos.png"></ion-img>
+      </ion-col>
+      <ion-col size="8" class="ion-text-center">
+        <h1>EDIFICIO ATHOS</h1>
+        <h4>Av. República de El Salvador N35-40 y Portugal</h4>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4" class="squareBorder ion-text-center">
+        R.U.C 1791430751001
+      </ion-col>
+      <ion-col size="7" class="ion-margin-start ion-text-center">
+        <h4>Quito - Ecuador</h4>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top" *ngIf="currentReceipt.status === 'Pagado'">
+      <ion-col class="ion-text-center">
+        <h3><ion-text color="success">PAGADO</ion-text></h3>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col size="7" class="squareBorder">
+        <ion-text color="medium">Residente:</ion-text> {{currentReceipt?.userName}}
+      </ion-col>
+      <ion-col size="4" class="ion-margin-start squareBorder ion-text-center">
+        RECIBO DE COBRO
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="7" class="itemBorder">
+        <ion-text color="medium">ID/R:U:C:</ion-text> No.    {{currentReceipt?.userCI}}
+      </ion-col>
+      <ion-col size="4" class="ion-margin-start itemBorder ion-text-center" style="border-bottom: 2px solid black;">
+        <ion-text color="danger" class="ion-text-capitalize">Nro    {{fixNumber(currentReceipt?.receiptNumber)}}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="7" class="squareBorder">
+        <ion-row>
+          <ion-col>
+            <ion-text color="medium">DIRECCIÓN:</ion-text> {{currentReceipt?.address}}
+          </ion-col>
+          <ion-col size="5">
+            <ion-text color="medium">TELEFONO:</ion-text> 0987654321
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4" class="ion-margin-start ion-margin-top">
+        <ion-row>
+          <ion-col class="ion-text-center squareBorder">
+            <p><ion-text color="dark">Fecha:</ion-text></p>
+            <p><ion-text color="dark">{{displayDate}}</ion-text></p>
+            <p><ion-text color="dark"><ion-text color="medium">DÍA/MES/AÑO </ion-text></ion-text></p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col size="7" class="squareBorder ion-text-center">
+        <h4>CONCEPTO</h4>
+      </ion-col>
+      <ion-col size="2" class="itemMidBorder ion-text-center">
+        <h4>V. UNITARIO</h4>
+      </ion-col>
+      <ion-col size="3" class="squareBorder ion-text-center">
+        <h4>SUBTOTAL</h4>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let item of currentReceipt?.itemDetail">
+      <ion-col size="7" class="itemBorder ion-text-center">
+        {{item.itemDescription}}
+      </ion-col>
+      <ion-col size="2" class=" ion-text-center">
+        {{item.unitValue}}
+      </ion-col>
+      <ion-col size="3" class="itemBorder ion-text-center">
+        {{item.totalValue}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="7" class="ion-text-center" style="border-top: 2px solid black;">
+      </ion-col>
+      <ion-col size="2" class="squareBorder ion-text-center">
+        TOTAL USD.
+      </ion-col>
+      <ion-col size="3" class="totalBorder ion-text-center">
+        {{currentReceipt?.total}}$
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-text color="medium">Son: </ion-text> {{totalDescription}}
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col size="1"></ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <ion-img class="signSize signatureBorder" src="../../../../../assets/FirmaAdmin.png"></ion-img> 
+        <ion-label class="">FIRMA AUTORIZADA</ion-label>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <div class="signSize signatureBorder" *ngIf="!currentReceipt.userSignature"></div>
+        <ion-img class="signSize signatureBorder" *ngIf="currentReceipt.userSignature" [src]="currentReceipt.userSignature"></ion-img> 
+        <ion-label>{{currentReceipt.payerName? currentReceipt.payerName :'RECIBI CONFORME'}}</ion-label>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+
+  </ion-grid>

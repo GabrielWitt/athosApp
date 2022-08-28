@@ -1,0 +1,77 @@
+@mixin fz-22 {
+    font-size: 22pt;
+}
+
+@mixin fz-18 {
+    font-size: 18pt;
+}
+
+@mixin fz-20 {
+    font-size: 20pt;
+}
+
+.selector-title {
+    @include fz-22
+}
+
+canvas {
+    border: 1px solid #B7B7B7; 
+}
+
+
+.body {
+    text-align: center;
+    ion-button {
+        width: 148.35pt;
+        height: 38.51pt;
+        border-radius: 8pt;
+    }
+    ion-text {
+        @include fz-20;
+    }
+}
+
+.separator {
+    margin: 30px 0px 30px 0px;
+}
+
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 767px)
+  and (-webkit-min-device-pixel-ratio: 2)  {
+    @mixin fz-22 {
+        font-size: 22px;
+    }
+    
+    @mixin fz-18 {
+        font-size: 18px;
+    }
+    
+    @mixin fz-20 {
+        font-size: 20px;
+    }
+    
+    .selector-title {
+        @include fz-22
+    }
+    
+    canvas {
+        border: 1px solid #B7B7B7; 
+    }
+
+    .body {
+        text-align: center;
+        ion-button {
+            width: 148.35px;
+            height: 38.51px;
+            border-radius: 8px;
+        }
+        ion-text {
+            @include fz-20;
+        }
+    }
+
+    .separator {
+        margin: 30px 0px 30px 0px;
+    }
+  }

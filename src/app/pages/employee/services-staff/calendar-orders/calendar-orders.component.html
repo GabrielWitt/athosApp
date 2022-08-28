@@ -1,0 +1,12 @@
+<ion-content>
+  <app-loading-view *ngIf="loading"></app-loading-view>
+  
+  <app-not-data-yet-message 
+    *ngIf="calendarItems.length == 0 && !loading"
+    text="No tiene eventos aún" icon="alert-circle-outline"
+  ></app-not-data-yet-message>
+
+  <ion-list *ngIf="calendarItems.length > 0 && !loading">
+    <app-reservation-item [item]="item" *ngFor="let item of calendarItems"></app-reservation-item>
+  </ion-list>
+</ion-content>

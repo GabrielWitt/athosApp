@@ -1,0 +1,38 @@
+<ion-toolbar>
+  <ion-title class="selector-title">Recibo {{myReceipt.receiptNumber}}</ion-title>
+  <ion-buttons slot="end" *ngIf="!loading">
+    <ion-button slot="end" fill="clear" (click)="dismiss()">
+      <ion-icon color="dark" class="selector-title" slot="icon-only" name="close-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-content>
+  <div class="body">
+    <canvas #sPad class="separator"></canvas>
+    <ion-row><ion-col class="ion-text-center">Firme aquí</ion-col></ion-row>
+    <ion-item class="separator">
+      <ion-label>Recibo de:</ion-label>
+      <ion-input type="text" placeholder="(Obligatorio) Persona que paga" [value]="myReceipt.payerName" (ionChange)="nameListener($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Total: {{myReceipt.total}}$</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Residente: {{myReceipt.userName}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Recibo del Mes: {{myReceipt.receiptDate | timeFormat: 'MonthDisplay'}}</ion-label>
+    </ion-item>
+    <ion-progress-bar  *ngIf="progress>0" [value]="progress"></ion-progress-bar>
+    <app-loading-view *ngIf="loading"></app-loading-view>
+    <div class="ion-text-center" *ngIf="!loading">
+      <ion-button (click)="cancel()" color="danger">
+        <ion-text color="light">Cancelar</ion-text>
+      </ion-button>
+  
+      <ion-button (click)="saveData()" [disabled]="!myReceipt.payerName || this.signaturePad.isEmpty()" class="ion-margin-start">
+        <ion-text color="light">Enviar</ion-text>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

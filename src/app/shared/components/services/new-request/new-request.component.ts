@@ -1,15 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { Lease } from 'src/app/core/models/spaces';
 import { Service } from 'src/app/core/models/services';
 import { UserFormData } from 'src/app/core/models/user';
-import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
-import { ModalController } from '@ionic/angular';
-import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
+import { CalendarItem } from 'src/app/core/models/calendar';
 import { AlertsService } from 'src/app/shared/utilities/alerts';
 import { HapticsService } from 'src/app/shared/utilities/haptics.service';
-import { CalendarService } from 'src/app/core/services/modules/calendar.service';
 import { RequestsService } from 'src/app/core/services/modules/requests.service';
-import { CalendarItem } from 'src/app/core/models/calendar';
-import { Space } from 'src/app/core/models/spaces';
+import { CalendarService } from 'src/app/core/services/modules/calendar.service';
+import { ServicesController } from 'src/app/core/controller/services.controller';
+import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
 
 @Component({
   selector: 'app-new-request',
@@ -19,17 +19,27 @@ import { Space } from 'src/app/core/models/spaces';
 export class NewRequestComponent implements OnInit {
   defaultUser = 'assets/profile/ProfileBlank.png';
   defaultSpace = '../../../../../assets/blueprint.png';
-  @Input() user: UserFormData;
+  @Input() currentUser: UserFormData;
+  @Input() users: UserFormData[];
   @Input() service: Service;
   @Input() request: CalendarItem;
-  @Input() units: Space[];
+  units: Lease[];
 
-  selectedUnit: Space;
-  unitName;
+  selectedUser:UserFormData;
+  selectedUnit: Lease;
+  selectedUserUID;
+  selectedUnitUID;
 
   loading = false;
-  editRequestForm = false;
+  notes = '';
   showRequestForm = false;
+  dom = false;
+  lun = true;
+  mar = true;
+  mie = true;
+  jue = true;
+  vie = true;
+  sab = false;
 
   myRequest: CalendarItem = {
     scheduleDate: null,
@@ -44,34 +54,108 @@ export class NewRequestComponent implements OnInit {
 
   constructor(
     private vibe: HapticsService,
+    private requestService: ServicesController,
     private requests: RequestsService,
     private calendar: CalendarService,
     private alerts: AlertsService,
     public modal: ModalController,
-    private time: TimeHandlerModule,
     private extra: VerificationFuncService,
   ) { }
 
   ngOnInit(){
-    if(this.service){this.showRequestForm = true;}
+    if(this.service){ 
+      this.showRequestForm = true; 
+      this.dom = this.service.weekdays[0];
+      this.lun = this.service.weekdays[1];
+      this.mar = this.service.weekdays[2];
+      this.mie = this.service.weekdays[3];
+      this.jue = this.service.weekdays[4];
+      this.vie = this.service.weekdays[5];
+      this.sab = this.service.weekdays[6];
+    }
+    if(this.request){
+      this.myRequest = this.request;
+    }
+    if(this.users?.length > 1){ 
+      this.selectedUser = this.currentUser; 
+      this.selectedUserUID=this.currentUser.uid;
+      this.units = this.selectedUser.leases;
+    } else{ 
+      this.selectedUser = this.currentUser;
+      this.selectedUserUID = this.currentUser.uid;
+      this.units = this.selectedUser.leases?this.selectedUser.leases:[];
+    }
+    this.users.push(this.currentUser);
   }
 
-  enableForm(){
+  async enableForm(){
+    if(this.showRequestForm){
+      this.service = null;
+      this.showRequestForm = false; 
+    }else{
+      this.service = await this.requestService.getServiceData(this.request.service.maintenance, this.request.service.serviceUID);
+      this.dom = this.service.weekdays[0];
+      this.lun = this.service.weekdays[1];
+      this.mar = this.service.weekdays[2];
+      this.mie = this.service.weekdays[3];
+      this.jue = this.service.weekdays[4];
+      this.vie = this.service.weekdays[5];
+      this.sab = this.service.weekdays[6];
+      this.showRequestForm = true; 
+    }
+  }
 
+  userChange(e){
+    this.selectedUserUID = e.detail.value;
+    this.users.forEach((user:UserFormData) => {
+      if(user.uid == this.selectedUserUID){this.selectedUser = user;}
+    })
+    this.units = this.selectedUser.leases;
   }
 
   spaceChange(e){
-    this.unitName = e.detail.value;
-    this.units.forEach((space:Space) => {
-      if(space.unitNumber == this.unitName){this.selectedUnit = space;}
+    this.selectedUnitUID = e.detail.value;
+    this.units.forEach((space:Lease) => {
+      if(space.spaceLease.uid == this.selectedUnitUID){this.selectedUnit = space;}
     })
+  }
+
+  Listener0(e){ this.dom = e.detail.checked }
+
+  Listener1(e){ this.lun = e.detail.checked }
+
+  Listener2(e){ this.mar = e.detail.checked }
+
+  Listener3(e){ this.mie = e.detail.checked }
+
+  Listener4(e){ this.jue = e.detail.checked }
+
+  Listener5(e){ this.vie = e.detail.checked }
+
+  Listener6(e){ this.sab = e.detail.checked }
+
+  notesListener(e){ this.notes = e.detail.value }
+
+  cancelRequest(){
+    this.myRequest = {
+      scheduleDate: null,
+      startDate: null,
+      endDate: null,
+      status: 'Solicitado',
+      notes: null,
+      service: null,
+      requestBy: null,
+      userUID: null
+    }
+    this.modal.dismiss(false)
   }
 
   async createRequest(){
     try {
+      if(this.selectedUser?.leases?.length>0 && !this.selectedUnitUID){console.log('falta Unit'); return 'error';}
       this.loading = true;
-      this.myRequest.requestBy = await this.extra.createShortUser(this.user);
-      this.myRequest.userUID = this.user.uid
+      this.myRequest.requestBy = await this.extra.createShortUser(this.selectedUser);
+      this.myRequest.userUID = this.selectedUser.uid
       this.myRequest.service = {
         serviceUID: this.service.uid,
         name: this.service.name,
@@ -79,13 +163,16 @@ export class NewRequestComponent implements OnInit {
         photo: this.service.photo,
         estimatedTime: this.service.estimatedTime,
         cost: this.service.cost>0?this.service.cost:'Gratis',
-        spaceUID: this.selectedUnit.uid,
-        unitNumber: this.selectedUnit.unitNumber,
-        floor: this.selectedUnit.floor
+        spaceUID: this.selectedUnit ? this.selectedUnit.spaceLease.uid : '-',
+        unitNumber: this.selectedUnit? this.selectedUnit.spaceLease.type + ' ' + this.selectedUnit.spaceLease.unitNumber :'-',
+        floor: this.selectedUnit ? this.selectedUnit.spaceLease.floor : '-',
+        notes: this.notes,
+        comments: [],
+        preferredDays: [this.dom,this.lun,this.mar,this.mie,this.jue,this.vie,this.sab]
       }
       console.log(this.myRequest)
       if(this.request){
-        await this.requests.UpdateRequest(this.myRequest);
+        await this.requests.UpdateRequest(this.myRequest, this.currentUser);
       } else {
         await this.requests.createRequest(this.myRequest);
       }
@@ -104,44 +191,24 @@ export class NewRequestComponent implements OnInit {
 
   async changeStateReserve(status){
     this.alerts.AlertConfirm(status,'¿Seguro desea'+(status === ''?'aprobar':'cancelar')+ ' la reserva?')
-    .then(answer => {
-      if(answer){this.changeRequestStatus(status);}
-    })
-  }
-
-  cancelRequest(){
-    this.myRequest = {
-      scheduleDate: null,
-      startDate: null,
-      endDate: null,
-      status: 'Solicitado',
-      notes: null,
-      service: null,
-      requestBy: null,
-      userUID: null
-    }
-    this.modal.dismiss(false)
-  }
-
-  async changeRequestStatus(status){
-    try {
-      this.loading = true;
-      this.myRequest = this.request;
-      this.myRequest.status = status;
-      // await this.requests.UpdateReservations(this.reservation);
-      console.log(status === 'Aprovado')
-      if(status === 'Aprovado'){
-        await this.calendar.confirmReservation(this.myRequest);
+    .then(async answer => {
+      if(answer){
+        try {
+          this.loading = true;
+          this.myRequest = this.request;
+          this.myRequest.status = status;
+          await this.requests.UpdateRequest(this.myRequest, this.currentUser)
+          this.vibe.endAction();
+          this.alerts.showAlert('RESERVAS','Su reserva ha sido actualizada', 'OK');
+          this.loading = false;
+          this.modal.dismiss(true);
+        } catch (error) {
+          console.log(error)
+          this.loading = false;
+          this.modal.dismiss(true);
+        }
       }
-      this.vibe.endAction();
-      this.alerts.showAlert('RESERVAS','Su reserva ha sido actualizada', 'OK');
-      this.loading = false;
-      this.modal.dismiss(true);
-    } catch (error) {
-      console.log(error)
-      this.loading = false;
-      this.modal.dismiss(true);
-    }
+    })
   }
 
 }

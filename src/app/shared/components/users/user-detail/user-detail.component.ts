@@ -5,7 +5,7 @@ import { attachmentOptions, UserPhoto } from 'src/app/core/models/images';
 import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 import { UserController } from 'src/app/core/controller/user.controller';
-import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { NewSpaceComponent } from 'src/app/shared/components/spaces/new-space/new-space.component';
 import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
 import { SpacesService } from 'src/app/core/services/modules/spaces.service';
@@ -30,14 +30,14 @@ export class UserDetailComponent implements OnInit {
     private images: AttachmentsService,
     public userCtrl: UserController,
     private modal: ModalController,
-    private routerOutlet: IonRouterOutlet,
     private auth: FireAuthService,
     private utility: VerificationFuncService,
     private spaces: SpacesService
   ) { }
 
   ngOnInit() {
-    this.userData.leases.sort(this.utility.sortByType);
+    console.log(this.userData)
+    if(this.userData.leases){this.userData.leases.sort(this.utility.sortByType);}
   }
 
   editForm(){
@@ -81,9 +81,8 @@ export class UserDetailComponent implements OnInit {
     const spaceData = await this.spaces.readSpace(space.spaceLease.uid);
     const modal = await this.modal.create({
       component: NewSpaceComponent,
-      componentProps: {space: spaceData, user: this.user },
-      mode: 'ios',
-      presentingElement: this.routerOutlet.nativeEl
+      componentProps: {space: spaceData, user: this.userData },
+      mode: 'ios'
     });
     modal.present();
   }

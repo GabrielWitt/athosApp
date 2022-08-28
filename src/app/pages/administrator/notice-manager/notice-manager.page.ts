@@ -41,6 +41,7 @@ export class NoticeManagerPage implements OnInit {
   async loadData(){
     try {
       this.noticeList = await this.notices.readNoticeList();
+      console.log(this.noticeList)
       return 'done';
     } catch (error) {
       console.log(error);

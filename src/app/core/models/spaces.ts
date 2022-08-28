@@ -12,6 +12,7 @@ export interface Community {
     areas?: Area[]
     createdAt?: string;
     propertyType?: string;
+    lastReceiptNumber?: number;
 }
 
 export interface Area {

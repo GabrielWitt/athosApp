@@ -82,9 +82,7 @@ export class ServicesAdminComponent implements OnInit  {
     if (refresh){ refresh.target.complete(); }
   }
 
-  requestService(service){}
-
-  async createService(service){
+  async editService(service){
     const modalService = await this.modal.create({
       component: NewServiceComponent,
       componentProps: {service, user: this.user },

@@ -19,23 +19,25 @@ import { CalendarService } from 'src/app/core/services/modules/calendar.service'
 export class NewReservationComponent implements OnInit {
   defaultUser = 'assets/profile/ProfileBlank.png';
   defaultSpace = '../../../../../assets/blueprint.png';
-  @Input() user: UserFormData;
+  @Input() currentUser: UserFormData;
+  @Input() users: UserFormData[];
   @Input() reservation: CalendarItem;
   @Input() space: Space;
-
   rentSpacesList: Space[] = [];
 
+  min = new Date().toISOString();
+
+  selectedUserUID;
+  selectedUser: UserFormData;
   standAlone ={standalone: true}
   loading = false;
   editReservationForm = false;
   showReservationForm = false;
   showCalendar = false;
-  guestCounter = 0;
+  guestCounter = 1;
   availableDays = (dateString: string) => {
     const date = new Date(dateString);
     const utcDay = date.getUTCDay();
-    /* Date will be enabled if it is not
-       Sunday or Saturday */
     return this.space.rentData.weekdays[utcDay];
   };
   scheduleTimes;
@@ -68,12 +70,20 @@ export class NewReservationComponent implements OnInit {
     private spaces: SpacesService,
     private alerts: AlertsService,
     public modal: ModalController,
-    private time: TimeHandlerModule,
+    public time: TimeHandlerModule,
     private extra: VerificationFuncService,
   ) { }
 
   ngOnInit() {
     this.vibe.startAction();
+    if(this.users?.length > 1){ 
+      this.selectedUser = this.currentUser; 
+      this.selectedUserUID = this.currentUser.uid;
+    } else{ 
+      this.selectedUser = this.currentUser;
+      this.selectedUserUID = this.currentUser.uid;
+    }
+    this.users.push(this.currentUser);
   }
 
   async enableForm(){ 
@@ -90,7 +100,7 @@ export class NewReservationComponent implements OnInit {
         count++;
       })
     } else{
-      this.myReservation.requestBy = await this.extra.createShortUser(this.user);
+      this.myReservation.requestBy = await this.extra.createShortUser(this.currentUser);
       this.addTime = this.space.rentData.minTime <60 ? 30 : 60;
       this.myReservation.reservation = {
         spaceUID: this.space.uid,
@@ -99,6 +109,7 @@ export class NewReservationComponent implements OnInit {
         guests: 1
       }
       if(this.space.photo){this.myReservation.reservation.photo = this.space.photo;}
+      console.log(this.users)
     }
    }
 
@@ -141,9 +152,9 @@ export class NewReservationComponent implements OnInit {
 
   guestCounterButton(type) {
     const check = this.guestCounter+1;
-    if (type === 'plus' && check < this.space.rentData.capacity) {
+    if (type === 'plus' && check < this.space.rentData.capacity+1) {
       this.guestCounter++;
-    } else if (type === 'minus' && this.guestCounter > 0) {
+    } else if (type === 'minus' && this.guestCounter > 1) {
       this.guestCounter--;
     }
   }
@@ -170,10 +181,12 @@ export class NewReservationComponent implements OnInit {
         this.myReservation.startDate = this.timeSlotStart.date;
         this.myReservation.endDate = this.timeSlotEnd.date;
         this.myReservation.reservation.guests = this.guestCounter;
-        this.myReservation.userUID = this.user.uid;
-        console.log(this.myReservation)
+        this.myReservation.userUID = this.currentUser.uid;
+        this.users.forEach((user:UserFormData) => {
+          if(user.uid == this.selectedUserUID){this.selectedUser = user;}
+        })
         if(this.reservation){
-          await this.request.UpdateReservations(this.myReservation);
+          await this.request.UpdateReservations(this.myReservation, this.currentUser);
         } else {
           await this.request.createReservations(this.myReservation);
         }
@@ -198,6 +211,8 @@ export class NewReservationComponent implements OnInit {
     })
   }
 
+  userChange(e){ this.selectedUserUID = e.detail.value; }
+
   cancelReservation(){
     this.myReservation = {
       scheduleDate: '',
@@ -216,8 +231,7 @@ export class NewReservationComponent implements OnInit {
       this.loading = true;
       this.myReservation = this.reservation;
       this.myReservation.status = status;
-      await this.request.UpdateReservations(this.reservation);
-      console.log(status === 'Aprovado')
+      await this.request.UpdateReservations(this.reservation, this.currentUser);
       if(status === 'Aprovado'){
         await this.calendar.confirmReservation(this.myReservation);
       }

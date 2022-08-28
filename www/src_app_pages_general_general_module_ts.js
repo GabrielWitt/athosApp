@@ -268,13 +268,23 @@ let LoginComponent = class LoginComponent {
         });
         this.loading = true;
         this.auth.refreshUser()
-            .then((login) => { this.loading = login; });
+            .then((login) => {
+            if (login) {
+                setTimeout(() => { this.loading = false; }, 5000);
+            }
+            else {
+                this.loading = false;
+            }
+        });
     }
     EnterSubmit(evt, form) {
         this.verification.EnterSubmit(evt, form, this.loading).then(answer => {
             if (answer) {
                 this.loginProcess(this.loginForm.value);
             }
+        }).catch(error => {
+            this.messageError = error;
+            this.loading = false;
         });
     }
     loginProcess(form) {
@@ -323,17 +333,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SignUpComponent": () => (/* binding */ SignUpComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _sign_up_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sign-up.component.html?ngResource */ 4357);
-/* harmony import */ var _sign_up_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sign-up.component.scss?ngResource */ 96505);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 2508);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 60124);
-/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
-/* harmony import */ var src_app_shared_utilities_alerts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/utilities/alerts */ 80884);
-/* harmony import */ var src_app_shared_utilities_route_history__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/utilities/route-history */ 46147);
-/* harmony import */ var src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/utilities/validators */ 57916);
-/* harmony import */ var src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/utilities/verificationFunc */ 94264);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _sign_up_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sign-up.component.html?ngResource */ 4357);
+/* harmony import */ var _sign_up_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sign-up.component.scss?ngResource */ 96505);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var src_app_core_services_firestore_actions_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/firestore-actions.service */ 14871);
+/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
+/* harmony import */ var src_app_shared_utilities_alerts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/utilities/alerts */ 80884);
+/* harmony import */ var src_app_shared_utilities_route_history__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/utilities/route-history */ 46147);
+/* harmony import */ var src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/utilities/validators */ 57916);
+/* harmony import */ var src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/utilities/verificationFunc */ 94264);
+
+
 
 
 
@@ -346,77 +360,104 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SignUpComponent = class SignUpComponent {
-    constructor(formBuilder, router, verification, history, auth, alert) {
-        this.formBuilder = formBuilder;
-        this.router = router;
-        this.verification = verification;
-        this.history = history;
-        this.auth = auth;
-        this.alert = alert;
-        this.block = false;
-        this.loading = false;
-        this.validateCode = false;
-    }
-    ngOnInit() {
-        this.validationMessages = {
-            email: [
-                { type: 'required', message: 'El email es requerido' },
-                { type: 'email', message: 'El email tiene formato incorrecto' }
-            ]
-        };
-        this.signUpForm = this.formBuilder.group({
-            email: [null, { validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.email] }],
-            password1: [null, { validators: [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required,
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.minLength(8),
-                        src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_5__.min1digit,
-                        src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_5__.min1lowercase,
-                        src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_5__.min1uppercase,
-                        src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_5__.min1specialCharacter,
-                    ] }],
-            password2: [null, { validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required] }]
-        }, { validators: [(0,src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_5__.compareValidator)('password1', 'password2')] });
-    }
-    EnterSubmit(evt, form) {
-        this.verification.EnterSubmit(evt, form, this.loading).then(answer => {
-            if (answer) {
-                this.signProcess(this.signUpForm.value);
-            }
-        });
-    }
-    signProcess(form) {
-        this.messageError = '';
-        this.loading = true;
-        this.auth.registerUser(form.email, form.password1, form.name, form.lastName, form.birthday).then((user) => {
-            this.auth.verifyEmail().then((verify) => {
-                this.loading = false;
-                this.alert.showAlert('', verify, 'OK').then(() => {
-                    this.router.navigateByUrl('general/verify-email/' + user.email);
-                });
-            });
-        }).catch(error => { this.messageError = error; this.loading = false; });
-    }
-    cancel() {
-        this.messageError = '';
-        this.router.navigateByUrl('general/login');
-    }
-};
-SignUpComponent.ctorParameters = () => [
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormBuilder },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_8__.Router },
-    { type: src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_6__.VerificationFuncService },
-    { type: src_app_shared_utilities_route_history__WEBPACK_IMPORTED_MODULE_4__.RouteHistoryService },
-    { type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_2__.FireAuthService },
-    { type: src_app_shared_utilities_alerts__WEBPACK_IMPORTED_MODULE_3__.AlertsService }
-];
-SignUpComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
-        selector: 'app-sign-up',
-        template: _sign_up_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_sign_up_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], SignUpComponent);
+  constructor(formBuilder, router, verification, history, auth, action, alert) {
+    this.formBuilder = formBuilder;
+    this.router = router;
+    this.verification = verification;
+    this.history = history;
+    this.auth = auth;
+    this.action = action;
+    this.alert = alert;
+    this.block = false;
+    this.loading = false;
+    this.validateCode = false;
+  }
 
+  ngOnInit() {
+    this.validationMessages = {
+      email: [{
+        type: 'required',
+        message: 'El email es requerido'
+      }, {
+        type: 'email',
+        message: 'El email tiene formato incorrecto'
+      }]
+    };
+    this.signUpForm = this.formBuilder.group({
+      email: [null, {
+        validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.email]
+      }],
+      password1: [null, {
+        validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.minLength(8), src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_7__.min1digit, src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_7__.min1lowercase, src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_7__.min1uppercase, src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_7__.min1specialCharacter]
+      }],
+      password2: [null, {
+        validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required]
+      }]
+    }, {
+      validators: [(0,src_app_shared_utilities_validators__WEBPACK_IMPORTED_MODULE_7__.compareValidator)('password1', 'password2')]
+    });
+  }
+
+  EnterSubmit(evt, form) {
+    this.verification.EnterSubmit(evt, form, this.loading).then(answer => {
+      if (answer) {
+        this.signProcess(this.signUpForm.value);
+      }
+    });
+  }
+
+  signProcess(form) {
+    var _this = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      try {
+        _this.messageError = '';
+        _this.loading = true;
+
+        _this.auth.registerUser(form.email, form.password1).then(user => {
+          _this.auth.verifyEmail().then(verify => {
+            _this.loading = false;
+
+            _this.alert.showAlert('', verify, 'OK').then(() => {
+              _this.router.navigateByUrl('general/verify-email/' + user.email);
+            });
+          });
+        });
+      } catch (error) {
+        _this.messageError = error;
+        _this.loading = false;
+      }
+    })();
+  }
+
+  cancel() {
+    this.messageError = '';
+    this.router.navigateByUrl('general/login');
+  }
+
+};
+
+SignUpComponent.ctorParameters = () => [{
+  type: _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder
+}, {
+  type: _angular_router__WEBPACK_IMPORTED_MODULE_10__.Router
+}, {
+  type: src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_8__.VerificationFuncService
+}, {
+  type: src_app_shared_utilities_route_history__WEBPACK_IMPORTED_MODULE_6__.RouteHistoryService
+}, {
+  type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__.FireAuthService
+}, {
+  type: src_app_core_services_firestore_actions_service__WEBPACK_IMPORTED_MODULE_3__.FirestoreActionsService
+}, {
+  type: src_app_shared_utilities_alerts__WEBPACK_IMPORTED_MODULE_5__.AlertsService
+}];
+
+SignUpComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_12__.Component)({
+  selector: 'app-sign-up',
+  template: _sign_up_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
+  styles: [_sign_up_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
+})], SignUpComponent);
 
 
 /***/ }),
@@ -1298,7 +1339,7 @@ module.exports = ".fullWidth {\n  width: 100%;\n}\n/*# sourceMappingURL=data:app
   \*****************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p class=\"ion-text-center ion-text-capitalize inputLogin\" style=\"width: 100%;\"> RECUPERAR CONTRASEÑA </p>\n  </ion-toolbar>\n\n  \n  <form #login=\"ngForm\" [formGroup]=emailForm (ngSubmit)=enviarEmail(emailForm.value) (keydown)=\"EnterSubmit($event, emailForm)\" novalidate>\n    <ion-item>\n      <ion-label color=\"dark\" position=\"floating\"> <b>Email</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"email\" type=\"email\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    \n    <ng-container *ngFor=\"let validation of validationMessages.email\">\n      <div class=\"error-message\" *ngIf=\"emailForm.get('email').hasError(validation.type) && (emailForm.get('email').dirty || emailForm.get('email').touched)\">\n        <ion-text class=\"ion-padding-start\" color=\"danger\"> <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ validation.message }}</ion-text>\n      </div>\n    </ng-container>\n    <ion-text class=\"ion-padding-start ion-margin-vertical\" color=\"danger\" *ngIf=\"messageError\"> \n      <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ messageError }}\n    </ion-text>\n\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button type=\"submit\" class=\"ion-padding-top\" LABEL=\"SOLICITAR CONTRASEÑA\" buttonType=\"PRIMARY\" [loading]=\"loading\" [disabled]=\"!emailForm.valid || loading\" (click)=\"enviarEmail(emailForm.value)\"></app-big-button>\n    </ion-row>\n\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button class=\"ion-padding-top\" LABEL=\"Cancelar\" buttonType=\"GRAY\" [loading]=\"loading\" [disabled]=\"false\" (click)=\"cancel()\"></app-big-button>\n    </ion-row>\n  </form> \n\n</ion-content>";
+module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p class=\"ion-text-center ion-text-capitalize inputLogin\" style=\"width: 100%;\"> RECUPERAR CONTRASEÑA </p>\n  </ion-toolbar>\n\n  <ion-card style=\"width: 200px; height: 200px; margin: 10pt auto 0 auto; border-radius: 7pt; background-color: #e3e3e3;\">\n    <ion-img src=\"../../../../assets/Athos.png\"></ion-img>\n  </ion-card>\n\n  \n  <form #login=\"ngForm\" [formGroup]=emailForm (ngSubmit)=enviarEmail(emailForm.value) (keydown)=\"EnterSubmit($event, emailForm)\" novalidate>\n    <ion-item>\n      <ion-label color=\"dark\" position=\"floating\"> <b>Email</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"email\" type=\"email\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    \n    <ng-container *ngFor=\"let validation of validationMessages.email\">\n      <div class=\"error-message\" *ngIf=\"emailForm.get('email').hasError(validation.type) && (emailForm.get('email').dirty || emailForm.get('email').touched)\">\n        <ion-text class=\"ion-padding-start\" color=\"danger\"> <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ validation.message }}</ion-text>\n      </div>\n    </ng-container>\n    <ion-text class=\"ion-padding-start ion-margin-vertical\" color=\"danger\" *ngIf=\"messageError\"> \n      <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ messageError }}\n    </ion-text>\n\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button type=\"submit\" class=\"ion-padding-top\" LABEL=\"SOLICITAR CONTRASEÑA\" buttonType=\"PRIMARY\" [loading]=\"loading\" [disabled]=\"!emailForm.valid || loading\" (click)=\"enviarEmail(emailForm.value)\"></app-big-button>\n    </ion-row>\n\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button class=\"ion-padding-top\" LABEL=\"Cancelar\" buttonType=\"GRAY\" [loading]=\"loading\" [disabled]=\"false\" (click)=\"cancel()\"></app-big-button>\n    </ion-row>\n  </form> \n\n</ion-content>";
 
 /***/ }),
 
@@ -1308,7 +1349,7 @@ module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p c
   \*********************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p class=\"ion-text-center ion-text-capitalize inputLogin\" style=\"width: 100%;\"> INICIO DE SESIÓN </p>\n  </ion-toolbar>\n\n  \n  <form #login=\"ngForm\" [formGroup]=loginForm (ngSubmit)=loginProcess(loginForm.value) (keydown)=\"EnterSubmit($event, loginForm)\" novalidate>\n    <ion-item>\n      <ion-label color=\"dark\" position=\"floating\"> <b>Email</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"email\" type=\"email\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    \n    <ng-container *ngFor=\"let validation of validationMessages.email\">\n      <div class=\"error-message\" *ngIf=\"loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n        <ion-text class=\"ion-padding-start\" color=\"danger\"> <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ validation.message }}</ion-text>\n      </div>\n    </ng-container>\n    <ion-text class=\"ion-padding-start ion-margin-vertical\" color=\"danger\" *ngIf=\"messageError\"> \n      <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ messageError }}\n    </ion-text>\n\n    <ion-item #emailInput>\n      <ion-label color=\"dark\" position='floating'><b>Password</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"password\" type=\"password\" clearInput=\"true\"></ion-input>\n    </ion-item>\n\n    <ng-container *ngFor=\"let validation of validationMessages.password\">\n      <div class=\"error-message ion-margin-bottom\" *ngIf=\"loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)\">\n        <ion-text class=\"ion-padding-start\" color=\"danger\"> <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ validation.message }}</ion-text>\n      </div>\n    </ng-container>\n    <ion-text class=\"ion-padding-start ion-margin-vertical\" color=\"danger\" *ngIf=\"messageError\"> \n      <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ messageError }}\n    </ion-text>\n\n\n    <div class='ion-padding-start' *ngIf=\"!this.block && !loading\"> \n      <ion-text color='dark'> <p class=\"forgot_text\" (click)='forgotPassword()'><span>¿Olvidó su contraseña?</span></p>    </ion-text> \n    </div>\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button type=\"submit\" class=\"ion-padding-top\" LABEL=\"INICIAR SESIÓN\" buttonType=\"PRIMARY\" [loading]=\"loading\" [disabled]=\"!loginForm.valid || loading\" \n      (click)=\"loginProcess(loginForm.value)\"></app-big-button>\n    </ion-row>\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button class=\"ion-padding-top\" LABEL=\"REGISTRARSE\" buttonType=\"SECONDARY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"registrase()\"></app-big-button>\n    </ion-row>\n  </form> \n\n</ion-content>";
+module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p class=\"ion-text-center ion-text-capitalize inputLogin\" style=\"width: 100%;\"> INICIO DE SESIÓN </p>\n  </ion-toolbar>\n\n  <ion-card style=\"width: 200px; height: 200px; margin: 10pt auto 0 auto; border-radius: 7pt; background-color: #e3e3e3;\">\n    <ion-img src=\"../../../../assets/Athos.png\"></ion-img>\n  </ion-card>\n  \n  <form #login=\"ngForm\" [formGroup]=loginForm (ngSubmit)=loginProcess(loginForm.value) (keydown)=\"EnterSubmit($event, loginForm)\" novalidate>\n    <ion-item>\n      <ion-label color=\"dark\" position=\"floating\"> <b>Email</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"email\" type=\"email\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    \n    <ng-container *ngFor=\"let validation of validationMessages.email\">\n      <div class=\"error-message\" *ngIf=\"loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n        <ion-text class=\"ion-padding-start\" color=\"danger\"> <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ validation.message }}</ion-text>\n      </div>\n    </ng-container>\n    <ion-text class=\"ion-padding-start ion-margin-vertical\" color=\"danger\" *ngIf=\"messageError\"> \n      <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ messageError }}\n    </ion-text>\n\n    <ion-item #emailInput>\n      <ion-label color=\"dark\" position='floating'><b>Password</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"password\" type=\"password\" clearInput=\"true\"></ion-input>\n    </ion-item>\n\n    <ng-container *ngFor=\"let validation of validationMessages.password\">\n      <div class=\"error-message ion-margin-bottom\" *ngIf=\"loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)\">\n        <ion-text class=\"ion-padding-start\" color=\"danger\"> <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ validation.message }}</ion-text>\n      </div>\n    </ng-container>\n    <ion-text class=\"ion-padding-start ion-margin-vertical\" color=\"danger\" *ngIf=\"messageError\"> \n      <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ messageError }}\n    </ion-text>\n\n\n    <div class='ion-padding-start' *ngIf=\"!this.block && !loading\"> \n      <ion-text color='dark'> <p class=\"forgot_text\" (click)='forgotPassword()'><span>¿Olvidó su contraseña?</span></p>    </ion-text> \n    </div>\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button type=\"submit\" class=\"ion-padding-top\" LABEL=\"INICIAR SESIÓN\" buttonType=\"PRIMARY\" [loading]=\"loading\" [disabled]=\"!loginForm.valid || loading\" \n      (click)=\"loginProcess(loginForm.value)\"></app-big-button>\n    </ion-row>\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button class=\"ion-padding-top\" LABEL=\"REGISTRARSE\" buttonType=\"SECONDARY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"registrase()\"></app-big-button>\n    </ion-row>\n  </form> \n\n</ion-content>";
 
 /***/ }),
 
@@ -1318,7 +1359,7 @@ module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p c
   \*************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p class=\"ion-text-center ion-text-capitalize inputLogin\" style=\"width: 100%;\"> REGISTRO </p>\n  </ion-toolbar>\n\n  <form #email=\"ngForm\" [formGroup]=\"signUpForm\" (ngSubmit)=\"signProcess(signUpForm.value)\" (keydown)=\"EnterSubmit($event, signUpForm)\" novalidate>\n    <ion-item>\n      <ion-label color=\"dark\" position=\"floating\"> <b>Email / Usuario</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"email\" type=\"email\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    <ng-container *ngFor=\"let validation of validationMessages.email\">\n      <div class=\"error-message\" *ngIf=\"signUpForm.get('email').hasError(validation.type) && (signUpForm.get('email').dirty || signUpForm.get('email').touched)\">\n        <ion-text class=\"ion-padding-start\" color=\"danger\"> \n          <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ validation.message }}\n        </ion-text>\n      </div>\n    </ng-container>\n\n    <ion-item>\n      <ion-label color=\"dark\" position='floating'><b>Contraseña</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"password1\" type=\"password\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    <ng-container>\n      <div *ngIf=\"(signUpForm.get('password1').dirty || signUpForm.get('password1').touched)\">\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'required'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon> Contraseña requerida\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'minlength'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon> Requiere 8 letras por los menos\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'min1digit'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon> Requiere un número por lo menos\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'min1uppercase'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  \n            Requiere una letra mayúscula por lo menos\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'min1lowercase'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  \n            Requiere una letra minúscula por lo menos\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'min1specialCharacter'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  \n            Requiere un cáracter special {{'(^ $ * . [ ] { } ( ) ? - \" ! @ # % & / \\ , > < ' + \"' : ; | _ ~ ` + =)\"}}\n          </ion-text>\n        </div>\n      </div>\n    </ng-container>\n\n    <ion-item>\n      <ion-label color=\"dark\" position='floating'><b>Repetir Contraseña</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"password2\" type=\"password\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    <ng-container>\n      <div *ngIf=\"(signUpForm.get('password2').dirty || signUpForm.get('password2').touched)\">\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password2').errors | first) === 'required'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>\n            Repita la contraseña\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.errors | first) === 'compareValidator'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  \n            Las contraseñas no coinciden\n          </ion-text>\n        </div>\n      </div>\n      <ion-text class=\"ion-padding-start ion-margin-vertical ion-text-capitalize\" color=\"danger\" *ngIf=\"messageError\"> \n        <ion-icon class=\"vertical-align \" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ messageError }}\n      </ion-text>\n    </ng-container>\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button LABEL=\"REGISTRARSE\" buttonType=\"\" [loading]=\"loading\" [disabled]=\"!signUpForm.valid || loading\" (click)=\"signProcess(signUpForm.value)\"></app-big-button>\n    </ion-row>\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button class=\"ion-padding-top\" LABEL=\"CANCELAR\" buttonType=\"GRAY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"cancel()\"></app-big-button>\n    </ion-row>\n  </form>\n\n</ion-content>";
+module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p class=\"ion-text-center ion-text-capitalize inputLogin\" style=\"width: 100%;\"> REGISTRO </p>\n  </ion-toolbar>\n\n  <ion-card style=\"width: 200px; height: 200px; margin: 10pt auto 0 auto; border-radius: 7pt; background-color: #e3e3e3;\">\n    <ion-img src=\"../../../../assets/Athos.png\"></ion-img>\n  </ion-card>\n\n  <form #email=\"ngForm\" [formGroup]=\"signUpForm\" (ngSubmit)=\"signProcess(signUpForm.value)\" (keydown)=\"EnterSubmit($event, signUpForm)\" novalidate>\n    <ion-item>\n      <ion-label color=\"dark\" position=\"floating\"> <b>Email / Usuario</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"email\" type=\"email\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    <ng-container *ngFor=\"let validation of validationMessages.email\">\n      <div class=\"error-message\" *ngIf=\"signUpForm.get('email').hasError(validation.type) && (signUpForm.get('email').dirty || signUpForm.get('email').touched)\">\n        <ion-text class=\"ion-padding-start\" color=\"danger\"> \n          <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ validation.message }}\n        </ion-text>\n      </div>\n    </ng-container>\n\n    <ion-item>\n      <ion-label color=\"dark\" position='floating'><b>Contraseña</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"password1\" type=\"password\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    <ng-container>\n      <div *ngIf=\"(signUpForm.get('password1').dirty || signUpForm.get('password1').touched)\">\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'required'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon> Contraseña requerida\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'minlength'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon> Requiere 8 letras por los menos\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'min1digit'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon> Requiere un número por lo menos\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'min1uppercase'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  \n            Requiere una letra mayúscula por lo menos\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'min1lowercase'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  \n            Requiere una letra minúscula por lo menos\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password1').errors | first) === 'min1specialCharacter'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  \n            Requiere un cáracter special {{'(^ $ * . [ ] { } ( ) ? - \" ! @ # % & / \\ , > < ' + \"' : ; | _ ~ ` + =)\"}}\n          </ion-text>\n        </div>\n      </div>\n    </ng-container>\n\n    <ion-item>\n      <ion-label color=\"dark\" position='floating'><b>Repetir Contraseña</b></ion-label>\n      <ion-input color=\"dark\" formControlName=\"password2\" type=\"password\" clearInput=\"true\"></ion-input>\n    </ion-item>\n    <ng-container>\n      <div *ngIf=\"(signUpForm.get('password2').dirty || signUpForm.get('password2').touched)\">\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.get('password2').errors | first) === 'required'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>\n            Repita la contraseña\n          </ion-text>\n        </div>\n        <div class=\"error-message ion-margin-bottom\" *ngIf=\"(signUpForm.errors | first) === 'compareValidator'\">\n          <ion-text class=\"ion-padding-start\" color=\"danger\"> \n            <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  \n            Las contraseñas no coinciden\n          </ion-text>\n        </div>\n      </div>\n      <ion-text class=\"ion-padding-start ion-margin-vertical ion-text-capitalize\" color=\"danger\" *ngIf=\"messageError\"> \n        <ion-icon class=\"vertical-align \" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  {{ messageError }}\n      </ion-text>\n    </ng-container>\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button LABEL=\"REGISTRARSE\" buttonType=\"\" [loading]=\"loading\" [disabled]=\"!signUpForm.valid || loading\" (click)=\"signProcess(signUpForm.value)\"></app-big-button>\n    </ion-row>\n    <ion-row class=\"ion-margin-top\">\n      <app-big-button class=\"ion-padding-top\" LABEL=\"CANCELAR\" buttonType=\"GRAY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"cancel()\"></app-big-button>\n    </ion-row>\n  </form>\n\n</ion-content>";
 
 /***/ }),
 
@@ -1328,7 +1369,7 @@ module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p c
   \***********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p class=\"ion-text-center ion-text-capitalize inputLogin\" style=\"width: 100%;\"> INICIO DE SESIÓN </p>\n  </ion-toolbar>\n  <ion-item>\n    <ion-text color=\"dark\">\n      <p>Email: {{email}}</p>\n    </ion-text>\n  </ion-item>\n  \n  <ion-row class=\"fullWidth\">\n    <ion-text color=\"danger\" class=\"ion-padding ion-text-center fullWidth\">\n      <p>{{errorMessage}}</p>\n    </ion-text>\n  </ion-row>\n  \n  <ion-row class=\"ion-margin-top\">\n    <p class=\"ion-padding ion-text-center\">Verifique si el correo se encuentra en 'no deseado' o 'spam'. Si no lo tiene, presione el botón 'Reenviar' para volver a enviarle el mail de verificación</p>\n    <app-big-button type=\"submit\" class=\"\" LABEL=\"Reenviar\" buttonType=\"SECONDARY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"resendEmail()\"></app-big-button>\n  </ion-row>\n  \n  <ion-row class=\"ion-margin-top\">\n    <app-big-button type=\"submit\" class=\"ion-padding-top\" LABEL=\"Verificar Email\" buttonType=\"PRIMARY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"checkUser()\"></app-big-button>\n  </ion-row>\n\n  <ion-row class=\"ion-margin-top\">\n    <app-big-button class=\"ion-padding-top\" LABEL=\"Cancelar\" buttonType=\"GRAY\" [loading]=\"loading\" [disabled]=\"false\" (click)=\"cancel()\"></app-big-button>\n  </ion-row>\n\n</ion-content>";
+module.exports = "<ion-content class=\"ion-padding\">\n  <ion-toolbar>\n    <p class=\"ion-text-center ion-text-capitalize inputLogin\" style=\"width: 100%;\"> INICIO DE SESIÓN </p>\n  </ion-toolbar>\n\n  <ion-card style=\"width: 200px; height: 200px; margin: 10pt auto 0 auto; border-radius: 7pt; background-color: #e3e3e3;\">\n    <ion-img src=\"../../../../assets/Athos.png\"></ion-img>\n  </ion-card>\n  \n  <ion-item>\n    <ion-text color=\"dark\">\n      <p>Email: {{email}}</p>\n    </ion-text>\n  </ion-item>\n  \n  <ion-row class=\"fullWidth\">\n    <ion-text color=\"danger\" class=\"ion-padding ion-text-center fullWidth\">\n      <p>{{errorMessage}}</p>\n    </ion-text>\n  </ion-row>\n  \n  <ion-row class=\"ion-margin-top\">\n    <p class=\"ion-padding ion-text-center\">Verifique si el correo se encuentra en 'no deseado' o 'spam'. Si no lo tiene, presione el botón 'Reenviar' para volver a enviarle el mail de verificación</p>\n    <app-big-button type=\"submit\" class=\"\" LABEL=\"Reenviar\" buttonType=\"SECONDARY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"resendEmail()\"></app-big-button>\n  </ion-row>\n  \n  <ion-row class=\"ion-margin-top\">\n    <app-big-button type=\"submit\" class=\"ion-padding-top\" LABEL=\"Verificar Email\" buttonType=\"PRIMARY\" [loading]=\"loading\" [disabled]=\"loading\" (click)=\"checkUser()\"></app-big-button>\n  </ion-row>\n\n  <ion-row class=\"ion-margin-top\">\n    <app-big-button class=\"ion-padding-top\" LABEL=\"Cancelar\" buttonType=\"GRAY\" [loading]=\"loading\" [disabled]=\"false\" (click)=\"cancel()\"></app-big-button>\n  </ion-row>\n\n</ion-content>";
 
 /***/ })
 

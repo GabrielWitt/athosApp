@@ -13,6 +13,7 @@ export interface Service {
     available: boolean;
     createdAt?: string;
 }
+
 export interface ShortService {
     uid: string
     name: string;

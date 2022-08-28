@@ -74,8 +74,8 @@
   <ion-row *ngIf="showCalendar">
     <ion-col>
       <ion-item>
-        <ion-datetime #datetime style="margin: 0 auto;" presentation="date" 
-              [(ngModel)]="myCurrentUser.birthDate" (ionChange)="changeScheduleTime(datetime.value)">
+        <ion-datetime #datetime style="margin: 0 auto;" (ionChange)="changeScheduleTime(datetime.value)" presentation="date" 
+              [(ngModel)]="myCurrentUser.birthDate" >
           <ion-buttons slot="buttons">
             <ion-button color="danger" (click)="showCalendar1()">Cancelar</ion-button>
             <ion-button color="success" (click)="datetime.confirm()">OK</ion-button>

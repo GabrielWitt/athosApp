@@ -28,17 +28,21 @@ const routes = [
     },
     {
         path: 'general',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_general_general_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/general/general.module */ 13387)).then(m => m.GeneralPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_general_general_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/general/general.module */ 13387)).then(m => m.GeneralPageModule)
     },
     {
         path: 'administrator',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_administrator_administrator_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/administrator/administrator.module */ 66484)).then(m => m.AdministratorPageModule),
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_administrator_administrator_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/administrator/administrator.module */ 66484)).then(m => m.AdministratorPageModule),
         canActivate: [_angular_fire_compat_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
     },
     {
         path: 'client',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_client_client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/client/client.module */ 54373)).then(m => m.ClientPageModule),
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/client/client.module */ 54373)).then(m => m.ClientPageModule),
         canActivate: [_angular_fire_compat_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+    },
+    {
+        path: 'employee',
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_employee_employee_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./pages/employee/employee.module */ 53354)).then(m => m.EmployeePageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -102,24 +106,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app.component */ 55041);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/router */ 60124);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-routing.module */ 90158);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/platform-browser */ 34497);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser */ 34497);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 92340);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic/angular */ 93819);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/core */ 26549);
 /* harmony import */ var _awesome_cordova_plugins_chooser_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @awesome-cordova-plugins/chooser/ngx */ 89519);
-/* harmony import */ var ngx_image_compress__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ngx-image-compress */ 32568);
-/* harmony import */ var _angular_fire_compat__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/fire/compat */ 11879);
-/* harmony import */ var _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/fire/compat/firestore */ 92393);
-/* harmony import */ var _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/fire/compat/auth */ 5873);
+/* harmony import */ var ngx_image_compress__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ngx-image-compress */ 32568);
+/* harmony import */ var _angular_fire_compat__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/fire/compat */ 11879);
+/* harmony import */ var _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/fire/compat/firestore */ 92393);
+/* harmony import */ var _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/fire/compat/auth */ 5873);
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/platform-browser/animations */ 37146);
+/* harmony import */ var angular_calendar__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! angular-calendar */ 62038);
+/* harmony import */ var angular_calendar_date_adapters_date_fns__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! angular-calendar/date-adapters/date-fns */ 58617);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! firebase/app */ 66369);
-/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/fire/auth */ 61577);
+/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/fire/auth */ 61577);
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! firebase/auth */ 23628);
+/* harmony import */ var _awesome_cordova_plugins_native_storage_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @awesome-cordova-plugins/native-storage/ngx */ 20070);
 
 
 
@@ -137,36 +145,47 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+//Calendar
+
+
+
+
 
 
 
 let AppModule = class AppModule {
 };
-AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.NgModule)({
+AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
         imports: [
-            _angular_forms__WEBPACK_IMPORTED_MODULE_9__.ReactiveFormsModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule,
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__.BrowserModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicModule.forRoot(),
+            _angular_forms__WEBPACK_IMPORTED_MODULE_10__.ReactiveFormsModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormsModule,
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__.BrowserModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.IonicModule.forRoot(),
             _app_routing_module__WEBPACK_IMPORTED_MODULE_1__.AppRoutingModule,
-            _angular_fire_compat__WEBPACK_IMPORTED_MODULE_12__.AngularFireModule.initializeApp(src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.firebaseConfig),
-            _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_13__.AngularFirestoreModule,
-            (0,_angular_fire_auth__WEBPACK_IMPORTED_MODULE_14__.provideAuth)(() => {
+            _angular_fire_compat__WEBPACK_IMPORTED_MODULE_13__.AngularFireModule.initializeApp(src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.firebaseConfig),
+            _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_14__.AngularFirestoreModule,
+            (0,_angular_fire_auth__WEBPACK_IMPORTED_MODULE_15__.provideAuth)(() => {
                 if (_capacitor_core__WEBPACK_IMPORTED_MODULE_3__.Capacitor.isNativePlatform()) {
                     return (0,firebase_auth__WEBPACK_IMPORTED_MODULE_6__.initializeAuth)((0,firebase_app__WEBPACK_IMPORTED_MODULE_5__.getApp)(), { persistence: firebase_auth__WEBPACK_IMPORTED_MODULE_6__.indexedDBLocalPersistence, });
                 }
                 else {
-                    return (0,_angular_fire_auth__WEBPACK_IMPORTED_MODULE_14__.getAuth)();
+                    return (0,_angular_fire_auth__WEBPACK_IMPORTED_MODULE_15__.getAuth)();
                 }
+            }),
+            _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_16__.BrowserAnimationsModule,
+            angular_calendar__WEBPACK_IMPORTED_MODULE_17__.CalendarModule.forRoot({
+                provide: angular_calendar__WEBPACK_IMPORTED_MODULE_17__.DateAdapter,
+                useFactory: angular_calendar_date_adapters_date_fns__WEBPACK_IMPORTED_MODULE_18__.adapterFactory,
             }),
         ],
         providers: [
-            { provide: _angular_router__WEBPACK_IMPORTED_MODULE_15__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_11__.IonicRouteStrategy },
-            { provide: _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_16__.PERSISTENCE, useValue: 'session' },
+            { provide: _angular_router__WEBPACK_IMPORTED_MODULE_19__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.IonicRouteStrategy },
+            { provide: _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_20__.PERSISTENCE, useValue: 'session' },
             _awesome_cordova_plugins_chooser_ngx__WEBPACK_IMPORTED_MODULE_4__.Chooser,
-            ngx_image_compress__WEBPACK_IMPORTED_MODULE_17__.NgxImageCompressService
+            _awesome_cordova_plugins_native_storage_ngx__WEBPACK_IMPORTED_MODULE_7__.NativeStorage,
+            ngx_image_compress__WEBPACK_IMPORTED_MODULE_21__.NgxImageCompressService
         ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
     })
@@ -436,6 +455,7 @@ var map = {
 	],
 	"./ion-tab-bar_2.entry.js": [
 		28902,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-tab-bar_2_entry_js"
 	],
 	"./ion-tab_2.entry.js": [

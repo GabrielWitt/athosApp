@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CalendarItem } from 'src/app/core/models/calendar';
 import { Service } from 'src/app/core/models/services';
 
 @Component({
@@ -7,7 +8,7 @@ import { Service } from 'src/app/core/models/services';
   styleUrls: ['./detail-request.component.scss'],
 })
 export class DetailRequestComponent implements OnInit {
-  @Input() service: Service;
+  @Input() request: CalendarItem;
   @Input() reserve: boolean;
   defaultSpace = '../../../../../assets/blueprint.png';
 

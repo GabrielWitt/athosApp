@@ -4,6 +4,7 @@ import { Space } from 'src/app/core/models/spaces';
 import { UserFormData } from 'src/app/core/models/user';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 import { ReservationsService } from 'src/app/core/services/modules/reservations.service';
+import { UsersService } from 'src/app/core/services/modules/users.service';
 import { NewReservationComponent } from 'src/app/shared/components/spaces/new-reservation/new-reservation.component';
 import { PickRentSpaceComponent } from 'src/app/shared/components/spaces/pick-rent-space/pick-rent-space.component';
 
@@ -16,6 +17,7 @@ export class ReservationAdminComponent implements OnInit {
   loading = true;
   itemList = [];
   rentSpacesList: Space[]=[]
+  users: UserFormData[];
   user: UserFormData;
   filterSelected: '>'|'<' = '>'
 
@@ -27,6 +29,7 @@ export class ReservationAdminComponent implements OnInit {
   constructor(
     private modal: ModalController,
     private auth: FireAuthService,
+    private userServ: UsersService,
     private request: ReservationsService,
     private routerOutlet: IonRouterOutlet
   ) { }
@@ -40,9 +43,8 @@ export class ReservationAdminComponent implements OnInit {
 
   async loadData() {
     const userData:any = await this.auth.getUser();
-    this.itemList = await this.request.readReservationsListOrderRent("startDate",new Date().toISOString(),this.filterSelected);
-    console.log(this.itemList)
     this.user = userData.data;
+    this.itemList = await this.request.readReservationsListOrderRent("startDate",new Date().toISOString(),this.filterSelected);
     return this.user
   }
 
@@ -71,15 +73,15 @@ export class ReservationAdminComponent implements OnInit {
   }
 
   async openReservation(reservation,space){
+    this.users = await this.userServ.readOnlyResidents();
     const modalCreate = await this.modal.create({
       component: NewReservationComponent,
-      componentProps: {reservation, space, user: this.user },
+      componentProps: {reservation, space, currentUser: this.user, users: this.users },
       mode: 'ios',
       presentingElement: this.routerOutlet.nativeEl
     });
     modalCreate.present();
     const modalResult2 = await modalCreate.onWillDismiss();
-    console.log(modalResult2);
     if(modalResult2.data){ this.loadData()}
   }
 

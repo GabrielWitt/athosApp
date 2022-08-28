@@ -61,14 +61,9 @@ export class NewSpaceComponent implements OnInit {
     {text: '1 hora', unit:60},
     {text: '1:30 hrs.', unit:90},
     {text: '2:00 hrs.', unit:120},
-    {text: '2:30 hrs.', unit:150},
-    {text: '3:00 hrs.', unit:180},
-    {text: '3:30 hrs.', unit:220},
-    {text: '4:00 hrs.', unit:180},
-    {text: '4:30 hrs.', unit:220},
-    {text: '5:00 hrs.', unit:180},
-    {text: '5:30 hrs.', unit:220},
-    {text: '6:30 hrs.', unit:220},
+    {text: '4:00 hrs.', unit:240},
+    {text: '6:00 hrs.', unit:360},
+    {text: '8:00 hrs.', unit:480},
   ]
 
   constructor(

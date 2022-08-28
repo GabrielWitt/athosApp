@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserFormData } from 'src/app/core/models/user';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
-import { UserController } from 'src/app/core/controller/user.controller';
-import { SpacesService } from 'src/app/core/services/modules/spaces.service';
+import { UsersService } from 'src/app/core/services/modules/users.service';
+import { RequestsService } from 'src/app/core/services/modules/requests.service';
+import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
 import { NewRequestComponent } from 'src/app/shared/components/services/new-request/new-request.component';
 import { PickServiceComponent } from 'src/app/shared/components/services/pick-service/pick-service.component';
-import { Space } from 'src/app/core/models/spaces';
-import { UsersService } from 'src/app/core/services/modules/users.service';
 
 @Component({
   selector: 'app-request-admin',
@@ -17,14 +16,13 @@ export class RequestAdminComponent implements OnInit {
   loading = true;
   user: UserFormData;
   itemList = []
-  units: Space[];
   users: UserFormData[];
 
   constructor(
     private modal: ModalController,
-    private spaces: SpacesService,
-    private userService: UsersService,
-    private userCtrl: UserController,
+    private requests: RequestsService,
+    private auth: FireAuthService,
+    private userServ: UsersService,
     private routerOutlet: IonRouterOutlet,
   ) { }
 
@@ -33,23 +31,22 @@ export class RequestAdminComponent implements OnInit {
   }
 
   async loadData() {
-    const userData:any = await this.userCtrl.loadUser();
+    const userData:any = await this.auth.getUser()
     this.user = userData.data;
-    console.log(this.user)
-    this.units = await this.spaces.readSpacesListOrder();
-    console.log(this.units)
+    this.itemList = await this.requests.readRequestListOrder();
     this.loading = false;
     return this.user
   }
 
   async doRefresh(refresh?){
-    // load 
+    await this.loadData();
     if (refresh){ refresh.target.complete(); }
   }
 
   async createRequest(){
     const modalService = await this.modal.create({
       component: PickServiceComponent,
+      componentProps:{user:this.user},
       mode: 'ios',
       presentingElement: this.routerOutlet.nativeEl
     });
@@ -60,9 +57,10 @@ export class RequestAdminComponent implements OnInit {
   }
 
   async openRequest(request, service){
+    this.users = await this.userServ.readOnlyResidents();
     const modalCreate = await this.modal.create({
       component: NewRequestComponent,
-      componentProps: {service, request, user: this.user },
+      componentProps: {service, request, currentUser: this.user, users: this.users },
       mode: 'ios',
       presentingElement: this.routerOutlet.nativeEl
     });

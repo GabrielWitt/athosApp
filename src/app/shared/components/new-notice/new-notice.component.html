@@ -33,7 +33,7 @@
     <img *ngIf="notice.photo" [src]="notice.photo" />
     <ion-card-header>
       <ion-card-subtitle>
-        Por: {{notice.writer.name}}
+        Por: {{notice.writer?.name}}
       </ion-card-subtitle>
       <ion-card-title>Título: {{notice.title}}</ion-card-title>
     </ion-card-header>

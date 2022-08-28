@@ -20,11 +20,11 @@
       <ion-col size="3" class="ion-text-center">Precio</ion-col>
     </ion-row>
     <app-service-item *ngFor="let service of itemList" [service]="service" 
-    (click)="requestService(service)" [maintenance]="false"></app-service-item>
+    (click)="editService(service)" [maintenance]="false"></app-service-item>
   </ion-list>
       
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button color="secondary" (click)="createService(null)">
+    <ion-fab-button color="secondary" (click)="editService(null)">
       <ion-icon name="create-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'client',
     loadChildren: () => import('./pages/client/client.module').then( m => m.ClientPageModule),
     canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+  },
+  {
+    path: 'employee',
+    loadChildren: () => import('./pages/employee/employee.module').then( m => m.EmployeePageModule)
   }
 ];
 

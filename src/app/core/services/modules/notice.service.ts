@@ -19,10 +19,11 @@ export class NoticeService {
   getNoticeType(){
     return [
       {icon: 'information-circle-outline', name: 'INFORMACIÓN' },
-      {icon: 'search-outline', name: 'PERDIDO/ENCONTRADO' },
-      {icon: 'gift-outline', name: 'ADOPCIONES' },
+      {icon: 'hammer-outline', name: 'REPARACIONES' },
+      {icon: 'calendar-outline', name: 'EVENTOS' },
     ];
   }
+  //78.09
 
   createNotice(data: Notice){
     return new Promise((resolve,reject) => {
@@ -42,7 +43,7 @@ export class NoticeService {
 
   readNoticeList(){
     return new Promise<Notice[]>((resolve,reject) => {
-      this.firestore.readCollectionOrderBy(this.noticeFolder,'updatedAt')
+      this.firestore.readCollectionOrderBy(this.noticeFolder,'createdAt')
       .then((docs: any[]) => { resolve(docs) })
       .catch((error) => { reject(this.error.handle(error)); });
     });

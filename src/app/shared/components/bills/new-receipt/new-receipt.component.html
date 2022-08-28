@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button color="primary" [disabled]="loading" (click)="modal.dismiss(false)">
+        Atrás
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">RECIBO </ion-title>
+    <ion-buttons slot="end" *ngIf="currentUser.type === 'administrador'">
+      <ion-button color="success" [disabled]="loading" *ngIf="generate" (click)="payReceipt()">
+          Cobrar
+      </ion-button>
+      <ion-button color="success" [disabled]="loading" *ngIf="!generate" (click)="payReceipt()">
+          Generar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <app-receipt-detail *ngIf="receipt" [currentReceipt]="receipt"></app-receipt-detail>
+  <ion-row class="ion-text-center" *ngIf="receipt.status == 'Pendiente'">
+    Usted puede hacer transferencias con los siguientes datos:
+  </ion-row>
+  <ion-row *ngIf="receipt.status == 'Pendiente'">
+    <ion-col size="2"></ion-col>
+    <ion-col class="ion-text-center">
+      <ion-text color="tertiary">
+        <h4>EDIFICIO ATHOS</h4>
+        <p>Telf:0999634198</p>
+      </ion-text>
+    </ion-col>
+    <ion-col class="ion-text-center">
+      <ion-text color="dark">
+        <h4>RUC:1791430751001</h4>
+        <p>Email:athosedificio@gmail.com</p>
+      </ion-text>
+    </ion-col>
+    <ion-col size="2"></ion-col>
+  </ion-row>
+</ion-content>

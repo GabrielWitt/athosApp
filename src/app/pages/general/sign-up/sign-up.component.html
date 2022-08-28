@@ -3,6 +3,10 @@
     <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> REGISTRO </p>
   </ion-toolbar>
 
+  <ion-card style="width: 200px; height: 200px; margin: 10pt auto 0 auto; border-radius: 7pt; background-color: #e3e3e3;">
+    <ion-img src="../../../../assets/Athos.png"></ion-img>
+  </ion-card>
+
   <form #email="ngForm" [formGroup]="signUpForm" (ngSubmit)="signProcess(signUpForm.value)" (keydown)="EnterSubmit($event, signUpForm)" novalidate>
     <ion-item>
       <ion-label color="dark" position="floating"> <b>Email / Usuario</b></ion-label>

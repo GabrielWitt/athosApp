@@ -54,6 +54,15 @@ export class NewServiceComponent implements OnInit {
   maintenanceCheck = false;
 
   typeList = this.services.typeList;
+  timeEstimationList = [
+    {text: '30 mins.', unit:30},
+    {text: '1 hora', unit:60},
+    {text: '1:30 hrs.', unit:90},
+    {text: '2:00 hrs.', unit:120},
+    {text: '4:00 hrs.', unit:240},
+    {text: '6:00 hrs.', unit:360},
+    {text: '8:00 hrs.', unit:480},
+  ]
 
   constructor(
     public modal: ModalController,
@@ -66,8 +75,19 @@ export class NewServiceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.typeList)
     this.spaces.readCommunityList()
     .then(communities => { this.communitiesList = communities; })
+    if(this.service){
+      this.myService = this.service;
+      this.dom = this.service.weekdays[0];
+      this.lun = this.service.weekdays[1];
+      this.mar = this.service.weekdays[2];
+      this.mie = this.service.weekdays[3];
+      this.jue = this.service.weekdays[4];
+      this.vie = this.service.weekdays[5];
+      this.sab = this.service.weekdays[6];
+    }
   }
 
   // LISTENRES
@@ -76,9 +96,14 @@ export class NewServiceComponent implements OnInit {
   serviceType(e) { 
     this.myService.serviceType = e.detail.value;
     this.vibe.changeAction();
+    this.typeList.forEach(item => {
+      if(item.name === this.myService.serviceType){ this.myService.photo = item.image;}
+    });
   }
   
   descriptionListener(e){ this.myService.description = e.detail.value; }
+
+  termsListener(e){ this.myService.terms = e.detail.value; }
 
   maintenanceListener(e){ 
     this.myService.maintenance = e.detail.checked;
@@ -90,7 +115,7 @@ export class NewServiceComponent implements OnInit {
 
   priceListener(e) { this.myService.cost = e.detail.value; }
 
-  estimatedTimeListener(e) { this.myService.estimatedTime = e.detail.value; }
+  estimatedTimeListener(e) { this.myService.estimatedTime = e.detail.value;console.log(e.detail.value) }
   
   Listener0(e){ this.dom = e.detail.checked }
 
@@ -131,8 +156,42 @@ export class NewServiceComponent implements OnInit {
     })
   }
 
-  createService(){}
+  createService(){
+    try {
+      this.loading = true;
+      this.myService.weekdays = [this.dom,this.lun,this.mar,this.mie,this.jue,this.vie,this.sab];
+      this.myService.communityUID = this.communitiesList[0].uid;
+      if(this.service){
+        this.services.UpdateService(this.myService);
+      } else {
+        this.services.createService(this.myService);
+      }
+      this.alerts.showAlert( 'ESPACIOS', 
+      this.service? 'Datos de '+ this.service.name + ' actualizado' : 'Nuevo '+this.myService.maintenance?'mantenimiento':'servicio'+' agregado', 'OK');
+      this.loading = false;
+      this.modal.dismiss(true);
+      return 'done';
+    } catch (error) {
+      console.log(error);
+      this.loading = false;
+      return 'error';
+    }
+  }
 
-  editService(){}
+  editService(){
+    if(this.editServiceForm){
+      this.editServiceForm = false; 
+    }else{
+      this.myService = this.service;
+      this.dom = this.service.weekdays[0];
+      this.lun = this.service.weekdays[1];
+      this.mar = this.service.weekdays[2];
+      this.mie = this.service.weekdays[3];
+      this.jue = this.service.weekdays[4];
+      this.vie = this.service.weekdays[5];
+      this.sab = this.service.weekdays[6];
+      this.editServiceForm = true; 
+    }
+  }
 
 }

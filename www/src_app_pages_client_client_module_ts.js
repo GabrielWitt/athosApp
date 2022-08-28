@@ -31,19 +31,19 @@ const routes = [
         children: [
             {
                 path: 'news',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_notices-client_notices-client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./notices-client/notices-client.module */ 92606)).then(m => m.NoticesClientPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_client_notices-client_notices-client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./notices-client/notices-client.module */ 92606)).then(m => m.NoticesClientPageModule)
             },
             {
                 path: 'services',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_services-resident_services-resident_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./services-resident/services-resident.module */ 56124)).then(m => m.ServicesResidentPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_client_services-resident_services-resident_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./services-resident/services-resident.module */ 56124)).then(m => m.ServicesResidentPageModule)
             },
             {
                 path: 'reservations',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_reservations-resident_reservations-resident_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./reservations-resident/reservations-resident.module */ 68038)).then(m => m.ReservationsResidentPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_client_reservations-resident_reservations-resident_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./reservations-resident/reservations-resident.module */ 68038)).then(m => m.ReservationsResidentPageModule)
             },
             {
                 path: 'profile',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_core_controller_user_controller_ts"), __webpack_require__.e("src_app_pages_client_profile-client_profile-client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./profile-client/profile-client.module */ 72579)).then(m => m.ProfileClientPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("default-src_app_shared_utilities_attachments_service_ts"), __webpack_require__.e("src_app_pages_client_profile-client_profile-client_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./profile-client/profile-client.module */ 72579)).then(m => m.ProfileClientPageModule)
             }
         ]
     },
@@ -113,14 +113,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ClientPage": () => (/* binding */ ClientPage)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./client.page.html?ngResource */ 33482);
-/* harmony import */ var _client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./client.page.scss?ngResource */ 39977);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 60124);
-/* harmony import */ var src_app_shared_utilities_attachments_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/utilities/attachments.service */ 15909);
-
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./client.page.html?ngResource */ 33482);
+/* harmony import */ var _client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./client.page.scss?ngResource */ 39977);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
 
 
 
@@ -128,46 +126,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ClientPage = class ClientPage {
-  constructor(router, images) {
-    this.router = router;
-    this.images = images;
-  }
-
-  ngOnInit() {}
-
-  checkSavedImages() {
-    var _this = this;
-
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      _this.images.loadSaved().then(photos => {
-        if (photos.length) {
-          setTimeout(() => {
-            _this.router.navigateByUrl(photos[0].route.substring(1));
-          }, 1500);
-        } else {
-          _this.router.navigateByUrl('/client/news');
-        }
-      }).catch(e => {
-        console.log(e);
-
-        _this.router.navigateByUrl('/client/news');
-      });
-    })();
-  }
-
+    constructor(router, userCtrl) {
+        this.router = router;
+        this.userCtrl = userCtrl;
+    }
+    ngOnInit() {
+        this.userCtrl.loadUser();
+    }
 };
+ClientPage.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router },
+    { type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__.UserController }
+];
+ClientPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+        selector: 'app-client',
+        template: _client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], ClientPage);
 
-ClientPage.ctorParameters = () => [{
-  type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.Router
-}, {
-  type: src_app_shared_utilities_attachments_service__WEBPACK_IMPORTED_MODULE_3__.AttachmentsService
-}];
-
-ClientPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
-  selector: 'app-client',
-  template: _client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
-  styles: [_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
-})], ClientPage);
 
 
 /***/ }),

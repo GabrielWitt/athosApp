@@ -148,6 +148,7 @@ export class NewNoticeComponent implements OnInit {
   async createNotice(){
     try {
       this.loading = true;
+      this.myNotice.writer = await this.extra.createShortUser(this.user)
       if(this.newImage){this.myNotice.photo =  await this.uploadPhoto();}
       console.log(this.myNotice);
       if(this.notice){

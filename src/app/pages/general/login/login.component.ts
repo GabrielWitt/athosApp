@@ -47,12 +47,18 @@ export class LoginComponent implements OnInit {
     });
     this.loading = true;
     this.auth.refreshUser()
-    .then((login: boolean) => {this.loading = login;});
+    .then((login: boolean) => {
+      if(login){setTimeout(() => { this.loading = false; }, 5000);}
+      else{this.loading = false;}
+    });
   }
 
   EnterSubmit(evt, form){
     this.verification.EnterSubmit(evt,form,this.loading).then(answer => {
       if(answer){ this.loginProcess(this.loginForm.value); }
+    }).catch(error => {
+      this.messageError = error;
+      this.loading = false;
     })
   }
 

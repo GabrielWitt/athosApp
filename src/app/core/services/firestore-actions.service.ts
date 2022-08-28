@@ -96,7 +96,6 @@ export class FirestoreActionsService {
     return new Promise((resolve, reject) => {
       data['uid'] = this.afs.createId();
       data['createdAt'] = this.time.dateTransform(serverTimestamp());
-      console.log(data);
       try {
         this.afs.collection(folder).doc(data.uid).set(data).then((data:any) => {
           resolve(data);
@@ -212,6 +211,24 @@ export class FirestoreActionsService {
             .orderBy(orderField))
         ).valueChanges();
 
+        callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {
+          resolve(querySnapshot); 
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
+    });
+  }
+
+  readReceiptsByMonth(folderName: string, startMonth: string, endMonth: string, ){
+    return new Promise((resolve, reject) => {
+      try {
+        const callDoc = this.afs.collection(
+          folderName,(ref => ref
+            .where('receiptDate', '>=', startMonth)
+            .where('receiptDate', '<=', endMonth)
+            .orderBy('receiptDate'))
+        ).valueChanges();
         callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {
           resolve(querySnapshot); 
         })

@@ -1,0 +1,47 @@
+
+.spaceView{
+    background-size: 120% auto !important;
+    background-position: center;
+    --size: 20vw;
+}
+
+.time_box {
+    border: 2px solid var(--ion-color-secondary);
+    width: 100%;
+    text-align: center;
+    color: black;
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 2px 0;
+    border-radius: 15px;
+}
+
+.time_box.selected{
+    background-color: var(--ion-color-secondary);
+}
+
+.time_box.disabled{
+    background: darkgray !important;
+    border: 0 !important;
+}
+
+.guest_size{
+    font-size: 20pt;
+}
+
+.input_bg {
+    border: 2pt solid var(--ion-color-dark);
+    border-radius: 15pt;
+    padding: 5pt;
+  }
+
+.dateStyle{
+    font-size: inherit; 
+    float: right;
+}
+
+.noDateStyle{
+    --color: #b4b4b4;
+    color: #b4b4b4;
+}

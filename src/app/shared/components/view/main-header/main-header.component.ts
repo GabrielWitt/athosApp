@@ -27,8 +27,7 @@ export class MainHeaderComponent implements OnInit {
     private routerOutlet: IonRouterOutlet,
   ) { }
 
-  ngOnInit() {  this.user = this.userCtrl.currentUser;
-  }
+  ngOnInit() { }
 
   cerrarSesion(){
     this.loading = true;
@@ -45,9 +44,10 @@ export class MainHeaderComponent implements OnInit {
   }
 
   async createNotice(){
+    const userData:any = await this.auth.getUser();
     const modal = await this.modal.create({
       component: NewNoticeComponent,
-      componentProps: {notice: null, user: this.user, pet: null},
+      componentProps: {notice: null, user: userData.data, pet: null},
       mode: 'ios',
       presentingElement: this.routerOutlet.nativeEl
     });

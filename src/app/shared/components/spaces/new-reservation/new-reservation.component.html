@@ -13,7 +13,7 @@
     </ion-buttons>
     <ion-title class="ion-text-uppercase">{{reservation ? reservation.reservation.unitNumber: 'Nueva Reserva'}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="reservation && user.type === 'administrador' && !editReservationForm" color="dark" (click)="enableForm()">
+      <ion-button *ngIf="reservation && currentUser.type === 'administrador' && !editReservationForm" color="dark" (click)="enableForm()">
           Editar
       </ion-button>
     </ion-buttons>
@@ -25,11 +25,11 @@
 </ion-content>
 
 <ion-content *ngIf="!loading && space && !showReservationForm">
-  <app-detail-space style="height: 100%;" [user]="user" [space]="space" [reserve]="true"></app-detail-space>
+  <app-detail-space style="height: 100%;" [user]="currentUser" [space]="space" [reserve]="true"></app-detail-space>
 </ion-content>
 
 <ion-content *ngIf="!loading && reservation && !showReservationForm">
-  <app-detail-reservation style="height: 100%;" [user]="user" [request]="reservation"></app-detail-reservation>
+  <app-detail-reservation style="height: 100%;" [user]="currentUser" [request]="reservation"></app-detail-reservation>
 </ion-content>
 
 <ion-content *ngIf="!loading && space && showReservationForm">
@@ -53,6 +53,14 @@
     </ion-row>
   </ion-card>
   <ion-list>
+
+    <ion-item *ngIf="users?.length > 1">
+      <ion-label position="stacked">Usuario Solicitante:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="selectedUserUID" (ionChange)="userChange($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let user of users" [value]="user.uid">{{user.name}} {{user.lastName}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
     <ion-item (click)="showCalendar1()" *ngIf="!showCalendar">
       <ion-label>Fecha de Evento: </ion-label>
       <ion-label> 
@@ -70,7 +78,7 @@
     <ion-row *ngIf="showCalendar">
       <ion-col>
         <ion-label>Fecha de Evento: </ion-label>
-        <ion-datetime #datetime style="margin: 0 auto;" [isDateEnabled]="availableDays" presentation="date" 
+        <ion-datetime #datetime style="margin: 0 auto;" [min]="min" [isDateEnabled]="availableDays" presentation="date" 
               [(ngModel)]="myReservation.scheduleDate" (ionChange)="changeScheduleTime(datetime.value)">
           <ion-buttons slot="buttons">
             <ion-button color="danger" (click)="showCalendar1()">Cancelar</ion-button>
@@ -84,6 +92,7 @@
       <ion-row class="ion-align-items-center">
         <ion-col>
           <p class="ion-no-margin item_text required ion-text-center" position="stacked">Disponibilidad:</p>
+          <p class="ion-no-margin item_text required ion-text-center" position="stacked">(Tiempo máximo - {{time.maxTimeString(space.rentData.maxTime)}})</p>
         </ion-col>
       </ion-row>
       <ion-row class="ion-align-items-center" *ngIf="scheduleTimes?.length === 1">
@@ -135,23 +144,23 @@
       </ion-row>
       <ion-row class="ion-align-items-center">
         <ion-col>
-          <p class="ion-no-margin item_text ion-text-center">Grupo: {{guestCounter+1}}/{{space.rentData.capacity}}</p>
+          <p class="ion-no-margin item_text ion-text-center">Grupo: {{guestCounter}}/{{space.rentData.capacity}}</p>
         </ion-col>
       </ion-row>
     </ion-grid>
 
   </ion-list>
 </ion-content>
-<ion-footer *ngIf="!loading">
+<ion-footer *ngIf="!loading && (currentUser.type === 'administrador' || reservation.requestBy.uid === currentUser.uid) && (reservation?reservation.status === 'Solicitado':true)">
   <ion-toolbar>
     <app-big-button *ngIf="(!reservation || editReservationForm) && showReservationForm" class="ion-padding-top" LABEL="Enviar" buttonType="SECONDARY" [loading]="loading" [disabled]="loading || !myReservation.scheduleDate || !timeSlotStart.date" (click)="createReservation()"></app-big-button>
     <app-big-button *ngIf="space && !showReservationForm" class="ion-padding-top" LABEL="SOLICITAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="enableForm()"></app-big-button>
     <ion-row>
       <ion-col>
-        <app-big-button *ngIf="reservation && user.type === 'administrador'" class="ion-padding-top" LABEL="APROVAR" buttonType="SUCCESS" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Aprovado')"></app-big-button>
+        <app-big-button *ngIf="reservation && currentUser.type === 'administrador'" class="ion-padding-top" LABEL="APROVAR" buttonType="SUCCESS" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Aprovado')"></app-big-button>
       </ion-col>
       <ion-col>
-        <app-big-button *ngIf="reservation && (user.type === 'administrador' || reservation.requestBy.uid === user.uid)" class="ion-padding-top" LABEL="CANCELAR" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>
+        <app-big-button *ngIf="reservation && (currentUser.type === 'administrador' || reservation.requestBy.uid === currentUser.uid)" class="ion-padding-top" LABEL="CANCELAR" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>
       </ion-col>
     </ion-row>
   </ion-toolbar>

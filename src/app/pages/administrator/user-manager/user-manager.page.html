@@ -1,28 +1,21 @@
-<app-main-header title="Usuarios"></app-main-header>
+<div *ngIf="userCtrl.platform !== 'web'">
+  <app-main-header *ngIf="selectedTab === 'users'" title="Usuarios"></app-main-header>
+  <app-main-header *ngIf="selectedTab === 'payments'" title="Pagos"></app-main-header>
+</div>
+<ion-toolbar>
+  <ion-segment (ionChange)="segmentChanged($event)" value="users">
+    <ion-segment-button value="users" layout="icon-start">
+      <ion-label *ngIf="userCtrl.platform === 'web'">Usuarios</ion-label>
+      <ion-icon name="people-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="payments" layout="icon-start">
+      <ion-label *ngIf="userCtrl.platform === 'web'">Pagos</ion-label>
+      <ion-icon name="card-outline"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
 
-<ion-content class="ion-padding">
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
-      <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." 
-      refreshingSpinner="dots"></ion-refresher-content> 
-    </ion-refresher>
-    <app-loading-view *ngIf="loading"></app-loading-view>
-    <div *ngIf="!loading && userList.length > 0">
-      <ion-row class="headerUserList">
-        <ion-col size="3" class="ion-text-center">Nombre</ion-col>
-        <ion-col size="3" class="ion-text-center">Espacio</ion-col>
-        <ion-col size="4" class="ion-text-center">Email</ion-col>
-        <ion-col size="2" class="ion-text-center">Tipo</ion-col>
-      </ion-row>
-      <app-item-user *ngFor="let user of userList" [user]="user" (click)="userDetail(user)"></app-item-user>
-    </div>
-    <app-not-data-yet-message 
-      *ngIf="userList.length == 0 && !loading"
-      text="No tiene espacios aún" icon="alert-circle-outline"
-    ></app-not-data-yet-message>
-    
-    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-      <ion-fab-button color="secondary" (click)="newUserModal()">
-        <ion-icon size="large" name="add-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-</ion-content>
+<app-user-list *ngIf="selectedTab === 'users'" style="height: 100%"></app-user-list>
+<app-billing-view *ngIf="selectedTab === 'payments'" style="height: 100%"></app-billing-view>
+
+

@@ -140,6 +140,7 @@ let NoticeManagerPage = class NoticeManagerPage {
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.noticeList = yield _this.notices.readNoticeList();
+        console.log(_this.noticeList);
         return 'done';
       } catch (error) {
         console.log(error);

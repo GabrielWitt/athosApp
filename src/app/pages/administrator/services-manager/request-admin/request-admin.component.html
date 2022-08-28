@@ -13,12 +13,12 @@
   ></app-not-data-yet-message>
   
   <ion-list *ngIf="itemList.length > 0 && !loading">
-    
+    <app-item-request *ngFor="let request of itemList" [request]="request" [reserve]="false" (click)="openRequest(request,null)"></app-item-request>
   </ion-list>
     
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button color="secondary" (click)="createRequest()">
-      <ion-icon size="large" name="create-outline"></ion-icon>
+      <ion-icon size="large" name="add-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

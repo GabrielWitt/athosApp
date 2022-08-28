@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { AttachmentsService } from 'src/app/shared/utilities/attachments.service';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { PushNotificationService } from 'src/app/shared/utilities/push-notification.service';
 import { User, UserFormData } from '../../models/user';
 import { FirestoreActionsService } from '../firestore-actions.service';
 import { MyStoreService } from '../../../shared/utilities/my-store.service';
+import { BiometricService } from 'src/app/shared/utilities/biometric.service';
+import { Capacitor } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class FireAuthService {
     public auth: AngularFireAuth,
     public FS: FirestoreActionsService,
     private error: ErrorHandlerService,
-    private images: AttachmentsService,
+    private faio: BiometricService,
     private push: PushNotificationService
   ) { 
     this.session = 'session'; 
@@ -31,11 +32,9 @@ export class FireAuthService {
     this.credentials = 'credentials';
     this.auth.authState.subscribe(async (user) => {
       if (user) {
-        console.log('update')
         await this.store.setData(this.session, user);
         this.readUserForm(user.uid).then(async (data:UserFormData) => {
           if(!this.user){
-            this.checkUser()
             this.push.registerPushService().then(async token => {
               let userData: UserFormData = {
                 ...data,
@@ -46,6 +45,7 @@ export class FireAuthService {
               }
               if(token){userData.token = token;}
               await this.uploadUserForm(userData.uid, userData);
+              this.checkUser();
             })
           }
           this.user = this.setUser(user);
@@ -161,14 +161,48 @@ export class FireAuthService {
     });
   }
 
+  biometricsVerification() {
+    return new Promise(async (resolve,reject) => {
+      if(Capacitor.getPlatform() !== 'web'){
+        this.faio.isAvailable().then(result => {
+          if (!!result){
+            this.faio.show(`Confirmar para continuar.`)
+            .then((response: any) => {
+              resolve(response);
+            })
+            .catch((error: any) => {
+              console.error(`Unable to recognize fingerprint or faceID: ${error.error}`);
+              reject(this.error.handle(error));
+            });
+          }
+        }).catch(error => {
+          console.warn('error: No fingerprint or faceId available', error );
+          reject(this.error.handle(error));
+        });
+      }else{
+        console.warn('No mobile device, Biometric Auth not required.');
+        resolve(true);
+      }
+    });
+  }
+
   async refreshUser(){
     return new Promise(async (resolve) => {
       try {
         this.store.readFile(this.credentials).then(async data => {
-          console.log(data)
           if(data?.email && data?.password){
-            this.login(data.email, data.password);
-            resolve(true);
+            this.biometricsVerification().then(async answer => {
+              if(answer){
+                this.login(data.email, data.password);
+                resolve(true);
+              } else { 
+                await this.cleanSession();
+                this.signOut();
+                this.router.navigateByUrl('general'); 
+                resolve(false);
+              }
+            })
+            
           } else {
             await this.cleanSession();
             this.router.navigateByUrl('general'); 

@@ -42,8 +42,8 @@ export class ReservationsResidentPage implements OnInit {
   }
 
   async loadData() {
-    const userData:any = await this.userCtrl.currentUserData();
-    this.user = userData.user;
+    const userData:any = await this.auth.getUser();
+    this.user = userData.data;
     this.itemList = await this.request.
     readUserReservationsListOrderRent("startDate",new Date().toISOString(),this.userCtrl.currentUser.uid,this.filterSelected);
     console.log(this.itemList)
@@ -77,7 +77,7 @@ export class ReservationsResidentPage implements OnInit {
   async openReservation(reservation,space){
     const modalCreate = await this.modal.create({
       component: NewReservationComponent,
-      componentProps: {reservation, space, user: this.userCtrl.user },
+      componentProps: {reservation, space, currentUser: this.userCtrl.user },
       mode: 'ios',
       presentingElement: this.routerOutlet.nativeEl
     });

@@ -22,11 +22,17 @@ export class TimeFormatPipe implements PipeTransform {
       case 'shortDateUTC': 
         this.RESULT =  moment.parseZone(date).format('DD/MM/YYYY');
         break;
+      case 'fullDateUTC': 
+        this.RESULT =  moment.parseZone(date).format('DD/MM/YYYY h:mm A');
+        break;
       case 'displayDateUTC': 
         this.RESULT =  moment.parseZone(date).format('dddd, DD') + ' de ' +moment.parseZone(date).format('MMMM, YYYY');
         break;
       case 'TimeUTC':
         this.RESULT =  moment.parseZone(date).format('h:mm A');
+        break;
+      case 'MonthDisplay':
+        this.RESULT =  moment.parseZone(date).format('MMMM / YYYY');
         break;
       default:
         this.RESULT =  date;

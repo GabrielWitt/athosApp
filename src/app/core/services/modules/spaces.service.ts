@@ -26,6 +26,14 @@ export class SpacesService {
     });
   }
 
+  UpdateCommunity(data: Community){
+    return new Promise((resolve,reject) => {
+      this.firestore.setNamedDocument(this.CommunityFolder, data.uid, data)
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
   createSpaces(data: Space){
     return new Promise((resolve,reject) => {
       this.firestore.createDocument(this.SpacesFolder,data)

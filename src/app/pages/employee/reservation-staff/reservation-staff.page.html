@@ -1,0 +1,30 @@
+<app-main-header title="RESERVAS"></app-main-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
+    <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
+  </ion-refresher>
+  
+  <ion-list *ngIf="loading">
+    <app-loading-view></app-loading-view>
+    <ion-row>
+      
+    </ion-row>
+  </ion-list>
+  
+  <ion-item *ngIf="!loading">
+    <ion-label>Reservas:</ion-label>
+    <ion-select placeholder="Todos los espacios" class="ion-text-capitalize" mode='ios' [value]="filterSelected" (ionChange)="filterChange($event)">
+      <ion-select-option class="ion-text-capitalize" *ngFor="let item of filterItems" [value]="item.filter"> {{item.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  
+  <app-not-data-yet-message 
+    *ngIf="itemList.length == 0 && !loading"
+    text="No tiene reservaciones aún" icon="alert-circle-outline"
+  ></app-not-data-yet-message>
+  
+  <ion-list *ngIf="itemList.length > 0 && !loading">
+    <app-item-reservation *ngFor="let request of itemList" [request]="request" (click)="openReservation(request,null)"></app-item-reservation>
+  </ion-list>
+</ion-content>

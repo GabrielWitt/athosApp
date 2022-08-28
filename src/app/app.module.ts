@@ -17,9 +17,15 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 
+//Calendar
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 import { getApp } from 'firebase/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
+import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,11 +42,17 @@ import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
         return initializeAuth(getApp(), { persistence: indexedDBLocalPersistence,});
       } else { return getAuth(); }
     }),
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: PERSISTENCE, useValue: 'session' },
     Chooser,
+    NativeStorage,
     NgxImageCompressService
   ],
   bootstrap: [AppComponent],

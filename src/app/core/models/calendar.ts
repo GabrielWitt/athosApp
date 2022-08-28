@@ -5,12 +5,25 @@ export interface CalendarItem {
     scheduleDate: string;
     startDate: string;
     endDate: string;
+    completedDate?: string;
     status: StatusList;
     notes?: string;
     reservation?: ReservationItem;
     service?: ServiceItem;
     requestBy: ShortUser;
     userUID: string;
+    createdAt?: string;
+    employeeUID?:string;
+    employeePhoto?:string;
+    employeeFullName?:string;
+    history?: HistoryRecord[];
+}
+
+export interface HistoryRecord {
+    updateAt: string;
+    updateByUID: string;
+    updateByName: string;
+    status: string;
 }
 
 export interface ReservationItem {
@@ -26,26 +39,46 @@ export interface ServiceItem {
     name: string;
     maintenance: boolean;
     photo: string;
+    preferredDays: boolean[];
     estimatedTime: number;
     cost: string | number;
     spaceUID: string;
+    notes: string;
+    comments: serviceComment[];
     unitNumber?: string | number;
     floor?: string;
 }
 
 export interface reservationSlot {
     uid?: string;
-    spaceUID: string;
     scheduleDate: string;
     startDate: string;
     endDate: string;
     unitNumber?: string | number;
     floor?: string;
+    spaceUID?:string;
+}
+
+export interface serviceSlot {
+    uid?: string;
+    scheduleDate: string;
+    startDate: string;
+    endDate: string;
+    unitNumber?: string | number;
+    employeeUID?:string;
+    employeePhoto?:string;
+    employeeFullName?:string;
+}
+
+export interface serviceComment{
+    note: string;
+    photo?:string;
 }
 
 export const StatusArray = [
     'Solicitado',
     'Aprovado',
+    'Agendado',
     'En Progreso',
     'Cancelado',
     'Terminado'

@@ -1,0 +1,25 @@
+<div *ngIf="userCtrl.platform === 'web'">
+  <app-main-header *ngIf="selectedTab === 'request'" title="Tíquetes"></app-main-header>
+  <app-main-header *ngIf="selectedTab === 'services'" title="Servicios"></app-main-header>
+  <app-main-header *ngIf="selectedTab === 'calendar'" title="Agenda"></app-main-header>
+</div>
+<ion-toolbar>
+  <ion-segment (ionChange)="segmentChanged($event)" value="calendar">
+    <ion-segment-button value="calendar" layout="icon-start">
+      <ion-label *ngIf="userCtrl.platform === 'web'">Agenda</ion-label>
+      <ion-icon name="calendar-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="request" layout="icon-start">
+      <ion-label *ngIf="userCtrl.platform === 'web'">Tíquetes</ion-label>
+      <ion-icon name="book-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="services" layout="icon-start">
+      <ion-label *ngIf="userCtrl.platform === 'web'">Servicios</ion-label>
+      <ion-icon name="hammer-outline"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<app-calendar-orders *ngIf="selectedTab === 'calendar'" style="height: 100%"></app-calendar-orders>
+<app-ticket-orders *ngIf="selectedTab === 'request'" style="height: 100%"></app-ticket-orders>
+<app-services-orders *ngIf="selectedTab === 'services'" style="height: 100%"></app-services-orders>

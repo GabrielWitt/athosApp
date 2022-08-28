@@ -2,6 +2,7 @@
   <ion-toolbar *ngIf="userCtrl.platform !== 'web'">
     <ion-title *ngIf="selectedTab === 'spaces'" class="ion-text-uppercase">Espacios</ion-title>
     <ion-title *ngIf="selectedTab === 'reservations'" class="ion-text-uppercase">Reservaciones</ion-title>
+    <ion-title *ngIf="selectedTab === 'space_group'" class="ion-text-uppercase">Comunidad</ion-title>
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment (ionChange)="segmentChanged($event)" value="reservations">
@@ -13,9 +14,14 @@
         <ion-label *ngIf="userCtrl.platform === 'web'">Inmuebles</ion-label>
         <ion-icon name="business-outline"></ion-icon>
       </ion-segment-button>
+      <ion-segment-button value="space_group" layout="icon-start">
+        <ion-label *ngIf="userCtrl.platform === 'web'">Comunidad</ion-label>
+        <ion-icon name="cube-outline"></ion-icon>
+      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 <app-spaces-admin *ngIf="selectedTab === 'spaces'" style="height: 100%"></app-spaces-admin>
 <app-reservation-admin *ngIf="selectedTab === 'reservations'" style="height: 100%"></app-reservation-admin>
+<app-community-admin *ngIf="selectedTab === 'space_group'" style="height: 100%"></app-community-admin>

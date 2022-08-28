@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
+import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
@@ -6,12 +8,13 @@ import { Preferences } from '@capacitor/preferences';
 })
 export class MyStoreService {
 
-  constructor() { }
+  constructor(private nativeStorage: NativeStorage) { }
 
   async setData(filename:string, data: any){
     try {
       const lockData = JSON.stringify(data);
-      await Preferences.set({ key: filename, value: lockData });
+      if(Capacitor.getPlatform() !== 'web'){ await this.nativeStorage.setItem(filename,{ value: lockData }); } 
+      else { await Preferences.set({ key: filename, value: lockData }); }
       return 'ok'
     } catch (error) {
       console.log(error);
@@ -21,8 +24,13 @@ export class MyStoreService {
 
   async readFile(filename:string){
     try {
-      const { value } =  await Preferences.get({ key: filename });
-      return JSON.parse(value);
+      if(Capacitor.getPlatform() !== 'web'){ 
+        const saveData =  await this.nativeStorage.getItem(filename);
+        return JSON.parse(saveData.value);
+      } else {
+        const { value } =  await Preferences.get({ key: filename });
+        return JSON.parse(value);
+      }
     } catch (error) {
       console.log(error);
       return 'file not found';
@@ -31,7 +39,8 @@ export class MyStoreService {
 
   async removeFile(filename:string){
     try {
-      await Preferences.remove({ key: filename });
+      if(Capacitor.getPlatform() !== 'web'){ await this.nativeStorage.remove(filename); }
+      else{ await Preferences.remove({ key: filename }); }
       return 'file removed'
     } catch (error) {
       console.log(error);

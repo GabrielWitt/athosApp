@@ -36,6 +36,14 @@ import { EditUserComponent } from './components/users/edit-user/edit-user.compon
 import { PickServiceComponent } from './components/services/pick-service/pick-service.component';
 import { NewRequestComponent } from './components/services/new-request/new-request.component';
 import { DetailRequestComponent } from './components/services/detail-request/detail-request.component';
+import { ItemRequestComponent } from './components/services/item-request/item-request.component';
+import { AssignTaskComponent } from './components/services/assign-task/assign-task.component';
+import { NewReceiptComponent } from './components/bills/new-receipt/new-receipt.component';
+import { ReceiptDetailComponent } from './components/bills/receipt-detail/receipt-detail.component';
+import { ReceiptItemComponent } from './components/bills/receipt-item/receipt-item.component';
+import { ReservationCalendarComponent } from './components/calendar/reservation-calendar/reservation-calendar.component';
+import { ServiceCalendarComponent } from './components/calendar/service-calendar/service-calendar.component';
+import { SignModalComponent } from './components/view/sign-modal/sign-modal.component';
 
 const components = [
   BigButtonComponent,
@@ -61,6 +69,8 @@ const components = [
   NewRequestComponent,
   DetailRequestComponent,
   DetailServiceComponent,
+  ItemRequestComponent,
+  AssignTaskComponent,
   //Spaces
   ItemSpaceComponent,
   ItemReservationComponent,
@@ -68,7 +78,16 @@ const components = [
   DetailReservationComponent,
   NewSpaceComponent,
   PickRentSpaceComponent,
-  NewReservationComponent
+  NewReservationComponent,
+  //Receipts
+  NewReceiptComponent,
+  ReceiptDetailComponent,
+  ReceiptItemComponent,
+  SignModalComponent,
+  //Calendar
+  ReservationCalendarComponent,
+  ServiceCalendarComponent,
+  ServiceItemComponent,
 ]
 const pipes = [
   FirstKeyPipe,

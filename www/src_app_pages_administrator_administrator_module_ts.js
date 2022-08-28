@@ -36,7 +36,7 @@ const routes = [
             },
             {
                 path: 'users',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_administrator_user-manager_user-manager_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./user-manager/user-manager.module */ 22913)).then(m => m.UserManagerPageModule),
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("src_app_pages_administrator_user-manager_user-manager_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./user-manager/user-manager.module */ 22913)).then(m => m.UserManagerPageModule),
                 data: { viewName: 'Users' }
             },
             {
@@ -50,7 +50,7 @@ const routes = [
             },
             {
                 path: 'services',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_pages_administrator_services-manager_services-manager_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./services-manager/services-manager.module */ 55450)).then(m => m.ServicesManagerPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_shared_module_ts"), __webpack_require__.e("src_app_pages_administrator_services-manager_services-manager_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./services-manager/services-manager.module */ 55450)).then(m => m.ServicesManagerPageModule)
             }
         ]
     },

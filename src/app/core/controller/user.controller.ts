@@ -5,6 +5,7 @@ import { UserPhoto } from '../models/images';
 import { User, UserFormData } from '../models/user';
 import { ImageUploaderService } from '../services/image-uploader.service';
 import { FireAuthService } from '../services/modules/fire-auth.service';
+import { UsersService } from '../services/modules/users.service';
 import { ServicesController } from './services.controller';
 
 @Injectable({
@@ -12,13 +13,15 @@ import { ServicesController } from './services.controller';
 })
 export class UserController {
   user: User;
-  currentUser: UserFormData
+  currentUser: UserFormData;
+  userList:UserFormData[] = [];
 
   edit = false;
   platform;
 
   constructor(
     private auth: FireAuthService,
+    private userServ: UsersService,
     private upload: ImageUploaderService,
     private services: ServicesController,
   ) {  }
@@ -29,24 +32,9 @@ export class UserController {
       try {
         this.platform =  Capacitor.getPlatform();
         this.auth.getUser().then((user: any) =>{
-          this.user = user.data;
-          this.currentUser = user.user;
-          this.services.loadServices();
-          resolve(user);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  }
-
-  currentUserData(){
-    return new Promise((resolve, reject) => {
-      try {
-        this.platform =  Capacitor.getPlatform();
-        this.auth.getUser().then((user: any) =>{
-          this.user = user.data;
-          this.currentUser = user.user;
+          this.user = user.user;
+          this.currentUser = user.data;
+          this.services.loadServices(this.currentUser.type);
           resolve(user);
         });
       } catch (error) {

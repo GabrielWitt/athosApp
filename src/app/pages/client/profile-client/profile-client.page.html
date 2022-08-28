@@ -1,6 +1,6 @@
+<app-main-header title="Mi Perfil"></app-main-header>
 
-
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" *ngIf="currentUser">
   <app-user-detail *ngIf="!userCtrl.edit && user" [user]="user" [userData]="currentUser" [editDataForm]="true"></app-user-detail>
   <app-edit-user *ngIf="userCtrl.edit && user" [user]="user" [userData]="currentUser"></app-edit-user>
 </ion-content>

@@ -3,6 +3,9 @@
     <p class="ion-text-center ion-text-capitalize inputLogin" style="width: 100%;"> INICIO DE SESIÓN </p>
   </ion-toolbar>
 
+  <ion-card style="width: 200px; height: 200px; margin: 10pt auto 0 auto; border-radius: 7pt; background-color: #e3e3e3;">
+    <ion-img src="../../../../assets/Athos.png"></ion-img>
+  </ion-card>
   
   <form #login="ngForm" [formGroup]=loginForm (ngSubmit)=loginProcess(loginForm.value) (keydown)="EnterSubmit($event, loginForm)" novalidate>
     <ion-item>
