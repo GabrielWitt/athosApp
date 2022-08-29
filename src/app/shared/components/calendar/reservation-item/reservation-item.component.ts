@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { reservationSlot } from 'src/app/core/models/calendar';
+import { CalendarItem } from 'src/app/core/models/calendar';
 
 @Component({
   selector: 'app-reservation-item',
@@ -7,7 +7,7 @@ import { reservationSlot } from 'src/app/core/models/calendar';
   styleUrls: ['./reservation-item.component.scss'],
 })
 export class ReservationItemComponent implements OnInit {
-  @Input() item: reservationSlot
+  @Input() item: CalendarItem
 
   constructor() { }
 

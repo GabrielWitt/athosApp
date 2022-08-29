@@ -56,7 +56,6 @@ export class NewRequestComponent implements OnInit {
     private vibe: HapticsService,
     private requestService: ServicesController,
     private requests: RequestsService,
-    private calendar: CalendarService,
     private alerts: AlertsService,
     public modal: ModalController,
     private extra: VerificationFuncService,

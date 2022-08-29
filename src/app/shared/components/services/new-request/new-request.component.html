@@ -32,7 +32,8 @@
   <app-detail-service *ngIf="service" style="height: 100%;" [user]="currentUser" [service]="service" [reserve]="false"></app-detail-service>
   <app-assign-task *ngIf="request && !showRequestForm && request.status === 'Solicitado' && currentUser.type !== 'residente'"
     [currentUser]="currentUser" [request]="request"></app-assign-task>
-  <app-solve-task *ngIf="request && !showRequestForm && request.status === 'Agendado' && currentUser.type !== 'residente'"
+  <app-solve-task *ngIf="request && !showRequestForm && (request.status === 'Agendado' || request.status === 'En Progreso')
+    && currentUser.type !== 'residente' && request.employeeUID === currentUser.uid"
     [currentUser]="currentUser" [request]="request"></app-solve-task>
   <app-detail-request *ngIf="request && !showRequestForm" style="height: 100%;" [user]="currentUser" [request]="request"></app-detail-request>
   
@@ -99,9 +100,3 @@
 
   </ion-list>
 </ion-content>
-<ion-footer *ngIf="!loading && !(request && showRequestForm)">
-  <ion-toolbar>
-    <app-big-button *ngIf="!request && service && showRequestForm" class="ion-padding-top" LABEL="ENVIAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading || (this.selectedUser?.leases?.length>0 && !this.selectedUnitUID)" (click)="createRequest()"></app-big-button>
-    <app-big-button *ngIf="!service && request && (currentUser.type === 'administrador' || request.requestBy.uid === currentUser.uid)" class="ion-padding-top" LABEL="CANCELAR" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>
-  </ion-toolbar>
-</ion-footer>

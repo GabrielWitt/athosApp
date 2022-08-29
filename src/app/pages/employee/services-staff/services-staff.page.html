@@ -1,4 +1,4 @@
-<div *ngIf="userCtrl.platform === 'web'">
+<div *ngIf="userCtrl.platform !== 'web'">
   <app-main-header *ngIf="selectedTab === 'request'" title="Tíquetes"></app-main-header>
   <app-main-header *ngIf="selectedTab === 'services'" title="Servicios"></app-main-header>
   <app-main-header *ngIf="selectedTab === 'calendar'" title="Agenda"></app-main-header>

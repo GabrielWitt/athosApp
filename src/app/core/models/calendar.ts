@@ -7,16 +7,22 @@ export interface CalendarItem {
     endDate: string;
     completedDate?: string;
     status: StatusList;
-    notes?: string;
+    notes?: NoteService[];
     reservation?: ReservationItem;
     service?: ServiceItem;
     requestBy: ShortUser;
     userUID: string;
     createdAt?: string;
+    updatedAt?: string;
     employeeUID?:string;
     employeePhoto?:string;
     employeeFullName?:string;
     history?: HistoryRecord[];
+}
+
+export interface NoteService {
+    text: string;
+    photo?: string;
 }
 
 export interface HistoryRecord {

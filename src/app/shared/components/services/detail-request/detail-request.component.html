@@ -8,7 +8,8 @@
         <ion-label>
           <ion-text class="ion-text-capitalize">
             <h2>{{request.service.name}} ({{request.service.unitNumber}}) </h2>
-            <h3>Tipo: {{request.service.maintenance?'Mantenimiento':'Servicio Pago'}}</h3>
+            <h3>Status: 
+              <app-status-request [status]="request.status"></app-status-request></h3>
           </ion-text>
         </ion-label>
       </ion-item>

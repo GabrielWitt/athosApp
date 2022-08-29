@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { serverTimestamp } from 'firebase/firestore';
 import * as moment from 'moment';
 import * as timezone from 'moment-timezone';
 import { AlertsService } from './alerts';
@@ -100,7 +101,7 @@ export class TimeHandlerModule {
     if(data?.seconds){
       return moment(data.seconds * 1000 + data.nanoseconds/1000000).toISOString();
     } else {
-      return moment(data).toISOString();
+      return moment.parseZone().toISOString();
     }
   }
 
@@ -343,6 +344,13 @@ export class TimeHandlerModule {
 
   getMonthName(date){
     return moment.parseZone(date).format('MMMM');
+  }
+
+  timeSpent(lastUpdate){
+    const a = moment();
+    const b = moment.parseZone(lastUpdate);
+    console.log(a.toISOString(),b.toISOString())
+    return a.diff(b, 'minutes');
   }
 
  }

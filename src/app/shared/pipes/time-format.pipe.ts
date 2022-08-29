@@ -6,10 +6,10 @@ import * as timezone from 'moment-timezone';
   name: 'timeFormat'
 })
 export class TimeFormatPipe implements PipeTransform {
-  // | timeFormat:'DD/MM/YYYY'
+  // | timeFormat:'h:mm A'
   private RESULT = '';
 
-  transform(date: string, method: string) {;
+  transform(date: string, method: string) {
     this.RESULT = '';
     
     switch (method){

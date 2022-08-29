@@ -238,6 +238,25 @@ export class FirestoreActionsService {
     });
   }
 
+  readServicesAssignedByDate(folderName: string, employeeUID:string, startDate: string, filterOperator?:WhereFilterOp){
+    return new Promise((resolve, reject) => {
+      try {
+        const callDoc = this.afs.collection(
+          folderName,(ref => ref
+            .where('employeeUID', '==', employeeUID)
+            .where('startDate', filterOperator, startDate)
+            .orderBy('startDate'))
+        ).valueChanges();
+
+        callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {
+          resolve(querySnapshot); 
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
+    });
+  }
+
 
 
 }

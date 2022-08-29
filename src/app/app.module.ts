@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,8 +19,6 @@ import { PERSISTENCE } from '@angular/fire/compat/auth';
 
 //Calendar
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { getApp } from 'firebase/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -43,10 +41,6 @@ import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
       } else { return getAuth(); }
     }),
     BrowserAnimationsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -56,5 +50,6 @@ import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
     NgxImageCompressService
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

@@ -44,6 +44,9 @@ import { ReceiptItemComponent } from './components/bills/receipt-item/receipt-it
 import { ReservationCalendarComponent } from './components/calendar/reservation-calendar/reservation-calendar.component';
 import { ServiceCalendarComponent } from './components/calendar/service-calendar/service-calendar.component';
 import { SignModalComponent } from './components/view/sign-modal/sign-modal.component';
+import { ReservationItemComponent } from './components/calendar/reservation-item/reservation-item.component';
+import { CalendarServiceItemComponent } from './components/calendar/calendar-service-item/calendar-service-item.component';
+import { SolveTaskComponent } from './components/services/solve-task/solve-task.component';
 
 const components = [
   BigButtonComponent,
@@ -68,9 +71,9 @@ const components = [
   PickServiceComponent,
   NewRequestComponent,
   DetailRequestComponent,
-  DetailServiceComponent,
   ItemRequestComponent,
   AssignTaskComponent,
+  SolveTaskComponent,
   //Spaces
   ItemSpaceComponent,
   ItemReservationComponent,
@@ -87,7 +90,8 @@ const components = [
   //Calendar
   ReservationCalendarComponent,
   ServiceCalendarComponent,
-  ServiceItemComponent,
+  CalendarServiceItemComponent,
+  ReservationItemComponent
 ]
 const pipes = [
   FirstKeyPipe,

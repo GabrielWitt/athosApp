@@ -4,6 +4,7 @@ import { FirestoreActionsService } from '../firestore-actions.service';
 import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { UserFormData } from '../../models/user';
+import { WhereFilterOp } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -89,8 +90,24 @@ export class CalendarService {
   }
 
   readServicesCalendar(){
-    return new Promise<reservationSlot[]>((resolve,reject) => {
+    return new Promise<CalendarItem[]>((resolve,reject) => {
       this.firestore.readCollection(this.serviceRequestFolder)
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
+  readScheduleServicesByUser(uid){
+    return new Promise<CalendarItem[]>((resolve,reject) => {
+      this.firestore.readCollectionFilter(this.serviceRequestFolder,'employeeUID',uid)
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
+  readFutureServicesByUser(uid, startDate: string, filterOperator?:WhereFilterOp){
+    return new Promise<CalendarItem[]>((resolve,reject) => {
+      this.firestore.readServicesAssignedByDate(this.serviceRequestFolder,uid,startDate,filterOperator)
       .then((docs: any[]) => { resolve(docs) })
       .catch((error) => { reject(this.error.handle(error)); });
     });

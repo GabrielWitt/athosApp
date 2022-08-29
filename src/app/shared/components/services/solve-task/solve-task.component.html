@@ -1,6 +1,42 @@
 <ion-card class="ion-padding">
-  <p>
-    solve-task works!
-  </p>
+  <ion-list>
+    <ion-item lines="none">
+      <ion-label>{{request.status === 'Agendado' ? 'Iniciar':'Finalizar'}} Tarea:</ion-label>
+    </ion-item>
+    <ion-row>
+      <ion-col>Inicio: <ion-text color="dark">{{request.startDate| timeFormat:'h:mm A'}}</ion-text></ion-col>
+      <ion-col>Fin: <ion-text color="dark">{{request.endDate| timeFormat:'h:mm A'}}</ion-text></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center">Notas del Residente: <ion-text color="dark">{{request.service.notes}}</ion-text></ion-col>
+    </ion-row>
+    <ion-item *ngIf="request.status === 'Agendado'">
+      <ion-label>Estado Inicial:</ion-label>
+      <ion-select class="ion-text-capitalize" mode='ios' [value]="initialStatus" (ionChange)="statusListener($event)">
+        <ion-select-option class="ion-text-capitalize" *ngFor="let status of statusList" [value]="status">{{status}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-thumbnail slot="start" *ngIf="!newImage" (click)="addPhoto()">
+        <ion-icon size="large" name="image-outline"></ion-icon>
+      </ion-thumbnail>
+      <ion-thumbnail slot="start" *ngIf="newImage" (click)="addPhoto()">
+        <img src="{{newImage.webPath}}">
+      </ion-thumbnail>
+      <ion-label position="stacked">Notas:</ion-label>
+      <ion-textarea rows="3" [value]="noteService.text" (ionChange)="noteListener($event)"></ion-textarea>
+    </ion-item>
+    <ion-item *ngFor="let item of request.notes ">
+      <ion-thumbnail slot="start">
+        <img [src]="item.photo">
+      </ion-thumbnail>
+      <ion-label>{{item.text}}</ion-label>
+    </ion-item>
+    
+  </ion-list>
+  <app-big-button *ngIf="request.status === 'Agendado'" class="ion-padding-top" 
+    LABEL="INICIAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="changeStatus('En Progreso')"></app-big-button>
+  <app-big-button *ngIf="request.status === 'En Progreso'" class="ion-padding-top" 
+    LABEL="FINALIZAR" buttonType="SUCCESS" [loading]="loading" [disabled]="loading" (click)="changeStatus('Terminado')"></app-big-button>
 </ion-card>
 

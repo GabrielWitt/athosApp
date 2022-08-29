@@ -69,7 +69,7 @@ export class FireAuthService {
   }
 
   async getUser(){
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       try {
         this.store.readFile(this.session).then(session => {
           if (session) { 

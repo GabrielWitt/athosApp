@@ -10,6 +10,7 @@
   </ion-label>
   <ion-note slot="end">
     <ion-text color="medium" class="ion-text-capitalize">
+      <ion-text color="tertiary" *ngIf="request.employeeUID === currentUser.uid">Designado</ion-text>
       <ion-text color="dark"><p *ngIf="request.startDate">{{request.startDate | timeFormat: 'fullDateUTC'}} <ion-icon size="small" color="tertiary" name="calendar-number-outline"></ion-icon></p></ion-text>
       <p *ngIf="!request.startDate && request.createdAt ">{{request.createdAt | timeFormat: 'shortDateUTC'}} <ion-icon size="small" color="secondary" name="paper-plane-outline"></ion-icon></p>
     </ion-text>

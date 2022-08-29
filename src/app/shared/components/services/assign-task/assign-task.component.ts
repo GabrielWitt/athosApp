@@ -17,6 +17,7 @@ import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 export class AssignTaskComponent implements OnInit {
   @Input() currentUser: UserFormData;
   @Input() request: CalendarItem;
+  busySlots: CalendarItem[];
   staffList: UserFormData[];
 
   
@@ -54,6 +55,8 @@ export class AssignTaskComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.selectedUserUID = this.currentUser.uid;
+    this.selectedStaff = this.currentUser;
     this.loadData();
   }
 
@@ -61,10 +64,8 @@ export class AssignTaskComponent implements OnInit {
     try {
       this.myTask = this.request;
       this.staffList = await this.usersServ.readOnlyStaff();
-      console.log(this.staffList)
       if(this.staffList.length === 0){this.staffList.push(this.currentUser)}
-      this.selectedUserUID = this.currentUser.uid;
-      this.selectedStaff = this.currentUser;
+      console.log(this.busySlots)
       if(this.currentUser.type !== 'administrador'){
         this.allDays = this.request.service.preferredDays;
       }
@@ -77,6 +78,15 @@ export class AssignTaskComponent implements OnInit {
     this.selectedUserUID = e.detail.value;
     this.staffList.forEach((user:UserFormData) => {
       if(user.uid == this.selectedUserUID){this.selectedStaff = user;}
+    })
+  }
+
+  async loadBusySlots(){
+    this.busySlots = await this.calendar.readFutureServicesByUser(this.selectedStaff.uid, new Date().toISOString(),'>=');
+    this.busySlots.sort((a,b)=>{
+      if(a.startDate > b.startDate){return 1}
+      if(a.startDate < b.startDate){return -1}
+      return 0
     })
   }
 

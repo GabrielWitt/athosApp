@@ -1,12 +1,23 @@
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
+    <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
+  </ion-refresher>
+
   <app-loading-view *ngIf="loading"></app-loading-view>
   
   <app-not-data-yet-message 
     *ngIf="calendarItems.length == 0 && !loading"
     text="No tiene eventos aún" icon="alert-circle-outline"
   ></app-not-data-yet-message>
-
+  
+  <ion-item *ngIf="!loading">
+    <ion-label>Servicios:</ion-label>
+    <ion-select placeholder="Todos los espacios" class="ion-text-capitalize" mode='ios' [value]="filterSelected" (ionChange)="filterChange($event)">
+      <ion-select-option class="ion-text-capitalize" *ngFor="let item of filterItems" [value]="item.filter"> {{item.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
   <ion-list *ngIf="calendarItems.length > 0 && !loading">
-    <app-reservation-item [item]="item" *ngFor="let item of calendarItems"></app-reservation-item>
+    <app-calendar-service-item *ngFor="let item of calendarItems" [item]="item"></app-calendar-service-item>
   </ion-list>
+  
 </ion-content>
