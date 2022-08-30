@@ -22,6 +22,7 @@ export class ItemSpaceComponent implements OnInit {
 
   showOccupant(){
     if(this.space.rent){return this.space.rentData.cost + "$"; }
+    else if(this.space.lease){ return this.space.lease.userLease.name}
     else{ return '-'; }
   }
 

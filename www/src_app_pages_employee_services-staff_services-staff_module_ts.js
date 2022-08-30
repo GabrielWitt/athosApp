@@ -11,14 +11,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "CalendarOrdersComponent": () => (/* binding */ CalendarOrdersComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _calendar_orders_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./calendar-orders.component.html?ngResource */ 76495);
-/* harmony import */ var _calendar_orders_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./calendar-orders.component.scss?ngResource */ 69314);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ 46119);
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ 12366);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 92218);
-/* harmony import */ var angular_calendar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angular-calendar */ 62038);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _calendar_orders_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./calendar-orders.component.html?ngResource */ 76495);
+/* harmony import */ var _calendar_orders_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar-orders.component.scss?ngResource */ 69314);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var src_app_core_services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/calendar.service */ 16695);
+/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
 
 
 
@@ -27,39 +26,90 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let CalendarOrdersComponent = class CalendarOrdersComponent {
-    constructor() {
-        this.view = angular_calendar__WEBPACK_IMPORTED_MODULE_2__.CalendarView.Week;
-        this.viewDate = new Date();
-        this.events = [
-            {
-                start: (0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(new Date(), 20), 15),
-                end: (0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(new Date(), 40), 17),
-                title: 'An event',
-                resizable: {
-                    afterEnd: true,
-                },
-                draggable: true,
-            },
-        ];
-        this.refresh = new rxjs__WEBPACK_IMPORTED_MODULE_5__.Subject();
-    }
-    eventTimesChanged(event) {
-        console.log(event); // { event, newStart?, newEnd?, }
-        // event.start = newStart;
-        // event.end = newEnd;
-        this.refresh.next();
-    }
-    ngOnInit() { }
-};
-CalendarOrdersComponent.ctorParameters = () => [];
-CalendarOrdersComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
-        selector: 'app-calendar-orders',
-        template: _calendar_orders_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_calendar_orders_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], CalendarOrdersComponent);
+  constructor(calendar, auth) {
+    this.calendar = calendar;
+    this.auth = auth;
+    this.calendarItems = [];
+    this.loading = false;
+    this.filterSelected = '>';
+    this.filterItems = [{
+      name: 'Próximas',
+      filter: '>'
+    }, {
+      name: 'Pasadas',
+      filter: '<'
+    }];
+  }
 
+  ngOnInit() {
+    this.loading = true;
+    this.loadData().then(() => {
+      this.loading = false;
+    });
+  }
+
+  loadData() {
+    var _this = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      const user = yield _this.auth.getUser();
+      _this.currentUser = user.data;
+      _this.calendarItems = yield _this.calendar.readFutureServicesByUser(_this.currentUser.uid, new Date().toISOString(), _this.filterSelected);
+
+      _this.calendarItems.sort((a, b) => {
+        if (a.startDate > b.startDate) {
+          return 1;
+        }
+
+        if (a.startDate < b.startDate) {
+          return -1;
+        }
+
+        return 0;
+      });
+
+      console.log(_this.calendarItems);
+      return null;
+      /*
+      this.calendarItems = await this.calendar.readScheduleServicesByUser(this.currentUser.uid);
+      this.calendar.readReservationCalendar().then(data => {
+        console.log(data);
+      })
+       */
+    })();
+  }
+
+  doRefresh(refresh) {
+    var _this2 = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      // load 
+      yield _this2.loadData();
+
+      if (refresh) {
+        refresh.target.complete();
+      }
+    })();
+  }
+
+  filterChange(e) {
+    this.filterSelected = e.detail.value;
+    this.loadData();
+  }
+
+};
+
+CalendarOrdersComponent.ctorParameters = () => [{
+  type: src_app_core_services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_3__.CalendarService
+}, {
+  type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__.FireAuthService
+}];
+
+CalendarOrdersComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+  selector: 'app-calendar-orders',
+  template: _calendar_orders_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
+  styles: [_calendar_orders_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
+})], CalendarOrdersComponent);
 
 
 /***/ }),
@@ -504,7 +554,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \*********************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <mwl-calendar-week-view\n  [viewDate]=\"viewDate\"\n  [events]=\"events\"\n  [hourDuration]=\"40\"\n  [hourSegments]=\"2\"\n  [refresh]=\"refresh\"\n  (eventTimesChanged)=\"eventTimesChanged($event)\"\n>\n</mwl-calendar-week-view>\n</ion-content>";
+module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n\n  <app-loading-view *ngIf=\"loading\"></app-loading-view>\n  \n  <app-not-data-yet-message \n    *ngIf=\"calendarItems.length == 0 && !loading\"\n    text=\"No tiene eventos aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-item *ngIf=\"!loading\">\n    <ion-label>Servicios:</ion-label>\n    <ion-select placeholder=\"Todos los espacios\" class=\"ion-text-capitalize\" mode='ios' [value]=\"filterSelected\" (ionChange)=\"filterChange($event)\">\n      <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let item of filterItems\" [value]=\"item.filter\"> {{item.name}}</ion-select-option>\n    </ion-select>\n  </ion-item>\n  <ion-list *ngIf=\"calendarItems.length > 0 && !loading\">\n    <app-calendar-service-item *ngFor=\"let item of calendarItems\" [item]=\"item\"></app-calendar-service-item>\n  </ion-list>\n  \n</ion-content>";
 
 /***/ }),
 
@@ -524,7 +574,7 @@ module.exports = "<ion-content class=\"ion-padding\" *ngIf=\"loading\">\n  <app-
   \***********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-header *ngIf=\"selectedTab === 'request'\" title=\"Tíquetes\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'services'\" title=\"Servicios\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'maintenance'\" title=\"Mantenimientos\"></app-main-header>\n</div>\n<ion-toolbar>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"calendar\">\n    <ion-segment-button value=\"calendar\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Agenda</ion-label>\n      <ion-icon name=\"calendar-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"request\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Tíquetes</ion-label>\n      <ion-icon name=\"book-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"services\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Servicios</ion-label>\n      <ion-icon name=\"hammer-outline\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n</ion-toolbar>\n\n<app-calendar-orders *ngIf=\"selectedTab === 'calendar'\" style=\"height: 100%\"></app-calendar-orders>\n<app-ticket-orders *ngIf=\"selectedTab === 'request'\" style=\"height: 100%\"></app-ticket-orders>\n<app-services-orders *ngIf=\"selectedTab === 'services'\" style=\"height: 100%\"></app-services-orders>";
+module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-header *ngIf=\"selectedTab === 'request'\" title=\"Tíquetes\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'services'\" title=\"Servicios\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'calendar'\" title=\"Agenda\"></app-main-header>\n</div>\n<ion-toolbar>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"calendar\">\n    <ion-segment-button value=\"calendar\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Agenda</ion-label>\n      <ion-icon name=\"calendar-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"request\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Tíquetes</ion-label>\n      <ion-icon name=\"book-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"services\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Servicios</ion-label>\n      <ion-icon name=\"hammer-outline\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n</ion-toolbar>\n\n<app-calendar-orders *ngIf=\"selectedTab === 'calendar'\" style=\"height: 100%\"></app-calendar-orders>\n<app-ticket-orders *ngIf=\"selectedTab === 'request'\" style=\"height: 100%\"></app-ticket-orders>\n<app-services-orders *ngIf=\"selectedTab === 'services'\" style=\"height: 100%\"></app-services-orders>";
 
 /***/ }),
 
@@ -534,7 +584,7 @@ module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-heade
   \*****************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene solicitudes aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-request *ngFor=\"let request of itemList\" [request]=\"request\" [reserve]=\"false\" (click)=\"openRequest(request,null)\"></app-item-request>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createRequest()\">\n      <ion-icon size=\"large\" name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
+module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene solicitudes aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-request *ngFor=\"let request of itemList\" [request]=\"request\" [reserve]=\"false\" [currentUser]=\"user\" (click)=\"openRequest(request,null)\"></app-item-request>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createRequest()\">\n      <ion-icon size=\"large\" name=\"create-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ })
 

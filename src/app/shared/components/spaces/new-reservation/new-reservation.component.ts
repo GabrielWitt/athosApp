@@ -83,7 +83,6 @@ export class NewReservationComponent implements OnInit {
       this.selectedUser = this.currentUser;
       this.selectedUserUID = this.currentUser.uid;
     }
-    this.users.push(this.currentUser);
   }
 
   async enableForm(){ 

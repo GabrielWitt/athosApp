@@ -35,6 +35,7 @@ export interface Space {
     rentData?: RentSpace;
     photo?: string;
     createdAt?: string;
+    lease?: Lease
 }
 
 export interface RentSpace {

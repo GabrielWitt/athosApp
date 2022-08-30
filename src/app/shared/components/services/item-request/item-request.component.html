@@ -8,7 +8,7 @@
     </ion-text>
     <app-status-request [status]="request.status"></app-status-request>
   </ion-label>
-  <ion-note slot="end">
+  <ion-note slot="end" style="width: 27vw;">
     <ion-text color="medium" class="ion-text-capitalize">
       <ion-text color="tertiary" *ngIf="request.employeeUID === currentUser.uid">Designado</ion-text>
       <ion-text color="dark"><p *ngIf="request.startDate">{{request.startDate | timeFormat: 'fullDateUTC'}} <ion-icon size="small" color="tertiary" name="calendar-number-outline"></ion-icon></p></ion-text>

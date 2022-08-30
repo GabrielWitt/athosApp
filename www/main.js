@@ -109,7 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app.component */ 55041);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/router */ 60124);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-routing.module */ 90158);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser */ 34497);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 92340);
@@ -117,13 +117,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/core */ 26549);
 /* harmony import */ var _awesome_cordova_plugins_chooser_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @awesome-cordova-plugins/chooser/ngx */ 89519);
-/* harmony import */ var ngx_image_compress__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ngx-image-compress */ 32568);
+/* harmony import */ var ngx_image_compress__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ngx-image-compress */ 32568);
 /* harmony import */ var _angular_fire_compat__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/fire/compat */ 11879);
 /* harmony import */ var _angular_fire_compat_firestore__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/fire/compat/firestore */ 92393);
-/* harmony import */ var _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/fire/compat/auth */ 5873);
+/* harmony import */ var _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/fire/compat/auth */ 5873);
 /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/platform-browser/animations */ 37146);
-/* harmony import */ var angular_calendar__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! angular-calendar */ 62038);
-/* harmony import */ var angular_calendar_date_adapters_date_fns__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! angular-calendar/date-adapters/date-fns */ 58617);
 /* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! firebase/app */ 66369);
 /* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/fire/auth */ 61577);
 /* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! firebase/auth */ 23628);
@@ -151,8 +149,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 let AppModule = class AppModule {
 };
 AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
@@ -175,19 +171,16 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
                 }
             }),
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_16__.BrowserAnimationsModule,
-            angular_calendar__WEBPACK_IMPORTED_MODULE_17__.CalendarModule.forRoot({
-                provide: angular_calendar__WEBPACK_IMPORTED_MODULE_17__.DateAdapter,
-                useFactory: angular_calendar_date_adapters_date_fns__WEBPACK_IMPORTED_MODULE_18__.adapterFactory,
-            }),
         ],
         providers: [
-            { provide: _angular_router__WEBPACK_IMPORTED_MODULE_19__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.IonicRouteStrategy },
-            { provide: _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_20__.PERSISTENCE, useValue: 'session' },
+            { provide: _angular_router__WEBPACK_IMPORTED_MODULE_17__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.IonicRouteStrategy },
+            { provide: _angular_fire_compat_auth__WEBPACK_IMPORTED_MODULE_18__.PERSISTENCE, useValue: 'session' },
             _awesome_cordova_plugins_chooser_ngx__WEBPACK_IMPORTED_MODULE_4__.Chooser,
             _awesome_cordova_plugins_native_storage_ngx__WEBPACK_IMPORTED_MODULE_7__.NativeStorage,
-            ngx_image_compress__WEBPACK_IMPORTED_MODULE_21__.NgxImageCompressService
+            ngx_image_compress__WEBPACK_IMPORTED_MODULE_19__.NgxImageCompressService
         ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_0__.AppComponent],
+        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_9__.CUSTOM_ELEMENTS_SCHEMA]
     })
 ], AppModule);
 

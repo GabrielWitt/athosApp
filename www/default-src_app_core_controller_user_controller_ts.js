@@ -116,15 +116,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "UserController": () => (/* binding */ UserController)
 /* harmony export */ });
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @capacitor/core */ 26549);
 /* harmony import */ var _services_image_uploader_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/image-uploader.service */ 36071);
-/* harmony import */ var _services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/modules/calendar.service */ 16695);
-/* harmony import */ var _services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/modules/fire-auth.service */ 2687);
-/* harmony import */ var _services_modules_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/modules/users.service */ 77464);
-/* harmony import */ var _services_controller__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services.controller */ 82333);
-
+/* harmony import */ var _services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/modules/fire-auth.service */ 2687);
+/* harmony import */ var _services_modules_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/modules/users.service */ 77464);
+/* harmony import */ var _services_controller__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services.controller */ 82333);
 
 
 
@@ -134,12 +132,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let UserController = class UserController {
-  constructor(auth, userServ, upload, services, calendar) {
+  constructor(auth, userServ, upload, services) {
     this.auth = auth;
     this.userServ = userServ;
     this.upload = upload;
     this.services = services;
-    this.calendar = calendar;
     this.userList = [];
     this.edit = false;
   }
@@ -152,15 +149,6 @@ let UserController = class UserController {
           this.user = user.user;
           this.currentUser = user.data;
           this.services.loadServices(this.currentUser.type);
-          /*
-          this.calendar.readReservationCalendar().then(data => {
-            console.log(data);
-          })
-          this.calendar.readServicesCalendar().then(data => {
-            console.log(data);
-          })
-           */
-
           resolve(user);
         });
       } catch (error) {
@@ -235,18 +223,16 @@ let UserController = class UserController {
 };
 
 UserController.ctorParameters = () => [{
-  type: _services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__.FireAuthService
+  type: _services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__.FireAuthService
 }, {
-  type: _services_modules_users_service__WEBPACK_IMPORTED_MODULE_5__.UsersService
+  type: _services_modules_users_service__WEBPACK_IMPORTED_MODULE_4__.UsersService
 }, {
   type: _services_image_uploader_service__WEBPACK_IMPORTED_MODULE_2__.ImageUploaderService
 }, {
-  type: _services_controller__WEBPACK_IMPORTED_MODULE_6__.ServicesController
-}, {
-  type: _services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_3__.CalendarService
+  type: _services_controller__WEBPACK_IMPORTED_MODULE_5__.ServicesController
 }];
 
-UserController = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Injectable)({
+UserController = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Injectable)({
   providedIn: 'root'
 })], UserController);
 
@@ -327,7 +313,7 @@ let FirestoreActionsService = class FirestoreActionsService {
         return new Promise((resolve, reject) => {
             try {
                 const filterOp = filterOperator ? filterOperator : '==';
-                const callDoc = this.afs.collection(folderName, (ref => ref.where(filterName, filterOp, filterValue).orderBy(filterName))).valueChanges();
+                const callDoc = this.afs.collection(folderName, (ref => ref.where(filterName, filterOp, filterValue).orderBy(orderField))).valueChanges();
                 callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
                     resolve(querySnapshot);
                 });
@@ -477,6 +463,22 @@ let FirestoreActionsService = class FirestoreActionsService {
                     .where('receiptDate', '>=', startMonth)
                     .where('receiptDate', '<=', endMonth)
                     .orderBy('receiptDate'))).valueChanges();
+                callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
+                    resolve(querySnapshot);
+                });
+            }
+            catch (error) {
+                reject(this.error.handle(error));
+            }
+        });
+    }
+    readServicesAssignedByDate(folderName, employeeUID, startDate, filterOperator) {
+        return new Promise((resolve, reject) => {
+            try {
+                const callDoc = this.afs.collection(folderName, (ref => ref
+                    .where('employeeUID', '==', employeeUID)
+                    .where('startDate', filterOperator, startDate)
+                    .orderBy('startDate'))).valueChanges();
                 callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
                     resolve(querySnapshot);
                 });
@@ -822,121 +824,6 @@ ImageUploaderService.ctorParameters = () => [{
 ImageUploaderService = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Injectable)({
   providedIn: 'root'
 })], ImageUploaderService);
-
-
-/***/ }),
-
-/***/ 16695:
-/*!***********************************************************!*\
-  !*** ./src/app/core/services/modules/calendar.service.ts ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "CalendarService": () => (/* binding */ CalendarService)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _firestore_actions_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../firestore-actions.service */ 14871);
-/* harmony import */ var src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/shared/utilities/time-handler */ 8123);
-/* harmony import */ var src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/utilities/error-handler.service */ 43570);
-
-
-
-
-
-let CalendarService = class CalendarService {
-    constructor(firestore, error, time) {
-        this.firestore = firestore;
-        this.error = error;
-        this.time = time;
-        this.reservationsFolder = 'reservationsCalendar';
-        this.serviceRequestFolder = 'servicesCalendar';
-        this.reservationsFolder = 'reservationsCalendar';
-        this.serviceRequestFolder = 'servicesCalendar';
-    }
-    confirmReservation(data) {
-        return new Promise((resolve, reject) => {
-            const timeSlot = {
-                uid: data.uid,
-                scheduleDate: data.scheduleDate,
-                startDate: data.startDate,
-                endDate: data.endDate,
-                unitNumber: data.reservation.unitNumber,
-                spaceUID: data.uid,
-                floor: data.reservation.floor,
-            };
-            this.firestore.setNamedDocument(this.reservationsFolder, data.uid, timeSlot)
-                .then((doc) => { resolve(doc); })
-                .catch((error) => { reject(this.error.handle(error)); });
-        });
-    }
-    cancelReservation(data) {
-        return new Promise((resolve, reject) => {
-            this.firestore.deleteDocument(this.reservationsFolder + this.time.getShortDateUTC(data.startDate), data.uid)
-                .then((doc) => { resolve(doc); })
-                .catch((error) => { reject(this.error.handle(error)); });
-        });
-    }
-    confirmService(data, staff) {
-        return new Promise((resolve, reject) => {
-            const timeSlot = {
-                uid: data.uid,
-                scheduleDate: data.scheduleDate,
-                startDate: data.startDate,
-                endDate: data.endDate,
-                unitNumber: data.service.unitNumber,
-                employeeUID: staff.uid,
-                employeePhoto: staff.photo,
-                employeeFullName: staff.name + ' ' + staff.lastName
-            };
-            this.firestore.setNamedDocument(this.serviceRequestFolder, data.uid, timeSlot)
-                .then((doc) => { resolve(doc); })
-                .catch((error) => { reject(this.error.handle(error)); });
-        });
-    }
-    createCalendar(data) {
-        return new Promise((resolve, reject) => {
-            this.firestore.createDocument(this.reservationsFolder, data)
-                .then(doc => { resolve(doc); })
-                .catch((error) => { reject(this.error.handle(error)); });
-        });
-    }
-    UpdateCalendar(data) {
-        return new Promise((resolve, reject) => {
-            this.firestore.setNamedDocument(this.reservationsFolder, data.uid, data)
-                .then((docs) => { resolve(docs); })
-                .catch((error) => { reject(this.error.handle(error)); });
-        });
-    }
-    readReservationCalendar() {
-        return new Promise((resolve, reject) => {
-            this.firestore.readCollection(this.reservationsFolder)
-                .then((docs) => { resolve(docs); })
-                .catch((error) => { reject(this.error.handle(error)); });
-        });
-    }
-    readServicesCalendar() {
-        return new Promise((resolve, reject) => {
-            this.firestore.readCollection(this.serviceRequestFolder)
-                .then((docs) => { resolve(docs); })
-                .catch((error) => { reject(this.error.handle(error)); });
-        });
-    }
-};
-CalendarService.ctorParameters = () => [
-    { type: _firestore_actions_service__WEBPACK_IMPORTED_MODULE_0__.FirestoreActionsService },
-    { type: src_app_shared_utilities_error_handler_service__WEBPACK_IMPORTED_MODULE_2__.ErrorHandlerService },
-    { type: src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_1__.TimeHandlerModule }
-];
-CalendarService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
-        providedIn: 'root'
-    })
-], CalendarService);
-
 
 
 /***/ }),
@@ -1644,7 +1531,7 @@ let UsersService = class UsersService {
 
   readOnlyStaff() {
     return new Promise((resolve, reject) => {
-      this.firestore.readCollectionOrderFilter(this.UsersFolder, 'type', 'residente', 'name', '!=').then(docs => {
+      this.firestore.readCollectionOrderFilter(this.UsersFolder, 'type', 'empleado', 'name').then(docs => {
         resolve(docs);
       }).catch(error => {
         reject(this.error.handle(error));
@@ -2318,7 +2205,7 @@ let TimeHandlerModule = class TimeHandlerModule {
     if (data?.seconds) {
       return moment__WEBPACK_IMPORTED_MODULE_1__(data.seconds * 1000 + data.nanoseconds / 1000000).toISOString();
     } else {
-      return moment__WEBPACK_IMPORTED_MODULE_1__(data).toISOString();
+      return moment__WEBPACK_IMPORTED_MODULE_1__.parseZone().toISOString();
     }
   }
 
@@ -2602,6 +2489,13 @@ let TimeHandlerModule = class TimeHandlerModule {
 
   getMonthName(date) {
     return moment__WEBPACK_IMPORTED_MODULE_1__.parseZone(date).format('MMMM');
+  }
+
+  timeSpent(lastUpdate) {
+    const a = moment__WEBPACK_IMPORTED_MODULE_1__();
+    const b = moment__WEBPACK_IMPORTED_MODULE_1__.parseZone(lastUpdate);
+    console.log(a.toISOString(), b.toISOString());
+    return a.diff(b, 'minutes');
   }
 
 };

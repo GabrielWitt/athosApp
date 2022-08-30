@@ -71,6 +71,48 @@
       </ion-item>
     </ion-col>
   </ion-row>
+
+  <div *ngIf="space.lease">
+    
+    <ion-list-header>
+      <ion-label>Información de Contrato:</ion-label>
+    </ion-list-header>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>
+            Inicio Contrato: {{space.lease.leaseStart | timeFormat: 'shortDateUTC'}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>
+            Fin Contrato: {{space.lease.leaseEnd | timeFormat: 'shortDateUTC'}}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>
+            Costo Mensual: {{space.lease.monthlyCost.toFixed(2)}}$
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Espacio de:</ion-label>
+          <app-user-profile [shortUser]="space.lease.userLease"></app-user-profile>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+
+
   <div *ngIf="space.rent">
     <ion-list-header>
       <ion-label>Información de Renta:</ion-label>

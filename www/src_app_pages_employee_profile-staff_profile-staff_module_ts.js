@@ -93,39 +93,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ProfileStaffPage": () => (/* binding */ ProfileStaffPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _profile_staff_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile-staff.page.html?ngResource */ 58762);
 /* harmony import */ var _profile_staff_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile-staff.page.scss?ngResource */ 30426);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
+/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
+
 
 
 
 
 
 let ProfileStaffPage = class ProfileStaffPage {
-    constructor(auth) {
+    constructor(userCtrl, auth) {
+        this.userCtrl = userCtrl;
         this.auth = auth;
         this.defaultUser = '../../../../assets/profile/ProfileBlank.png';
+        this.edit = false;
+        this.loading = true;
     }
     ngOnInit() {
-        this.auth.getUser().then((user) => {
-            this.user = user.user;
-            this.currentUser = user.data;
-        });
     }
     ionViewWillEnter() {
+        this.loading = true;
         this.auth.getUser().then((user) => {
             this.user = user.user;
             this.currentUser = user.data;
+            console.log(this.currentUser);
+            this.loading = false;
         });
     }
 };
 ProfileStaffPage.ctorParameters = () => [
-    { type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_2__.FireAuthService }
+    { type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__.UserController },
+    { type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__.FireAuthService }
 ];
-ProfileStaffPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+ProfileStaffPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-profile-staff',
         template: _profile_staff_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_profile_staff_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -152,7 +157,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \*********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<app-main-header title=\"Mi Perfil\"></app-main-header>\n\n<ion-content class=\"ion-padding\">\n  <app-user-detail *ngIf=\"!userCtrl.edit && user\" [user]=\"user\" [userData]=\"currentUser\" [editDataForm]=\"true\"></app-user-detail>\n  <app-edit-user *ngIf=\"userCtrl.edit && user\" [user]=\"user\" [userData]=\"currentUser\"></app-edit-user>\n</ion-content>\n";
+module.exports = "<app-main-header title=\"Mi Perfil\"></app-main-header>\n\n<ion-content class=\"ion-padding\">\n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  <app-user-detail *ngIf=\"!loading && !userCtrl.edit && user\" [user]=\"user\" [userData]=\"currentUser\" [editDataForm]=\"true\"></app-user-detail>\n  <app-edit-user *ngIf=\"!loading && userCtrl.edit && user\" [user]=\"user\" [userData]=\"currentUser\"></app-edit-user>\n</ion-content>";
 
 /***/ })
 

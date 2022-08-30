@@ -7,6 +7,7 @@ import { NewSpaceComponent } from 'src/app/shared/components/spaces/new-space/ne
 import { SpacesService } from 'src/app/core/services/modules/spaces.service';
 import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 import { Space } from 'src/app/core/models/spaces';
+import { UsersService } from 'src/app/core/services/modules/users.service';
 
 @Component({
   selector: 'app-spaces-admin',
@@ -15,7 +16,7 @@ import { Space } from 'src/app/core/models/spaces';
 })
 export class SpacesAdminComponent implements OnInit {
   loading = true;
-  itemList = []
+  itemList: Space[] = []
   user: UserFormData;
 
   filterSelected = 'Todos';
@@ -23,6 +24,7 @@ export class SpacesAdminComponent implements OnInit {
 
   constructor(
     private modal: ModalController,
+    private users: UsersService,
     private auth: FireAuthService,
     private spaces: SpacesService,
     private routerOutlet: IonRouterOutlet
@@ -32,6 +34,7 @@ export class SpacesAdminComponent implements OnInit {
     this.loading = true;
     this.loadData().then(user => {
       this.loading = false;
+      // this.loadUsers();
     })
   }
 
@@ -95,5 +98,26 @@ export class SpacesAdminComponent implements OnInit {
     modal.present();
     const modalResult = await modal.onWillDismiss();
     if(modalResult.data){ this.loadData(true);}
+  }
+
+  loadUsers(){
+    this.users.readAllUsers()
+    .then(list => { 
+      const unitlist = [...this.itemList];
+      console.log(list)
+      list.forEach(user => {
+        if(user.leases?.length>0){
+          user.leases.forEach(lease => {
+            unitlist.forEach(async space => {
+              if(lease.spaceLease.uid === space.uid){
+                const updatedSpace:Space = {...space, lease: lease}
+                await this.spaces.UpdateSpaces(updatedSpace)
+                console.log(updatedSpace)
+              }
+            })
+          })
+        }
+      } )
+    })
   }
 }

@@ -74,6 +74,8 @@ export class NewRequestComponent implements OnInit {
     }
     if(this.request){
       this.myRequest = this.request;
+      console.log(this.request)
+      console.log(this.currentUser)
     }
     if(this.users?.length > 1){ 
       this.selectedUser = this.currentUser; 

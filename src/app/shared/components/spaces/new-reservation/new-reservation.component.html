@@ -13,8 +13,11 @@
     </ion-buttons>
     <ion-title class="ion-text-uppercase">{{reservation ? reservation.reservation.unitNumber: 'Nueva Reserva'}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="reservation && currentUser.type === 'administrador' && !editReservationForm" color="dark" (click)="enableForm()">
+      <ion-button *ngIf="reservation && currentUser.type === 'administrador' && !showReservationForm" color="dark" (click)="enableForm()">
           Editar
+      </ion-button>
+      <ion-button *ngIf="reservation && currentUser.type === 'administrador' && showReservationForm" color="dark" (click)="createReservation()">
+          Enviar
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -151,7 +154,8 @@
 
   </ion-list>
 </ion-content>
-<ion-footer *ngIf="!loading && (currentUser.type === 'administrador' || reservation.requestBy.uid === currentUser.uid) && (reservation?reservation.status === 'Solicitado':true)">
+<ion-footer *ngIf="!loading && ((space && !reservation) || 
+    reservation.status === 'Solicitado' && (currentUser.type === 'administrador' || reservation?.requestBy.uid === currentUser.uid))">
   <ion-toolbar>
     <app-big-button *ngIf="(!reservation || editReservationForm) && showReservationForm" class="ion-padding-top" LABEL="Enviar" buttonType="SECONDARY" [loading]="loading" [disabled]="loading || !myReservation.scheduleDate || !timeSlotStart.date" (click)="createReservation()"></app-big-button>
     <app-big-button *ngIf="space && !showReservationForm" class="ion-padding-top" LABEL="SOLICITAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="enableForm()"></app-big-button>

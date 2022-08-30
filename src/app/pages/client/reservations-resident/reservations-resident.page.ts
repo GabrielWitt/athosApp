@@ -77,7 +77,7 @@ export class ReservationsResidentPage implements OnInit {
   async openReservation(reservation,space){
     const modalCreate = await this.modal.create({
       component: NewReservationComponent,
-      componentProps: {reservation, space, currentUser: this.userCtrl.user },
+      componentProps: {reservation, space, currentUser: this.user, users: [this.user] },
       mode: 'ios',
       presentingElement: this.routerOutlet.nativeEl
     });

@@ -12,11 +12,6 @@ import { Capacitor } from '@capacitor/core';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { NgxImageCompressService } from 'ngx-image-compress';
 
-// @angular/fire
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { PERSISTENCE } from '@angular/fire/compat/auth';
-
 //Calendar
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -24,6 +19,11 @@ import { getApp } from 'firebase/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
+
+// @angular/fire
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { PERSISTENCE } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [AppComponent],
