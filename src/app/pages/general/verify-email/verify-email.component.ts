@@ -22,7 +22,6 @@ export class VerifyEmailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.routerParams.snapshot.params.email)
     if(this.routerParams.snapshot.params.email){
       this.email = this.routerParams.snapshot.params.email;
     }
@@ -41,11 +40,16 @@ export class VerifyEmailComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
     this.loading = true;
-    this.auth.signOut().then(done => {
+    this.auth.reCheckUser().then((done: any) => {
+      if(done){
+        if(!done.user.emailVerified){
+          this.alerts.showAlert('','El email: ' + this.email + ' aun no ha sido verificado', 'OK')
+        }
+        setTimeout(() => { this.loading = false; }, 5000);
+      }
+      else{this.loading = false;}
       this.loading = false;
-      this.router.navigateByUrl('general/login');
-    });
-    this.auth.checkUser();
+    }).catch(e => { this.loading = false; });
   }
 
   cancel(){

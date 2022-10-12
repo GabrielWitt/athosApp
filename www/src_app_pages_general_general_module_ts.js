@@ -496,7 +496,6 @@ let VerifyEmailComponent = class VerifyEmailComponent {
         this.errorMessage = '';
     }
     ngOnInit() {
-        console.log(this.routerParams.snapshot.params.email);
         if (this.routerParams.snapshot.params.email) {
             this.email = this.routerParams.snapshot.params.email;
         }
@@ -513,11 +512,18 @@ let VerifyEmailComponent = class VerifyEmailComponent {
         this.loading = true;
         this.errorMessage = '';
         this.loading = true;
-        this.auth.signOut().then(done => {
+        this.auth.reCheckUser().then((done) => {
+            if (done) {
+                if (!done.user.emailVerified) {
+                    this.alerts.showAlert('', 'El email: ' + this.email + ' aun no ha sido verificado', 'OK');
+                }
+                setTimeout(() => { this.loading = false; }, 5000);
+            }
+            else {
+                this.loading = false;
+            }
             this.loading = false;
-            this.router.navigateByUrl('general/login');
-        });
-        this.auth.checkUser();
+        }).catch(e => { this.loading = false; });
     }
     cancel() {
         this.loading = true;

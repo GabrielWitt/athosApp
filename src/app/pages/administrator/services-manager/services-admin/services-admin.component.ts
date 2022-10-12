@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserFormData } from 'src/app/core/models/user';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
-import { ReservationsService } from 'src/app/core/services/modules/reservations.service';
-import { NewServiceComponent } from 'src/app/shared/components/services/new-service/new-service.component';
-import { Service } from 'src/app/core/models/services';
-import { MaintenanceService } from 'src/app/core/services/modules/maintenance.service';
 import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
+import { MaintenanceService } from 'src/app/core/services/modules/maintenance.service';
+import { NewServiceComponent } from 'src/app/shared/components/services/new-service/new-service.component';
 
 @Component({
   selector: 'app-services-admin',

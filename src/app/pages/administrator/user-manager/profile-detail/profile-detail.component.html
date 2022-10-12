@@ -150,3 +150,8 @@
   
   </ion-list>
 </ion-content>
+<ion-footer *ngIf="admin && !editUserForm">
+  <ion-toolbar>
+    <ion-button color="tertiary" expand="full" (click)="editSpaces()">Editar Espacios</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -55,7 +55,7 @@ export class UsersService {
   }
 
   readUser(uid: string){
-    return new Promise((resolve,reject) => {
+    return new Promise<UserFormData>((resolve,reject) => {
       this.firestore.readDocument(this.UsersFolder,uid)
       .then((doc: UserFormData) => { resolve(doc); })
       .catch((error) => { reject(this.error.handle(error)); });

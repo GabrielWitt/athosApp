@@ -14,7 +14,7 @@
     <ion-title class="ion-text-uppercase">{{request ? request.service.name : 'Nuevo Tíquet'}}</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="(!request || showRequestForm )" color="success" (click)="createRequest()" 
-        [disabled]="loading">
+        [disabled]="loading || !selectedUnitUID">
           Enviar
       </ion-button>
       <ion-button *ngIf="request && currentUser.type === 'administrador' && !showRequestForm " color="dark" (click)="enableForm()">
@@ -109,6 +109,6 @@
   (currentUser.type === 'administrador' || request.requestBy.uid === currentUser.uid)))">
   <ion-toolbar>
     <app-big-button LABEL="ENVIAR" *ngIf="!request && service && showRequestForm" class="ion-padding-top" buttonType="SECONDARY" [loading]="loading" [disabled]="loading || (this.selectedUser?.leases?.length>0 && !this.selectedUnitUID)" (click)="createRequest()"></app-big-button>
-    <app-big-button LABEL="CANCELAR" *ngIf="request.status ==='Solicitado' && (currentUser.type === 'administrador' || request.requestBy.uid === currentUser.uid)" class="ion-padding-top" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>
+    <app-big-button LABEL="CANCELAR" *ngIf="request?.status ==='Solicitado' && (currentUser.type === 'administrador' || request.requestBy.uid === currentUser.uid)" class="ion-padding-top" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>
   </ion-toolbar>
 </ion-footer> 

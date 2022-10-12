@@ -15,6 +15,7 @@ import { HapticsService } from 'src/app/shared/utilities/haptics.service';
 export class ProfileDetailComponent implements OnInit {
   loading = false;
   upgrading = false;
+  @Input() admin: boolean;
   @Input() user: UserFormData;
   @Input() currentUser: UserFormData;
   petList = []
@@ -105,9 +106,6 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   sendData(){
-    if(this.newImage){
-
-    }
     if(this.user){
       this.users.createUser(this.myCurrentUser)
     }else {
@@ -121,8 +119,11 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   newReceipts(){
-    console.log('newReceipts')
     this.modal.dismiss({action:'receipt',user: this.user})
+  }
+
+  editSpaces(){
+    this.modal.dismiss({action:'spaces',user: this.currentUser})
   }
 
 }

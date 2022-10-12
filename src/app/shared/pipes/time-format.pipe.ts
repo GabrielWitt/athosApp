@@ -18,7 +18,7 @@ export class TimeFormatPipe implements PipeTransform {
         break;
       case 'h:mm A':
         this.RESULT =  moment(date).format('h:mm A');
-        break;
+        break; 
       case 'shortDateUTC': 
         this.RESULT =  moment.parseZone(date).format('DD/MM/YYYY');
         break;

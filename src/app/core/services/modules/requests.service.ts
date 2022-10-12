@@ -68,6 +68,14 @@ export class RequestsService {
     });
   }
 
+  readResidentRequestListOrderRent(filterName: string, filterValue: any,filterOp?){
+    return new Promise<CalendarItem[]>((resolve,reject) => {
+      this.firestore.readCollectionOrderFilter(this.RequestFolder, filterName, filterValue, 'startDate', filterOp)
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
   assignDuty(communityUID){
     return new Promise<CalendarItem>((resolve,reject) => {
       

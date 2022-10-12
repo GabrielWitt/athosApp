@@ -13,6 +13,6 @@
   ></app-not-data-yet-message>
 
   <ion-list *ngIf="itemList.length > 0 && !loading">
-    
+    <app-calendar-service-item *ngFor="let item of itemList" [item]="item" (click)="editService(item)"></app-calendar-service-item>
   </ion-list>
 </ion-content>

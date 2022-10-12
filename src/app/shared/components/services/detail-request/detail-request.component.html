@@ -7,9 +7,9 @@
       <ion-item>
         <ion-label>
           <ion-text class="ion-text-capitalize">
-            <h2>{{request.service.name}} ({{request.service.unitNumber}}) </h2>
-            <h3>Status: 
-              <app-status-request [status]="request.status"></app-status-request></h3>
+            <h2>{{request.service.name}}</h2>
+            <h3>Ubicación: {{request.service.unitNumber}}</h3>
+            <h3><app-status-request [status]="request.status"></app-status-request></h3>
           </ion-text>
         </ion-label>
       </ion-item>
@@ -49,9 +49,11 @@
       <ion-icon size="large" name="bookmark-outline"></ion-icon>
     </ion-thumbnail>
     <ion-label class="ion-text-capitalize">
-      Fecha de {{request.scheduleDate?'Servicio':'Solicitud'}}: 
+      <p class="textoDisplay">Fecha de {{request.scheduleDate?'Servicio':'Solicitud'}}: </p>
+      <p class="textoDisplay">
       <ion-text *ngIf="request.scheduleDate">{{request.scheduleDate | timeFormat: 'displayDateUTC'}}</ion-text>
       <ion-text *ngIf="!request.scheduleDate && request.createdAt">{{request.createdAt | timeFormat: 'displayDateUTC'}}</ion-text>
+      </p>
     </ion-label>
   </ion-item>
   <ion-item *ngIf="request.startDate">
@@ -79,6 +81,10 @@
     </ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>Solicitado por:</ion-label>
-    <app-user-profile [shortUser]="request.requestBy"></app-user-profile>
+    <ion-label>
+      <p class="textoDisplay">Solicitado por: </p>
+      <p class="textoDisplay">    
+        <app-user-profile [shortUser]="request.requestBy"></app-user-profile>
+      </p>
+    </ion-label>
   </ion-item>

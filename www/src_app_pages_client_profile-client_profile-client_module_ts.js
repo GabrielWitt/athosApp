@@ -94,45 +94,73 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ProfileClientPage": () => (/* binding */ ProfileClientPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _profile_client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile-client.page.html?ngResource */ 37524);
-/* harmony import */ var _profile_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile-client.page.scss?ngResource */ 82765);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _profile_client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile-client.page.html?ngResource */ 37524);
+/* harmony import */ var _profile_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile-client.page.scss?ngResource */ 82765);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
+/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
+
+
 
 
 
 
 
 let ProfileClientPage = class ProfileClientPage {
-    constructor(auth) {
-        this.auth = auth;
-        this.defaultUser = '../../../../assets/profile/ProfileBlank.png';
-    }
-    ngOnInit() {
-        this.auth.getUser().then((user) => {
-            this.user = user.user;
-            this.currentUser = user.data;
-        });
-    }
-    ionViewWillEnter() {
-        this.auth.getUser().then((user) => {
-            this.user = user.data;
-            this.currentUser = user.user;
-        });
-    }
-};
-ProfileClientPage.ctorParameters = () => [
-    { type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_2__.FireAuthService }
-];
-ProfileClientPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
-        selector: 'app-profile-client',
-        template: _profile_client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_profile_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], ProfileClientPage);
+  constructor(auth, userCtrl) {
+    this.auth = auth;
+    this.userCtrl = userCtrl;
+    this.loading = false;
+    this.defaultUser = '../../../../assets/profile/ProfileBlank.png';
+  }
 
+  ngOnInit() {
+    this.loadUser();
+  }
+
+  ionViewWillEnter() {
+    this.loadUser();
+  }
+
+  doRefresh(refresh) {
+    var _this = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      _this.auth.getUser().then(user => {
+        _this.user = user.user;
+        _this.currentUser = user.data;
+
+        if (refresh) {
+          refresh.target.complete();
+        }
+      });
+    })();
+  }
+
+  loadUser() {
+    this.loading = true;
+    this.auth.getUser().then(user => {
+      this.user = user.user;
+      this.currentUser = user.data;
+      this.loading = false;
+    });
+  }
+
+};
+
+ProfileClientPage.ctorParameters = () => [{
+  type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__.FireAuthService
+}, {
+  type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__.UserController
+}];
+
+ProfileClientPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+  selector: 'app-profile-client',
+  template: _profile_client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
+  styles: [_profile_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
+})], ProfileClientPage);
 
 
 /***/ }),
@@ -153,7 +181,7 @@ module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n
   \*********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<app-main-header title=\"Mi Perfil\"></app-main-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"currentUser\">\n  <app-user-detail *ngIf=\"!userCtrl.edit && user\" [user]=\"user\" [userData]=\"currentUser\" [editDataForm]=\"true\"></app-user-detail>\n  <app-edit-user *ngIf=\"userCtrl.edit && user\" [user]=\"user\" [userData]=\"currentUser\"></app-edit-user>\n</ion-content>";
+module.exports = "<app-main-header title=\"Mi Perfil\"></app-main-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"currentUser && !loading\">\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  <app-user-detail *ngIf=\"!userCtrl.edit && user\" [user]=\"user\" [userData]=\"currentUser\" [editDataForm]=\"true\"></app-user-detail>\n  <app-edit-user *ngIf=\"userCtrl.edit && user\" [user]=\"user\" [userData]=\"currentUser\"></app-edit-user>\n</ion-content>";
 
 /***/ })
 

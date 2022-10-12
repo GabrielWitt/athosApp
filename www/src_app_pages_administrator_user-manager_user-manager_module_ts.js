@@ -424,8 +424,6 @@ let ProfileDetailComponent = class ProfileDetailComponent {
   }
 
   sendData() {
-    if (this.newImage) {}
-
     if (this.user) {
       this.users.createUser(this.myCurrentUser);
     } else {
@@ -441,10 +439,16 @@ let ProfileDetailComponent = class ProfileDetailComponent {
   }
 
   newReceipts() {
-    console.log('newReceipts');
     this.modal.dismiss({
       action: 'receipt',
       user: this.user
+    });
+  }
+
+  editSpaces() {
+    this.modal.dismiss({
+      action: 'spaces',
+      user: this.currentUser
     });
   }
 
@@ -463,6 +467,9 @@ ProfileDetailComponent.ctorParameters = () => [{
 }];
 
 ProfileDetailComponent.propDecorators = {
+  admin: [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_8__.Input
+  }],
   user: [{
     type: _angular_core__WEBPACK_IMPORTED_MODULE_8__.Input
   }],
@@ -490,17 +497,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "UserListComponent": () => (/* binding */ UserListComponent)
 /* harmony export */ });
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _user_list_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user-list.component.html?ngResource */ 82774);
 /* harmony import */ var _user_list_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user-list.component.scss?ngResource */ 13806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 60124);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
 /* harmony import */ var src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/users.service */ 77464);
 /* harmony import */ var src_app_pages_administrator_user_manager_profile_detail_profile_detail_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/pages/administrator/user-manager/profile-detail/profile-detail.component */ 76526);
 /* harmony import */ var src_app_core_services_modules_billing_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/core/services/modules/billing.service */ 50317);
 /* harmony import */ var src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/utilities/time-handler */ 8123);
+/* harmony import */ var src_app_app_shared_components_spaces_assign_space_assign_space_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/app/shared/components/spaces/assign-space/assign-space.component */ 32575);
+
 
 
 
@@ -592,7 +601,8 @@ let UserListComponent = class UserListComponent {
           component: src_app_pages_administrator_user_manager_profile_detail_profile_detail_component__WEBPACK_IMPORTED_MODULE_5__.ProfileDetailComponent,
           componentProps: {
             user,
-            currentUser: _this2.currentUser
+            currentUser: _this2.currentUser,
+            admin: true
           },
           mode: 'ios',
           presentingElement: _this2.routerOutlet.nativeEl
@@ -604,8 +614,32 @@ let UserListComponent = class UserListComponent {
         if (modalResult.data) {
           if (modalResult.data.action === 'reload') {
             _this2.loadUsers();
+          } else if (modalResult.data.action === 'spaces') {
+            _this2.editSpaces(user);
           }
         }
+      }
+    })();
+  }
+
+  editSpaces(user) {
+    var _this3 = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      console.log(user);
+      const modal = yield _this3.modal.create({
+        component: src_app_app_shared_components_spaces_assign_space_assign_space_component__WEBPACK_IMPORTED_MODULE_8__.AssignSpaceComponent,
+        componentProps: {
+          userData: user
+        },
+        mode: 'ios',
+        presentingElement: _this3.routerOutlet.nativeEl
+      });
+      modal.present();
+      const modalResult = yield modal.onWillDismiss();
+
+      if (modalResult.data) {
+        _this3.loadUsers();
       }
     })();
   }
@@ -625,35 +659,13 @@ let UserListComponent = class UserListComponent {
   }
 
   newUser(user) {
-    var _this3 = this;
-
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      const modal = yield _this3.modal.create({
-        component: src_app_pages_administrator_user_manager_profile_detail_profile_detail_component__WEBPACK_IMPORTED_MODULE_5__.ProfileDetailComponent,
-        componentProps: {
-          user,
-          currentUser: _this3.currentUser
-        },
-        mode: 'ios',
-        presentingElement: _this3.routerOutlet.nativeEl
-      });
-      modal.present();
-      const modalResult = yield modal.onWillDismiss();
-
-      if (modalResult.data) {
-        _this3.loadUsers();
-      }
-    })();
-  }
-
-  newUserModal() {
     var _this4 = this;
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const modal = yield _this4.modal.create({
         component: src_app_pages_administrator_user_manager_profile_detail_profile_detail_component__WEBPACK_IMPORTED_MODULE_5__.ProfileDetailComponent,
         componentProps: {
-          user: null,
+          user,
           currentUser: _this4.currentUser
         },
         mode: 'ios',
@@ -668,16 +680,38 @@ let UserListComponent = class UserListComponent {
     })();
   }
 
+  newUserModal() {
+    var _this5 = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      const modal = yield _this5.modal.create({
+        component: src_app_pages_administrator_user_manager_profile_detail_profile_detail_component__WEBPACK_IMPORTED_MODULE_5__.ProfileDetailComponent,
+        componentProps: {
+          user: null,
+          currentUser: _this5.currentUser
+        },
+        mode: 'ios',
+        presentingElement: _this5.routerOutlet.nativeEl
+      });
+      modal.present();
+      const modalResult = yield modal.onWillDismiss();
+
+      if (modalResult.data) {
+        _this5.loadUsers();
+      }
+    })();
+  }
+
 };
 
 UserListComponent.ctorParameters = () => [{
   type: src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_4__.UsersService
 }, {
-  type: _angular_router__WEBPACK_IMPORTED_MODULE_8__.Router
+  type: _angular_router__WEBPACK_IMPORTED_MODULE_9__.Router
 }, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.ModalController
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.ModalController
 }, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonRouterOutlet
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonRouterOutlet
 }, {
   type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__.UserController
 }, {
@@ -686,7 +720,7 @@ UserListComponent.ctorParameters = () => [{
   type: src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_7__.TimeHandlerModule
 }];
 
-UserListComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.Component)({
+UserListComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_12__.Component)({
   selector: 'app-user-list',
   template: _user_list_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
   styles: [_user_list_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
@@ -880,7 +914,7 @@ module.exports = ".headerUserList {\n  border-bottom: 2px solid rgb(187, 187, 18
   \******************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <ion-row *ngIf=\"!loading\">\n    <ion-col>\n      <div class=\"ion-float-end\">\n        <ion-button (click)=\"prevMonth()\" size=\"small\">{{'< Anterior '}}</ion-button>\n      </div>\n    </ion-col>\n    <ion-col class=\"ion-text-center\">\n      <ion-label class=\"ion-text-uppercase iom-margin-top\">{{selectedMonth | timeFormat: 'MonthDisplay'}}</ion-label>\n    </ion-col>\n    <ion-col class=\"ion-float-start\">\n      <div>\n        <ion-button (click)=\"nextMonth()\" size=\"small\">{{' Siguiente >'}}</ion-button>\n      </div>\n    </ion-col>\n  </ion-row>\n  <app-loading-view *ngIf=\"loading\"></app-loading-view>\n\n<app-not-data-yet-message \n  *ngIf=\"billsList.length == 0 && !loading\"\n  text=\"No tienes recibos aún\" icon=\"alert-circle-outline\"\n></app-not-data-yet-message>\n\n<ion-list *ngIf=\"!loading && billsList.length > 0\">\n  <ion-row class=\"headerUserList\">\n    <ion-col size=\"4\" class=\"ion-text-center\">Residente</ion-col>\n    <ion-col size=\"1\" class=\"ion-text-center\">Items</ion-col>\n    <ion-col size=\"3\" class=\"ion-text-center\">Total</ion-col>\n    <ion-col size=\"4\" class=\"ion-text-center\">Status</ion-col>\n  </ion-row>\n  <app-receipt-item *ngFor=\"let receipt of billsList\" [receipt]=\"receipt\" (click)=\"newReceiptModal(receipt)\"></app-receipt-item>\n</ion-list>\n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" id=\"open-modal\" >\n      <ion-icon size=\"large\" name=\"receipt-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n\n  <ion-modal #modal trigger=\"open-modal\" [initialBreakpoint]=\"0.5\" [breakpoints]=\"[0, 0.5]\">\n    <ng-template>\n      <ion-content class=\" ion-padding\">\n        <ion-list>\n          <ion-list-header>\n            <ion-label>Generador de Recibos</ion-label>\n          </ion-list-header>\n          <p *ngIf=\"receiptProgress > 0\">Generando Recibos...</p>\n          <ion-progress-bar *ngIf=\"receiptProgress > 0\" [value]=\"receiptProgress\"></ion-progress-bar>\n          <p *ngIf=\"receiptProgress === 0\">Se genera una lista de recibos para todos los residentes existentes. Seleccione el mes y año de los recibos que desea crear:</p>\n          <ion-item *ngIf=\"receiptProgress === 0\">\n            <ion-datetime #datetime style=\"margin: 0 auto;\" [value]=\"receiptDate\" (ionChange)=\"changeReceiptDate(datetime.value)\" presentation=\"month-year\"></ion-datetime>\n          </ion-item>\n          <ion-row>\n            <ion-col>\n              <ion-button color=\"danger\" expand=\"block\" (click)=\"modal.dismiss()\" [disabled]=\"receiptProgress > 0\">Cancelar</ion-button>\n            </ion-col>\n            <ion-col>\n              <ion-button expand=\"block\" (click)=\"createListReceipt()\" [disabled]=\"receiptProgress > 0\">Crear Recibos</ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-list>\n      </ion-content>\n    </ng-template>\n  </ion-modal>\n</ion-content>";
+module.exports = "<ion-content>\n  <ion-row *ngIf=\"!loading\">\n    <ion-col>\n      <div class=\"ion-float-end\">\n        <ion-button (click)=\"prevMonth()\" size=\"small\">{{'< Anterior '}}</ion-button>\n      </div>\n    </ion-col>\n    <ion-col class=\"ion-text-center\">\n      <ion-label class=\"ion-text-uppercase iom-margin-top\">{{selectedMonth | timeFormat: 'MonthDisplay'}}</ion-label>\n    </ion-col>\n    <ion-col class=\"ion-float-start\">\n      <div>\n        <ion-button (click)=\"nextMonth()\" size=\"small\">{{' Siguiente >'}}</ion-button>\n      </div>\n    </ion-col>\n  </ion-row>\n  <app-loading-view *ngIf=\"loading\"></app-loading-view>\n\n<app-not-data-yet-message \n  *ngIf=\"billsList.length == 0 && !loading\"\n  text=\"No tienes recibos aún\" icon=\"alert-circle-outline\"\n></app-not-data-yet-message>\n\n<ion-list *ngIf=\"!loading && billsList.length > 0\">\n  <ion-row class=\"headerUserList\">\n    <ion-col size=\"4\" class=\"ion-text-center\">Residente</ion-col>\n    <ion-col size=\"1\" class=\"ion-text-center\">Items</ion-col>\n    <ion-col size=\"3\" class=\"ion-text-center\">Total</ion-col>\n    <ion-col size=\"4\" class=\"ion-text-center\">Status</ion-col>\n  </ion-row>\n  <app-receipt-item *ngFor=\"let receipt of billsList\" [receipt]=\"receipt\" (click)=\"newReceiptModal(receipt)\"></app-receipt-item>\n</ion-list>\n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" id=\"open-modal\" >\n      <ion-icon size=\"large\" name=\"receipt-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n\n  <ion-modal #modal trigger=\"open-modal\" [initialBreakpoint]=\"0.6\" [breakpoints]=\"[0, 0.6]\">\n    <ng-template>\n      <ion-content class=\" ion-padding\">\n        <ion-list>\n          <ion-list-header>\n            <ion-label>Generador de Recibos</ion-label>\n          </ion-list-header>\n          <p *ngIf=\"receiptProgress > 0\">Generando Recibos...</p>\n          <ion-progress-bar *ngIf=\"receiptProgress > 0\" [value]=\"receiptProgress\"></ion-progress-bar>\n          <p *ngIf=\"receiptProgress === 0\">Se genera una lista de recibos para todos los residentes existentes. Seleccione el mes y año de los recibos que desea crear:</p>\n          <ion-item *ngIf=\"receiptProgress === 0\">\n            <ion-datetime #datetime style=\"margin: 0 auto;\" [value]=\"receiptDate\" (ionChange)=\"changeReceiptDate(datetime.value)\" presentation=\"month-year\"></ion-datetime>\n          </ion-item>\n          <ion-row>\n            <ion-col>\n              <ion-button color=\"danger\" expand=\"block\" (click)=\"modal.dismiss()\" [disabled]=\"receiptProgress > 0\">Cancelar</ion-button>\n            </ion-col>\n            <ion-col>\n              <ion-button expand=\"block\" (click)=\"createListReceipt()\" [disabled]=\"receiptProgress > 0\">Crear Recibos</ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-list>\n      </ion-content>\n    </ng-template>\n  </ion-modal>\n</ion-content>";
 
 /***/ }),
 
@@ -890,7 +924,7 @@ module.exports = "<ion-content>\n  <ion-row *ngIf=\"!loading\">\n    <ion-col>\n
   \**********************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons slot=\"start\">\n      <ion-button color=\"primary\" [disabled]=\"loading\" (click)=\"modal.dismiss(false)\">\n        Atrás\n      </ion-button>\n    </ion-buttons>\n    <ion-title class=\"ion-text-uppercase\">{{user?user.name +' '+ user.lastName:'Nuevo Usuario'}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button *ngIf=\"!user || editUserForm\" color=\"success\" (click)=\"sendData()\" \n        [disabled]=\"loading && !myCurrentUser?.type && !myCurrentUser?.CI && !myCurrentUser?.name &&\n        !myCurrentUser?.secondName && !myCurrentUser?.lastName && !myCurrentUser?.birthDate &&\n        !myCurrentUser?.email && !myCurrentUser?.phonePersonal\n        \">\n          Enviar\n      </ion-button>\n      <ion-button *ngIf=\"user && currentUser?.type === 'administrador' && !editUserForm\" color=\"dark\" (click)=\"editUser()\">\n          Editar\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"loading\">\n  <app-loading-view></app-loading-view>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && user && !editUserForm\">\n  <app-user-detail [user]=\"null\" [userData]=\"user\" [editDataForm]=\"false\"></app-user-detail>\n</ion-content>\n\n<ion-content class=\"ion-padding\" *ngIf=\"!loading && (!user || editUserForm)\">\n  <ion-list>\n    <ion-item *ngIf=\"!user\">\n      <ion-thumbnail size=\"large\" *ngIf=\"!newImage\" class=\"profileCircle\"(click)=\"addPhoto()\">\n        <img class=\"imageProfile\" src=\"{{defaultUser}}\">\n        <div class=\"cameraButton\" *ngIf=\"user\">\n          <ion-icon name=\"camera-outline\" color=\"light\"></ion-icon>\n        </div>\n      </ion-thumbnail>\n      <ion-thumbnail size=\"large\" *ngIf=\"newImage\" class=\"profileCircle\" (click)=\"addPhoto()\">\n        <img src=\"{{newImage.webPath}}\">\n        <ion-spinner class=\"uploadingImage\" size=\"large\" name=\"circles\"></ion-spinner>\n        <ion-progress-bar class=\"loadingImage\" color=\"primary\" [value]=\"progress\"></ion-progress-bar>\n      </ion-thumbnail>\n    </ion-item>\n    <ion-item *ngIf=\"user\">\n      <ion-thumbnail *ngIf=\"!newImage\" slot=\"start\" class=\"profileCircle\">\n        <img class=\"imageProfile\" src=\"{{user?.photo ? user.photo : defaultUser}}\">\n      </ion-thumbnail>\n      <ion-thumbnail *ngIf=\"newImage\" slot=\"start\" class=\"profileCircle\">\n        <img src=\"{{newImage.webPath}}\">\n        <ion-spinner class=\"uploadingImage\" size=\"large\" name=\"circles\"></ion-spinner>\n        <ion-progress-bar class=\"loadingImage\" color=\"primary\" [value]=\"progress\"></ion-progress-bar>\n      </ion-thumbnail>\n      <ion-label class=\"ion-text-wrap\">\n        <ion-text color=\"dark\">\n          <ion-card-title>{{myCurrentUser ? myCurrentUser.name + ' ' + myCurrentUser.lastName : 'Cargando'}} <ion-spinner *ngIf=\"!myCurrentUser\" name=\"dots\"></ion-spinner></ion-card-title>\n        </ion-text>\n        <p>{{user?.email ? user?.email : '_'}}</p>\n        <ion-text color=\"primary\">\n          <p class=\"ion-text-capitalize\">Tipo: {{myCurrentUser?.type ? myCurrentUser?.type : '_'}}</p>\n        </ion-text>\n      </ion-label>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>Tipo de Usuario</ion-label>\n      <ion-select class=\"ion-text-capitalize\" mode='ios' [value]=\"myCurrentUser.type\" (ionChange)=\"typeHandler($event)\">\n        <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let type of typeList\" [value]=\"type\"> {{type}}</ion-select-option>\n      </ion-select>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Identificación:</ion-label>\n      <ion-input class=\"ion-text-center\" placeholder=\"Cédula o Pasaporte\" type=\"number\" maxlength=\"10\" (ionChange)=\"CIListener($event)\" [value]=\"myCurrentUser.CI\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Email:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" (ionChange)=\"emailListener($event)\" [value]=\"myCurrentUser.email\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Nombre:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Primer Nombre\" (ionChange)=\"nameListener($event)\" [value]=\"myCurrentUser.name\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>2º Nombre:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"\" (ionChange)=\"secondNameListener($event)\" [value]=\"myCurrentUser.secondName\"></ion-input>\n    </ion-item>\n    <div class=\"error-message\" *ngIf=\"!myCurrentUser.secondName\">\n      <ion-text class=\"ion-padding-start\" color=\"danger\"> \n        <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  Segundo Nombre Requerido\n      </ion-text>\n    </div>\n  \n    <ion-item>\n      <ion-label>Apellido:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Primer Apellido\" (ionChange)=\"lastNameListener($event)\" [value]=\"myCurrentUser.lastName\"></ion-input>\n    </ion-item>\n    <div class=\"error-message\" *ngIf=\"!myCurrentUser.lastName\">\n      <ion-text class=\"ion-padding-start\" color=\"danger\"> \n        <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  Nombre Requerido\n      </ion-text>\n    </div>\n  \n    <ion-item>\n      <ion-label>2º Apellido:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"(Opcional)\" (ionChange)=\"secondLastNameListener($event)\" [value]=\"myCurrentUser.secondLastName\"></ion-input>\n    </ion-item>\n  \n    <ion-item (click)=\"showCalendar1()\">\n      <ion-label>Fecha de Nacimiento: </ion-label>\n      <ion-label class=\"ion-text-center\"> \n        <ion-text *ngIf=\"myCurrentUser.birthDate\" style=\"font-size: inherit; float: inherit;\">{{myCurrentUser.birthDate | timeFormat: 'DD/MM/YYYY'}}</ion-text>\n        <ion-text *ngIf=\"!myCurrentUser.birthDate\" style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;\">(Selección fecha)</ion-text>\n      </ion-label>\n      <ion-button class=\"downArrow\" slot=\"end\" size=\"small\"><ion-icon style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit;\" name=\"caret-down-outline\"></ion-icon></ion-button>\n    </ion-item>\n    <ion-row *ngIf=\"showCalendar\">\n      <ion-col>\n        <ion-item>\n          <ion-datetime #datetime style=\"margin: 0 auto;\" presentation=\"date\" \n                [(ngModel)]=\"myCurrentUser.birthDate\" (ionChange)=\"changeScheduleTime(datetime.value)\">\n            <ion-buttons slot=\"buttons\">\n              <ion-button color=\"danger\" (click)=\"showCalendar1()\">Cancelar</ion-button>\n              <ion-button color=\"success\" (click)=\"datetime.confirm()\">OK</ion-button>\n            </ion-buttons>\n          </ion-datetime>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  \n    <ion-item>\n      <ion-label>Teléfono Principal:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"number\" placeholder=\"Para Emergencias\" (ionChange)=\"phonePersonalListener($event)\" [value]=\"myCurrentUser.phonePersonal\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Teléfono Secundario:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Fijo o Trabajo\" (ionChange)=\"phoneHomeListener($event)\" [value]=\"myCurrentUser.phoneHome\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Teléfono Contacto:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"En caso de que no esté disponible\" (ionChange)=\"phoneWorkListener($event)\" [value]=\"myCurrentUser.phoneWork\"></ion-input>\n    </ion-item>\n  \n  </ion-list>\n</ion-content>";
+module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons slot=\"start\">\n      <ion-button color=\"primary\" [disabled]=\"loading\" (click)=\"modal.dismiss(false)\">\n        Atrás\n      </ion-button>\n    </ion-buttons>\n    <ion-title class=\"ion-text-uppercase\">{{user?user.name +' '+ user.lastName:'Nuevo Usuario'}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button *ngIf=\"!user || editUserForm\" color=\"success\" (click)=\"sendData()\" \n        [disabled]=\"loading && !myCurrentUser?.type && !myCurrentUser?.CI && !myCurrentUser?.name &&\n        !myCurrentUser?.secondName && !myCurrentUser?.lastName && !myCurrentUser?.birthDate &&\n        !myCurrentUser?.email && !myCurrentUser?.phonePersonal\n        \">\n          Enviar\n      </ion-button>\n      <ion-button *ngIf=\"user && currentUser?.type === 'administrador' && !editUserForm\" color=\"dark\" (click)=\"editUser()\">\n          Editar\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"loading\">\n  <app-loading-view></app-loading-view>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && user && !editUserForm\">\n  <app-user-detail [user]=\"null\" [userData]=\"user\" [editDataForm]=\"false\"></app-user-detail>\n</ion-content>\n\n<ion-content class=\"ion-padding\" *ngIf=\"!loading && (!user || editUserForm)\">\n  <ion-list>\n    <ion-item *ngIf=\"!user\">\n      <ion-thumbnail size=\"large\" *ngIf=\"!newImage\" class=\"profileCircle\"(click)=\"addPhoto()\">\n        <img class=\"imageProfile\" src=\"{{defaultUser}}\">\n        <div class=\"cameraButton\" *ngIf=\"user\">\n          <ion-icon name=\"camera-outline\" color=\"light\"></ion-icon>\n        </div>\n      </ion-thumbnail>\n      <ion-thumbnail size=\"large\" *ngIf=\"newImage\" class=\"profileCircle\" (click)=\"addPhoto()\">\n        <img src=\"{{newImage.webPath}}\">\n        <ion-spinner class=\"uploadingImage\" size=\"large\" name=\"circles\"></ion-spinner>\n        <ion-progress-bar class=\"loadingImage\" color=\"primary\" [value]=\"progress\"></ion-progress-bar>\n      </ion-thumbnail>\n    </ion-item>\n    <ion-item *ngIf=\"user\">\n      <ion-thumbnail *ngIf=\"!newImage\" slot=\"start\" class=\"profileCircle\">\n        <img class=\"imageProfile\" src=\"{{user?.photo ? user.photo : defaultUser}}\">\n      </ion-thumbnail>\n      <ion-thumbnail *ngIf=\"newImage\" slot=\"start\" class=\"profileCircle\">\n        <img src=\"{{newImage.webPath}}\">\n        <ion-spinner class=\"uploadingImage\" size=\"large\" name=\"circles\"></ion-spinner>\n        <ion-progress-bar class=\"loadingImage\" color=\"primary\" [value]=\"progress\"></ion-progress-bar>\n      </ion-thumbnail>\n      <ion-label class=\"ion-text-wrap\">\n        <ion-text color=\"dark\">\n          <ion-card-title>{{myCurrentUser ? myCurrentUser.name + ' ' + myCurrentUser.lastName : 'Cargando'}} <ion-spinner *ngIf=\"!myCurrentUser\" name=\"dots\"></ion-spinner></ion-card-title>\n        </ion-text>\n        <p>{{user?.email ? user?.email : '_'}}</p>\n        <ion-text color=\"primary\">\n          <p class=\"ion-text-capitalize\">Tipo: {{myCurrentUser?.type ? myCurrentUser?.type : '_'}}</p>\n        </ion-text>\n      </ion-label>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>Tipo de Usuario</ion-label>\n      <ion-select class=\"ion-text-capitalize\" mode='ios' [value]=\"myCurrentUser.type\" (ionChange)=\"typeHandler($event)\">\n        <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let type of typeList\" [value]=\"type\"> {{type}}</ion-select-option>\n      </ion-select>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Identificación:</ion-label>\n      <ion-input class=\"ion-text-center\" placeholder=\"Cédula o Pasaporte\" type=\"number\" maxlength=\"10\" (ionChange)=\"CIListener($event)\" [value]=\"myCurrentUser.CI\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Email:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" (ionChange)=\"emailListener($event)\" [value]=\"myCurrentUser.email\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Nombre:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Primer Nombre\" (ionChange)=\"nameListener($event)\" [value]=\"myCurrentUser.name\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>2º Nombre:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"\" (ionChange)=\"secondNameListener($event)\" [value]=\"myCurrentUser.secondName\"></ion-input>\n    </ion-item>\n    <div class=\"error-message\" *ngIf=\"!myCurrentUser.secondName\">\n      <ion-text class=\"ion-padding-start\" color=\"danger\"> \n        <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  Segundo Nombre Requerido\n      </ion-text>\n    </div>\n  \n    <ion-item>\n      <ion-label>Apellido:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Primer Apellido\" (ionChange)=\"lastNameListener($event)\" [value]=\"myCurrentUser.lastName\"></ion-input>\n    </ion-item>\n    <div class=\"error-message\" *ngIf=\"!myCurrentUser.lastName\">\n      <ion-text class=\"ion-padding-start\" color=\"danger\"> \n        <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  Nombre Requerido\n      </ion-text>\n    </div>\n  \n    <ion-item>\n      <ion-label>2º Apellido:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"(Opcional)\" (ionChange)=\"secondLastNameListener($event)\" [value]=\"myCurrentUser.secondLastName\"></ion-input>\n    </ion-item>\n  \n    <ion-item (click)=\"showCalendar1()\">\n      <ion-label>Fecha de Nacimiento: </ion-label>\n      <ion-label class=\"ion-text-center\"> \n        <ion-text *ngIf=\"myCurrentUser.birthDate\" style=\"font-size: inherit; float: inherit;\">{{myCurrentUser.birthDate | timeFormat: 'DD/MM/YYYY'}}</ion-text>\n        <ion-text *ngIf=\"!myCurrentUser.birthDate\" style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;\">(Selección fecha)</ion-text>\n      </ion-label>\n      <ion-button class=\"downArrow\" slot=\"end\" size=\"small\"><ion-icon style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit;\" name=\"caret-down-outline\"></ion-icon></ion-button>\n    </ion-item>\n    <ion-row *ngIf=\"showCalendar\">\n      <ion-col>\n        <ion-item>\n          <ion-datetime #datetime style=\"margin: 0 auto;\" presentation=\"date\" \n                [(ngModel)]=\"myCurrentUser.birthDate\" (ionChange)=\"changeScheduleTime(datetime.value)\">\n            <ion-buttons slot=\"buttons\">\n              <ion-button color=\"danger\" (click)=\"showCalendar1()\">Cancelar</ion-button>\n              <ion-button color=\"success\" (click)=\"datetime.confirm()\">OK</ion-button>\n            </ion-buttons>\n          </ion-datetime>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  \n    <ion-item>\n      <ion-label>Teléfono Principal:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"number\" placeholder=\"Para Emergencias\" (ionChange)=\"phonePersonalListener($event)\" [value]=\"myCurrentUser.phonePersonal\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Teléfono Secundario:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Fijo o Trabajo\" (ionChange)=\"phoneHomeListener($event)\" [value]=\"myCurrentUser.phoneHome\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Teléfono Contacto:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"En caso de que no esté disponible\" (ionChange)=\"phoneWorkListener($event)\" [value]=\"myCurrentUser.phoneWork\"></ion-input>\n    </ion-item>\n  \n  </ion-list>\n</ion-content>\n<ion-footer *ngIf=\"admin && !editUserForm\">\n  <ion-toolbar>\n    <ion-button color=\"tertiary\" expand=\"full\" (click)=\"editSpaces()\">Editar Espacios</ion-button>\n  </ion-toolbar>\n</ion-footer>";
 
 /***/ }),
 

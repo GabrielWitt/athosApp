@@ -95,15 +95,17 @@ export class BillingService {
           createdBy: await this.utility.createShortUser(currentUser)
         }
         user.leases.forEach(lease => {
-          const subtotal = parseFloat(lease.monthlyCost.toFixed(2));
-          const leaseItem:ItemDetail = {
-            itemDescription: lease.spaceLease.description,
-            numberItems: '1',
-            unitValue: ''+lease.monthlyCost.toFixed(2),
-            totalValue: ''+lease.monthlyCost.toFixed(2)
+          if(lease.status === 'active'){
+            const subtotal = parseFloat(lease.monthlyCost.toFixed(2));
+            const leaseItem:ItemDetail = {
+              itemDescription: lease.spaceLease.description,
+              numberItems: '1',
+              unitValue: ''+lease.monthlyCost.toFixed(2),
+              totalValue: ''+lease.monthlyCost.toFixed(2)
+            }
+            myReceipt.itemDetail.push(leaseItem);
+            myReceipt.total = myReceipt.total + subtotal
           }
-          myReceipt.itemDetail.push(leaseItem);
-          myReceipt.total = myReceipt.total + subtotal
         })
         await this.createReceipt(myReceipt);
         resolve(myReceipt)

@@ -30,18 +30,20 @@ export class FireAuthService {
     this.session = 'session'; 
     this.userInfo = 'userInfo';
     this.credentials = 'credentials';
-    this.auth.authState.subscribe(async (user) => {
-      if (user) {
+    this.auth.authState.subscribe(async (userAuth:any) => {
+      if (userAuth) {
+        const user = userAuth.uid ? userAuth : userAuth.user;
         await this.store.setData(this.session, user);
         this.readUserForm(user.uid).then(async (data:UserFormData) => {
           if(!this.user){
+            console.log(user)
             this.push.registerPushService().then(async token => {
               let userData: UserFormData = {
                 ...data,
                 uid: user.uid, 
                 email: user.email, 
                 photo: user.photoURL,
-                type: data.type
+                type: user.displayName
               }
               if(token){userData.token = token;}
               await this.uploadUserForm(userData.uid, userData);
@@ -125,8 +127,7 @@ export class FireAuthService {
       this.auth.signInWithEmailAndPassword(email, password)
       .then(async (userCredential) => {
         this.store.setData(this.credentials = 'credentials', {email, password});
-        console.log('information sent')
-        resolve('done');
+        resolve(userCredential);
       })
       .catch((error) => { reject(this.error.handle(error)); });
     });
@@ -141,8 +142,8 @@ export class FireAuthService {
         const userDataForm: UserFormData = await this.FS.checkEmail(email)
         const updateUser = {...userDataForm,uid:user.uid}
         await this.updateUser(userDataForm.type, userDataForm.photo);
+        await this.FS.deleteDocument('users',userDataForm.uid);
         this.uploadUserForm( user.uid, updateUser).then(async done => {
-          await this.FS.deleteDocument('users',userDataForm.uid)
           resolve(user);
         }).catch((error) => { reject(this.error.handle(error)); });
       })
@@ -171,12 +172,12 @@ export class FireAuthService {
               resolve(response);
             })
             .catch((error: any) => {
-              console.error(`Unable to recognize fingerprint or faceID: ${error.error}`);
+              console.error(`No se reconoce huella or faceID: ${error.error}`);
               reject(this.error.handle(error));
             });
           }
         }).catch(error => {
-          console.warn('error: No fingerprint or faceId available', error );
+          console.warn('error: huella o faceId no está disponible', error );
           reject(this.error.handle(error));
         });
       }else{
@@ -218,23 +219,29 @@ export class FireAuthService {
     });
   }
 
-  async reCheckUser(){
-    try {
-      this.signOut().then(() => {
+  reCheckUser(){
+    return new Promise(async (Resolve,Reject) => {
+      try {
         this.store.readFile(this.credentials).then(async data => {
-          if(data.email && data.password){
-            this.login(data.email, data.password);
-          } else {
-            await this.cleanSession();
-            this.router.navigateByUrl('general'); 
-          }
+          this.auth.signOut().then(async () => {
+            setTimeout(() => {
+              if(data.email && data.password){
+                this.login(data.email, data.password).then(user => {
+                  console.log(user)
+                  Resolve(user);
+                });
+              } else {
+                console.log('no user')
+                Resolve(null);
+              }
+            }, 1500);
+          })
         });
-      })
-    } catch (error) {
-      console.log(error);
-      await this.cleanSession();
-      this.router.navigateByUrl('general'); 
-    }
+      } catch (error) {
+        console.log(error);
+        Reject(error);
+      }
+    })
   }
 
   forgotPassword(email: string) {

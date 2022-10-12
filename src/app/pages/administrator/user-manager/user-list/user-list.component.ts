@@ -6,9 +6,9 @@ import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { UserController } from 'src/app/core/controller/user.controller';
 import { UsersService } from 'src/app/core/services/modules/users.service';
 import { ProfileDetailComponent } from 'src/app/pages/administrator/user-manager/profile-detail/profile-detail.component';
-import { NewReceiptComponent } from 'src/app/shared/components/bills/new-receipt/new-receipt.component';
 import { BillingService } from 'src/app/core/services/modules/billing.service';
 import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
+import { AssignSpaceComponent } from 'src/app/app/shared/components/spaces/assign-space/assign-space.component';
 
 @Component({
   selector: 'app-user-list',
@@ -70,7 +70,7 @@ export class UserListComponent implements OnInit {
     } else {
       const modal = await this.modal.create({
         component: ProfileDetailComponent,
-        componentProps: {user, currentUser:this.currentUser},
+        componentProps: {user, currentUser:this.currentUser, admin: true},
         mode: 'ios',
         presentingElement: this.routerOutlet.nativeEl
       });
@@ -79,8 +79,22 @@ export class UserListComponent implements OnInit {
       console.log(modalResult.data)
       if(modalResult.data){ 
         if(modalResult.data.action === 'reload'){this.loadUsers();}
+        else if(modalResult.data.action === 'spaces'){this.editSpaces(user);}
        }
     }
+  }
+
+  async editSpaces(user){
+    console.log(user)
+    const modal = await this.modal.create({
+      component: AssignSpaceComponent,
+      componentProps: {userData: user},
+      mode: 'ios',
+      presentingElement: this.routerOutlet.nativeEl
+    });
+    modal.present();
+    const modalResult = await modal.onWillDismiss();
+    if(modalResult.data){ this.loadUsers(); }
   }
 
   doRefresh(refresh?){

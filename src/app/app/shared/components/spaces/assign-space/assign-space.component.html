@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button color="primary" *ngIf="!edit && !alreadyLease" [disabled]="loading" (click)="modal.dismiss(false)">
+        Atrás
+      </ion-button>
+      <ion-button color="danger" *ngIf="edit || alreadyLease" [disabled]="loading" (click)="editSpaces()">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">{{userData ? userData.name +' '+ userData.lastName:'Nuevo Usuario'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="edit && !loading" color="success" (click)="sendData()" 
+        [disabled]="loading || selectedSpace?.monthlyCost === 0">
+          Enviar
+      </ion-button>
+      <ion-button *ngIf="!edit && !loading" color="dark" (click)="editSpaces()">
+          Editar/Agregar
+      </ion-button>
+      <ion-button color="light" *ngIf="loading">
+        <ion-spinner name="lines-small"></ion-spinner>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-thumbnail slot="start" class="profileCircle">
+        <img class="imageProfile" src="{{userData?.photo ? userData?.photo : defaultUser}}">
+      </ion-thumbnail>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="dark">
+          <ion-card-title>{{userData ? userData.name + ' ' + userData.lastName : 'Cargando'}} <ion-spinner *ngIf="!userData" name="dots"></ion-spinner></ion-card-title>
+        </ion-text>
+        <p>{{userData?.email ? userData.email : '_'}}</p>
+        <ion-text color="primary">
+          <p class="ion-text-capitalize">Tipo: {{userData?.type ? userData.type : '_'}}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="edit">
+      <ion-label>Espacio: </ion-label>
+      <ion-select ngModel placeholder="Selecione el espacio a asignar"
+        (ionChange)="newSpace($event)" ngDefaultControl>
+        <ion-select-option class="ion-text-capitalize" *ngFor="let space of spacesList" value="{{space.uid}}">
+          {{space.type}} {{space.unitNumber}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid *ngIf="selectedSpace">
+    <ion-card>
+      <ion-row>
+        <ion-col size="3">
+          <ion-thumbnail class="spaceView">
+            <ion-img [src]="selectedSpace.spaceLease.photo ? selectedSpace.spaceLease.photo : defaultSpace"></ion-img>
+          </ion-thumbnail>
+        </ion-col>
+        <ion-col size="9">
+          <ion-item>
+            <ion-label>
+              <ion-text class="ion-text-capitalize">
+                <h2>{{selectedSpace.spaceLease.type}} {{selectedSpace.spaceLease.unitNumber}} </h2>
+                <h3>Piso: {{selectedSpace.spaceLease.floor}}</h3>
+              </ion-text>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <ion-item>
+      <ion-label>Costo Mensual:</ion-label>
+      <ion-input class="ion-text-center" type="number" placeholder="(opcional)" [value]="selectedSpace.monthlyCost" (ionChange)="costListener($event)"></ion-input>
+    </ion-item>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="selectedSpace?.monthlyCost === 0"> 
+      <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon> Agregue el valor de Alicuota
+    </ion-text>
+    <ion-item (click)="showCalendar1()">
+      <ion-label>Contrato Inicio: </ion-label>
+      <ion-label class="ion-text-center"> 
+        <ion-text *ngIf="selectedSpace.leaseStart" style="font-size: inherit; float: inherit;">{{selectedSpace.leaseStart | timeFormat: 'DD/MM/YYYY'}}</ion-text>
+        <ion-text *ngIf="!selectedSpace.leaseStart" style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;">(Selección fecha)</ion-text>
+      </ion-label>
+      <ion-button class="downArrow" slot="end" size="small"><ion-icon style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit;" name="caret-down-outline"></ion-icon></ion-button>
+    </ion-item>
+    <ion-row *ngIf="showCalendar">
+      <ion-col>
+        <ion-item>
+          <ion-datetime #datetime style="margin: 0 auto;" (ionChange)="changeLeaseStartTime(datetime.value)" presentation="date" 
+                [(ngModel)]="selectedSpace.leaseStart" ngDefaultControl>
+            <ion-buttons slot="buttons">
+              <ion-button color="danger" (click)="showCalendar1()">Cancelar</ion-button>
+              <ion-button color="success" (click)="datetime.confirm()">OK</ion-button>
+            </ion-buttons>
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+    
+  <app-not-data-yet-message 
+  *ngIf="(!userData.leases || userData.leases?.length === 0) && !loading && !edit && !selectedSpace"
+  text="No tiene espacios asignados aún" icon="alert-circle-outline"
+  ></app-not-data-yet-message>
+  
+  <div *ngIf="userData.leases?.length > 0 && !edit && !selectedSpace">
+    <ion-list-header>
+      <ion-label>Espacios Asignados:</ion-label>
+    </ion-list-header>
+    <app-item-space *ngFor="let space of userData.leases" [space]="space.spaceLease" [profileView]="true" (click)="selectSpace(space)">
+    </app-item-space>
+  </div>
+</ion-content>
+<ion-footer *ngIf="alreadyLease">
+  <ion-toolbar>
+    <ion-button color="danger" expand="full" (click)="closeLease()">Terminar Asignación</ion-button>
+  </ion-toolbar>
+</ion-footer>

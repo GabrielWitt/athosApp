@@ -326,9 +326,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
-/* harmony import */ var src_app_shared_components_services_new_service_new_service_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/components/services/new-service/new-service.component */ 36048);
+/* harmony import */ var src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/utilities/verificationFunc */ 94264);
 /* harmony import */ var src_app_core_services_modules_maintenance_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/core/services/modules/maintenance.service */ 82227);
-/* harmony import */ var src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/utilities/verificationFunc */ 94264);
+/* harmony import */ var src_app_shared_components_services_new_service_new_service_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/services/new-service/new-service.component */ 36048);
 
 
 
@@ -462,7 +462,7 @@ let ServicesAdminComponent = class ServicesAdminComponent {
 
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const modalService = yield _this3.modal.create({
-        component: src_app_shared_components_services_new_service_new_service_component__WEBPACK_IMPORTED_MODULE_4__.NewServiceComponent,
+        component: src_app_shared_components_services_new_service_new_service_component__WEBPACK_IMPORTED_MODULE_6__.NewServiceComponent,
         componentProps: {
           service,
           user: _this3.user
@@ -488,7 +488,7 @@ ServicesAdminComponent.ctorParameters = () => [{
 }, {
   type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonRouterOutlet
 }, {
-  type: src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_6__.VerificationFuncService
+  type: src_app_shared_utilities_verificationFunc__WEBPACK_IMPORTED_MODULE_4__.VerificationFuncService
 }];
 
 ServicesAdminComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({

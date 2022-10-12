@@ -4,11 +4,13 @@
   <app-main-header *ngIf="selectedTab === 'calendar'" title="Agenda"></app-main-header>
 </div>
 <ion-toolbar>
-  <ion-segment (ionChange)="segmentChanged($event)" value="calendar">
+  <ion-segment (ionChange)="segmentChanged($event)" value="request">
+  <!-- 
     <ion-segment-button value="calendar" layout="icon-start">
       <ion-label *ngIf="userCtrl.platform === 'web'">Agenda</ion-label>
       <ion-icon name="calendar-outline"></ion-icon>
     </ion-segment-button>
+  -->
     <ion-segment-button value="request" layout="icon-start">
       <ion-label *ngIf="userCtrl.platform === 'web'">Tíquetes</ion-label>
       <ion-icon name="book-outline"></ion-icon>

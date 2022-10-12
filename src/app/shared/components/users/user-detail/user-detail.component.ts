@@ -36,6 +36,7 @@ export class UserDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.user)
     console.log(this.userData)
     if(this.userData.leases){this.userData.leases.sort(this.utility.sortByType);}
   }

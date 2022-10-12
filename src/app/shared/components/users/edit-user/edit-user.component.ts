@@ -42,6 +42,8 @@ export class EditUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {  
+    console.log(this.user)
+    console.log(this.userData)
     this.myCurrentUser = this.userData;
    }
 

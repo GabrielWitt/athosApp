@@ -7,7 +7,7 @@ import { UserController } from 'src/app/core/controller/user.controller';
   styleUrls: ['./services-staff.page.scss'],
 })
 export class ServicesStaffPage implements OnInit {
-  selectedTab = 'calendar'
+  selectedTab = 'request'
 
   constructor(public userCtrl: UserController) { }
 

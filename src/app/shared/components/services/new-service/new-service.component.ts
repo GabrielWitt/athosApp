@@ -156,15 +156,16 @@ export class NewServiceComponent implements OnInit {
     })
   }
 
-  createService(){
+  async createService(){
     try {
       this.loading = true;
       this.myService.weekdays = [this.dom,this.lun,this.mar,this.mie,this.jue,this.vie,this.sab];
       this.myService.communityUID = this.communitiesList[0].uid;
       if(this.service){
-        this.services.UpdateService(this.myService);
+        await this.services.UpdateService(this.myService);
       } else {
-        this.services.createService(this.myService);
+        console.log(this.myService)
+        await this.services.createService(this.myService);
       }
       this.alerts.showAlert( 'ESPACIOS', 
       this.service? 'Datos de '+ this.service.name + ' actualizado' : 'Nuevo '+this.myService.maintenance?'mantenimiento':'servicio'+' agregado', 'OK');

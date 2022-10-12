@@ -36,6 +36,7 @@ export interface Space {
     photo?: string;
     createdAt?: string;
     lease?: Lease
+    leaseHistory?: Lease[];
 }
 
 export interface RentSpace {
@@ -64,6 +65,7 @@ export interface Lease {
     leaseStart: string;
     leaseEnd: string;
     monthlyCost: number;
+    status?: 'active' | 'unactive'
 }
 
 export const SpaceTypeArray = [

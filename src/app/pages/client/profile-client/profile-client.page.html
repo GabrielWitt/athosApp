@@ -1,6 +1,9 @@
 <app-main-header title="Mi Perfil"></app-main-header>
 
-<ion-content class="ion-padding" *ngIf="currentUser">
+<ion-content class="ion-padding" *ngIf="currentUser && !loading">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
+    <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
+  </ion-refresher>
   <app-user-detail *ngIf="!userCtrl.edit && user" [user]="user" [userData]="currentUser" [editDataForm]="true"></app-user-detail>
   <app-edit-user *ngIf="userCtrl.edit && user" [user]="user" [userData]="currentUser"></app-edit-user>
 </ion-content>

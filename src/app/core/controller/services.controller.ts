@@ -32,7 +32,7 @@ export class ServicesController {
                         }
                     }
                 })
-                resolve({services: this.serviceList, maintenances: this.maintenanceList})
+                resolve({services: this.serviceList, maintenances: this.maintenanceList, all: list})
             } catch (error) {
                 console.log(error)
                 reject('error')

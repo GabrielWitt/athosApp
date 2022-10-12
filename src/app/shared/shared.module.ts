@@ -47,6 +47,7 @@ import { SignModalComponent } from './components/view/sign-modal/sign-modal.comp
 import { ReservationItemComponent } from './components/calendar/reservation-item/reservation-item.component';
 import { CalendarServiceItemComponent } from './components/calendar/calendar-service-item/calendar-service-item.component';
 import { SolveTaskComponent } from './components/services/solve-task/solve-task.component';
+import { AssignSpaceComponent } from '../app/shared/components/spaces/assign-space/assign-space.component';
 
 const components = [
   BigButtonComponent,
@@ -82,6 +83,7 @@ const components = [
   NewSpaceComponent,
   PickRentSpaceComponent,
   NewReservationComponent,
+  AssignSpaceComponent,
   //Receipts
   NewReceiptComponent,
   ReceiptDetailComponent,

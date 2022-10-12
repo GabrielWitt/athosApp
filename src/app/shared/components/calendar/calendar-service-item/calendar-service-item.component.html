@@ -1,3 +1,18 @@
-<ion-item>
-  {{item.startDate}}
+<ion-item detail>
+  <ion-thumbnail slot="start">
+    <img [src]="item.service.photo">
+  </ion-thumbnail>
+  <ion-label class="ion-text-wrap">
+    <ion-text color="dark">
+      <h2 class="ion-text-capitalize"> {{item.service.name}} ({{item.service.unitNumber}}) </h2>
+    </ion-text>
+    <app-status-request [status]="item.status"></app-status-request>
+  </ion-label>
+  <ion-note slot="end" style="width: 27vw;">
+    <ion-text color="medium" class="ion-text-capitalize" style="font-size: 11pt;">
+      <!-- <ion-text color="tertiary" *ngIf="item.employeeUID === currentUser.uid">Designado</ion-text> -->
+      <ion-text color="dark"><p *ngIf="item.scheduleDate">{{item.scheduleDate | timeFormat: 'fullDateUTC'}} <ion-icon size="small" color="tertiary" name="calendar-number-outline"></ion-icon></p></ion-text>
+      <p *ngIf="!item.scheduleDate && item.createdAt ">{{item.createdAt | timeFormat: 'shortDateUTC'}} <ion-icon size="small" color="secondary" name="paper-plane-outline"></ion-icon></p>
+    </ion-text>
+  </ion-note>
 </ion-item>

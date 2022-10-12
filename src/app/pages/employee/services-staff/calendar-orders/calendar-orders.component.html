@@ -19,5 +19,5 @@
   <ion-list *ngIf="calendarItems.length > 0 && !loading">
     <app-calendar-service-item *ngFor="let item of calendarItems" [item]="item"></app-calendar-service-item>
   </ion-list>
-  
+  <div id='calendar'></div>
 </ion-content>

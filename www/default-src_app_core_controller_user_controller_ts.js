@@ -49,7 +49,8 @@ let ServicesController = class ServicesController {
           });
           resolve({
             services: _this.serviceList,
-            maintenances: _this.maintenanceList
+            maintenances: _this.maintenanceList,
+            all: list
           });
         } catch (error) {
           console.log(error);
@@ -876,20 +877,23 @@ let FireAuthService = class FireAuthService {
     this.userInfo = 'userInfo';
     this.credentials = 'credentials';
     this.auth.authState.subscribe( /*#__PURE__*/function () {
-      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (user) {
-        if (user) {
+      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (userAuth) {
+        if (userAuth) {
+          const user = userAuth.uid ? userAuth : userAuth.user;
           yield _this.store.setData(_this.session, user);
 
           _this.readUserForm(user.uid).then( /*#__PURE__*/function () {
             var _ref2 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (data) {
               if (!_this.user) {
+                console.log(user);
+
                 _this.push.registerPushService().then( /*#__PURE__*/function () {
                   var _ref3 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (token) {
                     let userData = { ...data,
                       uid: user.uid,
                       email: user.email,
                       photo: user.photoURL,
-                      type: data.type
+                      type: user.displayName
                     };
 
                     if (token) {
@@ -1033,8 +1037,7 @@ let FireAuthService = class FireAuthService {
             password
           });
 
-          console.log('information sent');
-          resolve('done');
+          resolve(userCredential);
         });
 
         return function (_x4) {
@@ -1059,10 +1062,10 @@ let FireAuthService = class FireAuthService {
             uid: user.uid
           };
           yield _this5.updateUser(userDataForm.type, userDataForm.photo);
+          yield _this5.FS.deleteDocument('users', userDataForm.uid);
 
           _this5.uploadUserForm(user.uid, updateUser).then( /*#__PURE__*/function () {
             var _ref6 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (done) {
-              yield _this5.FS.deleteDocument('users', userDataForm.uid);
               resolve(user);
             });
 
@@ -1113,12 +1116,12 @@ let FireAuthService = class FireAuthService {
               _this7.faio.show(`Confirmar para continuar.`).then(response => {
                 resolve(response);
               }).catch(error => {
-                console.error(`Unable to recognize fingerprint or faceID: ${error.error}`);
+                console.error(`No se reconoce huella or faceID: ${error.error}`);
                 reject(_this7.error.handle(error));
               });
             }
           }).catch(error => {
-            console.warn('error: No fingerprint or faceId available', error);
+            console.warn('error: huella o faceId no está disponible', error);
             reject(_this7.error.handle(error));
           });
         } else {
@@ -1197,32 +1200,40 @@ let FireAuthService = class FireAuthService {
   reCheckUser() {
     var _this9 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      try {
-        _this9.signOut().then(() => {
+    return new Promise( /*#__PURE__*/function () {
+      var _ref12 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (Resolve, Reject) {
+        try {
           _this9.store.readFile(_this9.credentials).then( /*#__PURE__*/function () {
-            var _ref12 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (data) {
-              if (data.email && data.password) {
-                _this9.login(data.email, data.password);
-              } else {
-                yield _this9.cleanSession();
-
-                _this9.router.navigateByUrl('general');
-              }
+            var _ref13 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (data) {
+              _this9.auth.signOut().then( /*#__PURE__*/(0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+                setTimeout(() => {
+                  if (data.email && data.password) {
+                    _this9.login(data.email, data.password).then(user => {
+                      console.log(user);
+                      Resolve(user);
+                    });
+                  } else {
+                    console.log('no user');
+                    Resolve(null);
+                  }
+                }, 1500);
+              }));
             });
 
-            return function (_x14) {
-              return _ref12.apply(this, arguments);
+            return function (_x16) {
+              return _ref13.apply(this, arguments);
             };
           }());
-        });
-      } catch (error) {
-        console.log(error);
-        yield _this9.cleanSession();
+        } catch (error) {
+          console.log(error);
+          Reject(error);
+        }
+      });
 
-        _this9.router.navigateByUrl('general');
-      }
-    })();
+      return function (_x14, _x15) {
+        return _ref12.apply(this, arguments);
+      };
+    }());
   }
 
   forgotPassword(email) {
@@ -1240,7 +1251,7 @@ let FireAuthService = class FireAuthService {
     var _this10 = this;
 
     return new Promise( /*#__PURE__*/function () {
-      var _ref13 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (resolve, reject) {
+      var _ref15 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (resolve, reject) {
         (yield _this10.auth.currentUser).updateProfile({
           displayName,
           photoURL
@@ -1252,8 +1263,8 @@ let FireAuthService = class FireAuthService {
         });
       });
 
-      return function (_x15, _x16) {
-        return _ref13.apply(this, arguments);
+      return function (_x17, _x18) {
+        return _ref15.apply(this, arguments);
       };
     }());
   }
@@ -1262,7 +1273,7 @@ let FireAuthService = class FireAuthService {
     var _this11 = this;
 
     return new Promise( /*#__PURE__*/function () {
-      var _ref14 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (resolve, reject) {
+      var _ref16 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (resolve, reject) {
         (yield _this11.auth.currentUser).updateProfile({
           displayName: type
         }).then(() => {
@@ -1273,8 +1284,8 @@ let FireAuthService = class FireAuthService {
         });
       });
 
-      return function (_x17, _x18) {
-        return _ref14.apply(this, arguments);
+      return function (_x19, _x20) {
+        return _ref16.apply(this, arguments);
       };
     }());
   }
@@ -1324,7 +1335,7 @@ let FireAuthService = class FireAuthService {
 
     return new Promise((resolve, reject) => {
       this.FS.setNamedDocument('users', uid, data).then( /*#__PURE__*/function () {
-        var _ref16 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (response) {
+        var _ref18 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (response) {
           if (_this14.user.uid === data.uid) {
             yield _this14.store.setData(_this14.userInfo, data);
           }
@@ -1332,8 +1343,8 @@ let FireAuthService = class FireAuthService {
           resolve('done');
         });
 
-        return function (_x19) {
-          return _ref16.apply(this, arguments);
+        return function (_x21) {
+          return _ref18.apply(this, arguments);
         };
       }()).catch(error => {
         reject(this.error.handle(error));

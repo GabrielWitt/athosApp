@@ -204,7 +204,8 @@ let ReservationsResidentPage = class ReservationsResidentPage {
         componentProps: {
           reservation,
           space,
-          currentUser: _this4.userCtrl.user
+          currentUser: _this4.user,
+          users: [_this4.user]
         },
         mode: 'ios',
         presentingElement: _this4.routerOutlet.nativeEl

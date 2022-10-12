@@ -7,7 +7,6 @@ import { CalendarItem } from 'src/app/core/models/calendar';
 import { AlertsService } from 'src/app/shared/utilities/alerts';
 import { HapticsService } from 'src/app/shared/utilities/haptics.service';
 import { RequestsService } from 'src/app/core/services/modules/requests.service';
-import { CalendarService } from 'src/app/core/services/modules/calendar.service';
 import { ServicesController } from 'src/app/core/controller/services.controller';
 import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
 
@@ -20,7 +19,7 @@ export class NewRequestComponent implements OnInit {
   defaultUser = 'assets/profile/ProfileBlank.png';
   defaultSpace = '../../../../../assets/blueprint.png';
   @Input() currentUser: UserFormData;
-  @Input() users: UserFormData[];
+  @Input() users: UserFormData[] = [];
   @Input() service: Service;
   @Input() request: CalendarItem;
   units: Lease[];

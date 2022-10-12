@@ -12,41 +12,112 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MaintenanceComponent": () => (/* binding */ MaintenanceComponent)
 /* harmony export */ });
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _maintenance_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./maintenance.component.html?ngResource */ 61649);
 /* harmony import */ var _maintenance_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./maintenance.component.scss?ngResource */ 32183);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var src_app_core_services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/calendar.service */ 16695);
+/* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
+/* harmony import */ var src_app_core_services_modules_requests_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/core/services/modules/requests.service */ 25293);
+/* harmony import */ var src_app_shared_components_services_new_request_new_request_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/services/new-request/new-request.component */ 58151);
+
+
+
+
+
 
 
 
 
 
 let MaintenanceComponent = class MaintenanceComponent {
-  constructor() {
-    this.loading = true;
+  constructor(calendar, modal, routerOutlet, requests, auth) {
+    this.calendar = calendar;
+    this.modal = modal;
+    this.routerOutlet = routerOutlet;
+    this.requests = requests;
+    this.auth = auth;
     this.itemList = [];
+    this.loading = false;
+    this.filterSelected = '>';
+    this.filterItems = [{
+      name: 'Próximas',
+      filter: '>'
+    }, {
+      name: 'Pasadas',
+      filter: '<'
+    }];
   }
 
   ngOnInit() {
-    setTimeout(() => {
+    this.loading = true;
+    this.loadData().then(user => {
       this.loading = false;
-    }, 2500);
+    });
+  }
+
+  loadData() {
+    var _this = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      const userData = yield _this.auth.getUser();
+      _this.currentUser = userData.data;
+      _this.itemList = yield _this.requests.readResidentRequestListOrderRent('userUID', _this.currentUser.uid, '==');
+      console.log(_this.itemList);
+      return _this.currentUser;
+    })();
   }
 
   doRefresh(refresh) {
+    var _this2 = this;
+
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       // load 
+      yield _this2.loadData();
+
       if (refresh) {
         refresh.target.complete();
       }
     })();
   }
 
+  editService(request) {
+    var _this3 = this;
+
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      const modalService = yield _this3.modal.create({
+        component: src_app_shared_components_services_new_request_new_request_component__WEBPACK_IMPORTED_MODULE_6__.NewRequestComponent,
+        componentProps: {
+          service: null,
+          request,
+          currentUser: _this3.currentUser
+        },
+        mode: 'ios',
+        presentingElement: _this3.routerOutlet.nativeEl
+      });
+      modalService.present();
+      const modalResult1 = yield modalService.onWillDismiss();
+
+      if (modalResult1.data) {}
+    })();
+  }
+
 };
 
-MaintenanceComponent.ctorParameters = () => [];
+MaintenanceComponent.ctorParameters = () => [{
+  type: src_app_core_services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_3__.CalendarService
+}, {
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ModalController
+}, {
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonRouterOutlet
+}, {
+  type: src_app_core_services_modules_requests_service__WEBPACK_IMPORTED_MODULE_5__.RequestsService
+}, {
+  type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__.FireAuthService
+}];
 
-MaintenanceComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+MaintenanceComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({
   selector: 'app-maintenance',
   template: _maintenance_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
   styles: [_maintenance_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
@@ -343,7 +414,7 @@ module.exports = ".headerServiceList {\n  border-bottom: 2px solid rgb(187, 187,
   \**************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene mantenimientos aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n\n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    \n  </ion-list>\n</ion-content>\n";
+module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene mantenimientos aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n\n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-calendar-service-item *ngFor=\"let item of itemList\" [item]=\"item\" (click)=\"editService(item)\"></app-calendar-service-item>\n  </ion-list>\n</ion-content>\n";
 
 /***/ }),
 

@@ -493,14 +493,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "SpacesAdminComponent": () => (/* binding */ SpacesAdminComponent)
 /* harmony export */ });
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _spaces_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spaces-admin.component.html?ngResource */ 64156);
 /* harmony import */ var _spaces_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./spaces-admin.component.scss?ngResource */ 46119);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
 /* harmony import */ var src_app_shared_components_spaces_new_space_new_space_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/components/spaces/new-space/new-space.component */ 61559);
 /* harmony import */ var src_app_core_services_modules_spaces_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/core/services/modules/spaces.service */ 59269);
+/* harmony import */ var src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/core/services/modules/users.service */ 77464);
+
 
 
 
@@ -511,8 +513,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SpacesAdminComponent = class SpacesAdminComponent {
-  constructor(modal, auth, spaces, routerOutlet) {
+  constructor(modal, users, auth, spaces, routerOutlet) {
     this.modal = modal;
+    this.users = users;
     this.auth = auth;
     this.spaces = spaces;
     this.routerOutlet = routerOutlet;
@@ -525,7 +528,7 @@ let SpacesAdminComponent = class SpacesAdminComponent {
   ngOnInit() {
     this.loading = true;
     this.loadData().then(user => {
-      this.loading = false;
+      this.loading = false; // this.loadUsers();
     });
   }
 
@@ -635,19 +638,51 @@ let SpacesAdminComponent = class SpacesAdminComponent {
     })();
   }
 
+  loadUsers() {
+    var _this5 = this;
+
+    this.users.readAllUsers().then(list => {
+      const unitlist = [...this.itemList];
+      console.log(list);
+      list.forEach(user => {
+        if (user.leases?.length > 0) {
+          user.leases.forEach(lease => {
+            unitlist.forEach( /*#__PURE__*/function () {
+              var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (space) {
+                if (lease.spaceLease.uid === space.uid) {
+                  const updatedSpace = { ...space,
+                    lease: lease
+                  };
+                  yield _this5.spaces.UpdateSpaces(updatedSpace);
+                  console.log(updatedSpace);
+                }
+              });
+
+              return function (_x) {
+                return _ref.apply(this, arguments);
+              };
+            }());
+          });
+        }
+      });
+    });
+  }
+
 };
 
 SpacesAdminComponent.ctorParameters = () => [{
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.ModalController
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ModalController
+}, {
+  type: src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_6__.UsersService
 }, {
   type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__.FireAuthService
 }, {
   type: src_app_core_services_modules_spaces_service__WEBPACK_IMPORTED_MODULE_5__.SpacesService
 }, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonRouterOutlet
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonRouterOutlet
 }];
 
-SpacesAdminComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
+SpacesAdminComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({
   selector: 'app-spaces-admin',
   template: _spaces_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
   styles: [_spaces_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
