@@ -194,24 +194,28 @@ let BillingViewComponent = class BillingViewComponent {
         const communities = yield _this4.spaces.readCommunityList();
         const list = yield _this4.users.readOnlyResidents();
         let lastNumber = communities[0].lastReceiptNumber;
+        let listBills = [];
 
         for (let i = 0; i < list.length; i++) {
-          if (list[i].uid === 'dW3hhe2eeFXik4pPqK7MxDYdqLE2') {
-            lastNumber = i + 1 + communities[0].lastReceiptNumber;
-
-            _this4.billing.generateReceipt(lastNumber, _this4.receiptDate, list[i], _this4.currentUser, [], []);
-
-            _this4.receiptProgress = i / list.length;
-          }
+          lastNumber = i + 1 + communities[0].lastReceiptNumber;
+          const bill = yield _this4.billing.generateReceipt(lastNumber, _this4.receiptDate, list[i], _this4.currentUser, [], []);
+          _this4.receiptProgress = i / list.length;
+          listBills.push(bill);
         }
-        /*
-        await this.spaces.UpdateCommunity({...communities[0],lastReceiptNumber:lastNumber})
-        this.alerts.showAlert( 'RECIBOS MENSUALES '+this.time.getMonthName(this.receiptDate).toUpperCase(), list.length+' nuevos recibos han sido generados', 'OK');
-        this.selectedMonth = selectedMonth;
-        this.endMonth = endMonth;*/
 
+        _this4.billsList = listBills;
+        yield _this4.spaces.UpdateCommunity({ ...communities[0],
+          lastReceiptNumber: lastNumber
+        });
+
+        _this4.alerts.showAlert('RECIBOS MENSUALES ' + _this4.time.getMonthName(_this4.receiptDate).toUpperCase(), list.length + ' nuevos recibos han sido generados', 'OK');
+
+        _this4.selectedMonth = selectedMonth;
+        _this4.endMonth = endMonth;
 
         _this4.modal.dismiss();
+
+        _this4.receiptProgress = 0;
 
         _this4.loadData().then(() => {
           _this4.loading = false;

@@ -314,7 +314,6 @@ let FirestoreActionsService = class FirestoreActionsService {
         return new Promise((resolve, reject) => {
             try {
                 const filterOp = filterOperator ? filterOperator : '==';
-                console.log(filterName, filterOp, filterValue);
                 const callDoc = this.afs.collection(folderName, (ref => ref.where(filterName, filterOp, filterValue).orderBy(orderField))).valueChanges();
                 callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
                     resolve(querySnapshot);
@@ -445,9 +444,9 @@ let FirestoreActionsService = class FirestoreActionsService {
         return new Promise((resolve, reject) => {
             try {
                 const callDoc = this.afs.collection(folderName, (ref => ref
+                    .where('userUID', '==', userUID)
                     .where(orderField, '>=', startDate)
                     .where(orderField, '<=', endDate)
-                    .where('userUID', '==', userUID)
                     .orderBy(orderField))).valueChanges();
                 callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
                     resolve(querySnapshot);
@@ -2270,6 +2269,10 @@ let TimeHandlerModule = class TimeHandlerModule {
     return moment__WEBPACK_IMPORTED_MODULE_1__.parseZone(date).format('DD/MM/YYYY');
   }
 
+  timeSchedule(date) {
+    return moment__WEBPACK_IMPORTED_MODULE_1__.parseZone(date).format('(DD/MM/YYYY - h:mm A)');
+  }
+
   getStartTime(selectedDate, startTime) {
     return moment__WEBPACK_IMPORTED_MODULE_1__(moment__WEBPACK_IMPORTED_MODULE_1__(selectedDate).format('MM/DD/YY') + ' ' + moment__WEBPACK_IMPORTED_MODULE_1__(startTime).format('HH:mm')).toISOString();
   }
@@ -2528,8 +2531,8 @@ let TimeHandlerModule = class TimeHandlerModule {
   }
 
   getMonthDates(myDate) {
-    const firstDay = moment__WEBPACK_IMPORTED_MODULE_1__(myDate).startOf('month');
-    const lastDay = moment__WEBPACK_IMPORTED_MODULE_1__(myDate).endOf('month');
+    const firstDay = moment__WEBPACK_IMPORTED_MODULE_1__.parseZone(myDate).startOf('month').toISOString();
+    const lastDay = moment__WEBPACK_IMPORTED_MODULE_1__.parseZone(myDate).endOf('month').toISOString();
     return {
       start: firstDay,
       end: lastDay
