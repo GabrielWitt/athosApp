@@ -161,7 +161,7 @@
     <app-big-button *ngIf="space && !showReservationForm" class="ion-padding-top" LABEL="SOLICITAR" buttonType="SECONDARY" [loading]="loading" [disabled]="loading" (click)="enableForm()"></app-big-button>
     <ion-row>
       <ion-col>
-        <app-big-button *ngIf="reservation && currentUser.type === 'administrador'" class="ion-padding-top" LABEL="APROVAR" buttonType="SUCCESS" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Aprovado')"></app-big-button>
+        <app-big-button *ngIf="reservation && currentUser.type === 'administrador'" class="ion-padding-top" LABEL="APROBAR" buttonType="SUCCESS" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Aprobado')"></app-big-button>
       </ion-col>
       <ion-col>
         <app-big-button *ngIf="reservation && (currentUser.type === 'administrador' || reservation.requestBy.uid === currentUser.uid)" class="ion-padding-top" LABEL="CANCELAR" buttonType="RED" [loading]="loading" [disabled]="loading" (click)="changeStateReserve('Cancelado')"></app-big-button>

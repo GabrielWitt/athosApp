@@ -20,7 +20,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 
-// @angular/fire
+// @angular/fire Modules
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
@@ -33,6 +33,7 @@ import { PERSISTENCE } from '@angular/fire/compat/auth';
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
+    // Firebase Setup
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     provideAuth(() => {

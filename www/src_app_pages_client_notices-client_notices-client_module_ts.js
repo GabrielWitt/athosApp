@@ -96,7 +96,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _notices_client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notices-client.page.html?ngResource */ 85014);
-/* harmony import */ var _notices_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notices-client.page.scss?ngResource */ 22090);
+/* harmony import */ var _notices_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notices-client.page.scss?ngResource */ 23883);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
@@ -216,7 +216,7 @@ NoticesClientPage = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angul
 
 /***/ }),
 
-/***/ 22090:
+/***/ 23883:
 /*!*********************************************************************************!*\
   !*** ./src/app/pages/client/notices-client/notices-client.page.scss?ngResource ***!
   \*********************************************************************************/
@@ -232,7 +232,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \*********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<app-main-header title=\"Avisos\"></app-main-header>\n\n\n<ion-content class=\"ion-padding\">\n    <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n      <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n    </ion-refresher>\n\n    <app-not-data-yet-message \n      *ngIf=\"noticeList.length == 0 && !loading\"\n      text=\"No hay anuncios aún\" icon=\"archive-outline\"\n    ></app-not-data-yet-message>\n  \n    <ion-list *ngIf=\"noticeList.length>0\">\n        <ion-card *ngFor=\"let notice of noticeList\" (click)=\"detailNotice(notice)\">\n            <ion-row>\n                <ion-col size=\"5\">\n                    <ion-img [src]=\"notice.photo\" style=\"height: 30vw; width: 30vw;\"></ion-img>\n                </ion-col>\n                <ion-col size=\"7\" class=\"ion-text-center\">\n                    <ion-text class=\"ion-text-uppercase\" color=\"tertiary\">\n                        <p>{{notice.type.name}}<ion-icon color=\"tertiary\" [name]=\"notice.type.icon\"></ion-icon></p>\n                    </ion-text>\n                    <ion-text class=\"ion-text-capitalized\" color=\"dark\">\n                        <h3>{{notice.title}}</h3>\n                    </ion-text>\n                </ion-col>\n            </ion-row>\n            <app-notice-bottom-bar [likes]=\"notice.likes.length\" [comments]=\"notice.comments.length\" [notice]=\"notice\" [userUID]=\"user.uid\"></app-notice-bottom-bar>\n        </ion-card>\n    </ion-list>\n    \n    <ion-list *ngIf=\"loading\">\n        <app-loading-view></app-loading-view>\n      </ion-list>\n</ion-content>\n";
+module.exports = "<app-main-header title=\"Avisos\"></app-main-header>\n\n\n<ion-content class=\"ion-padding\">\n    <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n      <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n    </ion-refresher>\n\n    <app-not-data-yet-message \n      *ngIf=\"noticeList.length == 0 && !loading\"\n      text=\"No hay anuncios aún\" icon=\"archive-outline\"\n    ></app-not-data-yet-message>\n  \n    <ion-list *ngIf=\"noticeList.length>0\">\n        <app-image-loader *ngFor=\"let notice of noticeList\" [notice]=\"notice\" [user]=\"userData\" (click)=\"detailNotice(notice)\"></app-image-loader>\n    </ion-list>\n    \n    <ion-list *ngIf=\"loading\">\n        <app-loading-view></app-loading-view>\n      </ion-list>\n</ion-content>\n";
 
 /***/ })
 

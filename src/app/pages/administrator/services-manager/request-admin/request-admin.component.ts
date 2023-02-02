@@ -17,6 +17,13 @@ export class RequestAdminComponent implements OnInit {
   user: UserFormData;
   itemList = []
   users: UserFormData[];
+  filterSelected: '>'|'<' = '>'
+
+  filterItems = [
+    {name: 'Sin Asignar',filter: 'unassigned'},
+    {name: 'Próximas',filter: '>'},
+    {name: 'Pasadas',filter: '<'}
+  ]
 
   constructor(
     private modal: ModalController,
@@ -33,14 +40,21 @@ export class RequestAdminComponent implements OnInit {
   async loadData() {
     const userData:any = await this.auth.getUser()
     this.user = userData.data;
-    this.itemList = await this.requests.readRequestListOrder();
+    this.itemList = await this.requests //.readRequestListOrder();
+    .readRequestListOrderRent("startDate",new Date().toISOString(),this.filterSelected);
     this.loading = false;
+    console.log(this.itemList)
     return this.user
   }
 
   async doRefresh(refresh?){
     await this.loadData();
     if (refresh){ refresh.target.complete(); }
+  }
+
+  filterChange(e){
+    this.filterSelected = e.detail.value;
+    this.loadData();
   }
 
   async createRequest(){

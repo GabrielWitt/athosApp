@@ -5,11 +5,11 @@
 <ion-toolbar>
   <ion-segment (ionChange)="segmentChanged($event)" value="users">
     <ion-segment-button value="users" layout="icon-start">
-      <ion-label *ngIf="userCtrl.platform === 'web'">Usuarios</ion-label>
+      <ion-label>Usuarios</ion-label>
       <ion-icon name="people-outline"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="payments" layout="icon-start">
-      <ion-label *ngIf="userCtrl.platform === 'web'">Pagos</ion-label>
+      <ion-label>Pagos</ion-label>
       <ion-icon name="card-outline"></ion-icon>
     </ion-segment-button>
   </ion-segment>

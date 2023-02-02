@@ -11,28 +11,7 @@
     ></app-not-data-yet-message>
   
     <ion-list *ngIf="noticeList.length>0">
-        <ion-card *ngFor="let notice of noticeList" (click)="detailNotice(notice)">
-            <ion-card-header>
-                <ion-card-subtitle>
-                    <ion-icon color="tertiary" size="small" [name]="notice.type.icon"></ion-icon>
-                    <ion-text color="tertiary">{{notice.type.name}}</ion-text>
-                </ion-card-subtitle>
-            </ion-card-header>
-            <ion-img [src]="notice.photo"></ion-img>
-            <ion-item detail>
-                <ion-label>
-                    <p>{{notice.title}}</p>
-                </ion-label>
-            </ion-item>
-            <ion-row>
-                <ion-col class="ion-text-center">
-                    <ion-icon name="thumbs-up-outline"></ion-icon> Likes {{notice.likes.length}}
-                </ion-col>
-                <ion-col class="ion-text-center">
-                <ion-icon name="chatbubble-ellipses-outline"></ion-icon> Comentarios {{notice.comments.length}}
-                </ion-col>
-            </ion-row>
-        </ion-card>
+        <app-image-loader *ngFor="let notice of noticeList" [notice]="notice" [user]="userData" (click)="detailNotice(notice)"></app-image-loader>
     </ion-list>
     
     <ion-list *ngIf="loading">

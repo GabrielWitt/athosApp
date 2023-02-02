@@ -5,7 +5,7 @@ import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 import { ErrorHandlerService } from 'src/app/shared/utilities/error-handler.service';
 import { UserFormData } from '../../models/user';
 import { WhereFilterOp } from 'firebase/firestore';
-import { Component, createElement } from '@fullcalendar/core';
+// import { Component, createElement } from '@fullcalendar/core';
 
 @Injectable({
   providedIn: 'root'
@@ -116,10 +116,4 @@ export class CalendarService {
 
   
 
-}
-
-export class CustomDayHeader extends Component<{ text: string }> {
-  render() {
-    return createElement('div', {}, '!' + this.props.text + '!')
-  }
 }

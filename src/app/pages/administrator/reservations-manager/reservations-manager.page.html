@@ -7,15 +7,15 @@
   <ion-toolbar>
     <ion-segment (ionChange)="segmentChanged($event)" value="reservations">
       <ion-segment-button value="reservations" layout="icon-start">
-        <ion-label *ngIf="userCtrl.platform === 'web'">Reservas</ion-label>
+        <ion-label>Reservas</ion-label>
         <ion-icon name="calendar-outline"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="spaces" layout="icon-start">
-        <ion-label *ngIf="userCtrl.platform === 'web'">Inmuebles</ion-label>
+        <ion-label>Inmuebles</ion-label>
         <ion-icon name="business-outline"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="space_group" layout="icon-start">
-        <ion-label *ngIf="userCtrl.platform === 'web'">Comunidad</ion-label>
+        <ion-label>Comunidad</ion-label>
         <ion-icon name="cube-outline"></ion-icon>
       </ion-segment-button>
     </ion-segment>

@@ -8,7 +8,8 @@ import { UsersService } from 'src/app/core/services/modules/users.service';
 import { ProfileDetailComponent } from 'src/app/pages/administrator/user-manager/profile-detail/profile-detail.component';
 import { BillingService } from 'src/app/core/services/modules/billing.service';
 import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
-import { AssignSpaceComponent } from 'src/app/app/shared/components/spaces/assign-space/assign-space.component';
+import { AssignSpaceComponent } from 'src/app/shared/components/assign-space/assign-space.component';
+import { LoaderDataService } from 'src/app/shared/utilities/loader-data.service';
 
 @Component({
   selector: 'app-user-list',
@@ -28,8 +29,7 @@ export class UserListComponent implements OnInit {
     private modal: ModalController,
     private routerOutlet: IonRouterOutlet,
     public userCtrl: UserController,
-    private receipt: BillingService,
-    private time: TimeHandlerModule
+    private call: LoaderDataService,
   ) { }
 
   ngOnInit() {
@@ -43,6 +43,7 @@ export class UserListComponent implements OnInit {
       this.userList = [];
       this.users.readAllUsers()
       .then(list => {
+        this.userList  = this.call.loadItems(list, this.userList);
         this.userList = list.sort(this.sortByName);
         this.userCtrl.loadUser().then((data:any) => {
           this.user = data.user;

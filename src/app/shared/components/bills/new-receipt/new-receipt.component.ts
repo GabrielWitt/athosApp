@@ -13,28 +13,11 @@ import { VerificationFuncService } from 'src/app/shared/utilities/verificationFu
 export class NewReceiptComponent implements OnInit {
   @Input() user: UserFormData;
   @Input() currentUser: UserFormData;
-  @Input() currentReceipt: Receipt;
+  @Input() receipt: Receipt;
   valueList: ItemDetail[] = [];
   total = 0;
   totalDescription = '';
   loading = false;
-  generate = true;
-
-  myReceipt: Receipt = {
-    receiptDate: '2022-01-04T12:00:00.000Z',
-    ruc: '1791430751001',
-    receiptNumber: 1,
-    userUID: '',
-    userName: 'Roberto Bueno',
-    userCI: '1767039819',
-    address: 'Av. Rep. del Salvador 734 y Av. Portugal'+' Oficina 1102',
-    itemDetail: [],
-    total: 0,
-    userSignature: '',
-    createdBy: null,
-    payerName: null,
-    status: 'Pendiente'
-  }
 
   constructor(
     private utility: VerificationFuncService,

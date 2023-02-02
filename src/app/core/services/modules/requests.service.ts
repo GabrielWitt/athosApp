@@ -54,7 +54,7 @@ export class RequestsService {
 
   readRequestListOrder(){
     return new Promise<CalendarItem[]>((resolve,reject) => {
-      this.firestore.readCollectionOrderBy(this.RequestFolder, 'createdAt')
+      this.firestore.readCollectionOrderBy(this.RequestFolder, 'startDate')
       .then((docs: any[]) => { resolve(docs) })
       .catch((error) => { reject(this.error.handle(error)); });
     });
@@ -62,9 +62,15 @@ export class RequestsService {
 
   readRequestListOrderRent(filterName: string, filterValue: any,filterOp?){
     return new Promise<CalendarItem[]>((resolve,reject) => {
-      this.firestore.readCollectionOrderFilter(this.RequestFolder, filterName, filterValue, 'startDate', filterOp)
-      .then((docs: any[]) => { resolve(docs) })
-      .catch((error) => { reject(this.error.handle(error)); });
+      if(filterOp === 'unassigned'){
+        this.firestore.readCollectionOrderFilter(this.RequestFolder, 'startDate', null, 'status')
+        .then((docs: any[]) => { resolve(docs) })
+        .catch((error) => { reject(this.error.handle(error)); });
+      }else{
+        this.firestore.readCollectionOrderFilter(this.RequestFolder, filterName, filterValue, 'startDate', filterOp)
+        .then((docs: any[]) => { resolve(docs) })
+        .catch((error) => { reject(this.error.handle(error)); });
+      }
     });
   }
 
@@ -76,9 +82,11 @@ export class RequestsService {
     });
   }
 
-  assignDuty(communityUID){
-    return new Promise<CalendarItem>((resolve,reject) => {
-      
+  readUserServicesByMonth(startDate, endDate, orderField, userUID){
+    return new Promise<CalendarItem[]>((resolve,reject) => {
+      this.firestore.readMonthDocs(this.RequestFolder, startDate, endDate, orderField, userUID)
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
     });
   }
 

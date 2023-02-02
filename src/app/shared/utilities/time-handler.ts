@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { serverTimestamp } from 'firebase/firestore';
 import * as moment from 'moment';
-import * as timezone from 'moment-timezone';
 import { AlertsService } from './alerts';
 
 moment.locale('fr', {
@@ -133,6 +131,10 @@ export class TimeHandlerModule {
 
   geDateFullUTC(date){
     return moment.parseZone(date).format('DD/MM/YYYY');
+  }
+
+  timeSchedule(date){
+    return moment.parseZone(date).format('(DD/MM/YYYY - h:mm A)');
   }
 
   getStartTime(selectedDate, startTime){
@@ -351,6 +353,12 @@ export class TimeHandlerModule {
     const b = moment.parseZone(lastUpdate);
     console.log(a.toISOString(),b.toISOString())
     return a.diff(b, 'minutes');
+  }
+
+  getMonthDates(myDate){
+    const firstDay = moment.parseZone(myDate).startOf('month').toISOString();
+    const lastDay = moment.parseZone(myDate).endOf('month').toISOString();
+    return {start:firstDay, end: lastDay}
   }
 
  }

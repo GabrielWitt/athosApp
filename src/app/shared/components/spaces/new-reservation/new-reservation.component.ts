@@ -105,7 +105,8 @@ export class NewReservationComponent implements OnInit {
         spaceUID: this.space.uid,
         unitNumber: this.space.type + ' ' + this.space.unitNumber,
         floor: this.space.floor,
-        guests: 1
+        guests: 1,
+        price: this.space.rentData.cost
       }
       if(this.space.photo){this.myReservation.reservation.photo = this.space.photo;}
       console.log(this.users)
@@ -204,7 +205,7 @@ export class NewReservationComponent implements OnInit {
   }
 
   async changeStateReserve(status){
-    this.alerts.AlertConfirm((status === 'Aprovado'?'APROVAR':'CANCELAR'),'¿Seguro desea '+(status === 'Aprovado'?'aprobar':'cancelar')+ ' la reserva?')
+    this.alerts.AlertConfirm((status === 'Aprobado'?'APROBAR':'CANCELAR'),'¿Seguro desea '+(status === 'Aprobado'?'aprobar':'cancelar')+ ' la reserva?')
     .then(answer => {
       if(answer){this.changeRequestStatus(status);}
     })
@@ -231,7 +232,7 @@ export class NewReservationComponent implements OnInit {
       this.myReservation = this.reservation;
       this.myReservation.status = status;
       await this.request.UpdateReservations(this.reservation, this.currentUser);
-      if(status === 'Aprovado'){
+      if(status === 'Aprobado'){
         await this.calendar.confirmReservation(this.myReservation);
       }
       this.vibe.endAction();

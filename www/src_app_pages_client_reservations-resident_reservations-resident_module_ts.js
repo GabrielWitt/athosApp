@@ -96,7 +96,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _reservations_resident_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reservations-resident.page.html?ngResource */ 72186);
-/* harmony import */ var _reservations_resident_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reservations-resident.page.scss?ngResource */ 43476);
+/* harmony import */ var _reservations_resident_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reservations-resident.page.scss?ngResource */ 22191);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
@@ -243,7 +243,7 @@ ReservationsResidentPage = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([(0
 
 /***/ }),
 
-/***/ 43476:
+/***/ 22191:
 /*!***********************************************************************************************!*\
   !*** ./src/app/pages/client/reservations-resident/reservations-resident.page.scss?ngResource ***!
   \***********************************************************************************************/

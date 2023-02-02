@@ -38,6 +38,7 @@ export interface ReservationItem {
     floor?: string;
     photo?: string;
     guests: number;
+    price: number | string;
 }
 
 export interface ServiceItem {
@@ -83,7 +84,7 @@ export interface serviceComment{
 
 export const StatusArray = [
     'Solicitado',
-    'Aprovado',
+    'Aprobado',
     'Agendado',
     'En Progreso',
     'Cancelado',

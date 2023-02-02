@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _community_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./community-admin.component.html?ngResource */ 53169);
-/* harmony import */ var _community_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./community-admin.component.scss?ngResource */ 94107);
+/* harmony import */ var _community_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./community-admin.component.scss?ngResource */ 21692);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var src_app_core_services_image_uploader_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/image-uploader.service */ 36071);
 /* harmony import */ var src_app_core_services_modules_spaces_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/spaces.service */ 59269);
@@ -199,7 +199,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _reservation_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reservation-admin.component.html?ngResource */ 20294);
-/* harmony import */ var _reservation_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reservation-admin.component.scss?ngResource */ 83991);
+/* harmony import */ var _reservation_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reservation-admin.component.scss?ngResource */ 63210);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
@@ -449,7 +449,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _reservations_manager_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./reservations-manager.page.html?ngResource */ 10844);
-/* harmony import */ var _reservations_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reservations-manager.page.scss?ngResource */ 71321);
+/* harmony import */ var _reservations_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reservations-manager.page.scss?ngResource */ 69722);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
 
@@ -495,7 +495,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _spaces_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spaces-admin.component.html?ngResource */ 64156);
-/* harmony import */ var _spaces_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./spaces-admin.component.scss?ngResource */ 46119);
+/* harmony import */ var _spaces_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./spaces-admin.component.scss?ngResource */ 17179);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
@@ -691,7 +691,7 @@ SpacesAdminComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([(0,_an
 
 /***/ }),
 
-/***/ 94107:
+/***/ 21692:
 /*!********************************************************************************************************************!*\
   !*** ./src/app/pages/administrator/reservations-manager/community-admin/community-admin.component.scss?ngResource ***!
   \********************************************************************************************************************/
@@ -701,7 +701,7 @@ module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n
 
 /***/ }),
 
-/***/ 83991:
+/***/ 63210:
 /*!************************************************************************************************************************!*\
   !*** ./src/app/pages/administrator/reservations-manager/reservation-admin/reservation-admin.component.scss?ngResource ***!
   \************************************************************************************************************************/
@@ -711,7 +711,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 71321:
+/***/ 69722:
 /*!****************************************************************************************************!*\
   !*** ./src/app/pages/administrator/reservations-manager/reservations-manager.page.scss?ngResource ***!
   \****************************************************************************************************/
@@ -721,7 +721,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 46119:
+/***/ 17179:
 /*!**************************************************************************************************************!*\
   !*** ./src/app/pages/administrator/reservations-manager/spaces-admin/spaces-admin.component.scss?ngResource ***!
   \**************************************************************************************************************/
@@ -757,7 +757,7 @@ module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"
   \****************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar *ngIf=\"userCtrl.platform !== 'web'\">\n    <ion-title *ngIf=\"selectedTab === 'spaces'\" class=\"ion-text-uppercase\">Espacios</ion-title>\n    <ion-title *ngIf=\"selectedTab === 'reservations'\" class=\"ion-text-uppercase\">Reservaciones</ion-title>\n    <ion-title *ngIf=\"selectedTab === 'space_group'\" class=\"ion-text-uppercase\">Comunidad</ion-title>\n  </ion-toolbar>\n  <ion-toolbar>\n    <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"reservations\">\n      <ion-segment-button value=\"reservations\" layout=\"icon-start\">\n        <ion-label *ngIf=\"userCtrl.platform === 'web'\">Reservas</ion-label>\n        <ion-icon name=\"calendar-outline\"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value=\"spaces\" layout=\"icon-start\">\n        <ion-label *ngIf=\"userCtrl.platform === 'web'\">Inmuebles</ion-label>\n        <ion-icon name=\"business-outline\"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value=\"space_group\" layout=\"icon-start\">\n        <ion-label *ngIf=\"userCtrl.platform === 'web'\">Comunidad</ion-label>\n        <ion-icon name=\"cube-outline\"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n\n<app-spaces-admin *ngIf=\"selectedTab === 'spaces'\" style=\"height: 100%\"></app-spaces-admin>\n<app-reservation-admin *ngIf=\"selectedTab === 'reservations'\" style=\"height: 100%\"></app-reservation-admin>\n<app-community-admin *ngIf=\"selectedTab === 'space_group'\" style=\"height: 100%\"></app-community-admin>";
+module.exports = "<ion-header>\n  <ion-toolbar *ngIf=\"userCtrl.platform !== 'web'\">\n    <ion-title *ngIf=\"selectedTab === 'spaces'\" class=\"ion-text-uppercase\">Espacios</ion-title>\n    <ion-title *ngIf=\"selectedTab === 'reservations'\" class=\"ion-text-uppercase\">Reservaciones</ion-title>\n    <ion-title *ngIf=\"selectedTab === 'space_group'\" class=\"ion-text-uppercase\">Comunidad</ion-title>\n  </ion-toolbar>\n  <ion-toolbar>\n    <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"reservations\">\n      <ion-segment-button value=\"reservations\" layout=\"icon-start\">\n        <ion-label>Reservas</ion-label>\n        <ion-icon name=\"calendar-outline\"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value=\"spaces\" layout=\"icon-start\">\n        <ion-label>Inmuebles</ion-label>\n        <ion-icon name=\"business-outline\"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value=\"space_group\" layout=\"icon-start\">\n        <ion-label>Comunidad</ion-label>\n        <ion-icon name=\"cube-outline\"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n\n<app-spaces-admin *ngIf=\"selectedTab === 'spaces'\" style=\"height: 100%\"></app-spaces-admin>\n<app-reservation-admin *ngIf=\"selectedTab === 'reservations'\" style=\"height: 100%\"></app-reservation-admin>\n<app-community-admin *ngIf=\"selectedTab === 'space_group'\" style=\"height: 100%\"></app-community-admin>";
 
 /***/ }),
 

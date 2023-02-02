@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _billing_view_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./billing-view.component.html?ngResource */ 25201);
-/* harmony import */ var _billing_view_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./billing-view.component.scss?ngResource */ 30203);
+/* harmony import */ var _billing_view_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./billing-view.component.scss?ngResource */ 96996);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_billing_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/billing.service */ 50317);
@@ -196,21 +196,20 @@ let BillingViewComponent = class BillingViewComponent {
         let lastNumber = communities[0].lastReceiptNumber;
 
         for (let i = 0; i < list.length; i++) {
-          lastNumber = i + 1 + communities[0].lastReceiptNumber;
+          if (list[i].uid === 'dW3hhe2eeFXik4pPqK7MxDYdqLE2') {
+            lastNumber = i + 1 + communities[0].lastReceiptNumber;
 
-          _this4.billing.generateReceipt(lastNumber, _this4.receiptDate, list[i], _this4.currentUser, [], []);
+            _this4.billing.generateReceipt(lastNumber, _this4.receiptDate, list[i], _this4.currentUser, [], []);
 
-          _this4.receiptProgress = i / list.length;
+            _this4.receiptProgress = i / list.length;
+          }
         }
+        /*
+        await this.spaces.UpdateCommunity({...communities[0],lastReceiptNumber:lastNumber})
+        this.alerts.showAlert( 'RECIBOS MENSUALES '+this.time.getMonthName(this.receiptDate).toUpperCase(), list.length+' nuevos recibos han sido generados', 'OK');
+        this.selectedMonth = selectedMonth;
+        this.endMonth = endMonth;*/
 
-        yield _this4.spaces.UpdateCommunity({ ...communities[0],
-          lastReceiptNumber: lastNumber
-        });
-
-        _this4.alerts.showAlert('RECIBOS MENSUALES ' + _this4.time.getMonthName(_this4.receiptDate).toUpperCase(), list.length + ' nuevos recibos han sido generados', 'OK');
-
-        _this4.selectedMonth = selectedMonth;
-        _this4.endMonth = endMonth;
 
         _this4.modal.dismiss();
 
@@ -221,11 +220,25 @@ let BillingViewComponent = class BillingViewComponent {
     })();
   }
 
-  checkList() {
+  eraseBills() {
     var _this5 = this;
 
+    this.billsList.forEach( /*#__PURE__*/function () {
+      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (item) {
+        yield _this5.billing.eraseBill(item);
+      });
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }());
+  }
+
+  checkList() {
+    var _this6 = this;
+
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
-      let List = yield _this5.billing.readAllReceiptList();
+      let List = yield _this6.billing.readAllReceiptList();
       List.sort((a, b) => {
         return a.receiptNumber - b.receiptNumber;
       });
@@ -287,7 +300,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _profile_detail_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile-detail.component.html?ngResource */ 57268);
-/* harmony import */ var _profile_detail_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile-detail.component.scss?ngResource */ 1085);
+/* harmony import */ var _profile_detail_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile-detail.component.scss?ngResource */ 90431);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/users.service */ 77464);
@@ -497,19 +510,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "UserListComponent": () => (/* binding */ UserListComponent)
 /* harmony export */ });
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _user_list_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user-list.component.html?ngResource */ 82774);
-/* harmony import */ var _user_list_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user-list.component.scss?ngResource */ 13806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 60124);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var _user_list_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user-list.component.scss?ngResource */ 94016);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 60124);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
 /* harmony import */ var src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/users.service */ 77464);
 /* harmony import */ var src_app_pages_administrator_user_manager_profile_detail_profile_detail_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/pages/administrator/user-manager/profile-detail/profile-detail.component */ 76526);
-/* harmony import */ var src_app_core_services_modules_billing_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/core/services/modules/billing.service */ 50317);
-/* harmony import */ var src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/utilities/time-handler */ 8123);
-/* harmony import */ var src_app_app_shared_components_spaces_assign_space_assign_space_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/app/shared/components/spaces/assign-space/assign-space.component */ 32575);
-
+/* harmony import */ var src_app_shared_components_assign_space_assign_space_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/assign-space/assign-space.component */ 49599);
+/* harmony import */ var src_app_shared_utilities_loader_data_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/utilities/loader-data.service */ 51366);
 
 
 
@@ -523,14 +534,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let UserListComponent = class UserListComponent {
-  constructor(users, router, modal, routerOutlet, userCtrl, receipt, time) {
+  constructor(users, router, modal, routerOutlet, userCtrl, call) {
     this.users = users;
     this.router = router;
     this.modal = modal;
     this.routerOutlet = routerOutlet;
     this.userCtrl = userCtrl;
-    this.receipt = receipt;
-    this.time = time;
+    this.call = call;
     this.loading = true;
     this.userList = [];
   }
@@ -551,6 +561,7 @@ let UserListComponent = class UserListComponent {
         _this.userList = [];
 
         _this.users.readAllUsers().then(list => {
+          _this.userList = _this.call.loadItems(list, _this.userList);
           _this.userList = list.sort(_this.sortByName);
 
           _this.userCtrl.loadUser().then(data => {
@@ -628,7 +639,7 @@ let UserListComponent = class UserListComponent {
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       console.log(user);
       const modal = yield _this3.modal.create({
-        component: src_app_app_shared_components_spaces_assign_space_assign_space_component__WEBPACK_IMPORTED_MODULE_8__.AssignSpaceComponent,
+        component: src_app_shared_components_assign_space_assign_space_component__WEBPACK_IMPORTED_MODULE_6__.AssignSpaceComponent,
         componentProps: {
           userData: user
         },
@@ -707,20 +718,18 @@ let UserListComponent = class UserListComponent {
 UserListComponent.ctorParameters = () => [{
   type: src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_4__.UsersService
 }, {
-  type: _angular_router__WEBPACK_IMPORTED_MODULE_9__.Router
+  type: _angular_router__WEBPACK_IMPORTED_MODULE_8__.Router
 }, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.ModalController
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.ModalController
 }, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonRouterOutlet
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonRouterOutlet
 }, {
   type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__.UserController
 }, {
-  type: src_app_core_services_modules_billing_service__WEBPACK_IMPORTED_MODULE_6__.BillingService
-}, {
-  type: src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_7__.TimeHandlerModule
+  type: src_app_shared_utilities_loader_data_service__WEBPACK_IMPORTED_MODULE_7__.LoaderDataService
 }];
 
-UserListComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_12__.Component)({
+UserListComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.Component)({
   selector: 'app-user-list',
   template: _user_list_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
   styles: [_user_list_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]
@@ -833,8 +842,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "UserManagerPage": () => (/* binding */ UserManagerPage)
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _user_manager_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user-manager.page.html?ngResource */ 65468);
-/* harmony import */ var _user_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user-manager.page.scss?ngResource */ 5731);
+/* harmony import */ var _user_manager_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user-manager.page.html?ngResource */ 76421);
+/* harmony import */ var _user_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user-manager.page.scss?ngResource */ 92320);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
 
@@ -868,7 +877,51 @@ UserManagerPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
 
 /***/ }),
 
-/***/ 30203:
+/***/ 51366:
+/*!*********************************************************!*\
+  !*** ./src/app/shared/utilities/loader-data.service.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LoaderDataService": () => (/* binding */ LoaderDataService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 22560);
+
+
+let LoaderDataService = class LoaderDataService {
+    constructor() { }
+    loadItems(oldItems, newItems) {
+        if (newItems.length < oldItems.length) {
+            return oldItems.concat(newItems);
+        }
+        else {
+            return newItems;
+        }
+    }
+    loadItemsRefresh(oldItems, newItems) {
+        if (newItems.length < oldItems.length) {
+            return oldItems.concat(newItems);
+        }
+        else {
+            return newItems;
+        }
+    }
+};
+LoaderDataService.ctorParameters = () => [];
+LoaderDataService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable)({
+        providedIn: 'root'
+    })
+], LoaderDataService);
+
+
+
+/***/ }),
+
+/***/ 96996:
 /*!******************************************************************************************************!*\
   !*** ./src/app/pages/administrator/user-manager/billing-view/billing-view.component.scss?ngResource ***!
   \******************************************************************************************************/
@@ -878,7 +931,7 @@ module.exports = ".headerUserList {\n  border-bottom: 2px solid rgb(187, 187, 18
 
 /***/ }),
 
-/***/ 1085:
+/***/ 90431:
 /*!**********************************************************************************************************!*\
   !*** ./src/app/pages/administrator/user-manager/profile-detail/profile-detail.component.scss?ngResource ***!
   \**********************************************************************************************************/
@@ -888,7 +941,7 @@ module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n
 
 /***/ }),
 
-/***/ 13806:
+/***/ 94016:
 /*!************************************************************************************************!*\
   !*** ./src/app/pages/administrator/user-manager/user-list/user-list.component.scss?ngResource ***!
   \************************************************************************************************/
@@ -898,7 +951,7 @@ module.exports = ".headerUserList {\n  border-bottom: 2px solid rgb(187, 187, 18
 
 /***/ }),
 
-/***/ 5731:
+/***/ 92320:
 /*!************************************************************************************!*\
   !*** ./src/app/pages/administrator/user-manager/user-manager.page.scss?ngResource ***!
   \************************************************************************************/
@@ -924,7 +977,7 @@ module.exports = "<ion-content>\n  <ion-row *ngIf=\"!loading\">\n    <ion-col>\n
   \**********************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons slot=\"start\">\n      <ion-button color=\"primary\" [disabled]=\"loading\" (click)=\"modal.dismiss(false)\">\n        Atrás\n      </ion-button>\n    </ion-buttons>\n    <ion-title class=\"ion-text-uppercase\">{{user?user.name +' '+ user.lastName:'Nuevo Usuario'}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button *ngIf=\"!user || editUserForm\" color=\"success\" (click)=\"sendData()\" \n        [disabled]=\"loading && !myCurrentUser?.type && !myCurrentUser?.CI && !myCurrentUser?.name &&\n        !myCurrentUser?.secondName && !myCurrentUser?.lastName && !myCurrentUser?.birthDate &&\n        !myCurrentUser?.email && !myCurrentUser?.phonePersonal\n        \">\n          Enviar\n      </ion-button>\n      <ion-button *ngIf=\"user && currentUser?.type === 'administrador' && !editUserForm\" color=\"dark\" (click)=\"editUser()\">\n          Editar\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"loading\">\n  <app-loading-view></app-loading-view>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && user && !editUserForm\">\n  <app-user-detail [user]=\"null\" [userData]=\"user\" [editDataForm]=\"false\"></app-user-detail>\n</ion-content>\n\n<ion-content class=\"ion-padding\" *ngIf=\"!loading && (!user || editUserForm)\">\n  <ion-list>\n    <ion-item *ngIf=\"!user\">\n      <ion-thumbnail size=\"large\" *ngIf=\"!newImage\" class=\"profileCircle\"(click)=\"addPhoto()\">\n        <img class=\"imageProfile\" src=\"{{defaultUser}}\">\n        <div class=\"cameraButton\" *ngIf=\"user\">\n          <ion-icon name=\"camera-outline\" color=\"light\"></ion-icon>\n        </div>\n      </ion-thumbnail>\n      <ion-thumbnail size=\"large\" *ngIf=\"newImage\" class=\"profileCircle\" (click)=\"addPhoto()\">\n        <img src=\"{{newImage.webPath}}\">\n        <ion-spinner class=\"uploadingImage\" size=\"large\" name=\"circles\"></ion-spinner>\n        <ion-progress-bar class=\"loadingImage\" color=\"primary\" [value]=\"progress\"></ion-progress-bar>\n      </ion-thumbnail>\n    </ion-item>\n    <ion-item *ngIf=\"user\">\n      <ion-thumbnail *ngIf=\"!newImage\" slot=\"start\" class=\"profileCircle\">\n        <img class=\"imageProfile\" src=\"{{user?.photo ? user.photo : defaultUser}}\">\n      </ion-thumbnail>\n      <ion-thumbnail *ngIf=\"newImage\" slot=\"start\" class=\"profileCircle\">\n        <img src=\"{{newImage.webPath}}\">\n        <ion-spinner class=\"uploadingImage\" size=\"large\" name=\"circles\"></ion-spinner>\n        <ion-progress-bar class=\"loadingImage\" color=\"primary\" [value]=\"progress\"></ion-progress-bar>\n      </ion-thumbnail>\n      <ion-label class=\"ion-text-wrap\">\n        <ion-text color=\"dark\">\n          <ion-card-title>{{myCurrentUser ? myCurrentUser.name + ' ' + myCurrentUser.lastName : 'Cargando'}} <ion-spinner *ngIf=\"!myCurrentUser\" name=\"dots\"></ion-spinner></ion-card-title>\n        </ion-text>\n        <p>{{user?.email ? user?.email : '_'}}</p>\n        <ion-text color=\"primary\">\n          <p class=\"ion-text-capitalize\">Tipo: {{myCurrentUser?.type ? myCurrentUser?.type : '_'}}</p>\n        </ion-text>\n      </ion-label>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>Tipo de Usuario</ion-label>\n      <ion-select class=\"ion-text-capitalize\" mode='ios' [value]=\"myCurrentUser.type\" (ionChange)=\"typeHandler($event)\">\n        <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let type of typeList\" [value]=\"type\"> {{type}}</ion-select-option>\n      </ion-select>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Identificación:</ion-label>\n      <ion-input class=\"ion-text-center\" placeholder=\"Cédula o Pasaporte\" type=\"number\" maxlength=\"10\" (ionChange)=\"CIListener($event)\" [value]=\"myCurrentUser.CI\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Email:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" (ionChange)=\"emailListener($event)\" [value]=\"myCurrentUser.email\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Nombre:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Primer Nombre\" (ionChange)=\"nameListener($event)\" [value]=\"myCurrentUser.name\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>2º Nombre:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"\" (ionChange)=\"secondNameListener($event)\" [value]=\"myCurrentUser.secondName\"></ion-input>\n    </ion-item>\n    <div class=\"error-message\" *ngIf=\"!myCurrentUser.secondName\">\n      <ion-text class=\"ion-padding-start\" color=\"danger\"> \n        <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  Segundo Nombre Requerido\n      </ion-text>\n    </div>\n  \n    <ion-item>\n      <ion-label>Apellido:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Primer Apellido\" (ionChange)=\"lastNameListener($event)\" [value]=\"myCurrentUser.lastName\"></ion-input>\n    </ion-item>\n    <div class=\"error-message\" *ngIf=\"!myCurrentUser.lastName\">\n      <ion-text class=\"ion-padding-start\" color=\"danger\"> \n        <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  Nombre Requerido\n      </ion-text>\n    </div>\n  \n    <ion-item>\n      <ion-label>2º Apellido:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"(Opcional)\" (ionChange)=\"secondLastNameListener($event)\" [value]=\"myCurrentUser.secondLastName\"></ion-input>\n    </ion-item>\n  \n    <ion-item (click)=\"showCalendar1()\">\n      <ion-label>Fecha de Nacimiento: </ion-label>\n      <ion-label class=\"ion-text-center\"> \n        <ion-text *ngIf=\"myCurrentUser.birthDate\" style=\"font-size: inherit; float: inherit;\">{{myCurrentUser.birthDate | timeFormat: 'DD/MM/YYYY'}}</ion-text>\n        <ion-text *ngIf=\"!myCurrentUser.birthDate\" style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;\">(Selección fecha)</ion-text>\n      </ion-label>\n      <ion-button class=\"downArrow\" slot=\"end\" size=\"small\"><ion-icon style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit;\" name=\"caret-down-outline\"></ion-icon></ion-button>\n    </ion-item>\n    <ion-row *ngIf=\"showCalendar\">\n      <ion-col>\n        <ion-item>\n          <ion-datetime #datetime style=\"margin: 0 auto;\" presentation=\"date\" \n                [(ngModel)]=\"myCurrentUser.birthDate\" (ionChange)=\"changeScheduleTime(datetime.value)\">\n            <ion-buttons slot=\"buttons\">\n              <ion-button color=\"danger\" (click)=\"showCalendar1()\">Cancelar</ion-button>\n              <ion-button color=\"success\" (click)=\"datetime.confirm()\">OK</ion-button>\n            </ion-buttons>\n          </ion-datetime>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  \n    <ion-item>\n      <ion-label>Teléfono Principal:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"number\" placeholder=\"Para Emergencias\" (ionChange)=\"phonePersonalListener($event)\" [value]=\"myCurrentUser.phonePersonal\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Teléfono Secundario:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Fijo o Trabajo\" (ionChange)=\"phoneHomeListener($event)\" [value]=\"myCurrentUser.phoneHome\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Teléfono Contacto:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"En caso de que no esté disponible\" (ionChange)=\"phoneWorkListener($event)\" [value]=\"myCurrentUser.phoneWork\"></ion-input>\n    </ion-item>\n  \n  </ion-list>\n</ion-content>\n<ion-footer *ngIf=\"admin && !editUserForm\">\n  <ion-toolbar>\n    <ion-button color=\"tertiary\" expand=\"full\" (click)=\"editSpaces()\">Editar Espacios</ion-button>\n  </ion-toolbar>\n</ion-footer>";
+module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons slot=\"start\">\n      <ion-button color=\"primary\" [disabled]=\"loading\" (click)=\"modal.dismiss(false)\">\n        Atrás\n      </ion-button>\n    </ion-buttons>\n    <ion-title class=\"ion-text-uppercase\">{{user?user.name +' '+ user.lastName:'Nuevo Usuario'}}</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button *ngIf=\"!user || editUserForm\" color=\"success\" (click)=\"sendData()\" \n        [disabled]=\"loading && !myCurrentUser?.type && !myCurrentUser?.CI && !myCurrentUser?.name &&\n        !myCurrentUser?.secondName && !myCurrentUser?.lastName && !myCurrentUser?.birthDate &&\n        !myCurrentUser?.email && !myCurrentUser?.phonePersonal\n        \">\n          Enviar\n      </ion-button>\n      <ion-button *ngIf=\"user && currentUser?.type === 'administrador' && !editUserForm\" color=\"dark\" (click)=\"editUser()\">\n          Editar\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\" *ngIf=\"loading\">\n  <app-loading-view></app-loading-view>\n</ion-content>\n\n<ion-content *ngIf=\"!loading && user && !editUserForm\">\n  <app-user-detail [user]=\"null\" [userData]=\"user\" [editDataForm]=\"false\"></app-user-detail>\n</ion-content>\n\n<ion-content class=\"ion-padding\" *ngIf=\"!loading && (!user || editUserForm)\">\n  <ion-list>\n    <ion-item *ngIf=\"!user\">\n      <ion-thumbnail size=\"large\" *ngIf=\"!newImage\" class=\"profileCircle\"(click)=\"addPhoto()\">\n        <img class=\"imageProfile\" src=\"{{defaultUser}}\">\n        <div class=\"cameraButton\" *ngIf=\"user\">\n          <ion-icon name=\"camera-outline\" color=\"light\"></ion-icon>\n        </div>\n      </ion-thumbnail>\n      <ion-thumbnail size=\"large\" *ngIf=\"newImage\" class=\"profileCircle\" (click)=\"addPhoto()\">\n        <img src=\"{{newImage.webPath}}\">\n        <ion-spinner class=\"uploadingImage\" size=\"large\" name=\"circles\"></ion-spinner>\n        <ion-progress-bar class=\"loadingImage\" color=\"primary\" [value]=\"progress\"></ion-progress-bar>\n      </ion-thumbnail>\n    </ion-item>\n    <ion-item *ngIf=\"user\">\n      <ion-thumbnail *ngIf=\"!newImage\" slot=\"start\" class=\"profileCircle\">\n        <img class=\"imageProfile\" src=\"{{user?.photo ? user.photo : defaultUser}}\">\n      </ion-thumbnail>\n      <ion-thumbnail *ngIf=\"newImage\" slot=\"start\" class=\"profileCircle\">\n        <img src=\"{{newImage.webPath}}\">\n        <ion-spinner class=\"uploadingImage\" size=\"large\" name=\"circles\"></ion-spinner>\n        <ion-progress-bar class=\"loadingImage\" color=\"primary\" [value]=\"progress\"></ion-progress-bar>\n      </ion-thumbnail>\n      <ion-label class=\"ion-text-wrap\">\n        <ion-text color=\"dark\">\n          <ion-card-title>{{myCurrentUser ? myCurrentUser.name + ' ' + myCurrentUser.lastName : 'Cargando'}} <ion-spinner *ngIf=\"!myCurrentUser\" name=\"dots\"></ion-spinner></ion-card-title>\n        </ion-text>\n        <p>{{user?.email ? user?.email : '_'}}</p>\n        <ion-text color=\"primary\">\n          <p class=\"ion-text-capitalize\">Tipo: {{myCurrentUser?.type ? myCurrentUser?.type : '_'}}</p>\n        </ion-text>\n      </ion-label>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>Tipo de Usuario</ion-label>\n      <ion-select class=\"ion-text-capitalize\" mode='ios' [value]=\"myCurrentUser.type\" (ionChange)=\"typeHandler($event)\">\n        <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let type of typeList\" [value]=\"type\"> {{type}}</ion-select-option>\n      </ion-select>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Identificación:</ion-label>\n      <ion-input class=\"ion-text-center\" placeholder=\"Cédula o Pasaporte\" type=\"number\" maxlength=\"10\" (ionChange)=\"CIListener($event)\" [value]=\"myCurrentUser.CI\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Email:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" (ionChange)=\"emailListener($event)\" [value]=\"myCurrentUser.email\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Nombre:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Primer Nombre\" (ionChange)=\"nameListener($event)\" [value]=\"myCurrentUser.name\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>2º Nombre:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"\" (ionChange)=\"secondNameListener($event)\" [value]=\"myCurrentUser.secondName\"></ion-input>\n    </ion-item>\n    <div class=\"error-message\" *ngIf=\"!myCurrentUser.secondName\">\n      <ion-text class=\"ion-padding-start\" color=\"danger\"> \n        <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  Segundo Nombre Requerido\n      </ion-text>\n    </div>\n  \n    <ion-item>\n      <ion-label>Apellido:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Primer Apellido\" (ionChange)=\"lastNameListener($event)\" [value]=\"myCurrentUser.lastName\"></ion-input>\n    </ion-item>\n    <div class=\"error-message\" *ngIf=\"!myCurrentUser.lastName\">\n      <ion-text class=\"ion-padding-start\" color=\"danger\"> \n        <ion-icon class=\"vertical-align\" color=\"danger\" name=\"alert-circle-outline\"> </ion-icon>  Nombre Requerido\n      </ion-text>\n    </div>\n  \n    <ion-item>\n      <ion-label>2º Apellido:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"(Opcional)\" (ionChange)=\"secondLastNameListener($event)\" [value]=\"myCurrentUser.secondLastName\"></ion-input>\n    </ion-item>\n  \n    <ion-item (click)=\"showCalendar1()\">\n      <ion-label>Fecha de Nacimiento: </ion-label>\n      <ion-label class=\"ion-text-center\"> \n        <ion-text *ngIf=\"myCurrentUser.birthDate\" style=\"font-size: inherit; float: inherit;\">{{myCurrentUser.birthDate | timeFormat: 'DD/MM/YYYY'}}</ion-text>\n        <ion-text *ngIf=\"!myCurrentUser.birthDate\" style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit; float: right;\">(Selección fecha)</ion-text>\n      </ion-label>\n      <ion-button class=\"downArrow\" slot=\"end\" size=\"small\"><ion-icon style=\"--color: #b4b4b4;color: #b4b4b4;font-size: inherit;\" name=\"caret-down-outline\"></ion-icon></ion-button>\n    </ion-item>\n    <ion-row *ngIf=\"showCalendar\">\n      <ion-col>\n        <ion-item>\n          <ion-datetime #datetime style=\"margin: 0 auto;\" presentation=\"date\" \n                [(ngModel)]=\"myCurrentUser.birthDate\" (ionChange)=\"changeScheduleTime(datetime.value)\">\n            <ion-buttons slot=\"buttons\">\n              <ion-button color=\"danger\" (click)=\"showCalendar1()\">Cancelar</ion-button>\n              <ion-button color=\"success\" (click)=\"datetime.confirm()\">OK</ion-button>\n            </ion-buttons>\n          </ion-datetime>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  \n    <ion-item>\n      <ion-label>Teléfono Principal:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"number\" placeholder=\"Para Emergencias\" (ionChange)=\"phonePersonalListener($event)\" [value]=\"myCurrentUser.phonePersonal\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Teléfono Secundario:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"Fijo o Trabajo\" (ionChange)=\"phoneHomeListener($event)\" [value]=\"myCurrentUser.phoneHome\"></ion-input>\n    </ion-item>\n  \n    <ion-item>\n      <ion-label>Teléfono Contacto:</ion-label>\n      <ion-input class=\"ion-text-center\" type=\"text\" placeholder=\"En caso de que no esté disponible\" (ionChange)=\"phoneWorkListener($event)\" [value]=\"myCurrentUser.phoneWork\"></ion-input>\n    </ion-item>\n  \n  </ion-list>\n</ion-content>\n<ion-footer *ngIf=\"admin && !editUserForm && myCurrentUser?.type === 'residente'\">\n  <ion-toolbar>\n    <ion-button color=\"tertiary\" expand=\"full\" (click)=\"editSpaces()\">Editar Espacios</ion-button>\n  </ion-toolbar>\n</ion-footer>";
 
 /***/ }),
 
@@ -934,17 +987,17 @@ module.exports = "<ion-header>\n  <ion-toolbar mode=\"ios\">\n    <ion-buttons s
   \************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content class=\"ion-padding\">\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" \n    refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  <app-loading-view *ngIf=\"loading\"></app-loading-view>\n  <div *ngIf=\"!loading && userList.length > 0\">\n    <ion-row class=\"headerUserList\">\n      <ion-col size=\"3\" class=\"ion-text-center\">Nombre</ion-col>\n      <ion-col size=\"3\" class=\"ion-text-center\">Espacio</ion-col>\n      <ion-col size=\"4\" class=\"ion-text-center\">Email</ion-col>\n      <ion-col size=\"2\" class=\"ion-text-center\">Tipo</ion-col>\n    </ion-row>\n    <app-item-user *ngFor=\"let user of userList\" [user]=\"user\" (click)=\"userDetail(user)\"></app-item-user>\n  </div>\n  <app-not-data-yet-message \n    *ngIf=\"userList.length == 0 && !loading\"\n    text=\"No tiens usuarios aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"newUserModal()\">\n      <ion-icon size=\"large\" name=\"person-add-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
+module.exports = "<ion-content class=\"ion-padding\">\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" \n    refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  <app-loading-view *ngIf=\"loading\"></app-loading-view>\n  <div *ngIf=\"!loading && userList.length > 0\">\n    <ion-row class=\"headerUserList\">\n      <ion-col size=\"3\" class=\"ion-text-center\">Nombre</ion-col>\n      <ion-col size=\"3\" class=\"ion-text-center\">Espacio</ion-col>\n      <ion-col size=\"4\" class=\"ion-text-center\">Email</ion-col>\n      <ion-col size=\"2\" class=\"ion-text-center\">Tipo</ion-col>\n    </ion-row>\n    <app-item-user *ngFor=\"let user of userList\" [user]=\"user\" (click)=\"userDetail(user)\"></app-item-user>\n  </div>\n  <app-not-data-yet-message \n    *ngIf=\"userList.length == 0 && !loading\"\n    text=\"No tiens usuarios aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"newUserModal()\">\n      <ion-icon size=\"large\" color=\"dark\" name=\"person-add-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ }),
 
-/***/ 65468:
+/***/ 76421:
 /*!************************************************************************************!*\
   !*** ./src/app/pages/administrator/user-manager/user-manager.page.html?ngResource ***!
   \************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-header *ngIf=\"selectedTab === 'users'\" title=\"Usuarios\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'payments'\" title=\"Pagos\"></app-main-header>\n</div>\n<ion-toolbar>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"users\">\n    <ion-segment-button value=\"users\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Usuarios</ion-label>\n      <ion-icon name=\"people-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"payments\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Pagos</ion-label>\n      <ion-icon name=\"card-outline\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n</ion-toolbar>\n\n<app-user-list *ngIf=\"selectedTab === 'users'\" style=\"height: 100%\"></app-user-list>\n<app-billing-view *ngIf=\"selectedTab === 'payments'\" style=\"height: 100%\"></app-billing-view>\n\n\n";
+module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-header *ngIf=\"selectedTab === 'users'\" title=\"Usuarios\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'payments'\" title=\"Pagos\"></app-main-header>\n</div>\n<ion-toolbar>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"users\">\n    <ion-segment-button value=\"users\" layout=\"icon-start\">\n      <ion-label>Usuarios</ion-label>\n      <ion-icon name=\"people-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"payments\" layout=\"icon-start\">\n      <ion-label>Pagos</ion-label>\n      <ion-icon name=\"card-outline\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n</ion-toolbar>\n\n<app-user-list *ngIf=\"selectedTab === 'users'\" style=\"height: 100%\"></app-user-list>\n<app-billing-view *ngIf=\"selectedTab === 'payments'\" style=\"height: 100%\"></app-billing-view>\n\n\n";
 
 /***/ })
 

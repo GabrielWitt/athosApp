@@ -130,18 +130,28 @@ export class BillingViewComponent implements OnInit {
       const communities = await this.spaces.readCommunityList();
       const list = await this.users.readOnlyResidents();
       let lastNumber = communities[0].lastReceiptNumber;
-      for(let i=0; i<list.length;i++){
+      let listBills = [];
+      for(let i=0; i<list.length; i++){
         lastNumber = i + 1 + communities[0].lastReceiptNumber
-        this.billing.generateReceipt(lastNumber,this.receiptDate, list[i],this.currentUser,[],[]);
+        const bill = await this.billing.generateReceipt(lastNumber,this.receiptDate, list[i],this.currentUser,[],[]);
         this.receiptProgress =  i/list.length;
+        listBills.push(bill);
       }
+      this.billsList = listBills;
       await this.spaces.UpdateCommunity({...communities[0],lastReceiptNumber:lastNumber})
       this.alerts.showAlert( 'RECIBOS MENSUALES '+this.time.getMonthName(this.receiptDate).toUpperCase(), list.length+' nuevos recibos han sido generados', 'OK');
       this.selectedMonth = selectedMonth;
       this.endMonth = endMonth;
       this.modal.dismiss();
+      this.receiptProgress = 0;
       this.loadData().then(() => {this.loading = false;})
     }
+  }
+
+  eraseBills(){
+    this.billsList.forEach(async item => { 
+      await this.billing.eraseBill(item);
+    })
   }
 
   async checkList(){

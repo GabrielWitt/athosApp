@@ -23,7 +23,6 @@ export class NoticeService {
       {icon: 'calendar-outline', name: 'EVENTOS' },
     ];
   }
-  //78.09
 
   createNotice(data: Notice){
     return new Promise((resolve,reject) => {

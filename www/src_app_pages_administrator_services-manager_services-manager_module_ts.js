@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _maintenance_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./maintenance-admin.component.html?ngResource */ 86083);
-/* harmony import */ var _maintenance_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./maintenance-admin.component.scss?ngResource */ 97240);
+/* harmony import */ var _maintenance_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./maintenance-admin.component.scss?ngResource */ 88519);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
@@ -181,7 +181,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _request_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./request-admin.component.html?ngResource */ 71187);
-/* harmony import */ var _request_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./request-admin.component.scss?ngResource */ 96063);
+/* harmony import */ var _request_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./request-admin.component.scss?ngResource */ 20723);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/users.service */ 77464);
@@ -209,6 +209,17 @@ let RequestAdminComponent = class RequestAdminComponent {
     this.routerOutlet = routerOutlet;
     this.loading = true;
     this.itemList = [];
+    this.filterSelected = '>';
+    this.filterItems = [{
+      name: 'Sin Asignar',
+      filter: 'unassigned'
+    }, {
+      name: 'Próximas',
+      filter: '>'
+    }, {
+      name: 'Pasadas',
+      filter: '<'
+    }];
   }
 
   ngOnInit() {
@@ -221,8 +232,10 @@ let RequestAdminComponent = class RequestAdminComponent {
     return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const userData = yield _this.auth.getUser();
       _this.user = userData.data;
-      _this.itemList = yield _this.requests.readRequestListOrder();
+      _this.itemList = yield _this.requests //.readRequestListOrder();
+      .readRequestListOrderRent("startDate", new Date().toISOString(), _this.filterSelected);
       _this.loading = false;
+      console.log(_this.itemList);
       return _this.user;
     })();
   }
@@ -237,6 +250,11 @@ let RequestAdminComponent = class RequestAdminComponent {
         refresh.target.complete();
       }
     })();
+  }
+
+  filterChange(e) {
+    this.filterSelected = e.detail.value;
+    this.loadData();
   }
 
   createRequest() {
@@ -322,7 +340,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _services_admin_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services-admin.component.html?ngResource */ 30581);
-/* harmony import */ var _services_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services-admin.component.scss?ngResource */ 38611);
+/* harmony import */ var _services_admin_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services-admin.component.scss?ngResource */ 96404);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
@@ -605,7 +623,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _services_manager_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services-manager.page.html?ngResource */ 42727);
-/* harmony import */ var _services_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services-manager.page.scss?ngResource */ 62837);
+/* harmony import */ var _services_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services-manager.page.scss?ngResource */ 29508);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
 
@@ -639,7 +657,7 @@ ServicesManagerPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
 
 /***/ }),
 
-/***/ 97240:
+/***/ 88519:
 /*!********************************************************************************************************************!*\
   !*** ./src/app/pages/administrator/services-manager/maintenance-admin/maintenance-admin.component.scss?ngResource ***!
   \********************************************************************************************************************/
@@ -649,7 +667,7 @@ module.exports = ".headerServiceList {\n  border-bottom: 2px solid rgb(187, 187,
 
 /***/ }),
 
-/***/ 96063:
+/***/ 20723:
 /*!************************************************************************************************************!*\
   !*** ./src/app/pages/administrator/services-manager/request-admin/request-admin.component.scss?ngResource ***!
   \************************************************************************************************************/
@@ -659,7 +677,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 38611:
+/***/ 96404:
 /*!**************************************************************************************************************!*\
   !*** ./src/app/pages/administrator/services-manager/services-admin/services-admin.component.scss?ngResource ***!
   \**************************************************************************************************************/
@@ -669,7 +687,7 @@ module.exports = ".headerServiceList {\n  border-bottom: 2px solid rgb(187, 187,
 
 /***/ }),
 
-/***/ 62837:
+/***/ 29508:
 /*!********************************************************************************************!*\
   !*** ./src/app/pages/administrator/services-manager/services-manager.page.scss?ngResource ***!
   \********************************************************************************************/
@@ -695,7 +713,7 @@ module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"
   \************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene solicitudes aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-request *ngFor=\"let request of itemList\" [request]=\"request\" [reserve]=\"false\" [currentUser]=\"user\" (click)=\"openRequest(request,null)\"></app-item-request>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createRequest()\">\n      <ion-icon size=\"large\" name=\"add-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
+module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n    <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n  </ion-refresher>\n  \n  <ion-list *ngIf=\"loading\">\n    <app-loading-view></app-loading-view>\n  </ion-list>\n  \n  <ion-item *ngIf=\"!loading\">\n    <ion-label>Filtro Fecha:</ion-label>\n    <ion-select placeholder=\"Todos los espacios\" class=\"ion-text-capitalize\" mode='ios' [value]=\"filterSelected\" (ionChange)=\"filterChange($event)\">\n      <ion-select-option class=\"ion-text-capitalize\" *ngFor=\"let item of filterItems\" [value]=\"item.filter\"> {{item.name}}</ion-select-option>\n    </ion-select>\n  </ion-item>\n  \n  <app-not-data-yet-message \n    *ngIf=\"itemList.length == 0 && !loading\"\n    text=\"No tiene solicitudes aún\" icon=\"alert-circle-outline\"\n  ></app-not-data-yet-message>\n  \n  <ion-list *ngIf=\"itemList.length > 0 && !loading\">\n    <app-item-request *ngFor=\"let request of itemList\" [request]=\"request\" [reserve]=\"false\" [currentUser]=\"user\" (click)=\"openRequest(request,null)\"></app-item-request>\n  </ion-list>\n    \n  <ion-fab vertical=\"bottom\" horizontal=\"center\" slot=\"fixed\">\n    <ion-fab-button color=\"secondary\" (click)=\"createRequest()\">\n      <ion-icon size=\"large\" name=\"add-outline\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n</ion-content>";
 
 /***/ }),
 
@@ -715,7 +733,7 @@ module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"
   \********************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-header *ngIf=\"selectedTab === 'request'\" title=\"Tíquetes\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'services'\" title=\"Servicios\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'maintenance'\" title=\"Mantenimientos\"></app-main-header>\n</div>\n<ion-toolbar>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"request\">\n    <ion-segment-button value=\"request\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Tíquetes</ion-label>\n      <ion-icon name=\"book-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"services\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Servicios</ion-label>\n      <ion-icon name=\"hammer-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"maintenance\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Mantenimiento</ion-label>\n      <ion-icon name=\"build-outline\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n</ion-toolbar>\n\n<app-request-admin *ngIf=\"selectedTab === 'request'\" style=\"height: 100%\"></app-request-admin>\n<app-services-admin *ngIf=\"selectedTab === 'services'\" style=\"height: 100%\"></app-services-admin>\n<app-maintenance-admin *ngIf=\"selectedTab === 'maintenance'\" style=\"height: 100%\"></app-maintenance-admin>";
+module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-header *ngIf=\"selectedTab === 'request'\" title=\"Tíquetes\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'services'\" title=\"Servicios\"></app-main-header>\n  <app-main-header *ngIf=\"selectedTab === 'maintenance'\" title=\"Mantenimientos\"></app-main-header>\n</div>\n<ion-toolbar>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" value=\"request\">\n    <ion-segment-button value=\"request\" layout=\"icon-start\">\n      <ion-label>Tíquetes</ion-label>\n      <ion-icon name=\"book-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"services\" layout=\"icon-start\">\n      <ion-label>Servicios</ion-label>\n      <ion-icon name=\"hammer-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"maintenance\" layout=\"icon-start\">\n      <ion-label>Mantenimiento</ion-label>\n      <ion-icon name=\"build-outline\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n</ion-toolbar>\n\n<app-request-admin *ngIf=\"selectedTab === 'request'\" style=\"height: 100%\"></app-request-admin>\n<app-services-admin *ngIf=\"selectedTab === 'services'\" style=\"height: 100%\"></app-services-admin>\n<app-maintenance-admin *ngIf=\"selectedTab === 'maintenance'\" style=\"height: 100%\"></app-maintenance-admin>";
 
 /***/ })
 

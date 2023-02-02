@@ -314,6 +314,7 @@ let FirestoreActionsService = class FirestoreActionsService {
         return new Promise((resolve, reject) => {
             try {
                 const filterOp = filterOperator ? filterOperator : '==';
+                console.log(filterName, filterOp, filterValue);
                 const callDoc = this.afs.collection(folderName, (ref => ref.where(filterName, filterOp, filterValue).orderBy(orderField))).valueChanges();
                 callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
                     resolve(querySnapshot);
@@ -431,6 +432,23 @@ let FirestoreActionsService = class FirestoreActionsService {
                     .where('communityUID', '==', communityUID)
                     .where('maintenance', '==', maintenance)
                     .orderBy('serviceType'))).valueChanges();
+                callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
+                    resolve(querySnapshot);
+                });
+            }
+            catch (error) {
+                reject(this.error.handle(error));
+            }
+        });
+    }
+    readMonthDocs(folderName, startDate, endDate, orderField, userUID) {
+        return new Promise((resolve, reject) => {
+            try {
+                const callDoc = this.afs.collection(folderName, (ref => ref
+                    .where(orderField, '>=', startDate)
+                    .where(orderField, '<=', endDate)
+                    .where('userUID', '==', userUID)
+                    .orderBy(orderField))).valueChanges();
                 callDoc.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1)).subscribe((querySnapshot) => {
                     resolve(querySnapshot);
                 });
@@ -2509,6 +2527,15 @@ let TimeHandlerModule = class TimeHandlerModule {
     return a.diff(b, 'minutes');
   }
 
+  getMonthDates(myDate) {
+    const firstDay = moment__WEBPACK_IMPORTED_MODULE_1__(myDate).startOf('month');
+    const lastDay = moment__WEBPACK_IMPORTED_MODULE_1__(myDate).endOf('month');
+    return {
+      start: firstDay,
+      end: lastDay
+    };
+  }
+
 };
 
 TimeHandlerModule.ctorParameters = () => [{
@@ -3001,6 +3028,11 @@ const DEFAULT_MAX_OPERATION_RETRY_TIME = 2 * 60 * 1000;
 
 const DEFAULT_MAX_UPLOAD_RETRY_TIME = 10 * 60 * 1000;
 /**
+ * 1 second
+ */
+
+const DEFAULT_MIN_SLEEP_TIME_MILLIS = 1000;
+/**
  * @license
  * Copyright 2017 Google LLC
  *
@@ -3027,9 +3059,11 @@ class StorageError extends _firebase_util__WEBPACK_IMPORTED_MODULE_2__.FirebaseE
    * @param code - A StorageErrorCode string to be prefixed with 'storage/' and
    *  added to the end of the message.
    * @param message  - Error message.
+   * @param status_ - Corresponding HTTP Status Code
    */
-  constructor(code, message) {
+  constructor(code, message, status_ = 0) {
     super(prependCode(code), `Firebase Storage: ${message} (${prependCode(code)})`);
+    this.status_ = status_;
     /**
      * Stores custom error data unque to StorageError.
      */
@@ -3041,6 +3075,14 @@ class StorageError extends _firebase_util__WEBPACK_IMPORTED_MODULE_2__.FirebaseE
     // returns false.
 
     Object.setPrototypeOf(this, StorageError.prototype);
+  }
+
+  get status() {
+    return this.status_;
+  }
+
+  set status(status) {
+    this.status_ = status;
   }
   /**
    * Compares a StorageErrorCode against this error's code, filtering out the prefix.
@@ -3159,6 +3201,12 @@ function noDownloadURL() {
   return new StorageError("no-download-url"
   /* NO_DOWNLOAD_URL */
   , 'The given file does not have any download URLs.');
+}
+
+function missingPolyFill(polyFill) {
+  return new StorageError("unsupported-environment"
+  /* UNSUPPORTED_ENVIRONMENT */
+  , `${polyFill} is missing. Make sure to install the required polyfills. See https://firebase.google.com/docs/web/environments-js-sdk#polyfills for more information.`);
 }
 /**
  * @internal
@@ -3390,15 +3438,21 @@ class FailRequest {
  */
 
 /**
- * @param f May be invoked
- *     before the function returns.
- * @param callback Get all the arguments passed to the function
- *     passed to f, including the initial boolean.
+ * Accepts a callback for an action to perform (`doRequest`),
+ * and then a callback for when the backoff has completed (`backoffCompleteCb`).
+ * The callback sent to start requires an argument to call (`onRequestComplete`).
+ * When `start` calls `doRequest`, it passes a callback for when the request has
+ * completed, `onRequestComplete`. Based on this, the backoff continues, with
+ * another call to `doRequest` and the above loop continues until the timeout
+ * is hit, or a successful response occurs.
+ * @description
+ * @param doRequest Callback to perform request
+ * @param backoffCompleteCb Callback to call when backoff has been completed
  */
 
 
-function start(f, // eslint-disable-next-line @typescript-eslint/no-explicit-any
-callback, timeout) {
+function start(doRequest, // eslint-disable-next-line @typescript-eslint/no-explicit-any
+backoffCompleteCb, timeout) {
   // TODO(andysoto): make this code cleaner (probably refactor into an actual
   // type instead of a bunch of functions with state shared in the closure)
   let waitSeconds = 1; // Would type this as "number" but that doesn't work for Node so ¯\_(ツ)_/¯
@@ -3420,14 +3474,14 @@ callback, timeout) {
   function triggerCallback(...args) {
     if (!triggeredCallback) {
       triggeredCallback = true;
-      callback.apply(null, args);
+      backoffCompleteCb.apply(null, args);
     }
   }
 
   function callWithDelay(millis) {
     retryTimeoutId = setTimeout(() => {
       retryTimeoutId = null;
-      f(handler, canceled());
+      doRequest(responseHandler, canceled());
     }, millis);
   }
 
@@ -3437,7 +3491,7 @@ callback, timeout) {
     }
   }
 
-  function handler(success, ...args) {
+  function responseHandler(success, ...args) {
     if (triggeredCallback) {
       clearGlobalTimeout();
       return;
@@ -3561,7 +3615,9 @@ function isNativeBlob(p) {
 }
 
 function isNativeBlobDefined() {
-  return typeof Blob !== 'undefined';
+  // Note: The `isNode()` check can be removed when `node-fetch` adds native Blob support
+  // PR: https://github.com/node-fetch/node-fetch/pull/1664
+  return typeof Blob !== 'undefined' && !(0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.isNode)();
 }
 
 function validateNumber(argument, minValue, maxValue, value) {
@@ -3647,6 +3703,42 @@ var ErrorCode;
 })(ErrorCode || (ErrorCode = {}));
 /**
  * @license
+ * Copyright 2022 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Checks the status code to see if the action should be retried.
+ *
+ * @param status Current HTTP status code returned by server.
+ * @param additionalRetryCodes additional retry codes to check against
+ */
+
+
+function isRetryStatusCode(status, additionalRetryCodes) {
+  // The codes for which to retry came from this page:
+  // https://cloud.google.com/storage/docs/exponential-backoff
+  const isFiveHundredCode = status >= 500 && status < 600;
+  const extraRetryCodes = [// Request Timeout: web server didn't receive full request in time.
+  408, // Too Many Requests: you're getting rate-limited, basically.
+  429];
+  const isExtraRetryCode = extraRetryCodes.indexOf(status) !== -1;
+  const isAdditionalRetryCode = additionalRetryCodes.indexOf(status) !== -1;
+  return isFiveHundredCode || isExtraRetryCode || isAdditionalRetryCode;
+}
+/**
+ * @license
  * Copyright 2017 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -3673,7 +3765,7 @@ var ErrorCode;
 
 
 class NetworkRequest {
-  constructor(url_, method_, headers_, body_, successCodes_, additionalRetryCodes_, callback_, errorCallback_, timeout_, progressCallback_, connectionFactory_) {
+  constructor(url_, method_, headers_, body_, successCodes_, additionalRetryCodes_, callback_, errorCallback_, timeout_, progressCallback_, connectionFactory_, retry = true) {
     this.url_ = url_;
     this.method_ = method_;
     this.headers_ = headers_;
@@ -3685,6 +3777,7 @@ class NetworkRequest {
     this.timeout_ = timeout_;
     this.progressCallback_ = progressCallback_;
     this.connectionFactory_ = connectionFactory_;
+    this.retry = retry;
     this.pendingConnection_ = null;
     this.backoffId_ = null;
     this.canceled_ = false;
@@ -3734,7 +3827,7 @@ class NetworkRequest {
         const hitServer = connection.getErrorCode() === ErrorCode.NO_ERROR;
         const status = connection.getStatus();
 
-        if (!hitServer || this.isRetryStatusCode_(status)) {
+        if ((!hitServer || isRetryStatusCode(status, this.additionalRetryCodes_)) && this.retry) {
           const wasCanceled = connection.getErrorCode() === ErrorCode.ABORT;
           backoffCallback(false, new RequestEndStatus(false, null, wasCanceled));
           return;
@@ -3817,18 +3910,6 @@ class NetworkRequest {
     }
   }
 
-  isRetryStatusCode_(status) {
-    // The codes for which to retry came from this page:
-    // https://cloud.google.com/storage/docs/exponential-backoff
-    const isFiveHundredCode = status >= 500 && status < 600;
-    const extraRetryCodes = [// Request Timeout: web server didn't receive full request in time.
-    408, // Too Many Requests: you're getting rate-limited, basically.
-    429];
-    const isExtraRetryCode = extraRetryCodes.indexOf(status) !== -1;
-    const isRequestSpecificRetryCode = this.additionalRetryCodes_.indexOf(status) !== -1;
-    return isFiveHundredCode || isExtraRetryCode || isRequestSpecificRetryCode;
-  }
-
 }
 /**
  * A collection of information about the result of a network request.
@@ -3867,7 +3948,7 @@ function addAppCheckHeader_(headers, appCheckToken) {
   }
 }
 
-function makeRequest(requestInfo, appId, authToken, appCheckToken, requestFactory, firebaseVersion) {
+function makeRequest(requestInfo, appId, authToken, appCheckToken, requestFactory, firebaseVersion, retry = true) {
   const queryPart = makeQueryString(requestInfo.urlParams);
   const url = requestInfo.url + queryPart;
   const headers = Object.assign({}, requestInfo.headers);
@@ -3875,7 +3956,7 @@ function makeRequest(requestInfo, appId, authToken, appCheckToken, requestFactor
   addAuthHeader_(headers, authToken);
   addVersionHeader_(headers, firebaseVersion);
   addAppCheckHeader_(headers, appCheckToken);
-  return new NetworkRequest(url, requestInfo.method, headers, requestInfo.body, requestInfo.successCodes, requestInfo.additionalRetryCodes, requestInfo.handler, requestInfo.errorHandler, requestInfo.timeout, requestInfo.progressCallback, requestFactory);
+  return new NetworkRequest(url, requestInfo.method, headers, requestInfo.body, requestInfo.successCodes, requestInfo.additionalRetryCodes, requestInfo.handler, requestInfo.errorHandler, requestInfo.timeout, requestInfo.progressCallback, requestFactory, retry);
 }
 /**
  * @license
@@ -3976,6 +4057,10 @@ function sliceBlob(blob, start, end) {
 
 
 function decodeBase64(encoded) {
+  if (typeof atob === 'undefined') {
+    throw missingPolyFill('base-64');
+  }
+
   return atob(encoded);
 }
 /**
@@ -4157,6 +4242,10 @@ function base64Bytes_(format, value) {
   try {
     bytes = decodeBase64(value);
   } catch (e) {
+    if (e.message.includes('polyfill')) {
+      throw e;
+    }
+
     throw invalidFormat(format, 'Invalid character found');
   }
 
@@ -4795,6 +4884,7 @@ function sharedErrorHandler(location) {
       }
     }
 
+    newErr.status = xhr.getStatus();
     newErr.serverResponse = err.serverResponse;
     return newErr;
   }
@@ -5133,7 +5223,16 @@ function continueResumableUpload(location, service, url, blob, chunkSize, mappin
 
   const startByte = status_.current;
   const endByte = startByte + bytesToUpload;
-  const uploadCommand = bytesToUpload === bytesLeft ? 'upload, finalize' : 'upload';
+  let uploadCommand = '';
+
+  if (bytesToUpload === 0) {
+    uploadCommand = 'finalize';
+  } else if (bytesLeft === bytesToUpload) {
+    uploadCommand = 'upload, finalize';
+  } else {
+    uploadCommand = 'upload';
+  }
+
   const headers = {
     'X-Goog-Upload-Command': uploadCommand,
     'X-Goog-Upload-Offset': `${status_.current}`
@@ -5564,6 +5663,19 @@ class UploadTask {
         this._needToFetchStatus = true;
         this.completeTransitions_();
       } else {
+        const backoffExpired = this.isExponentialBackoffExpired();
+
+        if (isRetryStatusCode(error.status, [])) {
+          if (backoffExpired) {
+            error = retryLimitExceeded();
+          } else {
+            this.sleepTime = Math.max(this.sleepTime * 2, DEFAULT_MIN_SLEEP_TIME_MILLIS);
+            this._needToFetchStatus = true;
+            this.completeTransitions_();
+            return;
+          }
+        }
+
         this._error = error;
 
         this._transition("error"
@@ -5588,6 +5700,8 @@ class UploadTask {
       }
     };
 
+    this.sleepTime = 0;
+    this.maxSleepTime = this._ref.storage.maxUploadRetryTime;
     this._promise = new Promise((resolve, reject) => {
       this._resolve = resolve;
       this._reject = reject;
@@ -5597,6 +5711,10 @@ class UploadTask {
     // to the top level with a dummy handler.
 
     this._promise.then(null, () => {});
+  }
+
+  isExponentialBackoffExpired() {
+    return this.sleepTime > this.maxSleepTime;
   }
 
   _makeProgressCallback() {
@@ -5631,7 +5749,11 @@ class UploadTask {
             // Happens if we miss the metadata on upload completion.
             this._fetchMetadata();
           } else {
-            this._continueUpload();
+            this.pendingTimeout = setTimeout(() => {
+              this.pendingTimeout = undefined;
+
+              this._continueUpload();
+            }, this.sleepTime);
           }
         }
       }
@@ -5736,7 +5858,10 @@ class UploadTask {
         return;
       }
 
-      const uploadRequest = this._ref.storage._makeRequest(requestInfo, newTextConnection, authToken, appCheckToken);
+      const uploadRequest = this._ref.storage._makeRequest(requestInfo, newTextConnection, authToken, appCheckToken,
+      /*retry=*/
+      false // Upload requests should not be retried as each retry should be preceded by another query request. Which is handled in this file.
+      );
 
       this._request = uploadRequest;
       uploadRequest.getPromise().then(newStatus => {
@@ -5762,7 +5887,7 @@ class UploadTask {
   _increaseMultiplier() {
     const currentSize = RESUMABLE_UPLOAD_CHUNK_SIZE * this._chunkMultiplier; // Max chunk size is 32M.
 
-    if (currentSize < 32 * 1024 * 1024) {
+    if (currentSize * 2 < 32 * 1024 * 1024) {
       this._chunkMultiplier *= 2;
     }
   }
@@ -5825,6 +5950,9 @@ class UploadTask {
       case "canceling"
       /* CANCELING */
       :
+      case "pausing"
+      /* PAUSING */
+      :
         // TODO(andysoto):
         // assert(this.state_ === InternalTaskState.RUNNING ||
         //        this.state_ === InternalTaskState.PAUSING);
@@ -5832,19 +5960,10 @@ class UploadTask {
 
         if (this._request !== undefined) {
           this._request.cancel();
-        }
-
-        break;
-
-      case "pausing"
-      /* PAUSING */
-      :
-        // TODO(andysoto):
-        // assert(this.state_ === InternalTaskState.RUNNING);
-        this._state = state;
-
-        if (this._request !== undefined) {
-          this._request.cancel();
+        } else if (this.pendingTimeout) {
+          clearTimeout(this.pendingTimeout);
+          this.pendingTimeout = undefined;
+          this.completeTransitions_();
         }
 
         break;
@@ -5984,6 +6103,7 @@ class UploadTask {
 
 
   on(type, nextOrObserver, error, completed) {
+    // Note: `type` isn't being used. Its type is also incorrect. TaskEvent should not be a string.
     const observer = new Observer(nextOrObserver || undefined, error || undefined, completed || undefined);
 
     this._addObserver(observer);
@@ -6838,9 +6958,9 @@ class FirebaseStorageImpl {
    */
 
 
-  _makeRequest(requestInfo, requestFactory, authToken, appCheckToken) {
+  _makeRequest(requestInfo, requestFactory, authToken, appCheckToken, retry = true) {
     if (!this._deleted) {
-      const request = makeRequest(requestInfo, this._appId, authToken, appCheckToken, requestFactory, this._firebaseVersion);
+      const request = makeRequest(requestInfo, this._appId, authToken, appCheckToken, requestFactory, this._firebaseVersion, retry);
 
       this._requests.add(request); // Request removes itself from set when complete.
 
@@ -6864,7 +6984,7 @@ class FirebaseStorageImpl {
 }
 
 const name = "@firebase/storage";
-const version = "0.9.9";
+const version = "0.9.14";
 /**
  * @license
  * Copyright 2020 Google LLC
@@ -7106,6 +7226,12 @@ function getStorage(app = (0,_firebase_app__WEBPACK_IMPORTED_MODULE_1__.getApp)(
   const storageInstance = storageProvider.getImmediate({
     identifier: bucketUrl
   });
+  const emulator = (0,_firebase_util__WEBPACK_IMPORTED_MODULE_2__.getDefaultEmulatorHostnameAndPort)('storage');
+
+  if (emulator) {
+    connectStorageEmulator(storageInstance, ...emulator);
+  }
+
   return storageInstance;
 }
 /**
@@ -7221,6 +7347,8 @@ registerStorage();
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AbstractUserDataWriter": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.AbstractUserDataWriter),
+/* harmony export */   "AggregateField": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.AggregateField),
+/* harmony export */   "AggregateQuerySnapshot": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.AggregateQuerySnapshot),
 /* harmony export */   "Bytes": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.Bytes),
 /* harmony export */   "CACHE_SIZE_UNLIMITED": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.CACHE_SIZE_UNLIMITED),
 /* harmony export */   "CollectionReference": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.CollectionReference),
@@ -7251,6 +7379,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "_logWarn": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__._logWarn),
 /* harmony export */   "_validateIsNotUsedTogether": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__._validateIsNotUsedTogether),
 /* harmony export */   "addDoc": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.addDoc),
+/* harmony export */   "aggregateQuerySnapshotEqual": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.aggregateQuerySnapshotEqual),
 /* harmony export */   "arrayRemove": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.arrayRemove),
 /* harmony export */   "arrayUnion": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.arrayUnion),
 /* harmony export */   "clearIndexedDbPersistence": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.clearIndexedDbPersistence),
@@ -7269,6 +7398,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "endBefore": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.endBefore),
 /* harmony export */   "ensureFirestoreConfigured": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.ensureFirestoreConfigured),
 /* harmony export */   "executeWrite": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.executeWrite),
+/* harmony export */   "getCountFromServer": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.getCountFromServer),
 /* harmony export */   "getDoc": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.getDoc),
 /* harmony export */   "getDocFromCache": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.getDocFromCache),
 /* harmony export */   "getDocFromServer": () => (/* reexport safe */ _firebase_firestore__WEBPACK_IMPORTED_MODULE_0__.getDocFromServer),

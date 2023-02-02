@@ -43,8 +43,10 @@ export class SpacesAdminComponent implements OnInit {
       let list: Space[] = [];
       const userData:any = await this.auth.getUser();
       if(this.filterSelected === 'Todos'){
-        list = await this.spaces.readSpacesListOrder()
-      }else{list = await this.spaces.readSpacesListOrderType(this.filterSelected);}
+        list = await this.spaces.readSpacesListOrder();
+      }else{
+        list = await this.spaces.readSpacesListOrderType(this.filterSelected);
+      }
       if(reload){
         if(list.length>0 && list.length < this.itemList.length){
           list.forEach(newItem => {

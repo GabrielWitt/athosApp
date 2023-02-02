@@ -60,7 +60,7 @@ export class FirestoreActionsService {
   readCollectionOrderFilter(folderName:string, filterName: string, filterValue: any, orderField: string, filterOperator?:WhereFilterOp){
     return new Promise((resolve, reject) => {
       try {
-        const filterOp: WhereFilterOp = filterOperator ? filterOperator : '=='
+        const filterOp: WhereFilterOp = filterOperator ? filterOperator : '==';
         const callDoc = this.afs.collection(
           folderName,(ref => ref.where(filterName, filterOp, filterValue).orderBy(orderField))
         ).valueChanges();
@@ -189,6 +189,26 @@ export class FirestoreActionsService {
             .where('communityUID', '==', communityUID)
             .where('maintenance', '==', maintenance)
             .orderBy('serviceType'))
+        ).valueChanges();
+
+        callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {
+          resolve(querySnapshot); 
+        })
+      } catch (error) {
+        reject(this.error.handle(error));
+      }
+    });
+  }
+
+  readMonthDocs(folderName, startDate, endDate, orderField, userUID){
+    return new Promise((resolve, reject) => {
+      try {
+        const callDoc = this.afs.collection(
+          folderName,(ref => ref
+            .where('userUID', '==', userUID)
+            .where(orderField, '>=', startDate) 
+            .where(orderField, '<=', endDate)
+            .orderBy(orderField))
         ).valueChanges();
 
         callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {

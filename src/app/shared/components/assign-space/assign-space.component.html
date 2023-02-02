@@ -8,7 +8,7 @@
         Cancelar
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-uppercase">{{userData ? userData.name +' '+ userData.lastName:'Nuevo Usuario'}}</ion-title>
+    <ion-title class="ion-text-uppercase">Espacios de {{userData ? userData.name +' '+ userData.lastName:'Nuevo Usuario'}}</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="edit && !loading" color="success" (click)="sendData()" 
         [disabled]="loading || selectedSpace?.monthlyCost === 0">

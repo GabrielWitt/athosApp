@@ -7,11 +7,8 @@
     </ion-buttons>
     <ion-title class="ion-text-uppercase">RECIBO </ion-title>
     <ion-buttons slot="end" *ngIf="currentUser.type === 'administrador'">
-      <ion-button color="success" [disabled]="loading" *ngIf="generate" (click)="payReceipt()">
+      <ion-button color="success" [disabled]="loading" *ngIf="receipt.status !== 'Pagado'" (click)="payReceipt()">
           Cobrar
-      </ion-button>
-      <ion-button color="success" [disabled]="loading" *ngIf="!generate" (click)="payReceipt()">
-          Generar
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

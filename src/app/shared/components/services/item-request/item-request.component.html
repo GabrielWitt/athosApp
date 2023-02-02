@@ -1,18 +1,21 @@
 <ion-item detail>
-  <ion-thumbnail slot="start">
+  <ion-thumbnail size="small" style="margin-right: 15px;" slot="start">
     <img [src]="request.service.photo ? request.service.photo : defaultSpace">
   </ion-thumbnail>
   <ion-label class="ion-text-wrap">
     <ion-text color="dark">
-      <h2 class="ion-text-capitalize"> {{request.service.name}} ({{request.service.unitNumber}}) </h2>
+      <h2 class="ion-text-capitalize"> {{request.service.name}} {{request.service.unitNumber?'('+request.service.unitNumber+')':''}}) </h2>
     </ion-text>
     <app-status-request [status]="request.status"></app-status-request>
   </ion-label>
-  <ion-note slot="end" style="width: 27vw;">
+  <ion-note slot="end" style="width: 30vw;">
     <ion-text color="medium" class="ion-text-capitalize">
       <ion-text color="tertiary" *ngIf="request.employeeUID === currentUser.uid">Designado</ion-text>
       <ion-text color="dark"><p *ngIf="request.startDate">{{request.startDate | timeFormat: 'fullDateUTC'}} <ion-icon size="small" color="tertiary" name="calendar-number-outline"></ion-icon></p></ion-text>
-      <p *ngIf="!request.startDate && request.createdAt ">{{request.createdAt | timeFormat: 'shortDateUTC'}} <ion-icon size="small" color="secondary" name="paper-plane-outline"></ion-icon></p>
+      <p *ngIf="!request.startDate && request.createdAt ">{{request.createdAt | timeFormat: 'shortDateUTC'}} 
+        <ion-icon size="small" *ngIf="request.status !== 'Cancelado'" color="secondary" name="paper-plane-outline"></ion-icon>
+        <ion-icon size="small" *ngIf="request.status === 'Cancelado'" color="danger" name="alert-circle-outline"></ion-icon>
+      </p>
     </ion-text>
   </ion-note>
 </ion-item>

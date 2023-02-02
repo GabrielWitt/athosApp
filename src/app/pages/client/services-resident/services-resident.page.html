@@ -6,11 +6,11 @@
 <ion-toolbar>
   <ion-segment (ionChange)="segmentChanged($event)" [value]="services.selectedTab">
     <ion-segment-button value="services" layout="icon-start">
-      <ion-label *ngIf="userCtrl.platform === 'web'">Servicios</ion-label>
+      <ion-label>Servicios</ion-label>
       <ion-icon name="hammer-outline"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="maintenance" layout="icon-start">
-      <ion-label *ngIf="userCtrl.platform === 'web'">Tíquetes</ion-label>
+      <ion-label>Tíquetes</ion-label>
       <ion-icon name="book-outline"></ion-icon>
     </ion-segment-button>
   </ion-segment>

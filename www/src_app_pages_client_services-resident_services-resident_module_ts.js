@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _maintenance_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./maintenance.component.html?ngResource */ 61649);
-/* harmony import */ var _maintenance_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./maintenance.component.scss?ngResource */ 32183);
+/* harmony import */ var _maintenance_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./maintenance.component.scss?ngResource */ 86177);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_services_modules_calendar_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/services/modules/calendar.service */ 16695);
@@ -228,7 +228,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _services_resident_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services-resident.page.html?ngResource */ 42527);
-/* harmony import */ var _services_resident_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services-resident.page.scss?ngResource */ 62319);
+/* harmony import */ var _services_resident_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services-resident.page.scss?ngResource */ 25042);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var src_app_core_controller_services_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/controller/services.controller */ 82333);
 /* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
@@ -278,7 +278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _services_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services.component.html?ngResource */ 69018);
-/* harmony import */ var _services_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services.component.scss?ngResource */ 62944);
+/* harmony import */ var _services_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services.component.scss?ngResource */ 77848);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_controller_services_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/services.controller */ 82333);
@@ -378,7 +378,7 @@ ServicesComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angul
 
 /***/ }),
 
-/***/ 32183:
+/***/ 86177:
 /*!**************************************************************************************************!*\
   !*** ./src/app/pages/client/services-resident/maintenance/maintenance.component.scss?ngResource ***!
   \**************************************************************************************************/
@@ -388,7 +388,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 62319:
+/***/ 25042:
 /*!***************************************************************************************!*\
   !*** ./src/app/pages/client/services-resident/services-resident.page.scss?ngResource ***!
   \***************************************************************************************/
@@ -398,7 +398,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 62944:
+/***/ 77848:
 /*!********************************************************************************************!*\
   !*** ./src/app/pages/client/services-resident/services/services.component.scss?ngResource ***!
   \********************************************************************************************/
@@ -424,7 +424,7 @@ module.exports = "<ion-content>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"
   \***************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-header *ngIf=\"services.selectedTab === 'maintenance'\" title=\"Tíquetes\"></app-main-header>\n  <app-main-header *ngIf=\"services.selectedTab === 'services'\" title=\"Servicios\"></app-main-header>\n</div>\n\n<ion-toolbar>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" [value]=\"services.selectedTab\">\n    <ion-segment-button value=\"services\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Servicios</ion-label>\n      <ion-icon name=\"hammer-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"maintenance\" layout=\"icon-start\">\n      <ion-label *ngIf=\"userCtrl.platform === 'web'\">Tíquetes</ion-label>\n      <ion-icon name=\"book-outline\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n</ion-toolbar>\n<app-services *ngIf=\"services.selectedTab === 'services'\" style=\"height: 100%\"></app-services>\n<app-maintenance *ngIf=\"services.selectedTab === 'maintenance'\" style=\"height: 100%\"></app-maintenance>";
+module.exports = "<div *ngIf=\"userCtrl.platform !== 'web'\">\n  <app-main-header *ngIf=\"services.selectedTab === 'maintenance'\" title=\"Tíquetes\"></app-main-header>\n  <app-main-header *ngIf=\"services.selectedTab === 'services'\" title=\"Servicios\"></app-main-header>\n</div>\n\n<ion-toolbar>\n  <ion-segment (ionChange)=\"segmentChanged($event)\" [value]=\"services.selectedTab\">\n    <ion-segment-button value=\"services\" layout=\"icon-start\">\n      <ion-label>Servicios</ion-label>\n      <ion-icon name=\"hammer-outline\"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value=\"maintenance\" layout=\"icon-start\">\n      <ion-label>Tíquetes</ion-label>\n      <ion-icon name=\"book-outline\"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n</ion-toolbar>\n<app-services *ngIf=\"services.selectedTab === 'services'\" style=\"height: 100%\"></app-services>\n<app-maintenance *ngIf=\"services.selectedTab === 'maintenance'\" style=\"height: 100%\"></app-maintenance>";
 
 /***/ }),
 

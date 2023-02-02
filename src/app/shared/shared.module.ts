@@ -14,6 +14,7 @@ import { DetailHeaderComponent } from './components/view/detail-header/detail-he
 import { NotDataYetMessageComponent } from './components/view/not-data-yet-message/not-data-yet-message.component';
 import { LoadingViewComponent } from './components/view/loading-view/loading-view.component';
 import { StatusRequestComponent } from './components/view/status-request/status-request.component';
+import { ImageLoaderComponent } from './components/view/image-loader/image-loader.component';
 
 // Components
 import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
@@ -47,7 +48,7 @@ import { SignModalComponent } from './components/view/sign-modal/sign-modal.comp
 import { ReservationItemComponent } from './components/calendar/reservation-item/reservation-item.component';
 import { CalendarServiceItemComponent } from './components/calendar/calendar-service-item/calendar-service-item.component';
 import { SolveTaskComponent } from './components/services/solve-task/solve-task.component';
-import { AssignSpaceComponent } from '../app/shared/components/spaces/assign-space/assign-space.component';
+import { AssignSpaceComponent } from './components/assign-space/assign-space.component';
 
 const components = [
   BigButtonComponent,
@@ -58,6 +59,7 @@ const components = [
   LoadingViewComponent,
   ImagePreviewComponent,
   StatusRequestComponent,
+  ImageLoaderComponent,
   // User
   UserProfileComponent,
   ItemUserComponent,

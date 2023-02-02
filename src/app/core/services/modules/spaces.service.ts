@@ -50,18 +50,18 @@ export class SpacesService {
     });
   }
 
-  readSpace(uid){
-    return new Promise<Space>((resolve,reject) => {
-      this.firestore.readDocument(this.SpacesFolder,uid)
-      .then((docs: Space) => { resolve(docs) })
-      .catch((error) => { reject(this.error.handle(error)); });
-    });
-  }
-
   readSpacesList(){
     return new Promise<Space[]>((resolve,reject) => {
       this.firestore.readCollection(this.SpacesFolder)
       .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
+  readSpace(uid){
+    return new Promise<Space>((resolve,reject) => {
+      this.firestore.readDocument(this.SpacesFolder,uid)
+      .then((docs: Space) => { resolve(docs) })
       .catch((error) => { reject(this.error.handle(error)); });
     });
   }

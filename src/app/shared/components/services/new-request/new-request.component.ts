@@ -71,11 +71,7 @@ export class NewRequestComponent implements OnInit {
       this.vie = this.service.weekdays[5];
       this.sab = this.service.weekdays[6];
     }
-    if(this.request){
-      this.myRequest = this.request;
-      console.log(this.request)
-      console.log(this.currentUser)
-    }
+    if(this.request){ this.myRequest = this.request; }
     if(this.users?.length > 1){ 
       this.selectedUser = this.currentUser; 
       this.selectedUserUID=this.currentUser.uid;
@@ -86,6 +82,7 @@ export class NewRequestComponent implements OnInit {
       this.units = this.selectedUser.leases?this.selectedUser.leases:[];
     }
     this.users.push(this.currentUser);
+    console.log(this.request)
   }
 
   async enableForm(){
@@ -170,7 +167,6 @@ export class NewRequestComponent implements OnInit {
         comments: [],
         preferredDays: [this.dom,this.lun,this.mar,this.mie,this.jue,this.vie,this.sab]
       }
-      console.log(this.myRequest)
       if(this.request){
         await this.requests.UpdateRequest(this.myRequest, this.currentUser);
       } else {

@@ -7,9 +7,9 @@ import { CalendarItem, HistoryRecord } from '../../models/calendar';
 import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 import { CalendarService } from './calendar.service';
 import { VerificationFuncService } from 'src/app/shared/utilities/verificationFunc';
-import { last } from 'rxjs/operators';
-import { Lease } from '../../models/spaces';
 import { serverTimestamp } from 'firebase/firestore';
+import { ReservationsService } from './reservations.service';
+import { RequestsService } from './requests.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,8 @@ export class BillingService {
     private error: ErrorHandlerService,
     private time: TimeHandlerModule,
     private calendar: CalendarService,
+    private reservation: ReservationsService,
+    private services: RequestsService,
     private utility: VerificationFuncService
   ) { this.ReceiptFolder = 'billing'; }
 
@@ -94,19 +96,54 @@ export class BillingService {
           userSignature: '',
           createdBy: await this.utility.createShortUser(currentUser)
         }
+
+        const dates = this.time.getMonthDates(receiptDate);
+        const reservations = await this.reservation.readUserReservationsByMonth(dates.start,dates.end,'startDate',user.uid);
+        const services = await this.services.readUserServicesByMonth(dates.start,dates.end,'scheduleDate',user.uid);
+        
+        // Leases
         user.leases.forEach(lease => {
-          if(lease.status === 'active'){
-            const subtotal = parseFloat(lease.monthlyCost.toFixed(2));
+          const subtotal = parseFloat(lease.monthlyCost.toFixed(2));
+          const leaseItem:ItemDetail = {
+            itemDescription: lease.spaceLease.description,
+            numberItems: '1',
+            unitValue: ''+lease.monthlyCost.toFixed(2),
+            totalValue: ''+lease.monthlyCost.toFixed(2)
+          }
+          myReceipt.itemDetail.push(leaseItem);
+          myReceipt.total = myReceipt.total + subtotal;
+        })
+
+        // Reservation
+        reservations.forEach(reserve => {
+          if(reserve.status === 'Aprobado'){
+            const subtotal = parseFloat(''+reserve.reservation.price).toFixed(2);
             const leaseItem:ItemDetail = {
-              itemDescription: lease.spaceLease.description,
+              itemDescription: reserve.reservation.unitNumber + ' ' + this.time.timeSchedule(reserve.startDate),
               numberItems: '1',
-              unitValue: ''+lease.monthlyCost.toFixed(2),
-              totalValue: ''+lease.monthlyCost.toFixed(2)
+              unitValue: subtotal,
+              totalValue: subtotal
             }
             myReceipt.itemDetail.push(leaseItem);
-            myReceipt.total = myReceipt.total + subtotal
+            myReceipt.total = myReceipt.total + parseFloat(subtotal);
           }
         })
+
+        // Services
+        services.forEach(service => {
+          if(service.status === 'Terminado'){
+            const subtotal = service.service.maintenance ? '0' : parseFloat(''+service.service.cost).toFixed(2);
+            const leaseItem: ItemDetail = {
+              itemDescription: service.service.name + ' ' + this.time.timeSchedule(service.updatedAt),
+              numberItems: '1',
+              unitValue: subtotal,
+              totalValue: subtotal
+            }
+            myReceipt.itemDetail.push(leaseItem);
+            myReceipt.total = myReceipt.total + parseFloat(subtotal);
+          }
+        })
+        myReceipt.total = parseFloat(myReceipt.total.toFixed(2));
         await this.createReceipt(myReceipt);
         resolve(myReceipt)
       } catch (error) {
@@ -114,6 +151,11 @@ export class BillingService {
         reject('Error')
       }
     });
+  }
+
+  eraseBill(bill){
+    this.firestore.deleteDocument(this.ReceiptFolder,bill.uid)
+    .then(() => {console.log('erased receipt: ' + bill.receiptNumber + ' - uid: ' + bill.uid)} )
   }
   
 

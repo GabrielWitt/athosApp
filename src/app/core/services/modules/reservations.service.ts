@@ -75,4 +75,13 @@ export class ReservationsService {
       .catch((error) => { reject(this.error.handle(error)); });
     });
   }
+
+  readUserReservationsByMonth(startDate, endDate, orderField, userUID){
+    return new Promise<CalendarItem[]>((resolve,reject) => {
+      this.firestore.readMonthDocs(this.ReservationsFolder, startDate, endDate, orderField, userUID)
+      .then((docs: any[]) => { resolve(docs) })
+      .catch((error) => { reject(this.error.handle(error)); });
+    });
+  }
+
 }
