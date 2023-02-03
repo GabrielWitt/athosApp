@@ -78,9 +78,10 @@ export class FirestoreActionsService {
     return new Promise((resolve, reject) => {
       try {
         const filterOp: WhereFilterOp = filterOperator ? filterOperator : '=='
+        console.log(filterName, filterOp, filterValue)
         const callDoc = this.afs.collection(
           folderName,(ref => ref.where(filterName, filterOp, filterValue)
-          .where("userUID", "==", userUID).orderBy(orderField))
+          .where("userUID", "==", userUID).orderBy(orderField,'asc'))
         ).valueChanges();
 
         callDoc.pipe(take(1)).subscribe((querySnapshot: any) => {

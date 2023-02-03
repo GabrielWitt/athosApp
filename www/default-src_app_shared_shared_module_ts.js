@@ -11,7 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "BillingService": () => (/* binding */ BillingService)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _firestore_actions_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../firestore-actions.service */ 14871);
@@ -90,7 +90,7 @@ let BillingService = class BillingService {
     var _this = this;
 
     return new Promise( /*#__PURE__*/function () {
-      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (resolve, reject) {
+      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (resolve, reject) {
         try {
           if (!data.history) {
             data.history = [];
@@ -121,7 +121,7 @@ let BillingService = class BillingService {
     var _this2 = this;
 
     return new Promise( /*#__PURE__*/function () {
-      var _ref2 = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (resolve, reject) {
+      var _ref2 = (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (resolve, reject) {
         try {
           let myReceipt = {
             receiptDate: receiptDate,
@@ -769,7 +769,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AssignSpaceComponent": () => (/* binding */ AssignSpaceComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _assign_space_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assign-space.component.html?ngResource */ 96152);
 /* harmony import */ var _assign_space_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assign-space.component.scss?ngResource */ 64393);
@@ -897,7 +897,7 @@ let AssignSpaceComponent = class AssignSpaceComponent {
   checkPreviousLease(lease) {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         let spaceObj = _this.spacesList.find(space => space.uid === lease.spaceLease.uid);
 
@@ -933,7 +933,7 @@ let AssignSpaceComponent = class AssignSpaceComponent {
   terminateLease(spaceObj, uid) {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         let oldLease;
         let previousUser = yield _this2.users.readUser(spaceObj.lease.userLease.uid);
@@ -957,7 +957,7 @@ let AssignSpaceComponent = class AssignSpaceComponent {
     var _this3 = this;
 
     this.alerts.AlertConfirm(this.alreadyLease.spaceLease.type.toUpperCase() + ' ' + this.alreadyLease.spaceLease.unitNumber, '¿Seguro que desea finalizar esta asignación?').then( /*#__PURE__*/function () {
-      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (answer) {
+      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (answer) {
         if (answer) {
           _this3.loading = true;
 
@@ -1343,7 +1343,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NewNoticeComponent": () => (/* binding */ NewNoticeComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _new_notice_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new-notice.component.html?ngResource */ 49578);
 /* harmony import */ var _new_notice_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new-notice.component.scss?ngResource */ 85679);
@@ -1422,7 +1422,7 @@ let NewNoticeComponent = class NewNoticeComponent {
   loadTypes() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.typeList = yield _this.notices.getNoticeType();
         return 'done';
@@ -1506,7 +1506,7 @@ let NewNoticeComponent = class NewNoticeComponent {
   createNotice() {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this2.loading = true;
         _this2.myNotice.writer = yield _this2.extra.createShortUser(_this2.user);
@@ -1542,7 +1542,7 @@ let NewNoticeComponent = class NewNoticeComponent {
   pressSend() {
     var _this3 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this3.sending = true;
       _this3.myNotice = _this3.notice;
 
@@ -1642,7 +1642,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AssignTaskComponent": () => (/* binding */ AssignTaskComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _assign_task_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assign-task.component.html?ngResource */ 44125);
 /* harmony import */ var _assign_task_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assign-task.component.scss?ngResource */ 14258);
@@ -1704,7 +1704,7 @@ let AssignTaskComponent = class AssignTaskComponent {
   loadData() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.myTask = _this.request;
         _this.staffList = yield _this.usersServ.readOnlyStaff();
@@ -1736,7 +1736,7 @@ let AssignTaskComponent = class AssignTaskComponent {
   loadBusySlots() {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this2.busySlots = yield _this2.calendar.readFutureServicesByUser(_this2.selectedStaff.uid, new Date().toISOString(), '>=');
 
       _this2.busySlots.sort((a, b) => {
@@ -1771,7 +1771,7 @@ let AssignTaskComponent = class AssignTaskComponent {
   createScheduleList() {
     var _this3 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this3.scheduleTimes = yield _this3.time.getScheduleList(_this3.myTask.scheduleDate, '2022-08-07T12:00:00.000Z', '2022-08-07T22:00:00.000Z', _this3.request.service.estimatedTime);
       return 'done';
     })();
@@ -1780,7 +1780,7 @@ let AssignTaskComponent = class AssignTaskComponent {
   timeSlotClicked(index, timeSlot) {
     var _this4 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       if (_this4.scheduleTimes[index].disabled) {
         _this4.alerts.showAlert('Book Reservation', 'La hora de reservacion no está disponible. ');
       } else {
@@ -1799,11 +1799,11 @@ let AssignTaskComponent = class AssignTaskComponent {
   confirmService() {
     var _this5 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const text = _this5.time.geDateFullUTC(_this5.timeSlotStart.date) + 'de ' + _this5.timeSlotStart.hour;
 
       _this5.alerts.AlertConfirm('', '¿Seguro desea agendar el servicio para ' + text + '?').then( /*#__PURE__*/function () {
-        var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (answer) {
+        var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (answer) {
           if (answer) {
             try {
               _this5.loading = true;
@@ -2003,7 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NewRequestComponent": () => (/* binding */ NewRequestComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _new_request_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new-request.component.html?ngResource */ 97437);
 /* harmony import */ var _new_request_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new-request.component.scss?ngResource */ 20871);
@@ -2091,7 +2091,7 @@ let NewRequestComponent = class NewRequestComponent {
   enableForm() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       if (_this.showRequestForm) {
         _this.service = null;
         _this.showRequestForm = false;
@@ -2177,7 +2177,7 @@ let NewRequestComponent = class NewRequestComponent {
   createRequest() {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         if (_this2.selectedUser?.leases?.length > 0 && !_this2.selectedUnitUID) {
           console.log('falta Unit');
@@ -2228,9 +2228,9 @@ let NewRequestComponent = class NewRequestComponent {
   changeStateReserve(status) {
     var _this3 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this3.alerts.AlertConfirm(status, '¿Seguro desea' + (status === '' ? 'aprobar' : 'cancelar') + ' la reserva?').then( /*#__PURE__*/function () {
-        var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (answer) {
+        var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (answer) {
           if (answer) {
             try {
               _this3.loading = true;
@@ -2310,7 +2310,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NewServiceComponent": () => (/* binding */ NewServiceComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _new_service_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new-service.component.html?ngResource */ 52805);
 /* harmony import */ var _new_service_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new-service.component.scss?ngResource */ 53074);
@@ -2524,7 +2524,7 @@ let NewServiceComponent = class NewServiceComponent {
   createService() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.loading = true;
         _this.myService.weekdays = [_this.dom, _this.lun, _this.mar, _this.mie, _this.jue, _this.vie, _this.sab];
@@ -2613,7 +2613,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PickServiceComponent": () => (/* binding */ PickServiceComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _pick_service_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pick-service.component.html?ngResource */ 40165);
 /* harmony import */ var _pick_service_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pick-service.component.scss?ngResource */ 15923);
@@ -2640,7 +2640,7 @@ let PickServiceComponent = class PickServiceComponent {
   doRefresh(refresh) {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this.loading = true;
 
       _this.services.loadServices(_this.user.type).then(() => {
@@ -2744,7 +2744,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SolveTaskComponent": () => (/* binding */ SolveTaskComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _solve_task_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./solve-task.component.html?ngResource */ 95837);
 /* harmony import */ var _solve_task_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./solve-task.component.scss?ngResource */ 61824);
@@ -2831,7 +2831,7 @@ let SolveTaskComponent = class SolveTaskComponent {
   changeStatus(status) {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.loading = true;
         _this.myTask.status = status;
@@ -2951,7 +2951,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DetailSpaceComponent": () => (/* binding */ DetailSpaceComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _detail_space_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./detail-space.component.html?ngResource */ 90290);
 /* harmony import */ var _detail_space_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./detail-space.component.scss?ngResource */ 67613);
@@ -2976,7 +2976,7 @@ let DetailSpaceComponent = class DetailSpaceComponent {
   openPreview(img) {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       let preview = {
         url: img
       };
@@ -3127,7 +3127,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NewReservationComponent": () => (/* binding */ NewReservationComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _new_reservation_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new-reservation.component.html?ngResource */ 44323);
 /* harmony import */ var _new_reservation_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new-reservation.component.scss?ngResource */ 59468);
@@ -3219,7 +3219,7 @@ let NewReservationComponent = class NewReservationComponent {
   enableForm() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this.showReservationForm = true;
 
       if (_this.reservation) {
@@ -3277,7 +3277,7 @@ let NewReservationComponent = class NewReservationComponent {
   createScheduleList() {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this2.scheduleTimes = yield _this2.time.getScheduleList(_this2.myReservation.scheduleDate, _this2.space.rentData.starTime, _this2.space.rentData.endTime, _this2.addTime);
       return 'done';
     })();
@@ -3286,7 +3286,7 @@ let NewReservationComponent = class NewReservationComponent {
   timeSlotClicked(index, timeSlot) {
     var _this3 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       if (_this3.scheduleTimes[index].disabled) {
         _this3.alerts.showAlert('Book Reservation', 'La hora de reservacion no está disponible. ');
       } else {
@@ -3328,7 +3328,7 @@ let NewReservationComponent = class NewReservationComponent {
   createReservation() {
     var _this4 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       if (_this4.loading || !_this4.myReservation.scheduleDate || !_this4.timeSlotStart.date) {
         return null;
       } else {
@@ -3372,7 +3372,7 @@ let NewReservationComponent = class NewReservationComponent {
   changeStateReserve(status) {
     var _this5 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this5.alerts.AlertConfirm(status === 'Aprobado' ? 'APROBAR' : 'CANCELAR', '¿Seguro desea ' + (status === 'Aprobado' ? 'aprobar' : 'cancelar') + ' la reserva?').then(answer => {
         if (answer) {
           _this5.changeRequestStatus(status);
@@ -3401,7 +3401,7 @@ let NewReservationComponent = class NewReservationComponent {
   changeRequestStatus(status) {
     var _this6 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this6.loading = true;
         _this6.myReservation = _this6.reservation;
@@ -3481,7 +3481,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NewSpaceComponent": () => (/* binding */ NewSpaceComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _new_space_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new-space.component.html?ngResource */ 21497);
 /* harmony import */ var _new_space_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new-space.component.scss?ngResource */ 80210);
@@ -3820,7 +3820,7 @@ let NewSpaceComponent = class NewSpaceComponent {
   createSpace() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.loading = true;
         _this.mySpace.communityUID = _this.communitiesList[0].uid;
@@ -3901,7 +3901,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PickRentSpaceComponent": () => (/* binding */ PickRentSpaceComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _pick_rent_space_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pick-rent-space.component.html?ngResource */ 94100);
 /* harmony import */ var _pick_rent_space_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pick-rent-space.component.scss?ngResource */ 62113);
@@ -3931,7 +3931,7 @@ let PickRentSpaceComponent = class PickRentSpaceComponent {
   loadData() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.rentSpacesList = yield _this.spaces.readSpacesListOrderRent('rent', true);
         _this.loading = false;
@@ -3981,7 +3981,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "EditUserComponent": () => (/* binding */ EditUserComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _edit_user_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit-user.component.html?ngResource */ 41809);
 /* harmony import */ var _edit_user_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit-user.component.scss?ngResource */ 20586);
@@ -4093,7 +4093,7 @@ let EditUserComponent = class EditUserComponent {
       pdf: false
     };
     this.images.presentImageOptions(options).then( /*#__PURE__*/function () {
-      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (imageObj) {
+      var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (imageObj) {
         if (imageObj[0] !== undefined) {
           _this.loading = true;
           _this.newImage = imageObj[0];
@@ -4195,7 +4195,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserDetailComponent": () => (/* binding */ UserDetailComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _user_detail_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user-detail.component.html?ngResource */ 97718);
 /* harmony import */ var _user_detail_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user-detail.component.scss?ngResource */ 76159);
@@ -4267,7 +4267,7 @@ let UserDetailComponent = class UserDetailComponent {
         pdf: false
       };
       this.images.presentImageOptions(options).then( /*#__PURE__*/function () {
-        var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (imageObj) {
+        var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (imageObj) {
           if (imageObj[0] !== undefined) {
             _this.loading = true;
             _this.newImage = imageObj[0];
@@ -4295,7 +4295,7 @@ let UserDetailComponent = class UserDetailComponent {
   detailSpace(space) {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const spaceData = yield _this2.spaces.readSpace(space.spaceLease.uid);
       const modal = yield _this2.modal.create({
         component: src_app_shared_components_spaces_new_space_new_space_component__WEBPACK_IMPORTED_MODULE_7__.NewSpaceComponent,
@@ -4613,7 +4613,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MainHeaderComponent": () => (/* binding */ MainHeaderComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _main_header_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./main-header.component.html?ngResource */ 55229);
 /* harmony import */ var _main_header_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./main-header.component.scss?ngResource */ 92450);
@@ -4665,7 +4665,7 @@ let MainHeaderComponent = class MainHeaderComponent {
   createNotice() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const userData = yield _this.auth.getUser();
       const modal = yield _this.modal.create({
         component: _new_notice_new_notice_component__WEBPACK_IMPORTED_MODULE_6__.NewNoticeComponent,
@@ -4774,7 +4774,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NoticeBottomBarComponent": () => (/* binding */ NoticeBottomBarComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _notice_bottom_bar_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notice-bottom-bar.component.html?ngResource */ 63152);
 /* harmony import */ var _notice_bottom_bar_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notice-bottom-bar.component.scss?ngResource */ 65974);
@@ -4814,7 +4814,7 @@ let NoticeBottomBarComponent = class NoticeBottomBarComponent {
   addLike() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       _this.sending = true;
       _this.myNotice = _this.notice;
 
@@ -4883,7 +4883,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SignModalComponent": () => (/* binding */ SignModalComponent)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _sign_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sign-modal.component.html?ngResource */ 47354);
 /* harmony import */ var _sign_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sign-modal.component.scss?ngResource */ 1666);
@@ -4949,7 +4949,7 @@ let SignModalComponent = class SignModalComponent {
   saveData() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.loading = true;
 
@@ -4967,7 +4967,7 @@ let SignModalComponent = class SignModalComponent {
           _this.upload.uploadFile('billsSign', imageName, file, progress => {
             _this.progress = progress;
           }).then( /*#__PURE__*/function () {
-            var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (data) {
+            var _ref = (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (data) {
               _this.upload.deletePicture();
 
               _this.myReceipt.userSignature = data.url;
@@ -5357,7 +5357,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "VerificationFuncService": () => (/* binding */ VerificationFuncService)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 22560);
 /* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @capacitor/core */ 26549);
@@ -5388,7 +5388,7 @@ let VerificationFuncService = class VerificationFuncService {
   }
 
   EnterSubmit(evt, form, block) {
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       if (evt.keyCode === 13 && form.status === 'VALID' && !block) {
         if (_capacitor_core__WEBPACK_IMPORTED_MODULE_1__.Capacitor.getPlatform() !== 'web') {
           _capacitor_keyboard__WEBPACK_IMPORTED_MODULE_2__.Keyboard.hide();
@@ -5402,7 +5402,7 @@ let VerificationFuncService = class VerificationFuncService {
   }
 
   createShortUser(user) {
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const short = {
         uid: user.uid,
         photo: user.photo ? user.photo : '',
@@ -5414,7 +5414,7 @@ let VerificationFuncService = class VerificationFuncService {
   }
 
   createShortSpace(space) {
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const short = {
         uid: space.uid,
         unitNumber: space.unitNumber,
@@ -6447,7 +6447,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \*******************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".billBorder {\n  border-radius: 25px;\n  border: 2px solid black;\n}\n\n.squareBorder {\n  border: 2px solid black;\n}\n\n.itemBorder {\n  border-left: 2px solid black;\n  border-right: 2px solid black;\n}\n\n.itemMidBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n}\n\n.totalBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n  border-right: 2px solid black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5ldy1yZWNlaXB0LmNvbXBvbmVudC5zY3NzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vUHJhY3RpY3VtJTIwNC9hdGhvc0FwcC9zcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL2JpbGxzL25ldy1yZWNlaXB0L25ldy1yZWNlaXB0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksbUJBQUE7RUFDQSx1QkFBQTtBQ0NKOztBREVBO0VBQ0ksdUJBQUE7QUNDSjs7QURFQTtFQUNJLDRCQUFBO0VBQ0EsNkJBQUE7QUNDSjs7QURFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7QUNDSjs7QURFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7RUFDQSw2QkFBQTtBQ0NKIiwiZmlsZSI6Im5ldy1yZWNlaXB0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJpbGxCb3JkZXIge1xuICAgIGJvcmRlci1yYWRpdXM6IDI1cHg7XG4gICAgYm9yZGVyOiAycHggc29saWQgYmxhY2s7XG59XG5cbi5zcXVhcmVCb3JkZXJ7XG4gICAgYm9yZGVyOiAycHggc29saWQgYmxhY2s7XG59XG5cbi5pdGVtQm9yZGVye1xuICAgIGJvcmRlci1sZWZ0OiAycHggc29saWQgYmxhY2s7XG4gICAgYm9yZGVyLXJpZ2h0OiAycHggc29saWQgYmxhY2s7XG59XG5cbi5pdGVtTWlkQm9yZGVye1xuICAgIGJvcmRlci10b3A6IDJweCBzb2xpZCBibGFjaztcbiAgICBib3JkZXItYm90dG9tOiAycHggc29saWQgYmxhY2s7XG59XG5cbi50b3RhbEJvcmRlcntcbiAgICBib3JkZXItdG9wOiAycHggc29saWQgYmxhY2s7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xuICAgIGJvcmRlci1yaWdodDogMnB4IHNvbGlkIGJsYWNrO1xufSIsIi5iaWxsQm9yZGVyIHtcbiAgYm9yZGVyLXJhZGl1czogMjVweDtcbiAgYm9yZGVyOiAycHggc29saWQgYmxhY2s7XG59XG5cbi5zcXVhcmVCb3JkZXIge1xuICBib3JkZXI6IDJweCBzb2xpZCBibGFjaztcbn1cblxuLml0ZW1Cb3JkZXIge1xuICBib3JkZXItbGVmdDogMnB4IHNvbGlkIGJsYWNrO1xuICBib3JkZXItcmlnaHQ6IDJweCBzb2xpZCBibGFjaztcbn1cblxuLml0ZW1NaWRCb3JkZXIge1xuICBib3JkZXItdG9wOiAycHggc29saWQgYmxhY2s7XG4gIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCBibGFjaztcbn1cblxuLnRvdGFsQm9yZGVyIHtcbiAgYm9yZGVyLXRvcDogMnB4IHNvbGlkIGJsYWNrO1xuICBib3JkZXItYm90dG9tOiAycHggc29saWQgYmxhY2s7XG4gIGJvcmRlci1yaWdodDogMnB4IHNvbGlkIGJsYWNrO1xufSJdfQ== */";
+module.exports = ".billBorder {\n  border-radius: 25px;\n  border: 2px solid black;\n}\n\n.squareBorder {\n  border: 2px solid black;\n}\n\n.itemBorder {\n  border-left: 2px solid black;\n  border-right: 2px solid black;\n}\n\n.itemMidBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n}\n\n.totalBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n  border-right: 2px solid black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5ldy1yZWNlaXB0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksbUJBQUE7RUFDQSx1QkFBQTtBQUNKOztBQUVBO0VBQ0ksdUJBQUE7QUFDSjs7QUFFQTtFQUNJLDRCQUFBO0VBQ0EsNkJBQUE7QUFDSjs7QUFFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7QUFDSjs7QUFFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7RUFDQSw2QkFBQTtBQUNKIiwiZmlsZSI6Im5ldy1yZWNlaXB0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJpbGxCb3JkZXIge1xuICAgIGJvcmRlci1yYWRpdXM6IDI1cHg7XG4gICAgYm9yZGVyOiAycHggc29saWQgYmxhY2s7XG59XG5cbi5zcXVhcmVCb3JkZXJ7XG4gICAgYm9yZGVyOiAycHggc29saWQgYmxhY2s7XG59XG5cbi5pdGVtQm9yZGVye1xuICAgIGJvcmRlci1sZWZ0OiAycHggc29saWQgYmxhY2s7XG4gICAgYm9yZGVyLXJpZ2h0OiAycHggc29saWQgYmxhY2s7XG59XG5cbi5pdGVtTWlkQm9yZGVye1xuICAgIGJvcmRlci10b3A6IDJweCBzb2xpZCBibGFjaztcbiAgICBib3JkZXItYm90dG9tOiAycHggc29saWQgYmxhY2s7XG59XG5cbi50b3RhbEJvcmRlcntcbiAgICBib3JkZXItdG9wOiAycHggc29saWQgYmxhY2s7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xuICAgIGJvcmRlci1yaWdodDogMnB4IHNvbGlkIGJsYWNrO1xufSJdfQ== */";
 
 /***/ }),
 
@@ -6457,7 +6457,7 @@ module.exports = ".billBorder {\n  border-radius: 25px;\n  border: 2px solid bla
   \*************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".billBorder {\n  border-radius: 25px;\n  border: 2px solid black;\n}\n\n.squareBorder {\n  border: 2px solid black;\n}\n\n.itemBorder {\n  border-left: 2px solid black;\n  border-right: 2px solid black;\n}\n\n.itemMidBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n}\n\n.totalBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n  border-right: 2px solid black;\n}\n\n.signatureBorder {\n  border-bottom: 2px solid black;\n}\n\n.signSize {\n  height: 90px;\n}\n\n.itemDateBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlY2VpcHQtZGV0YWlsLmNvbXBvbmVudC5zY3NzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vUHJhY3RpY3VtJTIwNC9hdGhvc0FwcC9zcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL2JpbGxzL3JlY2VpcHQtZGV0YWlsL3JlY2VpcHQtZGV0YWlsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksbUJBQUE7RUFDQSx1QkFBQTtBQ0NKOztBREVBO0VBQ0ksdUJBQUE7QUNDSjs7QURFQTtFQUNJLDRCQUFBO0VBQ0EsNkJBQUE7QUNDSjs7QURFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7QUNDSjs7QURFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7RUFDQSw2QkFBQTtBQ0NKOztBREVBO0VBQ0ksOEJBQUE7QUNDSjs7QURFQTtFQUNJLFlBQUE7QUNDSjs7QURFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7QUNDSiIsImZpbGUiOiJyZWNlaXB0LWRldGFpbC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5iaWxsQm9yZGVyIHtcbiAgICBib3JkZXItcmFkaXVzOiAyNXB4O1xuICAgIGJvcmRlcjogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4uc3F1YXJlQm9yZGVye1xuICAgIGJvcmRlcjogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4uaXRlbUJvcmRlcntcbiAgICBib3JkZXItbGVmdDogMnB4IHNvbGlkIGJsYWNrO1xuICAgIGJvcmRlci1yaWdodDogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4uaXRlbU1pZEJvcmRlcntcbiAgICBib3JkZXItdG9wOiAycHggc29saWQgYmxhY2s7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4udG90YWxCb3JkZXJ7XG4gICAgYm9yZGVyLXRvcDogMnB4IHNvbGlkIGJsYWNrO1xuICAgIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCBibGFjaztcbiAgICBib3JkZXItcmlnaHQ6IDJweCBzb2xpZCBibGFjaztcbn1cblxuLnNpZ25hdHVyZUJvcmRlcntcbiAgICBib3JkZXItYm90dG9tOiAycHggc29saWQgYmxhY2s7XG59XG5cbi5zaWduU2l6ZXtcbiAgICBoZWlnaHQ6IDkwcHg7XG59XG5cbi5pdGVtRGF0ZUJvcmRlcntcbiAgICBib3JkZXItdG9wOiAycHggc29saWQgYmxhY2s7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xufSIsIi5iaWxsQm9yZGVyIHtcbiAgYm9yZGVyLXJhZGl1czogMjVweDtcbiAgYm9yZGVyOiAycHggc29saWQgYmxhY2s7XG59XG5cbi5zcXVhcmVCb3JkZXIge1xuICBib3JkZXI6IDJweCBzb2xpZCBibGFjaztcbn1cblxuLml0ZW1Cb3JkZXIge1xuICBib3JkZXItbGVmdDogMnB4IHNvbGlkIGJsYWNrO1xuICBib3JkZXItcmlnaHQ6IDJweCBzb2xpZCBibGFjaztcbn1cblxuLml0ZW1NaWRCb3JkZXIge1xuICBib3JkZXItdG9wOiAycHggc29saWQgYmxhY2s7XG4gIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCBibGFjaztcbn1cblxuLnRvdGFsQm9yZGVyIHtcbiAgYm9yZGVyLXRvcDogMnB4IHNvbGlkIGJsYWNrO1xuICBib3JkZXItYm90dG9tOiAycHggc29saWQgYmxhY2s7XG4gIGJvcmRlci1yaWdodDogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4uc2lnbmF0dXJlQm9yZGVyIHtcbiAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4uc2lnblNpemUge1xuICBoZWlnaHQ6IDkwcHg7XG59XG5cbi5pdGVtRGF0ZUJvcmRlciB7XG4gIGJvcmRlci10b3A6IDJweCBzb2xpZCBibGFjaztcbiAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xufSJdfQ== */";
+module.exports = ".billBorder {\n  border-radius: 25px;\n  border: 2px solid black;\n}\n\n.squareBorder {\n  border: 2px solid black;\n}\n\n.itemBorder {\n  border-left: 2px solid black;\n  border-right: 2px solid black;\n}\n\n.itemMidBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n}\n\n.totalBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n  border-right: 2px solid black;\n}\n\n.signatureBorder {\n  border-bottom: 2px solid black;\n}\n\n.signSize {\n  height: 90px;\n}\n\n.itemDateBorder {\n  border-top: 2px solid black;\n  border-bottom: 2px solid black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlY2VpcHQtZGV0YWlsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksbUJBQUE7RUFDQSx1QkFBQTtBQUNKOztBQUVBO0VBQ0ksdUJBQUE7QUFDSjs7QUFFQTtFQUNJLDRCQUFBO0VBQ0EsNkJBQUE7QUFDSjs7QUFFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7QUFDSjs7QUFFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7RUFDQSw2QkFBQTtBQUNKOztBQUVBO0VBQ0ksOEJBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7QUFDSjs7QUFFQTtFQUNJLDJCQUFBO0VBQ0EsOEJBQUE7QUFDSiIsImZpbGUiOiJyZWNlaXB0LWRldGFpbC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5iaWxsQm9yZGVyIHtcbiAgICBib3JkZXItcmFkaXVzOiAyNXB4O1xuICAgIGJvcmRlcjogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4uc3F1YXJlQm9yZGVye1xuICAgIGJvcmRlcjogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4uaXRlbUJvcmRlcntcbiAgICBib3JkZXItbGVmdDogMnB4IHNvbGlkIGJsYWNrO1xuICAgIGJvcmRlci1yaWdodDogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4uaXRlbU1pZEJvcmRlcntcbiAgICBib3JkZXItdG9wOiAycHggc29saWQgYmxhY2s7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xufVxuXG4udG90YWxCb3JkZXJ7XG4gICAgYm9yZGVyLXRvcDogMnB4IHNvbGlkIGJsYWNrO1xuICAgIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCBibGFjaztcbiAgICBib3JkZXItcmlnaHQ6IDJweCBzb2xpZCBibGFjaztcbn1cblxuLnNpZ25hdHVyZUJvcmRlcntcbiAgICBib3JkZXItYm90dG9tOiAycHggc29saWQgYmxhY2s7XG59XG5cbi5zaWduU2l6ZXtcbiAgICBoZWlnaHQ6IDkwcHg7XG59XG5cbi5pdGVtRGF0ZUJvcmRlcntcbiAgICBib3JkZXItdG9wOiAycHggc29saWQgYmxhY2s7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xufSJdfQ== */";
 
 /***/ }),
 
@@ -6467,7 +6467,7 @@ module.exports = ".billBorder {\n  border-radius: 25px;\n  border: 2px solid bla
   \*********************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".userItemList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 13pt;\n  color: black;\n  min-height: 30pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlY2VpcHQtaXRlbS5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9iaWxscy9yZWNlaXB0LWl0ZW0vcmVjZWlwdC1pdGVtLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksMkNBQUE7RUFDQSxlQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0FDQ0oiLCJmaWxlIjoicmVjZWlwdC1pdGVtLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnVzZXJJdGVtTGlzdHtcbiAgICBib3JkZXItYm90dG9tOiAycHggc29saWQgcmdiKDE4NywgMTg3LCAxODcpO1xuICAgIGZvbnQtc2l6ZTogMTNwdDtcbiAgICBjb2xvcjogYmxhY2s7XG4gICAgbWluLWhlaWdodDogMzBwdDtcbn0iLCIudXNlckl0ZW1MaXN0IHtcbiAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIHJnYigxODcsIDE4NywgMTg3KTtcbiAgZm9udC1zaXplOiAxM3B0O1xuICBjb2xvcjogYmxhY2s7XG4gIG1pbi1oZWlnaHQ6IDMwcHQ7XG59Il19 */";
+module.exports = ".userItemList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 13pt;\n  color: black;\n  min-height: 30pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlY2VpcHQtaXRlbS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLDJDQUFBO0VBQ0EsZUFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtBQUNKIiwiZmlsZSI6InJlY2VpcHQtaXRlbS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi51c2VySXRlbUxpc3R7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIHJnYigxODcsIDE4NywgMTg3KTtcbiAgICBmb250LXNpemU6IDEzcHQ7XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIG1pbi1oZWlnaHQ6IDMwcHQ7XG59Il19 */";
 
 /***/ }),
 
@@ -6517,7 +6517,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \***********************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".rightButtonContainer {\n  text-align: center;\n}\n\n.rightButton {\n  width: 35px;\n  height: 35px;\n  margin: 3px 0px 3px -5px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5ldy1ub3RpY2UuY29tcG9uZW50LnNjc3MiLCIuLi8uLi8uLi8uLi8uLi8uLi8uLi9QcmFjdGljdW0lMjA0L2F0aG9zQXBwL3NyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvbmV3LW5vdGljZS9uZXctbm90aWNlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7QUNDSjs7QURFQTtFQUNJLFdBQUE7RUFDQSxZQUFBO0VBQ0Esd0JBQUE7QUNDSiIsImZpbGUiOiJuZXctbm90aWNlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnJpZ2h0QnV0dG9uQ29udGFpbmVye1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLnJpZ2h0QnV0dG9ue1xuICAgIHdpZHRoOiAzNXB4OyBcbiAgICBoZWlnaHQ6IDM1cHg7IFxuICAgIG1hcmdpbjogM3B4IDBweCAzcHggLTVweDtcbn0iLCIucmlnaHRCdXR0b25Db250YWluZXIge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5yaWdodEJ1dHRvbiB7XG4gIHdpZHRoOiAzNXB4O1xuICBoZWlnaHQ6IDM1cHg7XG4gIG1hcmdpbjogM3B4IDBweCAzcHggLTVweDtcbn0iXX0= */";
+module.exports = ".rightButtonContainer {\n  text-align: center;\n}\n\n.rightButton {\n  width: 35px;\n  height: 35px;\n  margin: 3px 0px 3px -5px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5ldy1ub3RpY2UuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtBQUNKOztBQUVBO0VBQ0ksV0FBQTtFQUNBLFlBQUE7RUFDQSx3QkFBQTtBQUNKIiwiZmlsZSI6Im5ldy1ub3RpY2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucmlnaHRCdXR0b25Db250YWluZXJ7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4ucmlnaHRCdXR0b257XG4gICAgd2lkdGg6IDM1cHg7IFxuICAgIGhlaWdodDogMzVweDsgXG4gICAgbWFyZ2luOiAzcHggMHB4IDNweCAtNXB4O1xufSJdfQ== */";
 
 /***/ }),
 
@@ -6527,7 +6527,7 @@ module.exports = ".rightButtonContainer {\n  text-align: center;\n}\n\n.rightBut
   \**********************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n\n.time_box {\n  border: 2px solid var(--ion-color-secondary);\n  width: 100%;\n  text-align: center;\n  color: black;\n  padding: 4px 8px;\n  font-size: 14px;\n  font-weight: bold;\n  margin: 2px 0;\n  border-radius: 15px;\n}\n\n.time_box.selected {\n  background-color: var(--ion-color-secondary);\n}\n\n.time_box.disabled {\n  background: darkgray !important;\n  border: 0 !important;\n}\n\n.guest_size {\n  font-size: 20pt;\n}\n\n.input_bg {\n  border: 2pt solid var(--ion-color-dark);\n  border-radius: 15pt;\n  padding: 5pt;\n}\n\n.dateStyle {\n  font-size: inherit;\n  float: right;\n}\n\n.noDateStyle {\n  --color: #b4b4b4;\n  color: #b4b4b4;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFzc2lnbi10YXNrLmNvbXBvbmVudC5zY3NzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vUHJhY3RpY3VtJTIwNC9hdGhvc0FwcC9zcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL3NlcnZpY2VzL2Fzc2lnbi10YXNrL2Fzc2lnbi10YXNrLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBO0VBQ0kscUNBQUE7RUFDQSwyQkFBQTtFQUNBLFlBQUE7QUNBSjs7QURHQTtFQUNJLDRDQUFBO0VBQ0EsV0FBQTtFQUNBLGtCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsYUFBQTtFQUNBLG1CQUFBO0FDQUo7O0FER0E7RUFDSSw0Q0FBQTtBQ0FKOztBREdBO0VBQ0ksK0JBQUE7RUFDQSxvQkFBQTtBQ0FKOztBREdBO0VBQ0ksZUFBQTtBQ0FKOztBREdBO0VBQ0ksdUNBQUE7RUFDQSxtQkFBQTtFQUNBLFlBQUE7QUNBSjs7QURHQTtFQUNJLGtCQUFBO0VBQ0EsWUFBQTtBQ0FKOztBREdBO0VBQ0ksZ0JBQUE7RUFDQSxjQUFBO0FDQUoiLCJmaWxlIjoiYXNzaWduLXRhc2suY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbi5zcGFjZVZpZXd7XG4gICAgYmFja2dyb3VuZC1zaXplOiAxMjAlIGF1dG8gIWltcG9ydGFudDtcbiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XG4gICAgLS1zaXplOiAyMHZ3O1xufVxuXG4udGltZV9ib3gge1xuICAgIGJvcmRlcjogMnB4IHNvbGlkIHZhcigtLWlvbi1jb2xvci1zZWNvbmRhcnkpO1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBjb2xvcjogYmxhY2s7XG4gICAgcGFkZGluZzogNHB4IDhweDtcbiAgICBmb250LXNpemU6IDE0cHg7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgbWFyZ2luOiAycHggMDtcbiAgICBib3JkZXItcmFkaXVzOiAxNXB4O1xufVxuXG4udGltZV9ib3guc2VsZWN0ZWR7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG59XG5cbi50aW1lX2JveC5kaXNhYmxlZHtcbiAgICBiYWNrZ3JvdW5kOiBkYXJrZ3JheSAhaW1wb3J0YW50O1xuICAgIGJvcmRlcjogMCAhaW1wb3J0YW50O1xufVxuXG4uZ3Vlc3Rfc2l6ZXtcbiAgICBmb250LXNpemU6IDIwcHQ7XG59XG5cbi5pbnB1dF9iZyB7XG4gICAgYm9yZGVyOiAycHQgc29saWQgdmFyKC0taW9uLWNvbG9yLWRhcmspO1xuICAgIGJvcmRlci1yYWRpdXM6IDE1cHQ7XG4gICAgcGFkZGluZzogNXB0O1xuICB9XG5cbi5kYXRlU3R5bGV7XG4gICAgZm9udC1zaXplOiBpbmhlcml0OyBcbiAgICBmbG9hdDogcmlnaHQ7XG59XG5cbi5ub0RhdGVTdHlsZXtcbiAgICAtLWNvbG9yOiAjYjRiNGI0O1xuICAgIGNvbG9yOiAjYjRiNGI0O1xufSIsIi5zcGFjZVZpZXcge1xuICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XG4gIC0tc2l6ZTogMjB2dztcbn1cblxuLnRpbWVfYm94IHtcbiAgYm9yZGVyOiAycHggc29saWQgdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG4gIHdpZHRoOiAxMDAlO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIGNvbG9yOiBibGFjaztcbiAgcGFkZGluZzogNHB4IDhweDtcbiAgZm9udC1zaXplOiAxNHB4O1xuICBmb250LXdlaWdodDogYm9sZDtcbiAgbWFyZ2luOiAycHggMDtcbiAgYm9yZGVyLXJhZGl1czogMTVweDtcbn1cblxuLnRpbWVfYm94LnNlbGVjdGVkIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG59XG5cbi50aW1lX2JveC5kaXNhYmxlZCB7XG4gIGJhY2tncm91bmQ6IGRhcmtncmF5ICFpbXBvcnRhbnQ7XG4gIGJvcmRlcjogMCAhaW1wb3J0YW50O1xufVxuXG4uZ3Vlc3Rfc2l6ZSB7XG4gIGZvbnQtc2l6ZTogMjBwdDtcbn1cblxuLmlucHV0X2JnIHtcbiAgYm9yZGVyOiAycHQgc29saWQgdmFyKC0taW9uLWNvbG9yLWRhcmspO1xuICBib3JkZXItcmFkaXVzOiAxNXB0O1xuICBwYWRkaW5nOiA1cHQ7XG59XG5cbi5kYXRlU3R5bGUge1xuICBmb250LXNpemU6IGluaGVyaXQ7XG4gIGZsb2F0OiByaWdodDtcbn1cblxuLm5vRGF0ZVN0eWxlIHtcbiAgLS1jb2xvcjogI2I0YjRiNDtcbiAgY29sb3I6ICNiNGI0YjQ7XG59Il19 */";
+module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n\n.time_box {\n  border: 2px solid var(--ion-color-secondary);\n  width: 100%;\n  text-align: center;\n  color: black;\n  padding: 4px 8px;\n  font-size: 14px;\n  font-weight: bold;\n  margin: 2px 0;\n  border-radius: 15px;\n}\n\n.time_box.selected {\n  background-color: var(--ion-color-secondary);\n}\n\n.time_box.disabled {\n  background: darkgray !important;\n  border: 0 !important;\n}\n\n.guest_size {\n  font-size: 20pt;\n}\n\n.input_bg {\n  border: 2pt solid var(--ion-color-dark);\n  border-radius: 15pt;\n  padding: 5pt;\n}\n\n.dateStyle {\n  font-size: inherit;\n  float: right;\n}\n\n.noDateStyle {\n  --color: #b4b4b4;\n  color: #b4b4b4;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFzc2lnbi10YXNrLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBO0VBQ0kscUNBQUE7RUFDQSwyQkFBQTtFQUNBLFlBQUE7QUFBSjs7QUFHQTtFQUNJLDRDQUFBO0VBQ0EsV0FBQTtFQUNBLGtCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsYUFBQTtFQUNBLG1CQUFBO0FBQUo7O0FBR0E7RUFDSSw0Q0FBQTtBQUFKOztBQUdBO0VBQ0ksK0JBQUE7RUFDQSxvQkFBQTtBQUFKOztBQUdBO0VBQ0ksZUFBQTtBQUFKOztBQUdBO0VBQ0ksdUNBQUE7RUFDQSxtQkFBQTtFQUNBLFlBQUE7QUFBSjs7QUFHQTtFQUNJLGtCQUFBO0VBQ0EsWUFBQTtBQUFKOztBQUdBO0VBQ0ksZ0JBQUE7RUFDQSxjQUFBO0FBQUoiLCJmaWxlIjoiYXNzaWduLXRhc2suY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbi5zcGFjZVZpZXd7XG4gICAgYmFja2dyb3VuZC1zaXplOiAxMjAlIGF1dG8gIWltcG9ydGFudDtcbiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XG4gICAgLS1zaXplOiAyMHZ3O1xufVxuXG4udGltZV9ib3gge1xuICAgIGJvcmRlcjogMnB4IHNvbGlkIHZhcigtLWlvbi1jb2xvci1zZWNvbmRhcnkpO1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBjb2xvcjogYmxhY2s7XG4gICAgcGFkZGluZzogNHB4IDhweDtcbiAgICBmb250LXNpemU6IDE0cHg7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgbWFyZ2luOiAycHggMDtcbiAgICBib3JkZXItcmFkaXVzOiAxNXB4O1xufVxuXG4udGltZV9ib3guc2VsZWN0ZWR7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG59XG5cbi50aW1lX2JveC5kaXNhYmxlZHtcbiAgICBiYWNrZ3JvdW5kOiBkYXJrZ3JheSAhaW1wb3J0YW50O1xuICAgIGJvcmRlcjogMCAhaW1wb3J0YW50O1xufVxuXG4uZ3Vlc3Rfc2l6ZXtcbiAgICBmb250LXNpemU6IDIwcHQ7XG59XG5cbi5pbnB1dF9iZyB7XG4gICAgYm9yZGVyOiAycHQgc29saWQgdmFyKC0taW9uLWNvbG9yLWRhcmspO1xuICAgIGJvcmRlci1yYWRpdXM6IDE1cHQ7XG4gICAgcGFkZGluZzogNXB0O1xuICB9XG5cbi5kYXRlU3R5bGV7XG4gICAgZm9udC1zaXplOiBpbmhlcml0OyBcbiAgICBmbG9hdDogcmlnaHQ7XG59XG5cbi5ub0RhdGVTdHlsZXtcbiAgICAtLWNvbG9yOiAjYjRiNGI0O1xuICAgIGNvbG9yOiAjYjRiNGI0O1xufSJdfQ== */";
 
 /***/ }),
 
@@ -6537,7 +6537,7 @@ module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  back
   \****************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".textoDisplay {\n  font-size: 12pt;\n  color: black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRldGFpbC1yZXF1ZXN0LmNvbXBvbmVudC5zY3NzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vUHJhY3RpY3VtJTIwNC9hdGhvc0FwcC9zcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL3NlcnZpY2VzL2RldGFpbC1yZXF1ZXN0L2RldGFpbC1yZXF1ZXN0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBQTtFQUNBLFlBQUE7QUNDSiIsImZpbGUiOiJkZXRhaWwtcmVxdWVzdC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi50ZXh0b0Rpc3BsYXl7XG4gICAgZm9udC1zaXplOiAxMnB0O1xuICAgIGNvbG9yOiBibGFjaztcbn0iLCIudGV4dG9EaXNwbGF5IHtcbiAgZm9udC1zaXplOiAxMnB0O1xuICBjb2xvcjogYmxhY2s7XG59Il19 */";
+module.exports = ".textoDisplay {\n  font-size: 12pt;\n  color: black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRldGFpbC1yZXF1ZXN0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBQTtFQUNBLFlBQUE7QUFDSiIsImZpbGUiOiJkZXRhaWwtcmVxdWVzdC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi50ZXh0b0Rpc3BsYXl7XG4gICAgZm9udC1zaXplOiAxMnB0O1xuICAgIGNvbG9yOiBibGFjaztcbn0iXX0= */";
 
 /***/ }),
 
@@ -6587,7 +6587,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".headerServiceList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 15pt;\n  font-weight: bold;\n  color: black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBpY2stc2VydmljZS5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zZXJ2aWNlcy9waWNrLXNlcnZpY2UvcGljay1zZXJ2aWNlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksMkNBQUE7RUFDQSxlQUFBO0VBQ0EsaUJBQUE7RUFDQSxZQUFBO0FDQ0oiLCJmaWxlIjoicGljay1zZXJ2aWNlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmhlYWRlclNlcnZpY2VMaXN0e1xuICAgIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCByZ2IoMTg3LCAxODcsIDE4Nyk7XG4gICAgZm9udC1zaXplOiAxNXB0O1xuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgIGNvbG9yOiBibGFjaztcbn0iLCIuaGVhZGVyU2VydmljZUxpc3Qge1xuICBib3JkZXItYm90dG9tOiAycHggc29saWQgcmdiKDE4NywgMTg3LCAxODcpO1xuICBmb250LXNpemU6IDE1cHQ7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBjb2xvcjogYmxhY2s7XG59Il19 */";
+module.exports = ".headerServiceList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 15pt;\n  font-weight: bold;\n  color: black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBpY2stc2VydmljZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLDJDQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsWUFBQTtBQUNKIiwiZmlsZSI6InBpY2stc2VydmljZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5oZWFkZXJTZXJ2aWNlTGlzdHtcbiAgICBib3JkZXItYm90dG9tOiAycHggc29saWQgcmdiKDE4NywgMTg3LCAxODcpO1xuICAgIGZvbnQtc2l6ZTogMTVwdDtcbiAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICBjb2xvcjogYmxhY2s7XG59Il19 */";
 
 /***/ }),
 
@@ -6617,7 +6617,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \**********************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRldGFpbC1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zcGFjZXMvZGV0YWlsLXJlc2VydmF0aW9uL2RldGFpbC1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FDQ0oiLCJmaWxlIjoiZGV0YWlsLXJlc2VydmF0aW9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNwYWNlVmlld3tcbiAgICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgICAtLXNpemU6IDIwdnc7XG59IiwiLnNwYWNlVmlldyB7XG4gIGJhY2tncm91bmQtc2l6ZTogMTIwJSBhdXRvICFpbXBvcnRhbnQ7XG4gIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgLS1zaXplOiAyMHZ3O1xufSJdfQ== */";
+module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRldGFpbC1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FBQ0oiLCJmaWxlIjoiZGV0YWlsLXJlc2VydmF0aW9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNwYWNlVmlld3tcbiAgICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgICAtLXNpemU6IDIwdnc7XG59Il19 */";
 
 /***/ }),
 
@@ -6627,7 +6627,7 @@ module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  back
   \**********************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRldGFpbC1zcGFjZS5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zcGFjZXMvZGV0YWlsLXNwYWNlL2RldGFpbC1zcGFjZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FDQ0oiLCJmaWxlIjoiZGV0YWlsLXNwYWNlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNwYWNlVmlld3tcbiAgICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgICAtLXNpemU6IDIwdnc7XG59IiwiLnNwYWNlVmlldyB7XG4gIGJhY2tncm91bmQtc2l6ZTogMTIwJSBhdXRvICFpbXBvcnRhbnQ7XG4gIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgLS1zaXplOiAyMHZ3O1xufSJdfQ== */";
+module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImRldGFpbC1zcGFjZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FBQ0oiLCJmaWxlIjoiZGV0YWlsLXNwYWNlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNwYWNlVmlld3tcbiAgICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgICAtLXNpemU6IDIwdnc7XG59Il19 */";
 
 /***/ }),
 
@@ -6647,7 +6647,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \******************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".spaceItemList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 13pt;\n  color: black;\n  min-height: 30pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIml0ZW0tc3BhY2UuY29tcG9uZW50LnNjc3MiLCIuLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi9QcmFjdGljdW0lMjA0L2F0aG9zQXBwL3NyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvc3BhY2VzL2l0ZW0tc3BhY2UvaXRlbS1zcGFjZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLDJDQUFBO0VBQ0EsZUFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtBQ0NKIiwiZmlsZSI6Iml0ZW0tc3BhY2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc3BhY2VJdGVtTGlzdHtcbiAgICBib3JkZXItYm90dG9tOiAycHggc29saWQgcmdiKDE4NywgMTg3LCAxODcpO1xuICAgIGZvbnQtc2l6ZTogMTNwdDtcbiAgICBjb2xvcjogYmxhY2s7XG4gICAgbWluLWhlaWdodDogMzBwdDtcbn0iLCIuc3BhY2VJdGVtTGlzdCB7XG4gIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCByZ2IoMTg3LCAxODcsIDE4Nyk7XG4gIGZvbnQtc2l6ZTogMTNwdDtcbiAgY29sb3I6IGJsYWNrO1xuICBtaW4taGVpZ2h0OiAzMHB0O1xufSJdfQ== */";
+module.exports = ".spaceItemList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 13pt;\n  color: black;\n  min-height: 30pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIml0ZW0tc3BhY2UuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSwyQ0FBQTtFQUNBLGVBQUE7RUFDQSxZQUFBO0VBQ0EsZ0JBQUE7QUFDSiIsImZpbGUiOiJpdGVtLXNwYWNlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNwYWNlSXRlbUxpc3R7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIHJnYigxODcsIDE4NywgMTg3KTtcbiAgICBmb250LXNpemU6IDEzcHQ7XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIG1pbi1oZWlnaHQ6IDMwcHQ7XG59Il19 */";
 
 /***/ }),
 
@@ -6657,7 +6657,7 @@ module.exports = ".spaceItemList {\n  border-bottom: 2px solid rgb(187, 187, 187
   \****************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n\n.time_box {\n  border: 2px solid var(--ion-color-secondary);\n  width: 100%;\n  text-align: center;\n  color: black;\n  padding: 4px 8px;\n  font-size: 14px;\n  font-weight: bold;\n  margin: 2px 0;\n  border-radius: 15px;\n}\n\n.time_box.selected {\n  background-color: var(--ion-color-secondary);\n}\n\n.time_box.disabled {\n  background: darkgray !important;\n  border: 0 !important;\n}\n\n.guest_size {\n  font-size: 20pt;\n}\n\n.input_bg {\n  border: 2pt solid var(--ion-color-dark);\n  border-radius: 15pt;\n  padding: 5pt;\n}\n\n.dateStyle {\n  font-size: inherit;\n  float: right;\n}\n\n.noDateStyle {\n  --color: #b4b4b4;\n  color: #b4b4b4;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zcGFjZXMvbmV3LXJlc2VydmF0aW9uL25ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FDQUo7O0FER0E7RUFDSSw0Q0FBQTtFQUNBLFdBQUE7RUFDQSxrQkFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtFQUNBLGVBQUE7RUFDQSxpQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtBQ0FKOztBREdBO0VBQ0ksNENBQUE7QUNBSjs7QURHQTtFQUNJLCtCQUFBO0VBQ0Esb0JBQUE7QUNBSjs7QURHQTtFQUNJLGVBQUE7QUNBSjs7QURHQTtFQUNJLHVDQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0FDQUo7O0FER0E7RUFDSSxrQkFBQTtFQUNBLFlBQUE7QUNBSjs7QURHQTtFQUNJLGdCQUFBO0VBQ0EsY0FBQTtBQ0FKIiwiZmlsZSI6Im5ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuLnNwYWNlVmlld3tcbiAgICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgICAtLXNpemU6IDIwdnc7XG59XG5cbi50aW1lX2JveCB7XG4gICAgYm9yZGVyOiAycHggc29saWQgdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGNvbG9yOiBibGFjaztcbiAgICBwYWRkaW5nOiA0cHggOHB4O1xuICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICBtYXJnaW46IDJweCAwO1xuICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XG59XG5cbi50aW1lX2JveC5zZWxlY3RlZHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kYXJ5KTtcbn1cblxuLnRpbWVfYm94LmRpc2FibGVke1xuICAgIGJhY2tncm91bmQ6IGRhcmtncmF5ICFpbXBvcnRhbnQ7XG4gICAgYm9yZGVyOiAwICFpbXBvcnRhbnQ7XG59XG5cbi5ndWVzdF9zaXple1xuICAgIGZvbnQtc2l6ZTogMjBwdDtcbn1cblxuLmlucHV0X2JnIHtcbiAgICBib3JkZXI6IDJwdCBzb2xpZCB2YXIoLS1pb24tY29sb3ItZGFyayk7XG4gICAgYm9yZGVyLXJhZGl1czogMTVwdDtcbiAgICBwYWRkaW5nOiA1cHQ7XG4gIH1cblxuLmRhdGVTdHlsZXtcbiAgICBmb250LXNpemU6IGluaGVyaXQ7IFxuICAgIGZsb2F0OiByaWdodDtcbn1cblxuLm5vRGF0ZVN0eWxle1xuICAgIC0tY29sb3I6ICNiNGI0YjQ7XG4gICAgY29sb3I6ICNiNGI0YjQ7XG59IiwiLnNwYWNlVmlldyB7XG4gIGJhY2tncm91bmQtc2l6ZTogMTIwJSBhdXRvICFpbXBvcnRhbnQ7XG4gIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgLS1zaXplOiAyMHZ3O1xufVxuXG4udGltZV9ib3gge1xuICBib3JkZXI6IDJweCBzb2xpZCB2YXIoLS1pb24tY29sb3Itc2Vjb25kYXJ5KTtcbiAgd2lkdGg6IDEwMCU7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgY29sb3I6IGJsYWNrO1xuICBwYWRkaW5nOiA0cHggOHB4O1xuICBmb250LXNpemU6IDE0cHg7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBtYXJnaW46IDJweCAwO1xuICBib3JkZXItcmFkaXVzOiAxNXB4O1xufVxuXG4udGltZV9ib3guc2VsZWN0ZWQge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kYXJ5KTtcbn1cblxuLnRpbWVfYm94LmRpc2FibGVkIHtcbiAgYmFja2dyb3VuZDogZGFya2dyYXkgIWltcG9ydGFudDtcbiAgYm9yZGVyOiAwICFpbXBvcnRhbnQ7XG59XG5cbi5ndWVzdF9zaXplIHtcbiAgZm9udC1zaXplOiAyMHB0O1xufVxuXG4uaW5wdXRfYmcge1xuICBib3JkZXI6IDJwdCBzb2xpZCB2YXIoLS1pb24tY29sb3ItZGFyayk7XG4gIGJvcmRlci1yYWRpdXM6IDE1cHQ7XG4gIHBhZGRpbmc6IDVwdDtcbn1cblxuLmRhdGVTdHlsZSB7XG4gIGZvbnQtc2l6ZTogaW5oZXJpdDtcbiAgZmxvYXQ6IHJpZ2h0O1xufVxuXG4ubm9EYXRlU3R5bGUge1xuICAtLWNvbG9yOiAjYjRiNGI0O1xuICBjb2xvcjogI2I0YjRiNDtcbn0iXX0= */";
+module.exports = ".spaceView {\n  background-size: 120% auto !important;\n  background-position: center;\n  --size: 20vw;\n}\n\n.time_box {\n  border: 2px solid var(--ion-color-secondary);\n  width: 100%;\n  text-align: center;\n  color: black;\n  padding: 4px 8px;\n  font-size: 14px;\n  font-weight: bold;\n  margin: 2px 0;\n  border-radius: 15px;\n}\n\n.time_box.selected {\n  background-color: var(--ion-color-secondary);\n}\n\n.time_box.disabled {\n  background: darkgray !important;\n  border: 0 !important;\n}\n\n.guest_size {\n  font-size: 20pt;\n}\n\n.input_bg {\n  border: 2pt solid var(--ion-color-dark);\n  border-radius: 15pt;\n  padding: 5pt;\n}\n\n.dateStyle {\n  font-size: inherit;\n  float: right;\n}\n\n.noDateStyle {\n  --color: #b4b4b4;\n  color: #b4b4b4;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLHFDQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0FBQUo7O0FBR0E7RUFDSSw0Q0FBQTtFQUNBLFdBQUE7RUFDQSxrQkFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtFQUNBLGVBQUE7RUFDQSxpQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtBQUFKOztBQUdBO0VBQ0ksNENBQUE7QUFBSjs7QUFHQTtFQUNJLCtCQUFBO0VBQ0Esb0JBQUE7QUFBSjs7QUFHQTtFQUNJLGVBQUE7QUFBSjs7QUFHQTtFQUNJLHVDQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0FBQUo7O0FBR0E7RUFDSSxrQkFBQTtFQUNBLFlBQUE7QUFBSjs7QUFHQTtFQUNJLGdCQUFBO0VBQ0EsY0FBQTtBQUFKIiwiZmlsZSI6Im5ldy1yZXNlcnZhdGlvbi5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuLnNwYWNlVmlld3tcbiAgICBiYWNrZ3JvdW5kLXNpemU6IDEyMCUgYXV0byAhaW1wb3J0YW50O1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcbiAgICAtLXNpemU6IDIwdnc7XG59XG5cbi50aW1lX2JveCB7XG4gICAgYm9yZGVyOiAycHggc29saWQgdmFyKC0taW9uLWNvbG9yLXNlY29uZGFyeSk7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGNvbG9yOiBibGFjaztcbiAgICBwYWRkaW5nOiA0cHggOHB4O1xuICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICBtYXJnaW46IDJweCAwO1xuICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XG59XG5cbi50aW1lX2JveC5zZWxlY3RlZHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kYXJ5KTtcbn1cblxuLnRpbWVfYm94LmRpc2FibGVke1xuICAgIGJhY2tncm91bmQ6IGRhcmtncmF5ICFpbXBvcnRhbnQ7XG4gICAgYm9yZGVyOiAwICFpbXBvcnRhbnQ7XG59XG5cbi5ndWVzdF9zaXple1xuICAgIGZvbnQtc2l6ZTogMjBwdDtcbn1cblxuLmlucHV0X2JnIHtcbiAgICBib3JkZXI6IDJwdCBzb2xpZCB2YXIoLS1pb24tY29sb3ItZGFyayk7XG4gICAgYm9yZGVyLXJhZGl1czogMTVwdDtcbiAgICBwYWRkaW5nOiA1cHQ7XG4gIH1cblxuLmRhdGVTdHlsZXtcbiAgICBmb250LXNpemU6IGluaGVyaXQ7IFxuICAgIGZsb2F0OiByaWdodDtcbn1cblxuLm5vRGF0ZVN0eWxle1xuICAgIC0tY29sb3I6ICNiNGI0YjQ7XG4gICAgY29sb3I6ICNiNGI0YjQ7XG59Il19 */";
 
 /***/ }),
 
@@ -6677,7 +6677,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \****************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".headerSpaceList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 15pt;\n  font-weight: bold;\n  color: black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBpY2stcmVudC1zcGFjZS5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy9zcGFjZXMvcGljay1yZW50LXNwYWNlL3BpY2stcmVudC1zcGFjZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLDJDQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsWUFBQTtBQ0NKIiwiZmlsZSI6InBpY2stcmVudC1zcGFjZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5oZWFkZXJTcGFjZUxpc3R7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIHJnYigxODcsIDE4NywgMTg3KTtcbiAgICBmb250LXNpemU6IDE1cHQ7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgY29sb3I6IGJsYWNrO1xufSIsIi5oZWFkZXJTcGFjZUxpc3Qge1xuICBib3JkZXItYm90dG9tOiAycHggc29saWQgcmdiKDE4NywgMTg3LCAxODcpO1xuICBmb250LXNpemU6IDE1cHQ7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBjb2xvcjogYmxhY2s7XG59Il19 */";
+module.exports = ".headerSpaceList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 15pt;\n  font-weight: bold;\n  color: black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBpY2stcmVudC1zcGFjZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLDJDQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0VBQ0EsWUFBQTtBQUNKIiwiZmlsZSI6InBpY2stcmVudC1zcGFjZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5oZWFkZXJTcGFjZUxpc3R7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIHJnYigxODcsIDE4NywgMTg3KTtcbiAgICBmb250LXNpemU6IDE1cHQ7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgY29sb3I6IGJsYWNrO1xufSJdfQ== */";
 
 /***/ }),
 
@@ -6687,7 +6687,7 @@ module.exports = ".headerSpaceList {\n  border-bottom: 2px solid rgb(187, 187, 1
   \***************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n}\n\n.profileCircle {\n  --border-radius: 50%;\n  --size: 40pt;\n  position: relative;\n}\n\n.cameraButton {\n  position: absolute;\n  background-color: var(--ion-color-medium);\n  top: 25pt;\n  left: 25pt;\n  width: 20pt;\n  height: 20pt;\n  font-size: 15pt;\n  border-radius: 50%;\n  padding: 2pt;\n}\n\n.uploadingImage {\n  position: absolute;\n  top: 10pt;\n  left: 10pt;\n}\n\n.imageProfile {\n  position: absolute;\n}\n\n.loadingImage {\n  position: absolute;\n  top: 41pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQtdXNlci5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy91c2Vycy9lZGl0LXVzZXIvZWRpdC11c2VyLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7RUFDQSxnQkFBQTtBQ0NKOztBREVBO0VBQ0ksb0JBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7QUNDSjs7QURFQTtFQUNJLGtCQUFBO0VBQ0EseUNBQUE7RUFDQSxTQUFBO0VBQ0EsVUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0VBQ0EsZUFBQTtFQUNBLGtCQUFBO0VBQ0EsWUFBQTtBQ0NKOztBREVBO0VBQ0ksa0JBQUE7RUFDQSxTQUFBO0VBQ0EsVUFBQTtBQ0NKOztBREVBO0VBQ0ksa0JBQUE7QUNDSjs7QURFQTtFQUNJLGtCQUFBO0VBQ0EsU0FBQTtBQ0NKIiwiZmlsZSI6ImVkaXQtdXNlci5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5yaXBwbGUtcGFyZW50IHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbn1cblxuLnByb2ZpbGVDaXJjbGV7XG4gICAgLS1ib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgLS1zaXplOiA0MHB0O1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbn1cblxuLmNhbWVyYUJ1dHRvbntcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLW1lZGl1bSk7XG4gICAgdG9wOiAyNXB0O1xuICAgIGxlZnQ6IDI1cHQ7XG4gICAgd2lkdGg6IDIwcHQ7XG4gICAgaGVpZ2h0OiAyMHB0O1xuICAgIGZvbnQtc2l6ZTogMTVwdDtcbiAgICBib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgcGFkZGluZzogMnB0O1xufVxuXG4udXBsb2FkaW5nSW1hZ2V7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHRvcDogMTBwdDtcbiAgICBsZWZ0OiAxMHB0O1xufVxuXG4uaW1hZ2VQcm9maWxle1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbn1cblxuLmxvYWRpbmdJbWFnZXtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiA0MXB0O1xufSIsIi5yaXBwbGUtcGFyZW50IHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBvdmVyZmxvdzogaGlkZGVuO1xufVxuXG4ucHJvZmlsZUNpcmNsZSB7XG4gIC0tYm9yZGVyLXJhZGl1czogNTAlO1xuICAtLXNpemU6IDQwcHQ7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbn1cblxuLmNhbWVyYUJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLW1lZGl1bSk7XG4gIHRvcDogMjVwdDtcbiAgbGVmdDogMjVwdDtcbiAgd2lkdGg6IDIwcHQ7XG4gIGhlaWdodDogMjBwdDtcbiAgZm9udC1zaXplOiAxNXB0O1xuICBib3JkZXItcmFkaXVzOiA1MCU7XG4gIHBhZGRpbmc6IDJwdDtcbn1cblxuLnVwbG9hZGluZ0ltYWdlIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDEwcHQ7XG4gIGxlZnQ6IDEwcHQ7XG59XG5cbi5pbWFnZVByb2ZpbGUge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG59XG5cbi5sb2FkaW5nSW1hZ2Uge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogNDFwdDtcbn0iXX0= */";
+module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n}\n\n.profileCircle {\n  --border-radius: 50%;\n  --size: 40pt;\n  position: relative;\n}\n\n.cameraButton {\n  position: absolute;\n  background-color: var(--ion-color-medium);\n  top: 25pt;\n  left: 25pt;\n  width: 20pt;\n  height: 20pt;\n  font-size: 15pt;\n  border-radius: 50%;\n  padding: 2pt;\n}\n\n.uploadingImage {\n  position: absolute;\n  top: 10pt;\n  left: 10pt;\n}\n\n.imageProfile {\n  position: absolute;\n}\n\n.loadingImage {\n  position: absolute;\n  top: 41pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQtdXNlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGtCQUFBO0VBQ0EsZ0JBQUE7QUFDSjs7QUFFQTtFQUNJLG9CQUFBO0VBQ0EsWUFBQTtFQUNBLGtCQUFBO0FBQ0o7O0FBRUE7RUFDSSxrQkFBQTtFQUNBLHlDQUFBO0VBQ0EsU0FBQTtFQUNBLFVBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLGVBQUE7RUFDQSxrQkFBQTtFQUNBLFlBQUE7QUFDSjs7QUFFQTtFQUNJLGtCQUFBO0VBQ0EsU0FBQTtFQUNBLFVBQUE7QUFDSjs7QUFFQTtFQUNJLGtCQUFBO0FBQ0o7O0FBRUE7RUFDSSxrQkFBQTtFQUNBLFNBQUE7QUFDSiIsImZpbGUiOiJlZGl0LXVzZXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucmlwcGxlLXBhcmVudCB7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG59XG5cbi5wcm9maWxlQ2lyY2xle1xuICAgIC0tYm9yZGVyLXJhZGl1czogNTAlO1xuICAgIC0tc2l6ZTogNDBwdDtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG59XG5cbi5jYW1lcmFCdXR0b257XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWlvbi1jb2xvci1tZWRpdW0pO1xuICAgIHRvcDogMjVwdDtcbiAgICBsZWZ0OiAyNXB0O1xuICAgIHdpZHRoOiAyMHB0O1xuICAgIGhlaWdodDogMjBwdDtcbiAgICBmb250LXNpemU6IDE1cHQ7XG4gICAgYm9yZGVyLXJhZGl1czogNTAlO1xuICAgIHBhZGRpbmc6IDJwdDtcbn1cblxuLnVwbG9hZGluZ0ltYWdle1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICB0b3A6IDEwcHQ7XG4gICAgbGVmdDogMTBwdDtcbn1cblxuLmltYWdlUHJvZmlsZXtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG59XG5cbi5sb2FkaW5nSW1hZ2V7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHRvcDogNDFwdDtcbn0iXX0= */";
 
 /***/ }),
 
@@ -6697,7 +6697,7 @@ module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n
   \***************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".userItemList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 13pt;\n  color: black;\n  min-height: 30pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIml0ZW0tdXNlci5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy91c2Vycy9pdGVtLXVzZXIvaXRlbS11c2VyLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksMkNBQUE7RUFDQSxlQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0FDQ0oiLCJmaWxlIjoiaXRlbS11c2VyLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnVzZXJJdGVtTGlzdHtcbiAgICBib3JkZXItYm90dG9tOiAycHggc29saWQgcmdiKDE4NywgMTg3LCAxODcpO1xuICAgIGZvbnQtc2l6ZTogMTNwdDtcbiAgICBjb2xvcjogYmxhY2s7XG4gICAgbWluLWhlaWdodDogMzBwdDtcbn0iLCIudXNlckl0ZW1MaXN0IHtcbiAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIHJnYigxODcsIDE4NywgMTg3KTtcbiAgZm9udC1zaXplOiAxM3B0O1xuICBjb2xvcjogYmxhY2s7XG4gIG1pbi1oZWlnaHQ6IDMwcHQ7XG59Il19 */";
+module.exports = ".userItemList {\n  border-bottom: 2px solid rgb(187, 187, 187);\n  font-size: 13pt;\n  color: black;\n  min-height: 30pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIml0ZW0tdXNlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLDJDQUFBO0VBQ0EsZUFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtBQUNKIiwiZmlsZSI6Iml0ZW0tdXNlci5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi51c2VySXRlbUxpc3R7XG4gICAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIHJnYigxODcsIDE4NywgMTg3KTtcbiAgICBmb250LXNpemU6IDEzcHQ7XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIG1pbi1oZWlnaHQ6IDMwcHQ7XG59Il19 */";
 
 /***/ }),
 
@@ -6707,7 +6707,7 @@ module.exports = ".userItemList {\n  border-bottom: 2px solid rgb(187, 187, 187)
   \*******************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n}\n\n.profileCircle {\n  --border-radius: 50%;\n  --size: 40pt;\n  position: relative;\n}\n\n.cameraButton {\n  position: absolute;\n  background-color: var(--ion-color-medium);\n  top: 25pt;\n  left: 25pt;\n  width: 20pt;\n  height: 20pt;\n  font-size: 15pt;\n  border-radius: 50%;\n  padding: 2pt;\n}\n\n.uploadingImage {\n  position: absolute;\n  top: 10pt;\n  left: 10pt;\n}\n\n.imageProfile {\n  position: absolute;\n}\n\n.loadingImage {\n  position: absolute;\n  top: 41pt;\n}\n\n.title {\n  font-size: 12pt;\n  color: grey;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVzZXItZGV0YWlsLmNvbXBvbmVudC5zY3NzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vUHJhY3RpY3VtJTIwNC9hdGhvc0FwcC9zcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL3VzZXJzL3VzZXItZGV0YWlsL3VzZXItZGV0YWlsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7RUFDQSxnQkFBQTtBQ0NKOztBREVBO0VBQ0ksb0JBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7QUNDSjs7QURFQTtFQUNJLGtCQUFBO0VBQ0EseUNBQUE7RUFDQSxTQUFBO0VBQ0EsVUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0VBQ0EsZUFBQTtFQUNBLGtCQUFBO0VBQ0EsWUFBQTtBQ0NKOztBREVBO0VBQ0ksa0JBQUE7RUFDQSxTQUFBO0VBQ0EsVUFBQTtBQ0NKOztBREVBO0VBQ0ksa0JBQUE7QUNDSjs7QURFQTtFQUNJLGtCQUFBO0VBQ0EsU0FBQTtBQ0NKOztBREVBO0VBQ0ksZUFBQTtFQUNBLFdBQUE7QUNDSiIsImZpbGUiOiJ1c2VyLWRldGFpbC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5yaXBwbGUtcGFyZW50IHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbn1cblxuLnByb2ZpbGVDaXJjbGV7XG4gICAgLS1ib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgLS1zaXplOiA0MHB0O1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbn1cblxuLmNhbWVyYUJ1dHRvbntcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLW1lZGl1bSk7XG4gICAgdG9wOiAyNXB0O1xuICAgIGxlZnQ6IDI1cHQ7XG4gICAgd2lkdGg6IDIwcHQ7XG4gICAgaGVpZ2h0OiAyMHB0O1xuICAgIGZvbnQtc2l6ZTogMTVwdDtcbiAgICBib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgcGFkZGluZzogMnB0O1xufVxuXG4udXBsb2FkaW5nSW1hZ2V7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHRvcDogMTBwdDtcbiAgICBsZWZ0OiAxMHB0O1xufVxuXG4uaW1hZ2VQcm9maWxle1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbn1cblxuLmxvYWRpbmdJbWFnZXtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiA0MXB0O1xufVxuXG4udGl0bGV7XG4gICAgZm9udC1zaXplOiAxMnB0O1xuICAgIGNvbG9yOiBncmV5O1xufSIsIi5yaXBwbGUtcGFyZW50IHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBvdmVyZmxvdzogaGlkZGVuO1xufVxuXG4ucHJvZmlsZUNpcmNsZSB7XG4gIC0tYm9yZGVyLXJhZGl1czogNTAlO1xuICAtLXNpemU6IDQwcHQ7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbn1cblxuLmNhbWVyYUJ1dHRvbiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLW1lZGl1bSk7XG4gIHRvcDogMjVwdDtcbiAgbGVmdDogMjVwdDtcbiAgd2lkdGg6IDIwcHQ7XG4gIGhlaWdodDogMjBwdDtcbiAgZm9udC1zaXplOiAxNXB0O1xuICBib3JkZXItcmFkaXVzOiA1MCU7XG4gIHBhZGRpbmc6IDJwdDtcbn1cblxuLnVwbG9hZGluZ0ltYWdlIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDEwcHQ7XG4gIGxlZnQ6IDEwcHQ7XG59XG5cbi5pbWFnZVByb2ZpbGUge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG59XG5cbi5sb2FkaW5nSW1hZ2Uge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogNDFwdDtcbn1cblxuLnRpdGxlIHtcbiAgZm9udC1zaXplOiAxMnB0O1xuICBjb2xvcjogZ3JleTtcbn0iXX0= */";
+module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n}\n\n.profileCircle {\n  --border-radius: 50%;\n  --size: 40pt;\n  position: relative;\n}\n\n.cameraButton {\n  position: absolute;\n  background-color: var(--ion-color-medium);\n  top: 25pt;\n  left: 25pt;\n  width: 20pt;\n  height: 20pt;\n  font-size: 15pt;\n  border-radius: 50%;\n  padding: 2pt;\n}\n\n.uploadingImage {\n  position: absolute;\n  top: 10pt;\n  left: 10pt;\n}\n\n.imageProfile {\n  position: absolute;\n}\n\n.loadingImage {\n  position: absolute;\n  top: 41pt;\n}\n\n.title {\n  font-size: 12pt;\n  color: grey;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVzZXItZGV0YWlsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7RUFDQSxnQkFBQTtBQUNKOztBQUVBO0VBQ0ksb0JBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7QUFDSjs7QUFFQTtFQUNJLGtCQUFBO0VBQ0EseUNBQUE7RUFDQSxTQUFBO0VBQ0EsVUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0VBQ0EsZUFBQTtFQUNBLGtCQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7RUFDQSxTQUFBO0VBQ0EsVUFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLGtCQUFBO0VBQ0EsU0FBQTtBQUNKOztBQUVBO0VBQ0ksZUFBQTtFQUNBLFdBQUE7QUFDSiIsImZpbGUiOiJ1c2VyLWRldGFpbC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5yaXBwbGUtcGFyZW50IHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbn1cblxuLnByb2ZpbGVDaXJjbGV7XG4gICAgLS1ib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgLS1zaXplOiA0MHB0O1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbn1cblxuLmNhbWVyYUJ1dHRvbntcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogdmFyKC0taW9uLWNvbG9yLW1lZGl1bSk7XG4gICAgdG9wOiAyNXB0O1xuICAgIGxlZnQ6IDI1cHQ7XG4gICAgd2lkdGg6IDIwcHQ7XG4gICAgaGVpZ2h0OiAyMHB0O1xuICAgIGZvbnQtc2l6ZTogMTVwdDtcbiAgICBib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgcGFkZGluZzogMnB0O1xufVxuXG4udXBsb2FkaW5nSW1hZ2V7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHRvcDogMTBwdDtcbiAgICBsZWZ0OiAxMHB0O1xufVxuXG4uaW1hZ2VQcm9maWxle1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbn1cblxuLmxvYWRpbmdJbWFnZXtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiA0MXB0O1xufVxuXG4udGl0bGV7XG4gICAgZm9udC1zaXplOiAxMnB0O1xuICAgIGNvbG9yOiBncmV5O1xufSJdfQ== */";
 
 /***/ }),
 
@@ -6717,7 +6717,7 @@ module.exports = ".ripple-parent {\n  position: relative;\n  overflow: hidden;\n
   \*********************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".profileCircle {\n  --border-radius: 50%;\n  --size: 40pt ;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVzZXItcHJvZmlsZS5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy91c2Vycy91c2VyLXByb2ZpbGUvdXNlci1wcm9maWxlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksb0JBQUE7RUFDQSxhQUFBO0FDQ0oiLCJmaWxlIjoidXNlci1wcm9maWxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnByb2ZpbGVDaXJjbGV7XG4gICAgLS1ib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgLS1zaXplOiA0MHB0XG59IiwiLnByb2ZpbGVDaXJjbGUge1xuICAtLWJvcmRlci1yYWRpdXM6IDUwJTtcbiAgLS1zaXplOiA0MHB0IDtcbn0iXX0= */";
+module.exports = ".profileCircle {\n  --border-radius: 50%;\n  --size: 40pt ;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVzZXItcHJvZmlsZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG9CQUFBO0VBQ0EsYUFBQTtBQUNKIiwiZmlsZSI6InVzZXItcHJvZmlsZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5wcm9maWxlQ2lyY2xle1xuICAgIC0tYm9yZGVyLXJhZGl1czogNTAlO1xuICAgIC0tc2l6ZTogNDBwdFxufSJdfQ== */";
 
 /***/ }),
 
@@ -6727,7 +6727,7 @@ module.exports = ".profileCircle {\n  --border-radius: 50%;\n  --size: 40pt ;\n}
   \****************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".buttonStyle {\n  border-radius: 7px;\n  --border-radius: 7px;\n  width: 90vw;\n  --width: 90vw;\n  font-size: 20pt;\n  height: 40px;\n  margin: 0 2vw;\n}\n\n.rowStyle {\n  width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJpZy1idXR0b24uY29tcG9uZW50LnNjc3MiLCIuLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi9QcmFjdGljdW0lMjA0L2F0aG9zQXBwL3NyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvdmlldy9iaWctYnV0dG9uL2JpZy1idXR0b24uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtFQUNBLG9CQUFBO0VBQ0EsV0FBQTtFQUNBLGFBQUE7RUFDQSxlQUFBO0VBQ0EsWUFBQTtFQUNBLGFBQUE7QUNDSjs7QURFQTtFQUNJLFdBQUE7QUNDSiIsImZpbGUiOiJiaWctYnV0dG9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJ1dHRvblN0eWxle1xuICAgIGJvcmRlci1yYWRpdXM6IDdweDtcbiAgICAtLWJvcmRlci1yYWRpdXM6IDdweDtcbiAgICB3aWR0aDogOTB2dztcbiAgICAtLXdpZHRoOiA5MHZ3O1xuICAgIGZvbnQtc2l6ZTogMjBwdDtcbiAgICBoZWlnaHQ6IDQwcHg7XG4gICAgbWFyZ2luOiAwIDJ2dztcbn1cblxuLnJvd1N0eWxle1xuICAgIHdpZHRoOiAxMDAlO1xufSIsIi5idXR0b25TdHlsZSB7XG4gIGJvcmRlci1yYWRpdXM6IDdweDtcbiAgLS1ib3JkZXItcmFkaXVzOiA3cHg7XG4gIHdpZHRoOiA5MHZ3O1xuICAtLXdpZHRoOiA5MHZ3O1xuICBmb250LXNpemU6IDIwcHQ7XG4gIGhlaWdodDogNDBweDtcbiAgbWFyZ2luOiAwIDJ2dztcbn1cblxuLnJvd1N0eWxlIHtcbiAgd2lkdGg6IDEwMCU7XG59Il19 */";
+module.exports = ".buttonStyle {\n  border-radius: 7px;\n  --border-radius: 7px;\n  width: 90vw;\n  --width: 90vw;\n  font-size: 20pt;\n  height: 40px;\n  margin: 0 2vw;\n}\n\n.rowStyle {\n  width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJpZy1idXR0b24uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtFQUNBLG9CQUFBO0VBQ0EsV0FBQTtFQUNBLGFBQUE7RUFDQSxlQUFBO0VBQ0EsWUFBQTtFQUNBLGFBQUE7QUFDSjs7QUFFQTtFQUNJLFdBQUE7QUFDSiIsImZpbGUiOiJiaWctYnV0dG9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJ1dHRvblN0eWxle1xuICAgIGJvcmRlci1yYWRpdXM6IDdweDtcbiAgICAtLWJvcmRlci1yYWRpdXM6IDdweDtcbiAgICB3aWR0aDogOTB2dztcbiAgICAtLXdpZHRoOiA5MHZ3O1xuICAgIGZvbnQtc2l6ZTogMjBwdDtcbiAgICBoZWlnaHQ6IDQwcHg7XG4gICAgbWFyZ2luOiAwIDJ2dztcbn1cblxuLnJvd1N0eWxle1xuICAgIHdpZHRoOiAxMDAlO1xufSJdfQ== */";
 
 /***/ }),
 
@@ -6747,7 +6747,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \********************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".rect-img-container {\n  position: relative;\n}\n\n.rect-img-container::after {\n  content: \"\";\n  display: block;\n  padding-bottom: 100%;\n}\n\n.rect-img {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  border-radius: 7px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImltYWdlLWxvYWRlci5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9zaGFyZWQvY29tcG9uZW50cy92aWV3L2ltYWdlLWxvYWRlci9pbWFnZS1sb2FkZXIuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtBQ0NKOztBREVFO0VBQ0UsV0FBQTtFQUNBLGNBQUE7RUFDQSxvQkFBQTtBQ0NKOztBREVFO0VBQ0Usa0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7QUNDSiIsImZpbGUiOiJpbWFnZS1sb2FkZXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucmVjdC1pbWctY29udGFpbmVyIHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIH1cbiAgXG4gIC5yZWN0LWltZy1jb250YWluZXI6OmFmdGVyIHtcbiAgICBjb250ZW50OiBcIlwiO1xuICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgIHBhZGRpbmctYm90dG9tOiAxMDAlO1xuICB9XG4gIFxuICAucmVjdC1pbWcge1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgb2JqZWN0LWZpdDogY292ZXI7XG4gICAgYm9yZGVyLXJhZGl1czogN3B4O1xuICB9IiwiLnJlY3QtaW1nLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbn1cblxuLnJlY3QtaW1nLWNvbnRhaW5lcjo6YWZ0ZXIge1xuICBjb250ZW50OiBcIlwiO1xuICBkaXNwbGF5OiBibG9jaztcbiAgcGFkZGluZy1ib3R0b206IDEwMCU7XG59XG5cbi5yZWN0LWltZyB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogMTAwJTtcbiAgb2JqZWN0LWZpdDogY292ZXI7XG4gIGJvcmRlci1yYWRpdXM6IDdweDtcbn0iXX0= */";
+module.exports = ".rect-img-container {\n  position: relative;\n}\n\n.rect-img-container::after {\n  content: \"\";\n  display: block;\n  padding-bottom: 100%;\n}\n\n.rect-img {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  border-radius: 7px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImltYWdlLWxvYWRlci5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGtCQUFBO0FBQ0o7O0FBRUU7RUFDRSxXQUFBO0VBQ0EsY0FBQTtFQUNBLG9CQUFBO0FBQ0o7O0FBRUU7RUFDRSxrQkFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0VBQ0EsaUJBQUE7RUFDQSxrQkFBQTtBQUNKIiwiZmlsZSI6ImltYWdlLWxvYWRlci5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5yZWN0LWltZy1jb250YWluZXIge1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgfVxuICBcbiAgLnJlY3QtaW1nLWNvbnRhaW5lcjo6YWZ0ZXIge1xuICAgIGNvbnRlbnQ6IFwiXCI7XG4gICAgZGlzcGxheTogYmxvY2s7XG4gICAgcGFkZGluZy1ib3R0b206IDEwMCU7XG4gIH1cbiAgXG4gIC5yZWN0LWltZyB7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGhlaWdodDogMTAwJTtcbiAgICBvYmplY3QtZml0OiBjb3ZlcjtcbiAgICBib3JkZXItcmFkaXVzOiA3cHg7XG4gIH0iXX0= */";
 
 /***/ }),
 
@@ -6807,7 +6807,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \****************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".selector-title {\n  font-size: 22pt;\n}\n\ncanvas {\n  border: 1px solid #B7B7B7;\n}\n\n.body {\n  text-align: center;\n}\n\n.body ion-button {\n  width: 148.35pt;\n  height: 38.51pt;\n  border-radius: 8pt;\n}\n\n.body ion-text {\n  font-size: 20pt;\n}\n\n.separator {\n  margin: 30px 0px 30px 0px;\n}\n\n@media only screen and (min-device-width: 320px) and (max-device-width: 767px) and (-webkit-min-device-pixel-ratio: 2) {\n  .selector-title {\n    font-size: 22px;\n  }\n  canvas {\n    border: 1px solid #B7B7B7;\n  }\n  .body {\n    text-align: center;\n  }\n  .body ion-button {\n    width: 148.35px;\n    height: 38.51px;\n    border-radius: 8px;\n  }\n  .body ion-text {\n    font-size: 20px;\n  }\n  .separator {\n    margin: 30px 0px 30px 0px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNpZ24tbW9kYWwuY29tcG9uZW50LnNjc3MiLCIuLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi9QcmFjdGljdW0lMjA0L2F0aG9zQXBwL3NyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvdmlldy9zaWduLW1vZGFsL3NpZ24tbW9kYWwuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBWUE7RUFYSSxlQUFBO0FDQ0o7O0FEY0E7RUFDSSx5QkFBQTtBQ1hKOztBRGVBO0VBQ0ksa0JBQUE7QUNaSjs7QURhSTtFQUNJLGVBQUE7RUFDQSxlQUFBO0VBQ0Esa0JBQUE7QUNYUjs7QURhSTtFQW5CQSxlQUFBO0FDU0o7O0FEZUE7RUFDSSx5QkFBQTtBQ1pKOztBRGVBO0VBZ0JJO0lBWEksZUFBQTtFQ2ZOO0VEOEJFO0lBQ0kseUJBQUE7RUM1Qk47RUQrQkU7SUFDSSxrQkFBQTtFQzdCTjtFRDhCTTtJQUNJLGVBQUE7SUFDQSxlQUFBO0lBQ0Esa0JBQUE7RUM1QlY7RUQ4Qk07SUFsQkEsZUFBQTtFQ1ROO0VEZ0NFO0lBQ0kseUJBQUE7RUM5Qk47QUFDRiIsImZpbGUiOiJzaWduLW1vZGFsLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQG1peGluIGZ6LTIyIHtcbiAgICBmb250LXNpemU6IDIycHQ7XG59XG5cbkBtaXhpbiBmei0xOCB7XG4gICAgZm9udC1zaXplOiAxOHB0O1xufVxuXG5AbWl4aW4gZnotMjAge1xuICAgIGZvbnQtc2l6ZTogMjBwdDtcbn1cblxuLnNlbGVjdG9yLXRpdGxlIHtcbiAgICBAaW5jbHVkZSBmei0yMlxufVxuXG5jYW52YXMge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkICNCN0I3Qjc7IFxufVxuXG5cbi5ib2R5IHtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgaW9uLWJ1dHRvbiB7XG4gICAgICAgIHdpZHRoOiAxNDguMzVwdDtcbiAgICAgICAgaGVpZ2h0OiAzOC41MXB0O1xuICAgICAgICBib3JkZXItcmFkaXVzOiA4cHQ7XG4gICAgfVxuICAgIGlvbi10ZXh0IHtcbiAgICAgICAgQGluY2x1ZGUgZnotMjA7XG4gICAgfVxufVxuXG4uc2VwYXJhdG9yIHtcbiAgICBtYXJnaW46IDMwcHggMHB4IDMwcHggMHB4O1xufVxuXG5AbWVkaWEgb25seSBzY3JlZW5cbiAgYW5kIChtaW4tZGV2aWNlLXdpZHRoOiAzMjBweClcbiAgYW5kIChtYXgtZGV2aWNlLXdpZHRoOiA3NjdweClcbiAgYW5kICgtd2Via2l0LW1pbi1kZXZpY2UtcGl4ZWwtcmF0aW86IDIpICB7XG4gICAgQG1peGluIGZ6LTIyIHtcbiAgICAgICAgZm9udC1zaXplOiAyMnB4O1xuICAgIH1cbiAgICBcbiAgICBAbWl4aW4gZnotMTgge1xuICAgICAgICBmb250LXNpemU6IDE4cHg7XG4gICAgfVxuICAgIFxuICAgIEBtaXhpbiBmei0yMCB7XG4gICAgICAgIGZvbnQtc2l6ZTogMjBweDtcbiAgICB9XG4gICAgXG4gICAgLnNlbGVjdG9yLXRpdGxlIHtcbiAgICAgICAgQGluY2x1ZGUgZnotMjJcbiAgICB9XG4gICAgXG4gICAgY2FudmFzIHtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI0I3QjdCNzsgXG4gICAgfVxuXG4gICAgLmJvZHkge1xuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgICAgIGlvbi1idXR0b24ge1xuICAgICAgICAgICAgd2lkdGg6IDE0OC4zNXB4O1xuICAgICAgICAgICAgaGVpZ2h0OiAzOC41MXB4O1xuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogOHB4O1xuICAgICAgICB9XG4gICAgICAgIGlvbi10ZXh0IHtcbiAgICAgICAgICAgIEBpbmNsdWRlIGZ6LTIwO1xuICAgICAgICB9XG4gICAgfVxuXG4gICAgLnNlcGFyYXRvciB7XG4gICAgICAgIG1hcmdpbjogMzBweCAwcHggMzBweCAwcHg7XG4gICAgfVxuICB9XG4iLCIuc2VsZWN0b3ItdGl0bGUge1xuICBmb250LXNpemU6IDIycHQ7XG59XG5cbmNhbnZhcyB7XG4gIGJvcmRlcjogMXB4IHNvbGlkICNCN0I3Qjc7XG59XG5cbi5ib2R5IHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuLmJvZHkgaW9uLWJ1dHRvbiB7XG4gIHdpZHRoOiAxNDguMzVwdDtcbiAgaGVpZ2h0OiAzOC41MXB0O1xuICBib3JkZXItcmFkaXVzOiA4cHQ7XG59XG4uYm9keSBpb24tdGV4dCB7XG4gIGZvbnQtc2l6ZTogMjBwdDtcbn1cblxuLnNlcGFyYXRvciB7XG4gIG1hcmdpbjogMzBweCAwcHggMzBweCAwcHg7XG59XG5cbkBtZWRpYSBvbmx5IHNjcmVlbiBhbmQgKG1pbi1kZXZpY2Utd2lkdGg6IDMyMHB4KSBhbmQgKG1heC1kZXZpY2Utd2lkdGg6IDc2N3B4KSBhbmQgKC13ZWJraXQtbWluLWRldmljZS1waXhlbC1yYXRpbzogMikge1xuICAuc2VsZWN0b3ItdGl0bGUge1xuICAgIGZvbnQtc2l6ZTogMjJweDtcbiAgfVxuICBjYW52YXMge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkICNCN0I3Qjc7XG4gIH1cbiAgLmJvZHkge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgfVxuICAuYm9keSBpb24tYnV0dG9uIHtcbiAgICB3aWR0aDogMTQ4LjM1cHg7XG4gICAgaGVpZ2h0OiAzOC41MXB4O1xuICAgIGJvcmRlci1yYWRpdXM6IDhweDtcbiAgfVxuICAuYm9keSBpb24tdGV4dCB7XG4gICAgZm9udC1zaXplOiAyMHB4O1xuICB9XG4gIC5zZXBhcmF0b3Ige1xuICAgIG1hcmdpbjogMzBweCAwcHggMzBweCAwcHg7XG4gIH1cbn0iXX0= */";
+module.exports = ".selector-title {\n  font-size: 22pt;\n}\n\ncanvas {\n  border: 1px solid #B7B7B7;\n}\n\n.body {\n  text-align: center;\n}\n\n.body ion-button {\n  width: 148.35pt;\n  height: 38.51pt;\n  border-radius: 8pt;\n}\n\n.body ion-text {\n  font-size: 20pt;\n}\n\n.separator {\n  margin: 30px 0px 30px 0px;\n}\n\n@media only screen and (min-device-width: 320px) and (max-device-width: 767px) and (-webkit-min-device-pixel-ratio: 2) {\n  .selector-title {\n    font-size: 22px;\n  }\n  canvas {\n    border: 1px solid #B7B7B7;\n  }\n  .body {\n    text-align: center;\n  }\n  .body ion-button {\n    width: 148.35px;\n    height: 38.51px;\n    border-radius: 8px;\n  }\n  .body ion-text {\n    font-size: 20px;\n  }\n  .separator {\n    margin: 30px 0px 30px 0px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNpZ24tbW9kYWwuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBWUE7RUFYSSxlQUFBO0FBQ0o7O0FBY0E7RUFDSSx5QkFBQTtBQVhKOztBQWVBO0VBQ0ksa0JBQUE7QUFaSjs7QUFhSTtFQUNJLGVBQUE7RUFDQSxlQUFBO0VBQ0Esa0JBQUE7QUFYUjs7QUFhSTtFQW5CQSxlQUFBO0FBU0o7O0FBZUE7RUFDSSx5QkFBQTtBQVpKOztBQWVBO0VBZ0JJO0lBWEksZUFBQTtFQWZOO0VBOEJFO0lBQ0kseUJBQUE7RUE1Qk47RUErQkU7SUFDSSxrQkFBQTtFQTdCTjtFQThCTTtJQUNJLGVBQUE7SUFDQSxlQUFBO0lBQ0Esa0JBQUE7RUE1QlY7RUE4Qk07SUFsQkEsZUFBQTtFQVROO0VBZ0NFO0lBQ0kseUJBQUE7RUE5Qk47QUFDRiIsImZpbGUiOiJzaWduLW1vZGFsLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQG1peGluIGZ6LTIyIHtcbiAgICBmb250LXNpemU6IDIycHQ7XG59XG5cbkBtaXhpbiBmei0xOCB7XG4gICAgZm9udC1zaXplOiAxOHB0O1xufVxuXG5AbWl4aW4gZnotMjAge1xuICAgIGZvbnQtc2l6ZTogMjBwdDtcbn1cblxuLnNlbGVjdG9yLXRpdGxlIHtcbiAgICBAaW5jbHVkZSBmei0yMlxufVxuXG5jYW52YXMge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkICNCN0I3Qjc7IFxufVxuXG5cbi5ib2R5IHtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgaW9uLWJ1dHRvbiB7XG4gICAgICAgIHdpZHRoOiAxNDguMzVwdDtcbiAgICAgICAgaGVpZ2h0OiAzOC41MXB0O1xuICAgICAgICBib3JkZXItcmFkaXVzOiA4cHQ7XG4gICAgfVxuICAgIGlvbi10ZXh0IHtcbiAgICAgICAgQGluY2x1ZGUgZnotMjA7XG4gICAgfVxufVxuXG4uc2VwYXJhdG9yIHtcbiAgICBtYXJnaW46IDMwcHggMHB4IDMwcHggMHB4O1xufVxuXG5AbWVkaWEgb25seSBzY3JlZW5cbiAgYW5kIChtaW4tZGV2aWNlLXdpZHRoOiAzMjBweClcbiAgYW5kIChtYXgtZGV2aWNlLXdpZHRoOiA3NjdweClcbiAgYW5kICgtd2Via2l0LW1pbi1kZXZpY2UtcGl4ZWwtcmF0aW86IDIpICB7XG4gICAgQG1peGluIGZ6LTIyIHtcbiAgICAgICAgZm9udC1zaXplOiAyMnB4O1xuICAgIH1cbiAgICBcbiAgICBAbWl4aW4gZnotMTgge1xuICAgICAgICBmb250LXNpemU6IDE4cHg7XG4gICAgfVxuICAgIFxuICAgIEBtaXhpbiBmei0yMCB7XG4gICAgICAgIGZvbnQtc2l6ZTogMjBweDtcbiAgICB9XG4gICAgXG4gICAgLnNlbGVjdG9yLXRpdGxlIHtcbiAgICAgICAgQGluY2x1ZGUgZnotMjJcbiAgICB9XG4gICAgXG4gICAgY2FudmFzIHtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI0I3QjdCNzsgXG4gICAgfVxuXG4gICAgLmJvZHkge1xuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgICAgIGlvbi1idXR0b24ge1xuICAgICAgICAgICAgd2lkdGg6IDE0OC4zNXB4O1xuICAgICAgICAgICAgaGVpZ2h0OiAzOC41MXB4O1xuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogOHB4O1xuICAgICAgICB9XG4gICAgICAgIGlvbi10ZXh0IHtcbiAgICAgICAgICAgIEBpbmNsdWRlIGZ6LTIwO1xuICAgICAgICB9XG4gICAgfVxuXG4gICAgLnNlcGFyYXRvciB7XG4gICAgICAgIG1hcmdpbjogMzBweCAwcHggMzBweCAwcHg7XG4gICAgfVxuICB9XG4iXX0= */";
 
 /***/ }),
 

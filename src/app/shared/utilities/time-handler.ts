@@ -95,6 +95,15 @@ export class TimeHandlerModule {
     return moment(a).isAfter(moment(b)) ?  -1 : moment(b).isBefore(moment(a)) ? 1 : 0;
   }
 
+  sortNewToOld(a, b){
+    console.log(moment(a.startDate).isAfter(moment(b.startDate)))
+    return moment(a.startDate).isAfter(moment(b.startDate)) ?  -1 : moment(b.startDate).isBefore(moment(a.startDate)) ? 1 : 0;
+  }
+
+  sortOldToNew(a, b){
+    return moment(a.startDate).isBefore(moment(b.startDate)) ?  -1 : moment(b.startDate).isAfter(moment(a.startDate)) ? 1 : 0;
+  }
+
   dateTransform(data){
     if(data?.seconds){
       return moment(data.seconds * 1000 + data.nanoseconds/1000000).toISOString();

@@ -7,6 +7,7 @@ import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service
 import { ReservationsService } from 'src/app/core/services/modules/reservations.service';
 import { NewReservationComponent } from 'src/app/shared/components/spaces/new-reservation/new-reservation.component';
 import { PickRentSpaceComponent } from 'src/app/shared/components/spaces/pick-rent-space/pick-rent-space.component';
+import { TimeHandlerModule } from 'src/app/shared/utilities/time-handler';
 
 @Component({
   selector: 'app-reservations-resident',
@@ -29,6 +30,7 @@ export class ReservationsResidentPage implements OnInit {
     private modal: ModalController,
     private auth: FireAuthService,
     public userCtrl: UserController,
+    private time: TimeHandlerModule,
     private request: ReservationsService,
     private routerOutlet: IonRouterOutlet
   ) { }
@@ -46,7 +48,8 @@ export class ReservationsResidentPage implements OnInit {
     this.user = userData.data;
     this.itemList = await this.request.
     readUserReservationsListOrderRent("startDate",new Date().toISOString(),this.userCtrl.currentUser.uid,this.filterSelected);
-    console.log(this.itemList)
+    this.itemList = this.itemList.sort((a, b) => this.time.sortOldToNew(a, b));
+    this.itemList = this.itemList.sort((a, b) => this.time.sortNewToOld(a, b));
     return this.user
   }
 

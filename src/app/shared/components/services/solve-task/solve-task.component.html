@@ -30,7 +30,7 @@
       <ion-thumbnail slot="start">
         <img [src]="item.photo">
       </ion-thumbnail>
-      <ion-label>{{item.text}}</ion-label>
+      <ion-textarea [readonly]="true" rows="3" [value]="item.text"></ion-textarea>
     </ion-item>
     
   </ion-list>

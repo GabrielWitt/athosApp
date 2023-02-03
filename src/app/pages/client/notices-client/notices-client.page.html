@@ -12,7 +12,24 @@
     ></app-not-data-yet-message>
   
     <ion-list *ngIf="noticeList.length>0">
-        <app-image-loader *ngFor="let notice of noticeList" [notice]="notice" [user]="userData" (click)="detailNotice(notice)"></app-image-loader>
+      <ion-row>
+        <ion-col sizeMd="6" sizeXs="12" *ngFor="let notice of noticeList">
+          <ion-card>
+              <div style="display:flex; ">
+                  <ion-icon slot="start" color="tertiary" size="large" [name]="notice.type.icon"></ion-icon>
+                  <ion-text color="tertiary" style="padding: 7px;">{{notice.type.name}}</ion-text></div>
+              <div style="height: 20vw;">
+                  <ion-img [src]="notice.photo"></ion-img>
+              </div>
+              <div class="ion-text-center" (click)="detailNotice(notice)">
+                  <ion-text class="ion-text-capitalized" color="dark" class="textMessage">
+                      {{notice.title}}
+                  </ion-text>
+              </div>
+          </ion-card>
+          <app-notice-bottom-bar [likes]="notice.likes.length" [comments]="notice.comments.length" [notice]="notice" [userUID]="user.uid"></app-notice-bottom-bar>
+        </ion-col>
+      </ion-row>
     </ion-list>
     
     <ion-list *ngIf="loading">
