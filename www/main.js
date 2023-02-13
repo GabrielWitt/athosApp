@@ -507,7 +507,7 @@ module.exports = webpackAsyncContext;
 /***/ ((module) => {
 
 "use strict";
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */";
+module.exports = "ion-input {\n  font-size: 15pt;\n}\n\nion-icon {\n  font-size: 25pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuc2NzcyIsIi4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9hcHAuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxlQUFBO0FDQ0o7O0FERUE7RUFDSSxlQUFBO0FDQ0oiLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWlucHV0e1xuICAgIGZvbnQtc2l6ZTogMTVwdDtcbn1cblxuaW9uLWljb257XG4gICAgZm9udC1zaXplOiAyNXB0O1xufSIsImlvbi1pbnB1dCB7XG4gIGZvbnQtc2l6ZTogMTVwdDtcbn1cblxuaW9uLWljb24ge1xuICBmb250LXNpemU6IDI1cHQ7XG59Il19 */";
 
 /***/ }),
 

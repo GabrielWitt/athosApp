@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { UserController } from 'src/app/core/controller/user.controller';
 import { User, UserFormData } from 'src/app/core/models/user';
 import { FireAuthService } from 'src/app/core/services/modules/fire-auth.service';
+import { UserSettingsComponent } from 'src/app/shared/components/users/user-settings/user-settings.component';
 
 @Component({
   selector: 'app-profile-client',
@@ -15,6 +17,8 @@ export class ProfileClientPage implements OnInit {
   defaultUser = '../../../../assets/profile/ProfileBlank.png';
 
   constructor( 
+    private modal: ModalController,
+    private routerOutlet: IonRouterOutlet,
     public auth: FireAuthService, 
     public userCtrl: UserController) { }
 
@@ -41,6 +45,18 @@ export class ProfileClientPage implements OnInit {
       this.currentUser = user.data;
       this.loading = false;
     });
+  }
+
+  async displayConfig(){
+    const modalService = await this.modal.create({
+      component: UserSettingsComponent,
+      componentProps: {currentUser: this.currentUser },
+      mode: 'ios',
+      presentingElement: this.routerOutlet.nativeEl
+    });
+    modalService.present();
+    const modalResult1 = await modalService.onWillDismiss();
+    if(modalResult1.data){}
   }
 
 }

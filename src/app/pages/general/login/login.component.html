@@ -9,8 +9,8 @@
   
   <form #login="ngForm" [formGroup]=loginForm (ngSubmit)=loginProcess(loginForm.value) (keydown)="EnterSubmit($event, loginForm)" novalidate>
     <ion-item>
-      <ion-label color="dark" position="floating"> <b>Email</b></ion-label>
-      <ion-input color="dark" formControlName="email" type="email" clearInput="true"></ion-input>
+      <ion-label color="dark" class="textInput" position="floating"> <b>Email</b></ion-label>
+      <ion-input color="dark" class="textInput" formControlName="email" type="email" clearInput="true"></ion-input>
     </ion-item>
     
     <ng-container *ngFor="let validation of validationMessages.email">
@@ -23,8 +23,8 @@
     </ion-text>
 
     <ion-item #emailInput>
-      <ion-label color="dark" position='floating'><b>Password</b></ion-label>
-      <ion-input color="dark" formControlName="password" type="password" clearInput="true"></ion-input>
+      <ion-label color="dark" class="textInput" position='floating'><b>Password</b></ion-label>
+      <ion-input color="dark" class="textInput" formControlName="password" type="password" clearInput="true"></ion-input>
     </ion-item>
 
     <ng-container *ngFor="let validation of validationMessages.password">
@@ -37,8 +37,8 @@
     </ion-text>
 
 
-    <div class='ion-padding-start' *ngIf="!this.block && !loading"> 
-      <ion-text color='dark'> <p class="forgot_text" (click)='forgotPassword()'><span>¿Olvidó su contraseña?</span></p>    </ion-text> 
+    <div class='ion-padding-start ion-margin-bottom' *ngIf="!this.block && !loading"> 
+      <ion-text color='dark'> <p class="forgot_text"><span (click)='forgotPassword()'>¿Olvidó su contraseña?</span></p>    </ion-text> 
     </div>
     <ion-row class="ion-margin-top">
       <app-big-button type="submit" class="ion-padding-top" LABEL="INICIAR SESIÓN" buttonType="PRIMARY" [loading]="loading" [disabled]="!loginForm.valid || loading" 

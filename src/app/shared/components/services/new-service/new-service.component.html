@@ -13,10 +13,6 @@
     </ion-buttons>
     <ion-title class="ion-text-uppercase">{{service ? service.serviceType+': '+service.name: title}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="!service || editServiceForm" color="success" (click)="createService()" 
-        [disabled]="loading">
-          Enviar
-      </ion-button>
       <ion-button *ngIf="this.service && this.user.type === 'administrador' && !editServiceForm" color="dark" (click)="editService()">
           Editar
       </ion-button>
@@ -140,4 +136,11 @@
     </ion-row>
   </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col>
+      <app-big-button *ngIf="!service || editServiceForm" class="ion-padding-top" LABEL="Solicitar" buttonType="primary" [loading]="loading" [disabled]="loading" (click)="createService()"></app-big-button>
+    </ion-col>
+  </ion-row>
+<ion-footer>
 

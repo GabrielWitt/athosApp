@@ -11,6 +11,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
     LoginComponent,
     ForgotPasswordComponent,
     SignUpComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    PrivacyComponent,
+    TerminosCondicionesComponent
   ]
 })
 export class GeneralPageModule {}

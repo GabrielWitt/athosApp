@@ -93,7 +93,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NoticesClientPage": () => (/* binding */ NoticesClientPage)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _notices_client_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notices-client.page.html?ngResource */ 85014);
 /* harmony import */ var _notices_client_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notices-client.page.scss?ngResource */ 23883);
@@ -137,7 +137,7 @@ let NoticesClientPage = class NoticesClientPage {
   loadData() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.noticeList = yield _this.notices.readNoticeList();
         return 'done';
@@ -150,7 +150,7 @@ let NoticesClientPage = class NoticesClientPage {
   detailNotice(notice) {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const modal = yield _this2.modal.create({
         component: src_app_shared_components_new_notice_new_notice_component__WEBPACK_IMPORTED_MODULE_5__.NewNoticeComponent,
         componentProps: {
@@ -186,7 +186,7 @@ let NoticesClientPage = class NoticesClientPage {
   reloadData(reload) {
     var _this3 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const that = _this3;
 
       if (reload) {
@@ -222,7 +222,7 @@ NoticesClientPage = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angul
   \*********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJub3RpY2VzLWNsaWVudC5wYWdlLnNjc3MifQ== */";
+module.exports = ".textMessage {\n  font-size: 14pt;\n  background-color: rgba(255, 255, 255, 0.8588235294);\n  padding: 7pt;\n  margin: 0 auto;\n  display: inline-table;\n  text-align: center;\n  width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5vdGljZXMtY2xpZW50LnBhZ2Uuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9wYWdlcy9jbGllbnQvbm90aWNlcy1jbGllbnQvbm90aWNlcy1jbGllbnQucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBQTtFQUNBLG1EQUFBO0VBQ0EsWUFBQTtFQUNBLGNBQUE7RUFDQSxxQkFBQTtFQUNBLGtCQUFBO0VBQ0EsV0FBQTtBQ0NKIiwiZmlsZSI6Im5vdGljZXMtY2xpZW50LnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi50ZXh0TWVzc2FnZXsgICAgXG4gICAgZm9udC1zaXplOiAxNHB0O1xuICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmZmZmZkYjtcbiAgICBwYWRkaW5nOiA3cHQ7XG4gICAgbWFyZ2luOiAwIGF1dG87XG4gICAgZGlzcGxheTogaW5saW5lLXRhYmxlO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICB3aWR0aDogMTAwJTtcbn0iLCIudGV4dE1lc3NhZ2Uge1xuICBmb250LXNpemU6IDE0cHQ7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC44NTg4MjM1Mjk0KTtcbiAgcGFkZGluZzogN3B0O1xuICBtYXJnaW46IDAgYXV0bztcbiAgZGlzcGxheTogaW5saW5lLXRhYmxlO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHdpZHRoOiAxMDAlO1xufSJdfQ== */";
 
 /***/ }),
 
@@ -232,7 +232,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \*********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<app-main-header title=\"Avisos\"></app-main-header>\n\n\n<ion-content class=\"ion-padding\">\n    <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n      <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n    </ion-refresher>\n\n    <app-not-data-yet-message \n      *ngIf=\"noticeList.length == 0 && !loading\"\n      text=\"No hay anuncios aún\" icon=\"archive-outline\"\n    ></app-not-data-yet-message>\n  \n    <ion-list *ngIf=\"noticeList.length>0\">\n        <app-image-loader *ngFor=\"let notice of noticeList\" [notice]=\"notice\" [user]=\"userData\" (click)=\"detailNotice(notice)\"></app-image-loader>\n    </ion-list>\n    \n    <ion-list *ngIf=\"loading\">\n        <app-loading-view></app-loading-view>\n      </ion-list>\n</ion-content>\n";
+module.exports = "<app-main-header title=\"Avisos\"></app-main-header>\n\n\n<ion-content class=\"ion-padding\">\n    <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n      <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n    </ion-refresher>\n\n    <app-not-data-yet-message \n      *ngIf=\"noticeList.length == 0 && !loading\"\n      text=\"No hay anuncios aún\" icon=\"archive-outline\"\n    ></app-not-data-yet-message>\n  \n    <ion-list *ngIf=\"noticeList.length>0\">\n      <ion-row>\n        <ion-col sizeMd=\"6\" sizeXs=\"12\" *ngFor=\"let notice of noticeList\">\n          <ion-card (click)=\"detailNotice(notice)\">\n              <div style=\"display:flex; \">\n                  <ion-icon slot=\"start\" color=\"tertiary\" size=\"large\" [name]=\"notice.type.icon\"></ion-icon>\n                  <ion-text color=\"tertiary\" style=\"padding: 7px;\">{{notice.type.name}}</ion-text></div>\n              <div style=\"height: 20vw;\">\n                  <ion-img [src]=\"notice.photo\"></ion-img>\n              </div>\n              <div class=\"ion-text-center\">\n                  <ion-text class=\"ion-text-capitalized\" color=\"dark\" class=\"textMessage\">\n                      {{notice.title}}\n                  </ion-text>\n              </div>\n          </ion-card>\n          <app-notice-bottom-bar [likes]=\"notice.likes.length\" [comments]=\"notice.comments.length\" [notice]=\"notice\" [userUID]=\"user.uid\"></app-notice-bottom-bar>\n        </ion-col>\n      </ion-row>\n    </ion-list>\n    \n    <ion-list *ngIf=\"loading\">\n        <app-loading-view></app-loading-view>\n      </ion-list>\n</ion-content>\n";
 
 /***/ })
 

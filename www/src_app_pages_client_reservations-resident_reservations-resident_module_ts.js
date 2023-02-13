@@ -93,17 +93,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ReservationsResidentPage": () => (/* binding */ ReservationsResidentPage)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _reservations_resident_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reservations-resident.page.html?ngResource */ 72186);
 /* harmony import */ var _reservations_resident_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reservations-resident.page.scss?ngResource */ 22191);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 93819);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 93819);
 /* harmony import */ var src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/core/controller/user.controller */ 36046);
 /* harmony import */ var src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/core/services/modules/fire-auth.service */ 2687);
 /* harmony import */ var src_app_core_services_modules_reservations_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/core/services/modules/reservations.service */ 53957);
 /* harmony import */ var src_app_shared_components_spaces_new_reservation_new_reservation_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/spaces/new-reservation/new-reservation.component */ 21897);
 /* harmony import */ var src_app_shared_components_spaces_pick_rent_space_pick_rent_space_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/components/spaces/pick-rent-space/pick-rent-space.component */ 29204);
+/* harmony import */ var src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/utilities/time-handler */ 8123);
+
 
 
 
@@ -116,10 +118,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ReservationsResidentPage = class ReservationsResidentPage {
-  constructor(modal, auth, userCtrl, request, routerOutlet) {
+  constructor(modal, auth, userCtrl, time, request, routerOutlet) {
     this.modal = modal;
     this.auth = auth;
     this.userCtrl = userCtrl;
+    this.time = time;
     this.request = request;
     this.routerOutlet = routerOutlet;
     this.loading = true;
@@ -146,11 +149,12 @@ let ReservationsResidentPage = class ReservationsResidentPage {
   loadData() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const userData = yield _this.auth.getUser();
       _this.user = userData.data;
       _this.itemList = yield _this.request.readUserReservationsListOrderRent("startDate", new Date().toISOString(), _this.userCtrl.currentUser.uid, _this.filterSelected);
-      console.log(_this.itemList);
+      _this.itemList = _this.itemList.sort((a, b) => _this.time.sortOldToNew(a, b));
+      _this.itemList = _this.itemList.sort((a, b) => _this.time.sortNewToOld(a, b));
       return _this.user;
     })();
   }
@@ -163,7 +167,7 @@ let ReservationsResidentPage = class ReservationsResidentPage {
   doRefresh(refresh) {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       // load 
       yield _this2.loadData();
 
@@ -176,7 +180,7 @@ let ReservationsResidentPage = class ReservationsResidentPage {
   createReservation() {
     var _this3 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const modalPick = yield _this3.modal.create({
         component: src_app_shared_components_spaces_pick_rent_space_pick_rent_space_component__WEBPACK_IMPORTED_MODULE_7__.PickRentSpaceComponent,
         componentProps: {
@@ -198,7 +202,7 @@ let ReservationsResidentPage = class ReservationsResidentPage {
   openReservation(reservation, space) {
     var _this4 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const modalCreate = yield _this4.modal.create({
         component: src_app_shared_components_spaces_new_reservation_new_reservation_component__WEBPACK_IMPORTED_MODULE_6__.NewReservationComponent,
         componentProps: {
@@ -223,18 +227,20 @@ let ReservationsResidentPage = class ReservationsResidentPage {
 };
 
 ReservationsResidentPage.ctorParameters = () => [{
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.ModalController
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.ModalController
 }, {
   type: src_app_core_services_modules_fire_auth_service__WEBPACK_IMPORTED_MODULE_4__.FireAuthService
 }, {
   type: src_app_core_controller_user_controller__WEBPACK_IMPORTED_MODULE_3__.UserController
 }, {
+  type: src_app_shared_utilities_time_handler__WEBPACK_IMPORTED_MODULE_8__.TimeHandlerModule
+}, {
   type: src_app_core_services_modules_reservations_service__WEBPACK_IMPORTED_MODULE_5__.ReservationsService
 }, {
-  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonRouterOutlet
+  type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonRouterOutlet
 }];
 
-ReservationsResidentPage = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
+ReservationsResidentPage = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.Component)({
   selector: 'app-reservations-resident',
   template: _reservations_resident_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__,
   styles: [_reservations_resident_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__]

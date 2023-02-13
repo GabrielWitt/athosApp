@@ -70,16 +70,36 @@
         <ion-select-option class="ion-text-capitalize" *ngFor="let type of typeList" [value]="type"> {{type}}</ion-select-option>
       </ion-select>
     </ion-item>
+    <div class="error-message" *ngIf="!myCurrentUser.type">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Tipo de usuario requerido
+      </ion-text>
+    </div>
   
     <ion-item>
       <ion-label>Identificación:</ion-label>
       <ion-input class="ion-text-center" placeholder="Cédula o Pasaporte" type="number" maxlength="10" (ionChange)="CIListener($event)" [value]="myCurrentUser.CI"></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!myCurrentUser.CI">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Identificación requerido
+      </ion-text>
+    </div>
   
     <ion-item>
       <ion-label>Email:</ion-label>
       <ion-input class="ion-text-center" type="text" (ionChange)="emailListener($event)" [value]="myCurrentUser.email"></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!myCurrentUser.email">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Email requerido
+      </ion-text>
+    </div>
+    <div class="error-message" *ngIf="alertEmail">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  {{alertEmail}}
+      </ion-text>
+    </div>
   
     <ion-item>
       <ion-label>Nombre:</ion-label>
@@ -92,7 +112,7 @@
     </ion-item>
     <div class="error-message" *ngIf="!myCurrentUser.secondName">
       <ion-text class="ion-padding-start" color="danger"> 
-        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Segundo Nombre Requerido
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Segundo nombre requerido
       </ion-text>
     </div>
   
@@ -102,7 +122,7 @@
     </ion-item>
     <div class="error-message" *ngIf="!myCurrentUser.lastName">
       <ion-text class="ion-padding-start" color="danger"> 
-        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Nombre Requerido
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Nombre requerido
       </ion-text>
     </div>
   
@@ -119,6 +139,11 @@
       </ion-label>
       <ion-button class="downArrow" slot="end" size="small"><ion-icon style="--color: #b4b4b4;color: #b4b4b4;font-size: inherit;" name="caret-down-outline"></ion-icon></ion-button>
     </ion-item>
+    <div class="error-message" *ngIf="!myCurrentUser.birthDate">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Fecha de nacimiento requerido
+      </ion-text>
+    </div>
     <ion-row *ngIf="showCalendar">
       <ion-col>
         <ion-item>
@@ -137,6 +162,11 @@
       <ion-label>Teléfono Principal:</ion-label>
       <ion-input class="ion-text-center" type="number" placeholder="Para Emergencias" (ionChange)="phonePersonalListener($event)" [value]="myCurrentUser.phonePersonal"></ion-input>
     </ion-item>
+    <div class="error-message" *ngIf="!myCurrentUser.phonePersonal">
+      <ion-text class="ion-padding-start" color="danger"> 
+        <ion-icon class="vertical-align" color="danger" name="alert-circle-outline"> </ion-icon>  Teléfono principal requerido
+      </ion-text>
+    </div>
   
     <ion-item>
       <ion-label>Teléfono Secundario:</ion-label>

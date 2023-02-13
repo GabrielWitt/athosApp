@@ -49,6 +49,7 @@ import { ReservationItemComponent } from './components/calendar/reservation-item
 import { CalendarServiceItemComponent } from './components/calendar/calendar-service-item/calendar-service-item.component';
 import { SolveTaskComponent } from './components/services/solve-task/solve-task.component';
 import { AssignSpaceComponent } from './components/assign-space/assign-space.component';
+import { UserSettingsComponent } from './components/users/user-settings/user-settings.component';
 
 const components = [
   BigButtonComponent,
@@ -65,6 +66,7 @@ const components = [
   ItemUserComponent,
   UserDetailComponent, 
   EditUserComponent,
+  UserSettingsComponent,
   //Notice
   NewNoticeComponent,
   //Services

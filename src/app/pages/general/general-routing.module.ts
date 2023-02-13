@@ -3,7 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 import { LoginComponent } from './login/login.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 const routes: Routes = [
@@ -23,7 +25,16 @@ const routes: Routes = [
   {
     path: 'verify-email/:email',
     component: VerifyEmailComponent
-  }
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent
+  },
+  {
+    path: 'terms-of-conditions',
+    component: TerminosCondicionesComponent
+  },
+
 ];
 
 @NgModule({

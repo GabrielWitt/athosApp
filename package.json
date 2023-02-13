@@ -9,7 +9,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-ios": "ionic build && npx cap copy && npx cap sync && npx cap open ios",
+    "build-android": "ionic build && npx cap copy && npx cap sync && npx cap open android"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +27,7 @@
     "@awesome-cordova-plugins/native-storage": "^5.44.0",
     "@capacitor/android": "4.3.0",
     "@capacitor/app": "^4.0.1",
+    "@capacitor/assets": "^2.0.4",
     "@capacitor/camera": "^4.0.1",
     "@capacitor/core": "^4.0.1",
     "@capacitor/filesystem": "^4.0.1",

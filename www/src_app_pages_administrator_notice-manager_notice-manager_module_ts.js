@@ -93,7 +93,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NoticeManagerPage": () => (/* binding */ NoticeManagerPage)
 /* harmony export */ });
-/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
+/* harmony import */ var _Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 71670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _notice_manager_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./notice-manager.page.html?ngResource */ 43376);
 /* harmony import */ var _notice_manager_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notice-manager.page.scss?ngResource */ 57636);
@@ -137,7 +137,7 @@ let NoticeManagerPage = class NoticeManagerPage {
   loadData() {
     var _this = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       try {
         _this.noticeList = yield _this.notices.readNoticeList();
         console.log(_this.noticeList);
@@ -151,7 +151,7 @@ let NoticeManagerPage = class NoticeManagerPage {
   detailNotice(notice) {
     var _this2 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const modal = yield _this2.modal.create({
         component: src_app_shared_components_new_notice_new_notice_component__WEBPACK_IMPORTED_MODULE_5__.NewNoticeComponent,
         componentProps: {
@@ -187,7 +187,7 @@ let NoticeManagerPage = class NoticeManagerPage {
   reloadData(reload) {
     var _this3 = this;
 
-    return (0,_Users_gabrielwitt_Desktop_UTPL_Tesis_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,_Users_gabrielwitt_Desktop_UTPL_Practicum_4_athosApp_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const that = _this3;
 
       if (reload) {
@@ -223,7 +223,7 @@ NoticeManagerPage = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([(0,_angul
   \****************************************************************************************/
 /***/ ((module) => {
 
-module.exports = ".cropImg {\n  object-fit: cover;\n  width: 30vw;\n  height: 30vw;\n  border-radius: 7px;\n}\n\n.rect-img-container {\n  position: relative;\n}\n\n.rect-img-container::after {\n  content: \"\";\n  display: block;\n  padding-bottom: 100%;\n}\n\n.rect-img {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  border-radius: 7px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5vdGljZS1tYW5hZ2VyLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxrQkFBQTtBQUNKOztBQUdBO0VBQ0ksa0JBQUE7QUFBSjs7QUFHRTtFQUNFLFdBQUE7RUFDQSxjQUFBO0VBQ0Esb0JBQUE7QUFBSjs7QUFHRTtFQUNFLGtCQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxpQkFBQTtFQUNBLGtCQUFBO0FBQUoiLCJmaWxlIjoibm90aWNlLW1hbmFnZXIucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNyb3BJbWd7IFxuICAgIG9iamVjdC1maXQ6IGNvdmVyO1xuICAgIHdpZHRoOiAzMHZ3O1xuICAgIGhlaWdodDogMzB2dztcbiAgICBib3JkZXItcmFkaXVzOiA3cHg7XG59XG4vLyA8aW1nIGNsYXNzPVwiY3JvcEltZ1wiIFtzcmNdPVwibm90aWNlLnBob3RvXCIgLz5cblxuLnJlY3QtaW1nLWNvbnRhaW5lciB7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICB9XG4gIFxuICAucmVjdC1pbWctY29udGFpbmVyOjphZnRlciB7XG4gICAgY29udGVudDogXCJcIjtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBwYWRkaW5nLWJvdHRvbTogMTAwJTtcbiAgfVxuICBcbiAgLnJlY3QtaW1nIHtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIG9iamVjdC1maXQ6IGNvdmVyO1xuICAgIGJvcmRlci1yYWRpdXM6IDdweDtcbiAgfSJdfQ== */";
+module.exports = ".cropImg {\n  object-fit: cover;\n  width: 30vw;\n  height: 30vw;\n  border-radius: 7px;\n}\n\n.rect-img-container {\n  position: relative;\n}\n\n.rect-img-container::after {\n  content: \"\";\n  display: block;\n  padding-bottom: 100%;\n}\n\n.rect-img {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  border-radius: 7px;\n}\n\n.textMessage {\n  font-size: 14pt;\n  background-color: rgba(255, 255, 255, 0.8588235294);\n  padding: 7pt;\n  margin: 0 auto;\n  display: inline-table;\n  text-align: center;\n  width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5vdGljZS1tYW5hZ2VyLnBhZ2Uuc2NzcyIsIi4uLy4uLy4uLy4uLy4uLy4uLy4uL1ByYWN0aWN1bSUyMDQvYXRob3NBcHAvc3JjL2FwcC9wYWdlcy9hZG1pbmlzdHJhdG9yL25vdGljZS1tYW5hZ2VyL25vdGljZS1tYW5hZ2VyLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxrQkFBQTtBQ0NKOztBREdBO0VBQ0ksa0JBQUE7QUNBSjs7QURHRTtFQUNFLFdBQUE7RUFDQSxjQUFBO0VBQ0Esb0JBQUE7QUNBSjs7QURHRTtFQUNFLGtCQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxpQkFBQTtFQUNBLGtCQUFBO0FDQUo7O0FER0U7RUFDRSxlQUFBO0VBQ0EsbURBQUE7RUFDQSxZQUFBO0VBQ0EsY0FBQTtFQUNBLHFCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0FDQUoiLCJmaWxlIjoibm90aWNlLW1hbmFnZXIucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNyb3BJbWd7IFxuICAgIG9iamVjdC1maXQ6IGNvdmVyO1xuICAgIHdpZHRoOiAzMHZ3O1xuICAgIGhlaWdodDogMzB2dztcbiAgICBib3JkZXItcmFkaXVzOiA3cHg7XG59XG4vLyA8aW1nIGNsYXNzPVwiY3JvcEltZ1wiIFtzcmNdPVwibm90aWNlLnBob3RvXCIgLz5cblxuLnJlY3QtaW1nLWNvbnRhaW5lciB7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICB9XG4gIFxuICAucmVjdC1pbWctY29udGFpbmVyOjphZnRlciB7XG4gICAgY29udGVudDogXCJcIjtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBwYWRkaW5nLWJvdHRvbTogMTAwJTtcbiAgfVxuICBcbiAgLnJlY3QtaW1nIHtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIG9iamVjdC1maXQ6IGNvdmVyO1xuICAgIGJvcmRlci1yYWRpdXM6IDdweDtcbiAgfVxuICBcbiAgLnRleHRNZXNzYWdleyAgICBcbiAgICBmb250LXNpemU6IDE0cHQ7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZmZmZmRiO1xuICAgIHBhZGRpbmc6IDdwdDtcbiAgICBtYXJnaW46IDAgYXV0bztcbiAgICBkaXNwbGF5OiBpbmxpbmUtdGFibGU7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIHdpZHRoOiAxMDAlO1xufSIsIi5jcm9wSW1nIHtcbiAgb2JqZWN0LWZpdDogY292ZXI7XG4gIHdpZHRoOiAzMHZ3O1xuICBoZWlnaHQ6IDMwdnc7XG4gIGJvcmRlci1yYWRpdXM6IDdweDtcbn1cblxuLnJlY3QtaW1nLWNvbnRhaW5lciB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbn1cblxuLnJlY3QtaW1nLWNvbnRhaW5lcjo6YWZ0ZXIge1xuICBjb250ZW50OiBcIlwiO1xuICBkaXNwbGF5OiBibG9jaztcbiAgcGFkZGluZy1ib3R0b206IDEwMCU7XG59XG5cbi5yZWN0LWltZyB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogMTAwJTtcbiAgb2JqZWN0LWZpdDogY292ZXI7XG4gIGJvcmRlci1yYWRpdXM6IDdweDtcbn1cblxuLnRleHRNZXNzYWdlIHtcbiAgZm9udC1zaXplOiAxNHB0O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuODU4ODIzNTI5NCk7XG4gIHBhZGRpbmc6IDdwdDtcbiAgbWFyZ2luOiAwIGF1dG87XG4gIGRpc3BsYXk6IGlubGluZS10YWJsZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICB3aWR0aDogMTAwJTtcbn0iXX0= */";
 
 /***/ }),
 
@@ -233,7 +233,7 @@ module.exports = ".cropImg {\n  object-fit: cover;\n  width: 30vw;\n  height: 30
   \****************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<app-main-header title=\"Anuncios\" [rightButton]=\"reloadData\"></app-main-header>\n\n<ion-content class=\"ion-padding\">\n    <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n      <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n    </ion-refresher>\n\n    <app-not-data-yet-message \n      *ngIf=\"noticeList.length == 0 && !loading\"\n      text=\"No hay anuncios aún\" icon=\"archive-outline\"\n    ></app-not-data-yet-message>\n  \n    <ion-list *ngIf=\"noticeList.length>0\">\n        <app-image-loader *ngFor=\"let notice of noticeList\" [notice]=\"notice\" [user]=\"userData\" (click)=\"detailNotice(notice)\"></app-image-loader>\n    </ion-list>\n    \n    <ion-list *ngIf=\"loading\">\n        <app-loading-view></app-loading-view>\n      </ion-list>\n</ion-content>\n";
+module.exports = "<app-main-header title=\"Anuncios\" [rightButton]=\"reloadData\"></app-main-header>\n\n<ion-content class=\"ion-padding\">\n    <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\" style=\"background-color: gray;\">\n      <ion-refresher-content pullingIcon=\"arrow-down\" pullingText=\"Desliza abajo para refrescar...\" refreshingSpinner=\"dots\"></ion-refresher-content> \n    </ion-refresher>\n\n    <app-not-data-yet-message \n      *ngIf=\"noticeList.length == 0 && !loading\"\n      text=\"No hay anuncios aún\" icon=\"archive-outline\"\n    ></app-not-data-yet-message>\n  \n    <ion-list *ngIf=\"noticeList.length>0\">\n      <ion-row>\n        <ion-col sizeMd=\"6\" sizeXs=\"12\" *ngFor=\"let notice of noticeList\">\n          <ion-card (click)=\"detailNotice(notice)\">\n              <div style=\"display:flex; \">\n                  <ion-icon slot=\"start\" color=\"tertiary\" size=\"large\" [name]=\"notice.type.icon\"></ion-icon>\n                  <ion-text color=\"tertiary\" style=\"padding: 7px;\">{{notice.type.name}}</ion-text></div>\n              <div style=\"height: 20vw;\">\n                  <ion-img [src]=\"notice.photo\"></ion-img>\n              </div>\n              <div class=\"ion-text-center\">\n                  <ion-text class=\"ion-text-capitalized\" color=\"dark\" class=\"textMessage\">\n                      {{notice.title}}\n                  </ion-text>\n              </div>\n          </ion-card>\n          <app-notice-bottom-bar [likes]=\"notice.likes.length\" [comments]=\"notice.comments.length\" [notice]=\"notice\" [userUID]=\"user.uid\"></app-notice-bottom-bar>\n        </ion-col>\n      </ion-row>\n    </ion-list>\n    \n    <ion-list *ngIf=\"loading\">\n        <app-loading-view></app-loading-view>\n      </ion-list>\n</ion-content>\n";
 
 /***/ })
 

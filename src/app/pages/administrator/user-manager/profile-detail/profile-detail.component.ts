@@ -42,7 +42,9 @@ export class ProfileDetailComponent implements OnInit {
   newImage;
   progress = 0;
   showCalendar = false;
-  typeList = ['residente','empleado','administrador','inactivo']
+  typeList = ['residente','empleado','administrador','inactivo'];
+  alertEmail = '';
+  missingData = '';
 
   constructor(
     public modal: ModalController,
@@ -65,9 +67,15 @@ export class ProfileDetailComponent implements OnInit {
     }
   }
 
-  CIListener(e){ this.myCurrentUser.CI = e.detail.value}
+  CIListener(e){ 
+    this.myCurrentUser.CI = e.detail.value;
+  }
 
-  emailListener(e){ this.myCurrentUser.email = e.detail.value}
+  emailListener(e){ 
+    this.myCurrentUser.email = e.detail.value
+    if(!this.ValidateEmail(this.myCurrentUser.email)){ this.alertEmail = 'Email inválido'; }
+    else{ this.alertEmail = ''; }
+  }
 
   phonePersonalListener(e){ this.myCurrentUser.phonePersonal = e.detail.value}
 
@@ -106,16 +114,42 @@ export class ProfileDetailComponent implements OnInit {
   }
 
   sendData(){
+    if(!this.myCurrentUser.name){this.missingData = 'Primer nombre'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+    if(this.myCurrentUser.name.length > 1){this.missingData = 'Primer nombre completo'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+
+    if(!this.myCurrentUser.secondName){this.missingData = 'Segundo nombre'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+    if(this.myCurrentUser.secondName.length > 2){this.missingData = 'Número de identificación completo'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+
+    if(!this.myCurrentUser.lastName){this.missingData = 'Primer apellido'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+    if(this.myCurrentUser.lastName.length > 2){this.missingData = 'Apellido completo'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+
+    if(!this.myCurrentUser.CI){this.missingData = 'Número de identificación'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+    if(this.myCurrentUser.CI.length > 4){this.missingData = 'Número de identificación completo'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+
+    if(!this.myCurrentUser.email){this.missingData = 'Email'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+    if(!this.ValidateEmail(this.myCurrentUser.email)){this.missingData = 'Email correcto'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+
+    if(!this.myCurrentUser.phonePersonal){this.missingData = 'Telefono Principal'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+    const phonePersonal = ''+this.myCurrentUser.phonePersonal;
+    if(phonePersonal.length > 4){this.missingData = 'Telefono Principal completo'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+
+    if(!this.myCurrentUser.birthDate){this.missingData = 'Fecha de Nacimiento'; this.show('Información Incompleta','Falta dato: '+ this.missingData);  return}
+
+    else{ this.missingData = '' }
     if(this.user){
       this.users.createUser(this.myCurrentUser)
     }else {
       this.users.updateUser(this.myCurrentUser);
     }
-    this.alerts.showAlert( 'USUARIO', 
+    this.show( 'USUARIO', 
     this.user? 'Datos de '+ this.user.name + ' '+ this.user.lastName + ' han sido actualizados' : 'Nuevo usuario agregado', 'OK');
     this.loading = false;
     this.modal.dismiss({action:'reload'});
     return 'done';
+  }
+
+  show(title,text,button?){
+    this.alerts.showAlert(title,text,button);
   }
 
   newReceipts(){
@@ -124,6 +158,15 @@ export class ProfileDetailComponent implements OnInit {
 
   editSpaces(){
     this.modal.dismiss({action:'spaces',user: this.currentUser})
+  }
+
+  ValidateEmail(email) {
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (email.match(validRegex)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

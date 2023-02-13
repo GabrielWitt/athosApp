@@ -14,14 +14,14 @@
     <ion-list *ngIf="noticeList.length>0">
         <ion-row>
           <ion-col sizeMd="6" sizeXs="12" *ngFor="let notice of noticeList">
-            <ion-card>
+            <ion-card (click)="detailNotice(notice)">
                 <div style="display:flex; ">
                     <ion-icon slot="start" color="tertiary" size="large" [name]="notice.type.icon"></ion-icon>
                     <ion-text color="tertiary" style="padding: 7px;">{{notice.type.name}}</ion-text></div>
                 <div style="height: 20vw;">
                     <ion-img [src]="notice.photo"></ion-img>
                 </div>
-                <div class="ion-text-center" (click)="detailNotice(notice)">
+                <div class="ion-text-center">
                     <ion-text class="ion-text-capitalized" color="dark" class="textMessage">
                         {{notice.title}}
                     </ion-text>

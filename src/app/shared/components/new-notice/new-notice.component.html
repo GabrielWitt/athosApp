@@ -68,7 +68,7 @@
   <ion-toolbar>
     <ion-row class="inputMargin" *ngIf="!loading">
       <ion-col size="11">
-        <ion-textarea style="background-color: white; color:black; border-radius: 7pt;" rows="1" [disabled]="sending" [value]="newComment.text" (ionChange)="commentListener($event)"></ion-textarea>
+        <ion-textarea placeholder=" Agregar un comentario..." style="background-color: white; color:black; border-radius: 7pt;" rows="1" [disabled]="sending" [value]="newComment.text" (ionChange)="commentListener($event)"></ion-textarea>
       </ion-col>
       <ion-col size="1" class="rightButtonContainer"> 
         <ion-icon *ngIf="!sending" color="dark" name="arrow-up-circle" class="rightButton" (click)="pressSend()"></ion-icon>

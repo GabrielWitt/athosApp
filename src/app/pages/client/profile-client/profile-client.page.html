@@ -1,6 +1,12 @@
 <app-main-header title="Mi Perfil"></app-main-header>
 
 <ion-content class="ion-padding" *ngIf="currentUser && !loading">
+
+  <ion-fab slot="fixed" vertical="top" horizontal="start" [edge]="true">
+    <ion-fab-button (click)="displayConfig()">
+      <ion-icon name="construct-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="background-color: gray;">
     <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza abajo para refrescar..." refreshingSpinner="dots"></ion-refresher-content> 
   </ion-refresher>
