@@ -17,31 +17,23 @@ Athos App is a mobile and web application designed for managing services in resi
 - **Development Methodology:** Scrum.
 - **Programming Languages:** TypeScript, HTML, CSS.
 - **Version Control & Collaboration Tools:** Git, GitHub.
-
-Repository Structure
-/docs: Contains project documentation.
+  
+## Repository Structure
+/android: Android source code
 /src: Application source code.
-/tests: Files related to conducted tests.
-Installation and Usage
+/resources: Files related to android application.
+
+## Installation and Usage
 To install and test the application, follow these steps:
 
-Clone this repository: git clone https://github.com/your_username/Athos-App.git
-Navigate to the project folder: cd Athos-App
-Follow detailed instructions in /docs/installation.md for setup and execution.
+1. Clone this repository: `git clone https://github.com/GabrielWitt/athosApp`
+2. Navigate to the project folder: `cd athosApp`
+3. Follow detailed instructions in `npm install` for setup and execution.
 Contribution
 We appreciate all contributions that improve this project! If you wish to contribute, follow these steps:
 
-Fork the repository.
-Create a branch for your new feature: git checkout -b feature/new-feature
-Make your changes and commit with descriptive messages.
-Push to your branch: git push origin feature/new-feature
-Send a pull request to the main repository branch.
-Contact
-For questions, suggestions, or project-related issues, reach out to us at:
+## Authors
 
-Email: athosapp@example.com
-Issues: Link to Project Issues
-License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+- [@Gabriel Witt](https://www.linkedin.com/in/gabriel-witt)
 
-This README is an example and can be modified to suit the specific needs of the Athos App project on GitHub.
+
