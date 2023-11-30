@@ -19,9 +19,10 @@ Athos App is a mobile and web application designed for managing services in resi
 - **Version Control & Collaboration Tools:** Git, GitHub.
   
 ## Repository Structure
-/android: Android source code
-/src: Application source code.
-/resources: Files related to android application.
+- `/android`: Android source code
+- `/src`: Application source code.
+- `/resources`: Files related to android application.
+- `package.json`: File that contains the Project information, dependencies, configuration settings and metadata.
 
 ## Installation and Usage
 To install and test the application, follow these steps:
