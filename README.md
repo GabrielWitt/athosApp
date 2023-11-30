@@ -1,19 +1,23 @@
-# athosApp
-Athos App
+# Athos App
+
 Athos App is a mobile and web application designed for managing services in residential communities, focused on improving the efficiency and quality of services provided in buildings, condominiums, or urbanizations. This project focuses on automating scheduling, coordination, and tracking of services, implementing hybrid technologies to provide an optimal user experience.
 
-Key Features
-User Management: Administrator, Employee, and Resident roles.
-Property management, fee collection, and space allocation.
-Maintenance services handling and service requests.
-Common area reservations and community announcements.
-Biometric security for authentication.
-Technologies Used
-Frameworks: Ionic, Angular.
-Cloud Platform: Firebase.
-Development Methodology: Scrum.
-Programming Languages: TypeScript, HTML, CSS.
-Version Control & Collaboration Tools: Git, GitHub.
+
+## Key Features
+- User Management: Administrator, Employee, and Resident roles.
+- Property management, fee collection, and space allocation.
+- Maintenance services handling and service requests.
+- Common area reservations and community announcements.
+- Biometric security for authentication.
+
+## Technologies Used:
+
+- **Frameworks:** Ionic, Angular.
+- **Cloud Platform:** Firebase.
+- **Development Methodology:** Scrum.
+- **Programming Languages:** TypeScript, HTML, CSS.
+- **Version Control & Collaboration Tools:** Git, GitHub.
+
 Repository Structure
 /docs: Contains project documentation.
 /src: Application source code.
